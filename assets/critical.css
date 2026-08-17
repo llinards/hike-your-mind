@@ -72,10 +72,84 @@ p:empty {
 }
 
 /** Theme styles below */
+
+/**
+ * The page margin is 30px on mobile and 79px on desktop in the design.
+ * The theme setting controls the desktop value only; the mobile value is
+ * fixed. Declared here rather than in css-variables.liquid because this
+ * stylesheet loads after that inlined <style> block and so wins the cascade.
+ */
+:root {
+  --page-margin: 30px;
+}
+
+@media (width >= 750px) {
+  :root {
+    --page-margin: var(--page-margin-desktop);
+  }
+}
+
 body {
-  font-family: var(--font-primary--family);
+  font-family: var(--font-body--family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body);
   background-color: var(--color-background);
   color: var(--color-foreground);
+}
+
+/**
+ * Headings are the display serif at a single size in the design; sections
+ * that need a different step set `font-size` themselves.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display--family);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+}
+
+small {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+  letter-spacing: var(--letter-spacing-small);
+}
+
+/** Links and controls sit on the UI step. */
+a,
+button,
+label,
+input,
+textarea,
+select {
+  letter-spacing: var(--letter-spacing-ui);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 2px;
+}
+
+/**
+ * Content available to screen readers but not visually rendered. Used for icon
+ * labels and form legends throughout the theme.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /** Section layout utilities */

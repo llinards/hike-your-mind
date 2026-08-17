@@ -1,59 +1,215 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+{% comment %}
+  Site header.
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  Desktop is two rows, as in the design: the wordmark, language switcher and
+  utility icons on top, the main navigation underneath. Both the language
+  switcher and the navigation start at the same inline offset from the content
+  edge (`--header-inset`, 340px - 79px in the 1440px design).
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </shopify-account>
-    {% endif %}
+  Mobile collapses to a single row with a hamburger that opens a <details>
+  drawer holding the navigation and language switcher. `scroll-lock` is picked
+  up by critical.css to stop the page scrolling behind the open drawer, so no
+  JavaScript is involved.
+{% endcomment %}
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
+<header class="header full-width">
+  <div class="header__row">
+    <a
+      class="header__logo"
+      href="{{ routes.root_url }}"
+      {% if request.page_type == 'index' %}
+        aria-current="page"
+      {% endif %}
+    >
+      {{ 'logo-wordmark.svg' | inline_asset_content }}
+      <span class="visually-hidden">{{ shop.name }}</span>
+    </a>
+
+    {% render 'language-selector', class: 'header__language' %}
+
+    <div class="header__utils">
+      {% for link in section.settings.utility_menu.links %}
+        <a class="header__utility-link" href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+
+      {% if shop.customer_accounts_enabled %}
+        <shopify-account menu="{{ section.settings.customer_account_menu }}">
+          <span class="header__icon">
+            {{ 'icon-user.svg' | inline_asset_content }}
+            <span class="visually-hidden">{{ 'general.accessibility.account' | t }}</span>
+          </span>
+        </shopify-account>
       {% endif %}
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+      <a class="header__icon header__cart" href="{{ routes.cart_url }}">
+        {{ 'icon-bag.svg' | inline_asset_content }}
+        <span class="visually-hidden">{{ 'general.accessibility.cart' | t }}</span>
+        {% if cart.item_count > 0 %}
+          <span class="header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+
+      <details class="header__drawer" scroll-lock>
+        <summary class="header__icon header__drawer-toggle">
+          {{ 'icon-menu.svg' | inline_asset_content }}
+          <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+        </summary>
+
+        <div class="header__drawer-panel">
+          {% render 'nav-menu', menu: section.settings.menu, class: 'nav-menu--stacked' %}
+          {% render 'language-selector' %}
+        </div>
+      </details>
+    </div>
   </div>
+
+  <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
+    {% render 'nav-menu', menu: section.settings.menu %}
+  </nav>
 </header>
 
 {% stylesheet %}
-  header {
-    height: 5rem;
+  .header {
+    --header-inset: 0px;
+
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    row-gap: 3.5rem;
+    padding-block: 2.4375rem 0;
+    color: var(--color-foreground);
+  }
+
+  .header > * {
+    grid-column: 2;
+  }
+
+  .header__row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
   }
-  header a {
-    position: relative;
-    text-decoration: none;
+
+  .header__logo {
+    display: block;
+    width: 8.6875rem;
     color: var(--color-foreground);
+  }
+
+  .header__logo svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Pushes the utility cluster to the far end of the row. */
+  .header__utils {
+    display: flex;
+    align-items: center;
+    gap: 1.875rem;
+    margin-inline-start: auto;
+  }
+
+  .header__utility-link {
+    color: var(--color-foreground);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+  }
+
+  .header__utility-link:hover {
+    text-decoration: underline;
+  }
+
+  .header__icon {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: var(--size-icon);
+    height: var(--size-icon);
+    color: var(--color-foreground);
+    cursor: pointer;
   }
-  header a sup {
+
+  .header__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header__cart-count {
     position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
+    inset-block-start: -0.25rem;
+    inset-inline-start: 100%;
+    font-size: var(--font-size-small);
+    line-height: 1;
   }
-  header svg {
-    width: 2rem;
+
+  .header__drawer-toggle {
+    list-style: none;
   }
-  header .header__menu,
-  header .header__icons {
+
+  .header__drawer-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .header__drawer-toggle svg {
+    width: 1.6875rem;
+    height: auto;
+  }
+
+  .header__drawer-panel {
+    position: absolute;
+    inset-inline: 0;
+    z-index: 1;
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem var(--page-margin);
+    background-color: var(--color-background);
+    border-block-end: 0.5px solid var(--color-hairline);
+  }
+
+  .nav-menu--stacked {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Mobile: the drawer carries navigation and language, so both rows collapse. */
+  .header__nav,
+  .header__language {
+    display: none;
+  }
+
+  @media (width >= 750px) {
+    .header {
+      /* 340px - 79px in the 1440px design: language and nav share this offset. */
+      --header-inset: 16.3125rem;
+    }
+
+    /**
+     * The inset is measured from the content edge, not from the logo, so the
+     * language switcher lines up with the navigation row beneath it. A grid
+     * column of exactly `--header-inset` does that; a flex gap would measure
+     * from the end of the logo instead.
+     */
+    .header__row {
+      display: grid;
+      grid-template-columns: var(--header-inset) auto 1fr;
+      align-items: center;
+    }
+
+    .header__nav,
+    .header__language {
+      display: block;
+    }
+
+    .header__drawer {
+      display: none;
+    }
+
+    .header__nav {
+      padding-inline-start: var(--header-inset);
+      padding-block-end: 1.5rem;
+    }
   }
 {% endstylesheet %}
 
@@ -65,6 +221,11 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "utility_menu",
+      "label": "t:labels.utility_menu"
     },
     {
       "type": "link_list",

@@ -1,39 +1,215 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+{% comment %}
+  Site footer.
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  Three bands, as in the design:
+    1. Oversized wordmark, with the Instagram call-out opposite it
+    2. Closing tagline, with the Contacts / Menu / Company details columns
+    3. Copyright
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  The whole footer sits above a 0.5px hairline rule.
+
+  Note: the tagline renders on every template because `footer-group` is shared
+  by all of them. The design omits it on the Shop page only; leaving the
+  setting blank hides it everywhere.
+{% endcomment %}
+
+<footer class="footer full-width">
+  <div class="footer__inner">
+    <div class="footer__band footer__band--brand">
+      <div class="footer__wordmark">
+        {{ 'logo-wordmark-large.svg' | inline_asset_content }}
+        <span class="visually-hidden">{{ shop.name }}</span>
+      </div>
+
+      {% if section.settings.instagram_url != blank %}
+        <a class="footer__instagram" href="{{ section.settings.instagram_url }}">
+          <span class="footer__instagram-label">{{ 'general.social.follow_instagram' | t }}</span>
+          <span class="footer__instagram-icon">
+            {{ 'icon-instagram.svg' | inline_asset_content }}
+          </span>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="footer__band footer__band--details">
+      {% if section.settings.tagline != blank %}
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      {% endif %}
+
+      <div class="footer__columns">
+        {% if section.settings.contact_details != blank %}
+          <div class="footer__column">
+            <h2 class="footer__column-title">{{ 'general.footer.contacts' | t }}</h2>
+            {{ section.settings.contact_details }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.menu != blank %}
+          <nav class="footer__column" aria-label="{{ 'general.footer.menu' | t }}">
+            <h2 class="footer__column-title">{{ 'general.footer.menu' | t }}</h2>
+            <ul class="footer__list">
+              {% for link in section.settings.menu.links %}
+                <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+        {% endif %}
+
+        {% if section.settings.company_details != blank %}
+          <div class="footer__column">
+            <h2 class="footer__column-title">{{ 'general.footer.company_details' | t }}</h2>
+            {{ section.settings.company_details }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- liquid
+      # A filter chain cannot be used inline as a `t:` argument, so the year is
+      # resolved first.
+      assign current_year = 'now' | date: '%Y'
+    -%}
+    <p class="footer__copyright">
+      {{ 'general.footer.copyright' | t: year: current_year, shop_name: shop.name }}
+    </p>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .footer {
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    margin-block-start: 5rem;
+    border-block-start: 0.5px solid var(--color-hairline);
+    color: var(--color-foreground-muted);
   }
-  footer a {
+
+  .footer__inner {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-block: 2.625rem 1.5rem;
+  }
+
+  .footer__band {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer__wordmark {
+    width: min(31.0625rem, 100%);
+    color: var(--color-foreground-muted);
+  }
+
+  .footer__wordmark svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer__instagram {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: inherit;
     text-decoration: none;
+  }
+
+  .footer__instagram-label {
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
+    letter-spacing: var(--letter-spacing-display);
+  }
+
+  .footer__instagram-icon {
+    flex-shrink: 0;
+    width: var(--size-icon);
+    height: var(--size-icon);
+  }
+
+  .footer__instagram-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .footer__tagline {
+    max-width: 38ch;
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
+    letter-spacing: var(--letter-spacing-display);
     color: var(--color-foreground);
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .footer__columns {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+  }
+
+  .footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* The column headings sit at body size in the design, not as headings. */
+  .footer__column-title,
+  .footer__link,
+  .footer__column :where(p) {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .footer__link {
+    color: inherit;
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+  }
+
+  .footer__link:hover {
+    text-decoration: underline;
+  }
+
+  .footer__copyright {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+    letter-spacing: var(--letter-spacing-small);
+  }
+
+  @media (width >= 750px) {
+    .footer__inner {
+      gap: 4.5rem;
+    }
+
+    .footer__band {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .footer__band--details {
+      align-items: flex-start;
+    }
+
+    .footer__columns {
+      flex-wrap: nowrap;
+      gap: 3.5rem;
+    }
   }
 {% endstylesheet %}
 
@@ -42,15 +218,30 @@
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:labels.tagline",
+      "default": "Feel Free to Contact Us & Remember to Hike Your Mind!"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "t:labels.instagram_url"
+    },
+    {
+      "type": "richtext",
+      "id": "contact_details",
+      "label": "t:labels.contact_details"
+    },
+    {
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
     },
     {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
+      "type": "richtext",
+      "id": "company_details",
+      "label": "t:labels.company_details"
     }
   ]
 }

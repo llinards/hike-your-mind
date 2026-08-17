@@ -19,6 +19,33 @@
     "update": "Update",
     "remove": "Remove"
   },
+  "general": {
+    "accessibility": {
+      "account": "Account",
+      "cart": "Cart",
+      "menu": "Menu",
+      "primary_navigation": "Primary",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "language": {
+      "label": "Language"
+    },
+    "social": {
+      "follow_instagram": "Follow us on Instagram"
+    },
+    "footer": {
+      "contacts": "Contacts",
+      "menu": "Menu",
+      "company_details": "Company details",
+      "copyright": "© {{ year }} {{ shop_name }}. All rights reserved."
+    }
+  },
+  "testimonials": {
+    "read_more": "Read more",
+    "read_less": "Read less",
+    "empty": "No reviews have been published yet."
+  },
   "customers": {
     "login": {
       "email": "Email",

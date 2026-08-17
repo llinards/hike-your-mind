@@ -1,0 +1,65 @@
+{% doc %}
+  Renders the LV / ENG language switcher as a no-JavaScript localization form.
+
+  Each available language is its own submit button, so switching works without
+  scripting. Renders nothing when the store has only one language, which is the
+  case until Shopify Markets translations are turned on.
+
+  Labels come from the language's ISO code (LV, EN) rather than its endonym so
+  they stay short enough for the header.
+
+  @param {string} [class] - Optional class added to the form wrapper
+
+  @example
+  {% render 'language-selector' %}
+  {% render 'language-selector', class: 'header__language--drawer' %}
+{% enddoc %}
+
+{% if localization.available_languages.size > 1 %}
+  {% form 'localization', class: class %}
+    <fieldset class="language-selector">
+      <legend class="visually-hidden">{{ 'general.language.label' | t }}</legend>
+
+      {% for language in localization.available_languages %}
+        <button
+          type="submit"
+          name="language_code"
+          value="{{ language.iso_code }}"
+          class="language-selector__option"
+          {% if language.iso_code == localization.language.iso_code %}
+            aria-current="true"
+          {% endif %}
+        >
+          <span class="visually-hidden">{{ language.endonym_name }}</span>
+          <span aria-hidden="true">{{ language.iso_code | upcase }}</span>
+        </button>
+      {% endfor %}
+    </fieldset>
+  {% endform %}
+{% endif %}
+
+{% stylesheet %}
+  .language-selector {
+    display: flex;
+    gap: 1.875rem;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .language-selector__option {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    cursor: pointer;
+    text-underline-offset: 0.25em;
+  }
+
+  .language-selector__option[aria-current='true'] {
+    text-decoration: underline;
+  }
+{% endstylesheet %}

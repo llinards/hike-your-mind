@@ -1,6 +1,8 @@
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+{% comment %}
+  `charset` and `viewport` are declared at the top of the layout files instead of
+  here: the inlined font and token <style> blocks render before this snippet, and
+  `charset` must appear within the first 1024 bytes of the document.
+{% endcomment %}
 
 {%- liquid
   assign og_title = page_title | default: shop.name

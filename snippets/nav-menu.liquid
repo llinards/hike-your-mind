@@ -1,0 +1,56 @@
+{% doc %}
+  Renders a navigation list from a link list.
+
+  Used twice by the header — once for the desktop row under the logo, once
+  inside the mobile drawer — so the two can never drift apart.
+
+  The active link is underlined, matching the design's treatment of the
+  current page.
+
+  @param {linklist} menu - The link list to render
+  @param {string} [class] - Optional class added to the <ul>
+
+  @example
+  {% render 'nav-menu', menu: section.settings.menu %}
+  {% render 'nav-menu', menu: section.settings.menu, class: 'header__nav-list--drawer' %}
+{% enddoc %}
+
+<ul class="nav-menu {{ class }}">
+  {% for link in menu.links %}
+    <li>
+      <a
+        href="{{ link.url }}"
+        class="nav-menu__link"
+        {% if link.active %}
+          aria-current="page"
+        {% endif %}
+      >
+        {{ link.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% stylesheet %}
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.875rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .nav-menu__link {
+    color: var(--color-foreground);
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    text-decoration: none;
+    text-underline-offset: 0.25em;
+  }
+
+  .nav-menu__link[aria-current='page'],
+  .nav-menu__link:hover {
+    text-decoration: underline;
+  }
+{% endstylesheet %}

@@ -29,6 +29,8 @@
     "section": "Section",
     "settings": "Settings",
     "sidebar": "Sidebar",
+    "testimonial": "Testimonial",
+    "testimonials": "Testimonials",
     "text": "Text",
     "theme": "Theme",
     "typography": "Typography"
@@ -43,12 +45,20 @@
     "layout_direction": "Layout direction",
     "menu": "Menu",
     "customer_account_menu": "Customer account menu",
+    "utility_menu": "Utility menu",
     "padding": "Padding",
     "page_margin": "Page margin",
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "tagline": "Closing tagline",
+    "instagram_url": "Instagram URL",
+    "contact_details": "Contact details",
+    "company_details": "Company details",
+    "heading": "Heading",
+    "subheading": "Subheading",
+    "testimonials": "Testimonials"
   },
   "options": {
     "alignment": {
@@ -72,6 +82,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
   }
 }
