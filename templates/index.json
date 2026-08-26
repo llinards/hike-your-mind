@@ -10,7 +10,67 @@
 {
   "sections": {
     "main": {
-      "type": "hello-world",
+      "type": "mosaic-hero",
+      "blocks": {
+        "image-1": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 6
+          }
+        },
+        "image-2": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 6
+          }
+        },
+        "image-3": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 1
+          }
+        },
+        "image-4": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 6
+          }
+        },
+        "image-5": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 5
+          }
+        },
+        "image-6": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 4
+          }
+        },
+        "image-7": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 6
+          }
+        },
+        "image-8": {
+          "type": "image",
+          "settings": {
+            "height_ratio": 2
+          }
+        }
+      },
+      "block_order": [
+        "image-1",
+        "image-2",
+        "image-3",
+        "image-4",
+        "image-5",
+        "image-6",
+        "image-7",
+        "image-8"
+      ],
       "settings": {}
     }
   },

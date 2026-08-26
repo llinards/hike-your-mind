@@ -26,7 +26,8 @@
       "menu": "Menu",
       "primary_navigation": "Primary",
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "image_gallery": "Image gallery"
     },
     "language": {
       "label": "Language"

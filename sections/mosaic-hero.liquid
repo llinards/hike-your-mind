@@ -1,0 +1,476 @@
+{% comment %}
+  Mosaic hero — the Home page's opening frame.
+
+  A heading and a call to action, above a full-bleed band of image columns that
+  drifts horizontally and loops seamlessly.
+
+  Images are authored as a flat, reorderable list of blocks; the section packs
+  them into columns itself (see the packing comment below). A column of 6 + 6 and
+  a column of 1 + 6 + 5 both fill the band exactly, which is how the design's
+  stagger is reproduced without the merchant having to think in columns.
+
+  The column set is rendered twice. The second pass is the loop's tail — it is
+  `aria-hidden`, its images carry no alt text, and it deliberately does NOT carry
+  `shopify_attributes`, or the theme editor would bind block selection to the
+  clone instead of the real block.
+
+  Blocks with no image fall back to demo photography while the `demo_images`
+  setting is on — see the packing block below. That is preview scaffolding.
+
+  `band_height` and `column_width` apply from 750px up; below that the band uses
+  the viewport-relative values in the stylesheet.
+
+  Motion is a compositor-driven CSS transform. `<mosaic-marquee>` exists only to
+  measure the rendered track, which is the one thing CSS cannot know — see the
+  javascript tag below.
+{% endcomment %}
+
+{% comment %}
+  Pack the flat block list into columns: walk the blocks adding each one's
+  `height_ratio` to a running total, and close the column when the next image
+  would overshoot `column_fill`. The result is a comma-separated count of images
+  per column ("2,3,3"), which the render loop below walks to emit balanced
+  markup. Computing it up front rather than opening and closing `<div>`s inside
+  the loop keeps the HTML parseable — by theme check, and by anyone reading it.
+{% endcomment %}
+
+{%- liquid
+  assign fill = section.settings.column_fill
+  assign running = 0
+  assign current = 0
+  assign packed = ''
+
+  for candidate in section.blocks
+    assign ratio = candidate.settings.height_ratio
+    assign next = running | plus: ratio
+
+    if current == 0
+      assign next = ratio
+    elsif next > fill
+      assign packed = packed | append: current | append: ','
+      assign current = 0
+      assign next = ratio
+    endif
+
+    assign current = current | plus: 1
+    assign running = next
+  endfor
+
+  if current > 0
+    assign packed = packed | append: current
+  endif
+
+  assign columns = packed | split: ','
+
+  comment
+    Scaffolding: stand-in photography so the band can be judged before any real
+    images exist. Pexels ids, hotlinked from their CDN — nothing is committed to
+    assets/. Turn the `demo_images` setting off (or pick real images) and this
+    path is never reached. Delete the setting and this list before launch.
+  endcomment
+  assign demo_ids = '618833,775201,210243,552789,733162,167684,747964,803219' | split: ','
+-%}
+
+{%- capture image_sizes %}(min-width: 750px) {{ section.settings.column_width }}px, 60vw{% endcapture -%}
+
+<div class="mosaic-hero__intro">
+  {%- if section.settings.heading != blank -%}
+    <h1 class="mosaic-hero__heading">{{ section.settings.heading }}</h1>
+  {%- endif -%}
+
+  {%- if section.settings.cta_label != blank -%}
+    <a class="mosaic-hero__cta" href="{{ section.settings.cta_link | default: '#' }}">
+      {{ section.settings.cta_label }}
+      {{ 'icon-arrow-right.svg' | inline_asset_content }}
+    </a>
+  {%- endif -%}
+</div>
+
+{%- if section.blocks.size > 0 -%}
+  <div
+    class="mosaic full-width"
+    style="--mosaic-band-desktop: {{ section.settings.band_height }}px; --mosaic-column-desktop: {{ section.settings.column_width }}px;"
+  >
+    <mosaic-marquee
+      class="mosaic__viewport"
+      role="group"
+      aria-label="{{ 'general.accessibility.image_gallery' | t }}"
+      data-speed="{{ section.settings.speed }}"
+    >
+      <div class="mosaic__track">
+        {%- for pass in (1..2) -%}
+          {%- liquid
+            assign is_clone = false
+            if pass == 2
+              assign is_clone = true
+            endif
+            assign cursor = 0
+          -%}
+
+          <div class="mosaic__group" {% if is_clone %}aria-hidden="true"{% endif %}>
+            {%- for count in columns -%}
+              {%- assign column_size = count | plus: 0 -%}
+
+              <div class="mosaic__column">
+                {%- for offset in (1..column_size) -%}
+                  {%- liquid
+                    assign index = cursor | plus: offset | minus: 1
+                    assign cell = section.blocks[index]
+                    assign demo_index = index | modulo: demo_ids.size
+
+                    assign img_alt = cell.settings.image.alt
+                    assign img_loading = 'lazy'
+                    assign img_priority = 'auto'
+
+                    if is_clone
+                      assign img_alt = ''
+                    else
+                      if index == 0
+                        assign img_loading = 'eager'
+                        assign img_priority = 'high'
+                      endif
+                    endif
+                  -%}
+
+                  <figure
+                    class="mosaic__cell"
+                    style="--cell-ratio: {{ cell.settings.height_ratio }};"
+                    {% unless is_clone %}{{ cell.shopify_attributes }}{% endunless %}
+                  >
+                    {%- if cell.settings.image != blank -%}
+                      {{
+                        cell.settings.image
+                        | image_url: width: 1200
+                        | image_tag:
+                            widths: '200,300,400,600,800,1200',
+                            sizes: image_sizes,
+                            loading: img_loading,
+                            fetchpriority: img_priority,
+                            alt: img_alt
+                      }}
+                    {%- elsif section.settings.demo_images -%}
+                      {%- assign demo_id = demo_ids[demo_index] -%}
+                      {% # theme-check-disable RemoteAsset %}
+                      {%- comment -%}
+                        Hotlinked on purpose: demo photography must not be committed to
+                        assets/ or uploaded to the store. The cell crops it with
+                        object-fit, so these dimensions only supply the aspect hint.
+                      {%- endcomment -%}
+                      <img
+                        src="https://images.pexels.com/photos/{{ demo_id }}/pexels-photo-{{ demo_id }}.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                        alt=""
+                        width="1200"
+                        height="800"
+                        loading="{{ img_loading }}"
+                        fetchpriority="{{ img_priority }}"
+                      >
+                      {% # theme-check-enable RemoteAsset %}
+                    {%- else -%}
+                      {{ 'image' | placeholder_svg_tag: 'mosaic__placeholder' }}
+                    {%- endif -%}
+                  </figure>
+                {%- endfor -%}
+              </div>
+
+              {%- assign cursor = cursor | plus: column_size -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </mosaic-marquee>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mosaic-hero__intro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+    padding-block: 3rem 2.5rem;
+  }
+
+  .mosaic-hero__heading {
+    max-width: 16ch;
+    font-size: var(--font-size-hero);
+    line-height: var(--line-height-hero);
+    letter-spacing: var(--letter-spacing-hero);
+  }
+
+  .mosaic-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: inherit;
+    font-size: var(--font-size-ui);
+    line-height: var(--line-height-ui);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .mosaic-hero__cta svg {
+    width: 1.625rem;
+    height: 1.625rem;
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .mosaic-hero__cta:hover svg {
+    transform: translateX(0.25rem);
+  }
+
+  /**
+   * The desktop band and column width arrive as `--*-desktop` custom properties
+   * on the inline style attribute, which outranks any stylesheet rule. Mapping
+   * them onto the used tokens inside a media query is what lets the mobile
+   * values below win at narrow widths.
+   */
+  .mosaic {
+    --mosaic-gap: 1.25rem;
+    --mosaic-band: min(78vh, 700px);
+    --mosaic-column: 46vw;
+  }
+
+  @media (width >= 750px) {
+    .mosaic {
+      --mosaic-gap: 1.875rem;
+      --mosaic-band: var(--mosaic-band-desktop);
+      --mosaic-column: var(--mosaic-column-desktop);
+    }
+  }
+
+  .mosaic__viewport {
+    display: block;
+    height: var(--mosaic-band);
+    overflow: hidden;
+  }
+
+  .mosaic__track {
+    display: flex;
+    gap: var(--mosaic-gap);
+    width: max-content;
+    height: 100%;
+    animation: mosaic-drift var(--mosaic-duration, 40s) linear infinite;
+  }
+
+  /**
+   * Deliberately NOT paused on hover. The band is full-bleed and taller than the
+   * fold, so a stationary cursor ends up over it the moment the page scrolls,
+   * and the drift stops for no reason the reader can see.
+   *
+   * Focus-within is inert while the cells are plain images; it is here so the
+   * band stops on its own if a cell ever becomes a link.
+   */
+  .mosaic:focus-within .mosaic__track {
+    animation-play-state: paused;
+  }
+
+  .mosaic__group {
+    display: flex;
+    gap: var(--mosaic-gap);
+    height: 100%;
+  }
+
+  .mosaic__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mosaic-gap);
+    width: var(--mosaic-column);
+    height: 100%;
+  }
+
+  .mosaic__cell {
+    flex: var(--cell-ratio) 1 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .mosaic__cell img,
+  .mosaic__cell svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /**
+   * `--mosaic-shift` is one group plus one gap, measured by the custom element.
+   * The `-50%` fallback keeps the band drifting without JavaScript, at the cost
+   * of a half-gap seam once per loop.
+   */
+  @keyframes mosaic-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(var(--mosaic-shift, -50%), 0, 0);
+    }
+  }
+
+  /* With the drift stopped, the band has to be reachable some other way. */
+  @media (prefers-reduced-motion: reduce) {
+    .mosaic__viewport {
+      overflow-x: auto;
+    }
+
+    .mosaic__track {
+      animation: none;
+    }
+
+    .mosaic-hero__cta svg {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /**
+   * Turns the merchant's speed setting (px per second) into an animation
+   * duration. Only the browser knows how wide the rendered track is, so this is
+   * the one part of the marquee CSS cannot do on its own.
+   *
+   * The shift is one group's width plus one gap — the distance to the point
+   * where the clone sits exactly where the original started. Measuring it beats
+   * deriving it from percentages, which is off by half a gap.
+   */
+  class MosaicMarquee extends HTMLElement {
+    connectedCallback() {
+      this.track = this.querySelector('.mosaic__track');
+      this.group = this.querySelector('.mosaic__group');
+      if (!this.track || !this.group) return;
+
+      this.sync = this.sync.bind(this);
+      this.observer = new ResizeObserver(this.sync);
+      this.observer.observe(this.group);
+      this.sync();
+    }
+
+    disconnectedCallback() {
+      if (this.observer) this.observer.disconnect();
+    }
+
+    sync() {
+      const gap = parseFloat(getComputedStyle(this.track).columnGap) || 0;
+      const shift = this.group.getBoundingClientRect().width + gap;
+      if (!shift) return;
+
+      const speed = parseFloat(this.dataset.speed) || 30;
+
+      /* Assigning a new duration mid-flight preserves the animation's progress,
+         so a resize reads as a change of pace rather than a jump. */
+      this.track.style.setProperty('--mosaic-shift', `${-shift}px`);
+      this.track.style.setProperty('--mosaic-duration', `${(shift / speed).toFixed(2)}s`);
+    }
+  }
+
+  if (!customElements.get('mosaic-marquee')) {
+    customElements.define('mosaic-marquee', MosaicMarquee);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.mosaic_hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Experience More Than the Destination"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Explore Hikes"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:labels.cta_link"
+    },
+    {
+      "type": "range",
+      "id": "band_height",
+      "label": "t:labels.band_height",
+      "min": 400,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 1080
+    },
+    {
+      "type": "range",
+      "id": "column_width",
+      "label": "t:labels.column_width",
+      "min": 200,
+      "max": 560,
+      "step": 10,
+      "unit": "px",
+      "default": 410
+    },
+    {
+      "type": "range",
+      "id": "column_fill",
+      "label": "t:labels.column_fill",
+      "min": 6,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:labels.speed",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "demo_images",
+      "label": "t:labels.demo_images",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:general.image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:labels.image"
+        },
+        {
+          "type": "range",
+          "id": "height_ratio",
+          "label": "t:labels.height_ratio",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "unit": "fr",
+          "default": 6
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.mosaic_hero",
+      "blocks": [
+        { "type": "image", "settings": { "height_ratio": 6 } },
+        { "type": "image", "settings": { "height_ratio": 6 } },
+        { "type": "image", "settings": { "height_ratio": 1 } },
+        { "type": "image", "settings": { "height_ratio": 6 } },
+        { "type": "image", "settings": { "height_ratio": 5 } },
+        { "type": "image", "settings": { "height_ratio": 4 } },
+        { "type": "image", "settings": { "height_ratio": 6 } },
+        { "type": "image", "settings": { "height_ratio": 2 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

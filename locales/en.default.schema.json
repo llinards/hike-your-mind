@@ -6,8 +6,8 @@
     "blog": "Blog",
     "cart": "Cart",
     "collection": "Collection",
-    "collections": "Collections",
     "collection_card": "Collection card",
+    "collections": "Collections",
     "collections_grid": "Collections grid",
     "colors": "Colors",
     "column": "Column",
@@ -17,8 +17,10 @@
     "footer": "Footer",
     "group": "Group",
     "header": "Header",
+    "image": "Image",
     "layout": "Layout",
     "main": "Main",
+    "mosaic_hero": "Mosaic hero",
     "page": "Page",
     "password": "Password",
     "primary": "Primary",
@@ -58,7 +60,16 @@
     "company_details": "Company details",
     "heading": "Heading",
     "subheading": "Subheading",
-    "testimonials": "Testimonials"
+    "testimonials": "Testimonials",
+    "band_height": "Band height",
+    "column_fill": "Column fill",
+    "column_width": "Column width",
+    "cta_label": "Link label",
+    "cta_link": "Link",
+    "height_ratio": "Height",
+    "image": "Image",
+    "speed": "Speed",
+    "demo_images": "Use demo images"
   },
   "options": {
     "alignment": {
