@@ -132,6 +132,7 @@
         "subheading": "Have an idea for a special hiking experience?",
         "show_divider": true,
         "image": "shopify://shop_images/create-a-hike.jpg",
+        "image_position": 85,
         "paragraph": "Bring your activity, theme and people — HIKE YOUR MIND will take care of the route and practical planning.",
         "cta_label": "Create a Hike With Us",
         "cta_link": "shopify://pages/create-a-hike"
