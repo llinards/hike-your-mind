@@ -86,7 +86,8 @@
     "row_height": "Row height",
     "row_gap": "Space between rows",
     "overlay": "Image overlay",
-    "show_divider": "Show divider"
+    "show_divider": "Show divider",
+    "image_position": "Image position"
   },
   "options": {
     "alignment": {
@@ -110,6 +111,14 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
+    },
+    "image_position": {
+      "top": "Top",
+      "center": "Center",
+      "bottom": "Bottom"
     }
+  },
+  "info": {
+    "image_position": "0% holds the top of the photo in view, 100% the bottom."
   }
 }
