@@ -71,7 +71,16 @@
         "image-7",
         "image-8"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "Experience More Than the Destination",
+        "cta_label": "Explore Hikes",
+        "cta_link": "shopify://collections/hikes",
+        "band_height": 1080,
+        "column_width": 410,
+        "column_fill": 12,
+        "speed": 30,
+        "demo_images": true
+      }
     }
   },
   "order": [
