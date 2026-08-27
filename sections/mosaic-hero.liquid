@@ -12,7 +12,9 @@
   The column set is rendered twice. The second pass is the loop's tail — it is
   `aria-hidden`, its images carry no alt text, and it deliberately does NOT carry
   `shopify_attributes`, or the theme editor would bind block selection to the
-  clone instead of the real block.
+  clone instead of the real block. Two copies loop correctly only while one copy
+  is wider than the viewport, so on larger screens the custom element clones the
+  second pass until the set outruns the window.
 
   Blocks with no image fall back to demo photography while the `demo_images`
   setting is on — see the packing block below. That is preview scaffolding.
@@ -20,9 +22,8 @@
   `band_height` and `column_width` apply from 750px up; below that the band uses
   the viewport-relative values in the stylesheet.
 
-  Motion is a compositor-driven CSS transform. `<mosaic-marquee>` exists only to
-  measure the rendered track, which is the one thing CSS cannot know — see the
-  javascript tag below.
+  Motion is a compositor-driven CSS transform. `<mosaic-marquee>` only measures
+  the rendered track and tops up those copies — see the javascript tag below.
 {% endcomment %}
 
 {% comment %}
@@ -192,7 +193,7 @@
   }
 
   .mosaic-hero__heading {
-    max-width: 16ch;
+    max-width: 20ch;
     font-size: var(--font-size-hero);
     line-height: var(--line-height-hero);
     letter-spacing: var(--letter-spacing-hero);
@@ -239,10 +240,19 @@
     }
   }
 
+  /**
+   * `will-change` here is not about this element moving — it never does. It
+   * promotes the clip itself. The track inside is composited (it has a running
+   * transform animation) but this box is what crops it, and a clip resolved on
+   * the main thread can trail the compositor by a frame at the moment the
+   * track's transform jumps. The artifact lands on the clip edge, which is why
+   * it reads as a flicker down the left side once per loop.
+   */
   .mosaic__viewport {
     display: block;
     height: var(--mosaic-band);
     overflow: hidden;
+    will-change: transform;
   }
 
   .mosaic__track {
@@ -294,8 +304,9 @@
 
   /**
    * `--mosaic-shift` is one group plus one gap, measured by the custom element.
-   * The `-50%` fallback keeps the band drifting without JavaScript, at the cost
-   * of a half-gap seam once per loop.
+   * The `-50%` fallback is the no-JavaScript case, where the track holds only
+   * the two server-rendered copies: the band still drifts, at the cost of a
+   * half-gap seam once per loop.
    */
   @keyframes mosaic-drift {
     from {
@@ -326,22 +337,40 @@
 {% javascript %}
   /**
    * Turns the merchant's speed setting (px per second) into an animation
-   * duration. Only the browser knows how wide the rendered track is, so this is
-   * the one part of the marquee CSS cannot do on its own.
+   * duration, and keeps enough copies of the column set on the track to cover
+   * the viewport. Both jobs need the rendered width of the band, which is the
+   * part CSS cannot work out on its own.
    *
-   * The shift is one group's width plus one gap — the distance to the point
-   * where the clone sits exactly where the original started. Measuring it beats
-   * deriving it from percentages, which is off by half a gap.
+   * The repeat distance is the offset between the first two groups — one copy
+   * plus one gap, in a single fractional measurement. Measuring a width and
+   * parsing a gap separately rounds twice, and the leftover fraction shows up
+   * as jitter at the seam.
+   *
+   * The markup ships two copies. That loops correctly only while one copy is at
+   * least as wide as the viewport: at the end of a cycle the second copy has
+   * taken the first one's place with nothing behind it, so a wider screen sees
+   * bare band at the right edge and a jump when the animation restarts. Cloning
+   * the set until it outruns the viewport fills that in. The travel distance is
+   * unchanged — the extra copies only guarantee something is always under the
+   * right-hand edge.
    */
   class MosaicMarquee extends HTMLElement {
     connectedCallback() {
       this.track = this.querySelector('.mosaic__track');
-      this.group = this.querySelector('.mosaic__group');
-      if (!this.track || !this.group) return;
+      if (!this.track) return;
+
+      this.groups = Array.from(this.track.children);
+      if (this.groups.length < 2) return;
 
       this.sync = this.sync.bind(this);
       this.observer = new ResizeObserver(this.sync);
-      this.observer.observe(this.group);
+      this.observer.observe(this.groups[0]);
+
+      /* The host is the only element here that tracks the viewport. Above
+         750px the columns are a fixed px width, so the group alone would not
+         notice the window being widened. */
+      this.observer.observe(this);
+
       this.sync();
     }
 
@@ -350,16 +379,41 @@
     }
 
     sync() {
-      const gap = parseFloat(getComputedStyle(this.track).columnGap) || 0;
-      const shift = this.group.getBoundingClientRect().width + gap;
-      if (!shift) return;
+      const origin = this.groups[0].getBoundingClientRect().left;
+      const repeat = this.groups[1].getBoundingClientRect().left - origin;
+      if (!repeat) return;
+
+      this.fill(repeat);
 
       const speed = parseFloat(this.dataset.speed) || 30;
 
       /* Assigning a new duration mid-flight preserves the animation's progress,
          so a resize reads as a change of pace rather than a jump. */
-      this.track.style.setProperty('--mosaic-shift', `${-shift}px`);
-      this.track.style.setProperty('--mosaic-duration', `${(shift / speed).toFixed(2)}s`);
+      this.track.style.setProperty('--mosaic-shift', `${-repeat}px`);
+      this.track.style.setProperty('--mosaic-duration', `${(repeat / speed).toFixed(2)}s`);
+    }
+
+    /**
+     * At the end of a cycle the track has moved one repeat to the left, so what
+     * is left covering the viewport is the track minus that repeat. Whatever it
+     * falls short by is made up in whole copies.
+     *
+     * Grows only. Surplus copies left behind by a narrowing window cost a few
+     * off-screen nodes; removing them risks an observer that feeds itself.
+     */
+    fill(repeat) {
+      const viewport = this.getBoundingClientRect().width;
+      const shortfall = viewport - (this.track.getBoundingClientRect().width - repeat);
+      if (shortfall <= 0) return;
+
+      let copies = Math.ceil(shortfall / repeat);
+      while (copies--) {
+        /* Always clone the second group: it is already aria-hidden, its images
+           already carry empty alt text and lazy loading, and it has no
+           shopify_attributes. Cloning the first would duplicate the eager
+           priority hint and point theme editor selection at a copy. */
+        this.track.appendChild(this.groups[1].cloneNode(true));
+      }
     }
   }
 
