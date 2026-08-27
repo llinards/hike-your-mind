@@ -1,0 +1,75 @@
+{%- liquid
+  assign intro_class = 'create-a-hike__intro'
+  if section.settings.show_divider
+    assign intro_class = intro_class | append: ' create-a-hike__intro--divided'
+  endif
+  assign has_intro = false
+  if section.settings.heading != blank
+    assign has_intro = true
+  endif
+  if section.settings.subheading != blank
+    assign has_intro = true
+  endif
+-%}
+
+{%- if has_intro -%}
+  <div class="{{ intro_class }}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="create-a-hike__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="create-a-hike__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if section.settings.image != blank -%}
+    <div class="create-a-hike__image">
+        {{
+            section.settings.image
+            | image_url: width: 3000
+            | image_tag:
+                widths: '750,1100,1500,2000,2600,3000',
+                sizes: '100vw',
+                loading: img_loading,
+                fetchpriority: img_priority,
+                alt: section.settings.image.alt
+            }}
+    </div>
+{%- endif -%}
+
+{%- if section.settings.paragraph != blank -%}
+    <p class="create-a-hike__paragraph">{{ section.settings.paragraph }}</p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:general.create_a_hike",
+  "settings": [
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "t:labels.heading",
+        "default": "Create a Hike With Us"
+    },
+    {
+        "type": "text",
+        "id": "subheading",
+        "label": "t:labels.subheading",
+        "default": "Have an idea for a special hiking experience?"
+    },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "t:labels.image"
+    },
+    {
+        "type": "text",
+        "id": "paragraph",
+        "label": "t:labels.paragraph",
+        "default": "Bring your activity, theme and people — HIKE YOUR MIND will take care of the route and practical planning."
+    },
+  ]
+}
+{% endschema %}
