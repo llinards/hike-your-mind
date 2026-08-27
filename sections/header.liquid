@@ -25,7 +25,9 @@
       <span class="visually-hidden">{{ shop.name }}</span>
     </a>
 
-    {% render 'language-selector', class: 'header__language' %}
+    <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
+      {% render 'nav-menu', menu: section.settings.menu %}
+    </nav>
 
     <div class="header__utils">
       {% for link in section.settings.utility_menu.links %}
@@ -34,7 +36,7 @@
 
       {% if shop.customer_accounts_enabled %}
         <shopify-account menu="{{ section.settings.customer_account_menu }}">
-          <span class="header__icon">
+          <span class="header__icon" slot="signed-out-avatar">
             {{ 'icon-user.svg' | inline_asset_content }}
             <span class="visually-hidden">{{ 'general.accessibility.account' | t }}</span>
           </span>
@@ -49,6 +51,8 @@
         {% endif %}
       </a>
 
+      {% render 'language-selector', class: 'header__language' %}
+
       <details class="header__drawer" scroll-lock>
         <summary class="header__icon header__drawer-toggle">
           {{ 'icon-menu.svg' | inline_asset_content }}
@@ -62,10 +66,6 @@
       </details>
     </div>
   </div>
-
-  <nav class="header__nav" aria-label="{{ 'general.accessibility.primary_navigation' | t }}">
-    {% render 'nav-menu', menu: section.settings.menu %}
-  </nav>
 </header>
 
 {% stylesheet %}
@@ -135,6 +135,21 @@
     height: 100%;
   }
 
+  shopify-account {
+    --shopify-account-avatar-size: var(--size-icon);
+    --shopify-account-signed-in-avatar-size: var(--size-icon);
+
+    display: flex;
+    align-items: center;
+  }
+
+  shopify-account::part(signed-out-avatar) {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--color-foreground);
+  }
+
   .header__cart-count {
     position: absolute;
     inset-block-start: -0.25rem;
@@ -179,7 +194,7 @@
     display: none;
   }
 
-  @media (width >= 750px) {
+  @media (width >= 1140px) {
     .header {
       /* 340px - 79px in the 1440px design: language and nav share this offset. */
       --header-inset: 16.3125rem;
@@ -204,11 +219,6 @@
 
     .header__drawer {
       display: none;
-    }
-
-    .header__nav {
-      padding-inline-start: var(--header-inset);
-      padding-block-end: 1.5rem;
     }
   }
 {% endstylesheet %}
