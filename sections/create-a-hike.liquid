@@ -25,51 +25,176 @@
 {%- endif -%}
 
 {%- if section.settings.image != blank -%}
-    <div class="create-a-hike__image">
-        {{
-            section.settings.image
-            | image_url: width: 3000
-            | image_tag:
-                widths: '750,1100,1500,2000,2600,3000',
-                sizes: '100vw',
-                loading: img_loading,
-                fetchpriority: img_priority,
-                alt: section.settings.image.alt
-            }}
-    </div>
+  {%- comment -%}
+    The image is in the centre column, not full-bleed, so `sizes` describes that
+    column rather than the viewport. The numbers are the rendered width of
+    `--content-width`: the page is 90rem wide with a 79px margin either side
+    (30px below 750px), so the column stops growing at 1440 - 158 = 1282px once
+    the viewport passes 1598px. Keep them in step with the layout settings in
+    `config/settings_schema.json`.
+  {%- endcomment -%}
+  <div class="create-a-hike__image">
+    {{
+      section.settings.image
+      | image_url: width: 2600
+      | image_tag:
+          widths: '400,600,750,1100,1500,2000,2600',
+          sizes: '(min-width: 1598px) 1282px, (min-width: 750px) calc(100vw - 158px), calc(100vw - 60px)',
+          loading: 'lazy',
+          alt: section.settings.image.alt
+    }}
+  </div>
 {%- endif -%}
 
 {%- if section.settings.paragraph != blank -%}
-    <p class="create-a-hike__paragraph">{{ section.settings.paragraph }}</p>
+  <p class="create-a-hike__paragraph">{{ section.settings.paragraph }}</p>
 {%- endif -%}
+
+{%- if section.settings.cta_label != blank -%}
+  <a class="create-a-hike__cta" href="{{ section.settings.cta_link  }}">
+    {{ section.settings.cta_label }}
+    {{ 'icon-arrow-right.svg' | inline_asset_content }}
+  </a>
+{%- endif -%}
+
+{% stylesheet %}
+  /**
+   * Same 0.5px hairline the header, footer and journey rows use. The space
+   * above it is margin and the space below it padding, so the rule sits nearer
+   * the heading it introduces than the section it separates from.
+   */
+  .create-a-hike__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-block: 3rem 1.5rem;
+  }
+
+  .create-a-hike__intro--divided {
+    border-block-start: 0.5px solid var(--color-hairline);
+    margin-block-start: 3rem;
+    padding-block-start: 2rem;
+  }
+
+  /* The deck is the display serif here, not the body sans — see the design. */
+  .create-a-hike__subheading {
+    font-family: var(--font-display--family);
+  }
+
+  /**
+   * A letterbox crop: the design runs the photograph as a wide band across the
+   * column. Held to 4:3 on a phone, where 2.7:1 would leave a sliver.
+   */
+  .create-a-hike__image {
+    margin-block-start: 1rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  .create-a-hike__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (width >= 750px) {
+    .create-a-hike__image {
+      aspect-ratio: 2.7;
+    }
+  }
+
+  .create-a-hike__paragraph {
+    max-width: 72ch;
+    margin-block-start: 2.5rem;
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-lead);
+  }
+
+  /**
+   * The call to action sits on its own line, hard right — in the design it
+   * clears the paragraph's last line rather than sitting beside it.
+   */
+  .create-a-hike__cta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-block: 2rem 3rem;
+    color: inherit;
+    font-family: var(--font-display--family);
+    text-decoration: none;
+  }
+
+  .create-a-hike__cta svg {
+    width: var(--size-icon);
+    height: var(--size-icon);
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .create-a-hike__cta:hover svg {
+    transform: translateX(0.375rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .create-a-hike__cta svg {
+      transition: none;
+    }
+
+    .create-a-hike__cta:hover svg {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.create_a_hike",
   "settings": [
     {
-        "type": "text",
-        "id": "heading",
-        "label": "t:labels.heading",
-        "default": "Create a Hike With Us"
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Create a Hike With Us"
     },
     {
-        "type": "text",
-        "id": "subheading",
-        "label": "t:labels.subheading",
-        "default": "Have an idea for a special hiking experience?"
+      "type": "text",
+      "id": "subheading",
+      "label": "t:labels.subheading",
+      "default": "Have an idea for a special hiking experience?"
     },
     {
-        "type": "image_picker",
-        "id": "image",
-        "label": "t:labels.image"
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "t:labels.show_divider",
+      "default": true
     },
     {
-        "type": "text",
-        "id": "paragraph",
-        "label": "t:labels.paragraph",
-        "default": "Bring your activity, theme and people — HIKE YOUR MIND will take care of the route and practical planning."
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
     },
+    {
+      "type": "text",
+      "id": "paragraph",
+      "label": "t:labels.paragraph",
+      "default": "Bring your activity, theme and people — HIKE YOUR MIND will take care of the route and practical planning."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "t:labels.cta_label",
+      "default": "Create a Hike With Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:labels.cta_link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.create_a_hike"
+    }
   ]
 }
 {% endschema %}
