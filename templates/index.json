@@ -123,10 +123,24 @@
         "row_gap": 30,
         "demo_images": true
       }
+    },
+    "create_a_hike_mpiHwJ": {
+      "type": "create-a-hike",
+      "name": "t:general.create_a_hike",
+      "settings": {
+        "heading": "Create a Hike With Us",
+        "subheading": "Have an idea for a special hiking experience?",
+        "show_divider": true,
+        "image": "shopify://shop_images/create-a-hike.jpg",
+        "paragraph": "Bring your activity, theme and people — HIKE YOUR MIND will take care of the route and practical planning.",
+        "cta_label": "Create a Hike With Us",
+        "cta_link": "shopify://pages/create-a-hike"
+      }
     }
   },
   "order": [
     "main",
-    "journey_rows"
+    "journey_rows",
+    "create_a_hike_mpiHwJ"
   ]
 }
