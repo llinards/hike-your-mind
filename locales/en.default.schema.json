@@ -111,11 +111,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
-    "image_position": {
-      "top": "Top",
-      "center": "Center",
-      "bottom": "Bottom"
     }
   },
   "info": {
