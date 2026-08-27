@@ -89,7 +89,7 @@
           "type": "row",
           "settings": {
             "title": "Hiking in Italy",
-            "link": "/collections/hikes",
+            "link": "shopify://collections/hikes",
             "overlay": 25
           }
         },
@@ -117,8 +117,8 @@
       ],
       "settings": {
         "heading": "Where Will Your Next Journey Begin?",
+        "subheading": "From quiet trails in Latvia to sunlit paths in Italy and Portugal — find a route that feels close to you, and step into the journey at your own pace.",
         "show_divider": true,
-        "subheading": "From quiet trails in Latvia to sunlit paths in Italy and Portugal \u2014 find a route that feels close to you, and step into the journey at your own pace.",
         "row_height": 340,
         "row_gap": 30,
         "demo_images": true
