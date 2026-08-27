@@ -26,6 +26,10 @@
     --line-height-display: 1;
     --letter-spacing-display: -0.05em;
 
+    /* The display step is too wide for a phone once a heading sits inside a
+       band with an icon beside it — see the journey rows. */
+    --font-size-display-compact: 1.5rem;
+
     /* The home page's opening headline sits a step above the section headings.
        PROVISIONAL — scaled off the Home_D screenshot, not read from the Figma
        node, because the Figma file is not readable with the current seat. */
@@ -56,6 +60,9 @@
     --color-surface: #fffaec;
     --color-neutral: #363939;
     --color-hairline: rgba(0, 0, 0, 0.5);
+
+    /* Ink for text and icons laid over photography. */
+    --color-on-image: #ffffff;
 
     /* Card ink and borders. The design uses several near-blacks that are not
        distinguishable in use; this is the one used on cards. */

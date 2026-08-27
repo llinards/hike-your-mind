@@ -81,9 +81,52 @@
         "speed": 30,
         "demo_images": true
       }
+    },
+    "journey_rows": {
+      "type": "journey-rows",
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "title": "Hiking in Italy",
+            "link": "/collections/hikes",
+            "overlay": 25
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "title": "Create a Hike With Us",
+            "link": "/pages/create-a-hike",
+            "overlay": 45
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "title": "Shop Hiking Essentials",
+            "link": "/collections/hiking-essentials",
+            "overlay": 35
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3"
+      ],
+      "settings": {
+        "heading": "Where Will Your Next Journey Begin?",
+        "show_divider": true,
+        "subheading": "From quiet trails in Latvia to sunlit paths in Italy and Portugal \u2014 find a route that feels close to you, and step into the journey at your own pace.",
+        "row_height": 340,
+        "row_gap": 30,
+        "demo_images": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "journey_rows"
   ]
 }

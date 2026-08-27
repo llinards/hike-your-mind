@@ -18,6 +18,7 @@
     "group": "Group",
     "header": "Header",
     "image": "Image",
+    "journey_rows": "Journey rows",
     "layout": "Layout",
     "main": "Main",
     "mosaic_hero": "Mosaic hero",
@@ -69,7 +70,12 @@
     "height_ratio": "Height",
     "image": "Image",
     "speed": "Speed",
-    "demo_images": "Use demo images"
+    "demo_images": "Use demo images",
+    "title": "Title",
+    "row_height": "Row height",
+    "row_gap": "Space between rows",
+    "overlay": "Image overlay",
+    "show_divider": "Show divider"
   },
   "options": {
     "alignment": {
