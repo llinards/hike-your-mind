@@ -15,48 +15,56 @@
         "image-1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-clouds-hills.jpg",
             "height_ratio": 6
           }
         },
         "image-2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-sunburst-tree.jpg",
             "height_ratio": 6
           }
         },
         "image-3": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-wheat-sunset.jpg",
             "height_ratio": 1
           }
         },
         "image-4": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-valley-mist.jpg",
             "height_ratio": 6
           }
         },
         "image-5": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-sunset-ridges.jpg",
             "height_ratio": 5
           }
         },
         "image-6": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-cypresses.jpg",
             "height_ratio": 4
           }
         },
         "image-7": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-horses-fog.jpg",
             "height_ratio": 6
           }
         },
         "image-8": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-oak-heather-field.jpg",
             "height_ratio": 2
           }
         }
