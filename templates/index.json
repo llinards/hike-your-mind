@@ -97,6 +97,7 @@
           "settings": {
             "title": "Hiking in Italy",
             "link": "shopify://collections/hikes",
+            "image": "shopify://shop_images/hike-wheat-sunset.jpg",
             "image_position": 50
           }
         },
@@ -105,7 +106,8 @@
           "settings": {
             "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
-            "image_position": 50
+            "image": "shopify://shop_images/create-a-hike-row.jpg",
+            "image_position": 30
           }
         },
         "row-3": {
@@ -113,7 +115,8 @@
           "settings": {
             "title": "Shop Hiking Essentials",
             "link": "shopify://collections/hiking-essentials-rentals",
-            "image_position": 50
+            "image": "shopify://shop_images/shop-hiking-essentials.jpg",
+            "image_position": 85
           }
         }
       },
