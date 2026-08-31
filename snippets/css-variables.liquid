@@ -31,9 +31,10 @@
     --font-size-display-compact: 1.5rem;
 
     /* The home page's opening headline sits a step above the section headings.
+       Mobile-first: the desktop step is set below the 750px breakpoint.
        PROVISIONAL — scaled off the Home_D screenshot, not read from the Figma
        node, because the Figma file is not readable with the current seat. */
-    --font-size-hero: 4.5rem;
+    --font-size-hero: 3rem;
     --line-height-hero: 1.05;
     --letter-spacing-hero: -0.04em;
 
@@ -85,5 +86,13 @@
     --duration-fast: 150ms;
     --duration-base: 300ms;
     --easing-base: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* The hero headline is the only step that changes size between breakpoints;
+     4.5rem is too wide for a phone. */
+  @media (width >= 750px) {
+    :root {
+      --font-size-hero: 4.5rem;
+    }
   }
 {% endstyle %}
