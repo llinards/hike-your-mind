@@ -97,7 +97,7 @@
           "settings": {
             "title": "Hiking in Italy",
             "link": "shopify://collections/hikes",
-            "overlay": 25
+            "image_position": 50
           }
         },
         "row-2": {
@@ -105,7 +105,7 @@
           "settings": {
             "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
-            "overlay": 45
+            "image_position": 50
           }
         },
         "row-3": {
@@ -113,7 +113,7 @@
           "settings": {
             "title": "Shop Hiking Essentials",
             "link": "shopify://collections/hiking-essentials-rentals",
-            "overlay": 35
+            "image_position": 50
           }
         }
       },

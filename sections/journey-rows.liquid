@@ -39,8 +39,6 @@
           assign wrapper = 'a'
         endif
 
-        assign scrim = block.settings.overlay | divided_by: 100.0
-
         assign img_loading = 'lazy'
         assign img_priority = 'auto'
         if forloop.first
@@ -52,7 +50,7 @@
       <{{ wrapper }}
         class="journey-row"
         {% if wrapper == 'a' %}href="{{ block.settings.link }}"{% endif %}
-        style="--row-scrim: {{ scrim }};"
+        style="--image-position: {{ block.settings.image_position }}%;"
         {{ block.shopify_attributes }}
       >
         <div class="journey-row__media">
@@ -110,6 +108,7 @@
   .journey-row {
     --row-height: min(56vw, 320px);
     --caption-inset: 1.5rem;
+    --row-scrim: 0.25;
     --row-hover-wash: 0.2;
 
     position: relative;
@@ -137,6 +136,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center var(--image-position, 50%);
     transition: transform var(--duration-base) var(--easing-base);
   }
 
@@ -289,13 +289,14 @@
         },
         {
           "type": "range",
-          "id": "overlay",
-          "label": "t:labels.overlay",
+          "id": "image_position",
+          "label": "t:labels.image_position",
+          "info": "t:info.image_position",
           "min": 0,
-          "max": 80,
+          "max": 100,
           "step": 5,
           "unit": "%",
-          "default": 25
+          "default": 50
         }
       ]
     }
