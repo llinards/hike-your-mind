@@ -22,7 +22,7 @@
     --font-body--family: 'Rethink Sans', -apple-system, 'Segoe UI', system-ui, sans-serif;
 
     /* Type scale — sizes, line heights and tracking as measured in Figma */
-    --font-size-display: 2.5rem;
+    --font-size-display: 2rem;
     --line-height-display: 1;
     --letter-spacing-display: -0.05em;
 
@@ -59,6 +59,10 @@
     --font-size-quote: 1.0625rem;
     --line-height-quote: normal;
 
+    /* Spacing — the vertical rhythm a section puts around its own content.
+       Mobile-first: the desktop step is set below the 750px breakpoint. */
+    --spacing-section: 2rem;
+
     /* Colours */
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
@@ -93,6 +97,8 @@
   @media (width >= 750px) {
     :root {
       --font-size-hero: 4.5rem;
+      --font-size-display: 2.5rem;
+      --spacing-section: 3rem;
     }
   }
 {% endstyle %}
