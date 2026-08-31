@@ -78,8 +78,7 @@
         "band_height": 1080,
         "column_width": 410,
         "column_fill": 12,
-        "speed": 30,
-        "demo_images": true
+        "speed": 30
       }
     },
     "journey_rows": {

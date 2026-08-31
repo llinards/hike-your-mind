@@ -1,38 +1,12 @@
 {% comment %}
-  Mosaic hero — the Home page's opening frame.
-
-  A heading and a call to action, above a full-bleed band of image columns that
-  drifts horizontally and loops seamlessly.
-
-  Images are authored as a flat, reorderable list of blocks; the section packs
-  them into columns itself (see the packing comment below). A column of 6 + 6 and
-  a column of 1 + 6 + 5 both fill the band exactly, which is how the design's
-  stagger is reproduced without the merchant having to think in columns.
-
-  The column set is rendered twice. The second pass is the loop's tail — it is
-  `aria-hidden`, its images carry no alt text, and it deliberately does NOT carry
-  `shopify_attributes`, or the theme editor would bind block selection to the
-  clone instead of the real block. Two copies loop correctly only while one copy
-  is wider than the viewport, so on larger screens the custom element clones the
-  second pass until the set outruns the window.
-
-  Blocks with no image fall back to demo photography while the `demo_images`
-  setting is on — see the packing block below. That is preview scaffolding.
-
-  `band_height` and `column_width` apply from 750px up; below that the band uses
-  the viewport-relative values in the stylesheet.
-
-  Motion is a compositor-driven CSS transform. `<mosaic-marquee>` only measures
-  the rendered track and tops up those copies — see the javascript tag below.
+  Mosaic hero — a heading and call to action above a full-bleed band of image
+  columns that drifts sideways and loops seamlessly.
 {% endcomment %}
 
 {% comment %}
-  Pack the flat block list into columns: walk the blocks adding each one's
-  `height_ratio` to a running total, and close the column when the next image
-  would overshoot `column_fill`. The result is a comma-separated count of images
-  per column ("2,3,3"), which the render loop below walks to emit balanced
-  markup. Computing it up front rather than opening and closing `<div>`s inside
-  the loop keeps the HTML parseable — by theme check, and by anyone reading it.
+  Pack the flat block list into balanced columns by adding up each image's
+  `height_ratio` until it would overshoot `column_fill`, producing a
+  comma-separated count of images per column ("2,3,3") for the render loop.
 {% endcomment %}
 
 {%- liquid
@@ -62,14 +36,6 @@
   endif
 
   assign columns = packed | split: ','
-
-  comment
-    Scaffolding: stand-in photography so the band can be judged before any real
-    images exist. Pexels ids, hotlinked from their CDN — nothing is committed to
-    assets/. Turn the `demo_images` setting off (or pick real images) and this
-    path is never reached. Delete the setting and this list before launch.
-  endcomment
-  assign demo_ids = '618833,775201,210243,552789,733162,167684,747964,803219' | split: ','
 -%}
 
 {%- capture image_sizes %}(min-width: 750px) {{ section.settings.column_width }}px, 60vw{% endcapture -%}
@@ -88,6 +54,11 @@
 </div>
 
 {%- if section.blocks.size > 0 -%}
+  {% comment %}
+    The column set is rendered twice so the track can loop; the second pass is a
+    decorative clone, which is why it carries no alt text and no
+    `shopify_attributes`.
+  {% endcomment %}
   <div
     class="mosaic full-width"
     style="--mosaic-band-desktop: {{ section.settings.band_height }}px; --mosaic-column-desktop: {{ section.settings.column_width }}px;"
@@ -117,7 +88,6 @@
                   {%- liquid
                     assign index = cursor | plus: offset | minus: 1
                     assign cell = section.blocks[index]
-                    assign demo_index = index | modulo: demo_ids.size
 
                     assign img_alt = cell.settings.image.alt
                     assign img_loading = 'lazy'
@@ -149,23 +119,6 @@
                             fetchpriority: img_priority,
                             alt: img_alt
                       }}
-                    {%- elsif section.settings.demo_images -%}
-                      {%- assign demo_id = demo_ids[demo_index] -%}
-                      {% # theme-check-disable RemoteAsset %}
-                      {%- comment -%}
-                        Hotlinked on purpose: demo photography must not be committed to
-                        assets/ or uploaded to the store. The cell crops it with
-                        object-fit, so these dimensions only supply the aspect hint.
-                      {%- endcomment -%}
-                      <img
-                        src="https://images.pexels.com/photos/{{ demo_id }}/pexels-photo-{{ demo_id }}.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
-                        alt=""
-                        width="1200"
-                        height="800"
-                        loading="{{ img_loading }}"
-                        fetchpriority="{{ img_priority }}"
-                      >
-                      {% # theme-check-enable RemoteAsset %}
                     {%- else -%}
                       {{ 'image' | placeholder_svg_tag: 'mosaic__placeholder' }}
                     {%- endif -%}
@@ -220,12 +173,8 @@
     transform: translateX(0.25rem);
   }
 
-  /**
-   * The desktop band and column width arrive as `--*-desktop` custom properties
-   * on the inline style attribute, which outranks any stylesheet rule. Mapping
-   * them onto the used tokens inside a media query is what lets the mobile
-   * values below win at narrow widths.
-   */
+  /* Desktop band and column sizes arrive as inline `--*-desktop` properties and
+     are mapped onto the used tokens here, so the mobile values win below 750px. */
   .mosaic {
     --mosaic-gap: 1.25rem;
     --mosaic-band: min(78vh, 700px);
@@ -240,14 +189,8 @@
     }
   }
 
-  /**
-   * `will-change` here is not about this element moving — it never does. It
-   * promotes the clip itself. The track inside is composited (it has a running
-   * transform animation) but this box is what crops it, and a clip resolved on
-   * the main thread can trail the compositor by a frame at the moment the
-   * track's transform jumps. The artifact lands on the clip edge, which is why
-   * it reads as a flicker down the left side once per loop.
-   */
+  /* `will-change` promotes the clipping box itself, so the clip keeps up with
+     the composited track at the moment its transform wraps. */
   .mosaic__viewport {
     display: block;
     height: var(--mosaic-band);
@@ -263,14 +206,8 @@
     animation: mosaic-drift var(--mosaic-duration, 40s) linear infinite;
   }
 
-  /**
-   * Deliberately NOT paused on hover. The band is full-bleed and taller than the
-   * fold, so a stationary cursor ends up over it the moment the page scrolls,
-   * and the drift stops for no reason the reader can see.
-   *
-   * Focus-within is inert while the cells are plain images; it is here so the
-   * band stops on its own if a cell ever becomes a link.
-   */
+  /* Deliberately not paused on hover: the band is taller than the fold, so a
+     resting cursor would stop the drift for no reason the reader can see. */
   .mosaic:focus-within .mosaic__track {
     animation-play-state: paused;
   }
@@ -302,12 +239,8 @@
     object-fit: cover;
   }
 
-  /**
-   * `--mosaic-shift` is one group plus one gap, measured by the custom element.
-   * The `-50%` fallback is the no-JavaScript case, where the track holds only
-   * the two server-rendered copies: the band still drifts, at the cost of a
-   * half-gap seam once per loop.
-   */
+  /* `--mosaic-shift` is one group plus one gap, measured by the custom element;
+     the `-50%` fallback covers the no-JavaScript case. */
   @keyframes mosaic-drift {
     from {
       transform: translate3d(0, 0, 0);
@@ -336,23 +269,9 @@
 
 {% javascript %}
   /**
-   * Turns the merchant's speed setting (px per second) into an animation
-   * duration, and keeps enough copies of the column set on the track to cover
-   * the viewport. Both jobs need the rendered width of the band, which is the
-   * part CSS cannot work out on its own.
-   *
-   * The repeat distance is the offset between the first two groups — one copy
-   * plus one gap, in a single fractional measurement. Measuring a width and
-   * parsing a gap separately rounds twice, and the leftover fraction shows up
-   * as jitter at the seam.
-   *
-   * The markup ships two copies. That loops correctly only while one copy is at
-   * least as wide as the viewport: at the end of a cycle the second copy has
-   * taken the first one's place with nothing behind it, so a wider screen sees
-   * bare band at the right edge and a jump when the animation restarts. Cloning
-   * the set until it outruns the viewport fills that in. The travel distance is
-   * unchanged — the extra copies only guarantee something is always under the
-   * right-hand edge.
+   * Measures the rendered band to turn the merchant's speed setting into an
+   * animation duration, and to keep enough copies of the column set on the
+   * track that something always covers the viewport at the wrap.
    */
   class MosaicMarquee extends HTMLElement {
     connectedCallback() {
@@ -366,9 +285,8 @@
       this.observer = new ResizeObserver(this.sync);
       this.observer.observe(this.groups[0]);
 
-      /* The host is the only element here that tracks the viewport. Above
-         750px the columns are a fixed px width, so the group alone would not
-         notice the window being widened. */
+      /* The host is the only element here that tracks the viewport: above 750px
+         the columns are a fixed px width. */
       this.observer.observe(this);
 
       this.sync();
@@ -394,12 +312,8 @@
     }
 
     /**
-     * At the end of a cycle the track has moved one repeat to the left, so what
-     * is left covering the viewport is the track minus that repeat. Whatever it
-     * falls short by is made up in whole copies.
-     *
-     * Grows only. Surplus copies left behind by a narrowing window cost a few
-     * off-screen nodes; removing them risks an observer that feeds itself.
+     * Tops the track up, in whole copies, until what remains after one repeat
+     * has scrolled past still covers the viewport.
      */
     fill(repeat) {
       const viewport = this.getBoundingClientRect().width;
@@ -408,10 +322,8 @@
 
       let copies = Math.ceil(shortfall / repeat);
       while (copies--) {
-        /* Always clone the second group: it is already aria-hidden, its images
-           already carry empty alt text and lazy loading, and it has no
-           shopify_attributes. Cloning the first would duplicate the eager
-           priority hint and point theme editor selection at a copy. */
+        /* Clone the second group, never the first: it is already aria-hidden,
+           lazy-loaded and free of shopify_attributes. */
         this.track.appendChild(this.groups[1].cloneNode(true));
       }
     }
@@ -480,12 +392,6 @@
       "max": 120,
       "step": 5,
       "default": 30
-    },
-    {
-      "type": "checkbox",
-      "id": "demo_images",
-      "label": "t:labels.demo_images",
-      "default": true
     }
   ],
   "blocks": [
