@@ -1,0 +1,403 @@
+{%- liquid
+  assign wrapper_class = 'my-story'
+  if section.settings.quote != blank
+    assign wrapper_class = wrapper_class | append: ' my-story--quoted'
+  endif
+
+  assign has_text = false
+  if section.settings.heading != blank
+    assign has_text = true
+  endif
+  if section.settings.body != blank
+    assign has_text = true
+  endif
+  if section.settings.signature != blank
+    assign has_text = true
+  endif
+
+  comment
+    The phone `sizes` factor is the share of the content column the photograph
+    actually occupies once it has been pushed in from the left, so it tracks
+    the offset setting rather than assuming its default.
+  endcomment
+  assign mobile_width_factor = 100 | minus: section.settings.image_offset | divided_by: 100.0
+
+  comment
+    How many lines the merchant broke the quote into. On desktop the quote is
+    out of the flow, so the layout has to be told how much room to leave for
+    it — deriving that from the real line count means a two-line or a
+    four-line quote both clear the story underneath instead of only the
+    three-line one the design happens to use.
+  endcomment
+  assign quote_lines = section.settings.quote | newline_to_br | split: '<br />' | size
+
+  comment
+    The tilt is handed over a second time without its sign, because the lane
+    below needs its magnitude to work out how much taller the rotation makes
+    the quote — and CSS has no absolute value.
+  endcomment
+  assign quote_tilt = section.settings.quote_rotation | abs
+-%}
+
+{%- capture image_sizes -%}
+  (min-width: 1598px) 526px, (min-width: 750px) calc((100vw - 158px) * 0.41), calc((100vw - 60px) * {{ mobile_width_factor }})
+{%- endcapture -%}
+
+<div
+  class="{{ wrapper_class }}"
+  style="
+    --quote-size: {{ section.settings.quote_size }}px;
+    --quote-lines: {{ quote_lines }};
+    --quote-tilt: {{ quote_tilt }}deg;
+    --quote-rotation: {{ section.settings.quote_rotation }}deg;
+    --image-offset: {{ section.settings.image_offset }}%;
+    --image-position: {{ section.settings.image_position }}%;
+  "
+>
+  {%- if section.settings.quote != blank -%}
+    {%- comment -%}
+      The line breaks are the merchant's: the quote is set in a script face at
+      a size where automatic wrapping lands badly, and the design breaks it
+      into three deliberate lines. `escape` first so the setting can't inject
+      markup, then `newline_to_br` turns the typed breaks into <br>.
+    {%- endcomment -%}
+    <blockquote class="my-story__quote">
+      {{- section.settings.quote | escape | newline_to_br -}}
+    </blockquote>
+  {%- endif -%}
+
+  {%- comment -%}
+    The photograph is ~41% of the content column on desktop (two equal columns
+    either side of an 18% channel) and the column stops growing at
+    1440 - 158 = 1282px once the viewport passes 1598px, so 1282 * 0.41 = 526px
+    is as large as it ever renders. Keep these in step with the layout settings
+    in `config/settings_schema.json`.
+  {%- endcomment -%}
+  <figure class="my-story__media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+            widths: '300,400,500,600,750,900,1100,1300,1600',
+            sizes: image_sizes,
+            loading: 'lazy',
+            alt: section.settings.image.alt
+      }}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'my-story__placeholder' }}
+    {%- endif -%}
+  </figure>
+
+  {%- if has_text -%}
+    <div class="my-story__text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="my-story__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="my-story__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature != blank -%}
+        <p class="my-story__signature">{{ section.settings.signature }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  /**
+   * Unlike the other sections this one emits a single wrapper rather than a
+   * run of siblings, because the quote is positioned against it. The wrapper
+   * still lands in the content column on its own — `.shopify-section > *`
+   * in critical.css sees to that.
+   */
+  .my-story {
+    /**
+     * The size the quote actually renders at, kept on the wrapper rather than
+     * on the quote because the room reserved for the quote has to be worked
+     * out from it too. The dial is a desktop measurement; a phone caps it
+     * against the viewport so a large setting cannot run off the side.
+     */
+    --quote-rendered-size: min(calc(var(--quote-size, 60px) * 0.55), 7vw);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section);
+    padding-block: var(--spacing-section);
+  }
+
+  /**
+   * A tilted line of text is taller than a level one by its own width times
+   * the sine of the angle, and here the tilt pivots on the quote's left edge,
+   * so the whole of that rise lands above the quote's flow position. Padding
+   * it back on keeps a steep tilt inside the section instead of over whatever
+   * sits above it. `10em` is the quote's measure — the design's longest line
+   * is a little over ten of its em squares.
+   *
+   * The desktop rule pivots on the middle instead, so it corrects by half.
+   */
+  .my-story--quoted {
+    padding-block-start: calc(
+      var(--spacing-section) + var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg))
+    );
+  }
+
+  /**
+   * The quote is the one part of the design that ignores the grid: script
+   * face, tilted, and allowed to sit on top of the photograph.
+   *
+   * On a phone it stays in the flow and the photograph is pulled up beneath
+   * it by the negative bottom margin — `--quote-overlap` is in `em`, so how
+   * far the two pieces interlock scales with the quote rather than drifting
+   * as the setting changes. `z-index` is what keeps it on top.
+   *
+   * `rotate` rather than `transform` so the tilt composes with the centring
+   * translate the desktop rule adds instead of overwriting it.
+   *
+   * `align-self` rather than `width: max-content` is what shrink-wraps it
+   * here: a max-content width would be handed to the wrapper as its own
+   * min-content contribution — percentage `max-width` is ignored during
+   * intrinsic sizing — and push the whole section wider than the phone.
+   */
+  .my-story__quote {
+    --quote-overlap: 0.75em;
+
+    position: relative;
+    z-index: 1;
+    align-self: start;
+    margin-block-end: calc(-1 * (var(--spacing-section) + var(--quote-overlap)));
+    rotate: var(--quote-rotation, -4deg);
+    transform-origin: 0 50%;
+    font-family: var(--font-script--family);
+    font-size: var(--quote-rendered-size);
+    line-height: 1.15;
+  }
+
+  /**
+   * The photograph is pushed in from the left on a phone and runs out to the
+   * right page margin. That asymmetry is what gives the quote a corner to sit
+   * in — without it the two would simply stack.
+   */
+  .my-story__media {
+    margin-inline-start: var(--image-offset, 20%);
+    aspect-ratio: 9 / 10;
+  }
+
+  /**
+   * `cover` already centres the crop; the setting exists because a photograph
+   * whose subject sits high or low in the frame needs to be pulled that way by
+   * hand. The percentage is the vertical focal point: 0% holds the top edge of
+   * the photograph against the top of the frame, 100% the bottom edge against
+   * the bottom. Horizontal stays centred — the frame is nearly square, so
+   * there is little to choose along that axis.
+   */
+  .my-story__media img,
+  .my-story__media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center var(--image-position, 50%);
+  }
+
+  .my-story__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /**
+   * The reset zeroes every margin, so the blank lines between the story's
+   * paragraphs have to be put back. One `em` reads as a blank line at the
+   * body step without opening the gaps the theme's section rhythm uses.
+   */
+  .my-story__body :where(p) + :where(p) {
+    margin-block-start: 1em;
+  }
+
+  /* Signs off hard right, under the last line of the story. */
+  .my-story__signature {
+    align-self: end;
+    font-family: var(--font-script--family);
+    font-size: 2.75rem;
+    line-height: 1;
+  }
+
+  @media (width >= 750px) {
+    /**
+     * Two equal columns either side of a wide channel. The channel is not
+     * empty space for its own sake — it is where the quote sits, and the 18%
+     * is measured off the design.
+     *
+     * Two rows, not one. The first is the quote's lane: empty in the left
+     * column, photograph in the right. That is what puts clear air above the
+     * heading for the quote to sit in, and it holds however long the story
+     * runs — bottom-aligning the story against a fixed-ratio photograph would
+     * only look right for copy of roughly the length the design was drawn
+     * with, and would slide the heading up under the quote for anything
+     * longer.
+     *
+     * The story lane has a floor so a short story still leaves the
+     * photograph a sensible shape.
+     */
+    .my-story {
+      --quote-rendered-size: var(--quote-size, 60px);
+
+      /* Overridden below when there is a quote to leave room for. */
+      --quote-lane: 0px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: var(--quote-lane) minmax(18rem, auto);
+      column-gap: 18%;
+      row-gap: 0;
+    }
+
+    /**
+     * The lane is the quote's own height, less the part of it that rides
+     * above the photograph, plus the height the tilt adds, plus a little air.
+     *
+     * A tilted line of text is taller than a level one by its own width times
+     * the sine of the angle, so the third term needs a width to work from.
+     * `10em` is the quote's own measure — the design's longest line is a
+     * little over ten of its em squares, and any line much longer than that
+     * would be wrapping anyway. Every term is a multiple of the size setting,
+     * so the lane tracks both dials across their whole range.
+     */
+    .my-story--quoted {
+      --quote-lane: calc(
+        var(--quote-rendered-size) * 1.15 * var(--quote-lines, 3) - var(--quote-rendered-size) * 0.7 +
+          var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg)) + 1.5rem
+      );
+
+      /* Room for the quote's first line to rise above the photograph. */
+      padding-block-start: calc(var(--spacing-section) + var(--quote-rendered-size) * 0.7);
+    }
+
+    /* Explicit rows: the photograph precedes the story in the DOM, so sparse
+       auto-placement would otherwise push the story down a row of its own. */
+    .my-story__text {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: end;
+    }
+
+    /* Down both rows, so its foot lands on the story's last line. */
+    .my-story__media {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      margin-inline-start: 0;
+      aspect-ratio: auto;
+    }
+
+    /**
+     * Out of the flow and centred on the section, so it spans the channel and
+     * spills over the photograph's upper-left corner. Absolute positioning
+     * resolves against the padding box, so the top padding added above for the
+     * quote's own sake does not push the quote down with it.
+     */
+    .my-story__quote {
+      position: absolute;
+
+      /* Same half-tilt correction the phone gets from its top padding. */
+      inset-block-start: calc(
+        var(--spacing-section) + var(--quote-rendered-size) * 5 * sin(var(--quote-tilt, 4deg))
+      );
+      inset-inline-start: 50%;
+      width: max-content;
+      max-width: 100%;
+      margin-block-end: 0;
+      translate: -50% 0;
+      transform-origin: 50% 50%;
+      font-size: var(--quote-size, 60px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.my_story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "My Story"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "t:labels.paragraph",
+      "default": "<p>It started on September 25, 2022, when I went on my first hike.<br/>Without any previous experience, I was wearing old running shoes.</p><p>There were 245 km ahead. I went from Porto to the Cathedral of Santiago, right now I’m getting a pleasant shiver as I write this.</p><p>I could not wish for a more beautiful road, no, I could not even imagine what it would bring me, where it would take me.<br/>Please, go hike yourself.</p><p>Your courage is the beginning of a new path.<br/>With love, respect and gratitude for yourself, your body.</p><p>And get comfortable shoes!</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "t:labels.signature",
+      "default": "Gerda"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "t:labels.quote",
+      "info": "t:info.quote",
+      "default": "The journey of a\nthousand miles begins\nwith a single step."
+    },
+    {
+      "type": "range",
+      "id": "quote_size",
+      "label": "t:labels.quote_size",
+      "min": 32,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "quote_rotation",
+      "label": "t:labels.quote_rotation",
+      "info": "t:info.quote_rotation",
+      "min": -12,
+      "max": 0,
+      "step": 1,
+      "unit": "deg",
+      "default": -4
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "range",
+      "id": "image_position",
+      "label": "t:labels.image_position",
+      "info": "t:info.image_position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_offset",
+      "label": "t:labels.image_offset",
+      "info": "t:info.image_offset",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "%",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.my_story"
+    }
+  ]
+}
+{% endschema %}

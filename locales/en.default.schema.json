@@ -32,6 +32,7 @@
     "layout": "Layout",
     "main": "Main",
     "mosaic_hero": "Mosaic hero",
+    "my_story": "My story",
     "page": "Page",
     "password": "Password",
     "primary": "Primary",
@@ -85,7 +86,12 @@
     "row_height": "Row height",
     "row_gap": "Space between rows",
     "show_divider": "Show divider",
-    "image_position": "Image position"
+    "image_position": "Image position",
+    "image_offset": "Image offset on mobile",
+    "quote": "Quote",
+    "quote_size": "Quote size",
+    "quote_rotation": "Quote tilt",
+    "signature": "Signature"
   },
   "options": {
     "alignment": {
@@ -112,6 +118,9 @@
     }
   },
   "info": {
-    "image_position": "0% holds the top of the photo in view, 100% the bottom."
+    "image_position": "0% holds the top of the photo in view, 100% the bottom.",
+    "image_offset": "How far the photo is pushed in from the left. Phones only \u2014 on desktop the photo sits in its own column.",
+    "quote": "Line breaks are kept, so you choose where each line ends.",
+    "quote_rotation": "0\u00b0 sits level. The design tilts it a few degrees anticlockwise."
   }
 }
