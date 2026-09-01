@@ -158,7 +158,9 @@
         "quote_size": 48,
         "quote_rotation": -12,
         "image": "shopify://shop_images/hike-your-mind-gerda.jpg",
-        "image_position": 50,
+        "image_max_width": 550,
+        "image_max_height": 550,
+        "image_zoom": 120,
         "image_offset": 20,
         "show_divider": true
       }
