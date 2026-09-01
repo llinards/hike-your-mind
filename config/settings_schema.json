@@ -50,7 +50,7 @@
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#000000",
+        "default": "#1E1E1E",
         "label": "t:labels.foreground"
       },
       {

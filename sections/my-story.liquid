@@ -22,13 +22,17 @@
 
   assign mobile_width_factor = 100 | minus: section.settings.image_offset | divided_by: 100.0
 
+  assign image_zoom_factor = section.settings.image_zoom | divided_by: 100.0
+
   assign quote_lines = section.settings.quote | newline_to_br | split: '<br />' | size
 
   assign quote_tilt = section.settings.quote_rotation | abs
 -%}
 
 {%- capture image_sizes -%}
-  (min-width: 1598px) 526px, (min-width: 750px) calc((100vw - 158px) * 0.41), calc((100vw - 60px) * {{ mobile_width_factor }})
+  (min-width: 1024px) calc(min({{ section.settings.image_max_width }}px, (100vw - 158px) * 0.41) * {{ image_zoom_factor }}),
+  (min-width: 750px) calc((100vw - 158px) * {{ mobile_width_factor }} * {{ image_zoom_factor }}),
+  calc((100vw - 60px) * {{ mobile_width_factor }} * {{ image_zoom_factor }})
 {%- endcapture -%}
 
 <div
@@ -39,7 +43,9 @@
     --quote-tilt: {{ quote_tilt }}deg;
     --quote-rotation: {{ section.settings.quote_rotation }}deg;
     --image-offset: {{ section.settings.image_offset }}%;
-    --image-position: {{ section.settings.image_position }}%;
+    --image-max-width: {{ section.settings.image_max_width }}px;
+    --image-max-height: {{ section.settings.image_max_height }}px;
+    --image-zoom: {{ image_zoom_factor }};
   "
 >
   {%- if section.settings.quote != blank -%}
@@ -83,7 +89,8 @@
 
 {% stylesheet %}
   .my-story {
-    --quote-rendered-size: min(calc(var(--quote-size, 60px) * 0.55), 7vw);
+    --quote-scale: 0.55;
+    --quote-rendered-size: min(calc(var(--quote-size, 60px) * var(--quote-scale)), 7vw);
     --section-space: calc(var(--spacing-section) * 0.5);
     --quote-bleed: 1.5;
 
@@ -118,6 +125,7 @@
   .my-story__media {
     margin-inline-start: var(--image-offset, 20%);
     aspect-ratio: 9 / 10;
+    overflow: hidden;
   }
 
   .my-story__media img,
@@ -125,7 +133,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center var(--image-position, 50%);
+    scale: var(--image-zoom, 1);
   }
 
   .my-story__text {
@@ -135,7 +143,7 @@
   }
 
   .my-story__body {
-    margin-block-start: 1em;
+    margin-block-end: 1em;
     font-family: var(--font-display--family);
   }
 
@@ -146,11 +154,23 @@
   .my-story__signature {
     align-self: end;
     font-family: var(--font-script--family);
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     line-height: 1;
   }
 
-  @media (width >= 750px) {
+  @media (width >= 640px) {
+    .my-story {
+      --quote-scale: 0.7;
+    }
+  }
+
+  @media (width >= 768px) {
+    .my-story {
+      --quote-scale: 0.85;
+    }
+  }
+
+  @media (width >= 1024px) {
     .my-story {
       --quote-rendered-size: var(--quote-size, 60px);
       --quote-lane: 0px;
@@ -173,7 +193,7 @@
     }
 
     .my-story__text {
-      padding-top: none;
+      padding-top: 0;
       grid-column: 1;
       grid-row: 2;
       align-self: end;
@@ -182,8 +202,17 @@
     .my-story__media {
       grid-column: 2;
       grid-row: 1 / -1;
+      place-self: end;
+      width: 100%;
+      max-width: var(--image-max-width);
       margin-inline-start: 0;
       aspect-ratio: auto;
+    }
+
+    .my-story__media img,
+    .my-story__media svg {
+      height: auto;
+      max-height: var(--image-max-height);
     }
 
     .my-story__quote {
@@ -196,7 +225,7 @@
       max-width: 100%;
       margin-block-end: 0;
       translate: -50% 0;
-      transform-origin: 50% 50%;
+      transform-origin: 25% 50%;
       font-size: var(--quote-size, 60px);
     }
   }
@@ -259,14 +288,36 @@
     },
     {
       "type": "range",
-      "id": "image_position",
-      "label": "t:labels.image_position",
-      "info": "t:info.image_position",
-      "min": 0,
-      "max": 100,
+      "id": "image_max_width",
+      "label": "t:labels.image_max_width",
+      "info": "t:info.image_max_size",
+      "min": 300,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "image_max_height",
+      "label": "t:labels.image_max_height",
+      "info": "t:info.image_max_size",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 550
+    },
+    {
+      "type": "range",
+      "id": "image_zoom",
+      "label": "t:labels.image_zoom",
+      "info": "t:info.image_zoom",
+      "min": 100,
+      "max": 200,
       "step": 5,
       "unit": "%",
-      "default": 50
+      "default": 100
     },
     {
       "type": "range",

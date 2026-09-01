@@ -88,6 +88,9 @@
     "show_divider": "Show divider",
     "image_position": "Image position",
     "image_offset": "Image offset on mobile",
+    "image_max_width": "Image max width",
+    "image_max_height": "Image max height",
+    "image_zoom": "Image zoom",
     "quote": "Quote",
     "quote_size": "Quote size",
     "quote_rotation": "Quote tilt",
@@ -120,6 +123,8 @@
   "info": {
     "image_position": "0% holds the top of the photo in view, 100% the bottom.",
     "image_offset": "How far the photo is pushed in from the left. Phones only \u2014 on desktop the photo sits in its own column.",
+    "image_max_size": "Desktop only \u2014 the section is as tall as the photo. On phones the photo keeps its portrait crop.",
+    "image_zoom": "Enlarges the photo inside its frame. The frame stays the same size, so higher values crop in tighter.",
     "quote": "Line breaks are kept, so you choose where each line ends.",
     "quote_rotation": "0\u00b0 sits level. The design tilts it a few degrees anticlockwise."
   }
