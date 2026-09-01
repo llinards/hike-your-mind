@@ -84,11 +84,12 @@
 {% stylesheet %}
   .my-story {
     --quote-rendered-size: min(calc(var(--quote-size, 60px) * 0.55), 7vw);
+    --section-space: calc(var(--spacing-section) * 0.5);
+    --quote-bleed: 1.5;
 
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-section);
     padding-block: var(--spacing-section);
   }
 
@@ -97,9 +98,7 @@
   }
 
   .my-story--quoted {
-    padding-block-start: calc(
-      var(--spacing-section) + var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg))
-    );
+   padding-block: var(--spacing-section);
   }
 
   .my-story__quote {
@@ -108,9 +107,9 @@
     position: relative;
     z-index: 1;
     align-self: start;
-    margin-block-end: calc(-1 * (var(--spacing-section) + var(--quote-overlap)));
+    margin-block-end: calc(-1 * (var(--section-space) + var(--quote-overlap)));
     rotate: var(--quote-rotation, -4deg);
-    transform-origin: 0 50%;
+    transform-origin: 50% 50%;
     font-family: var(--font-script--family);
     font-size: var(--quote-rendered-size);
     line-height: 1.15;
@@ -130,14 +129,18 @@
   }
 
   .my-story__text {
+    padding-top: var(--spacing-section);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
   }
 
   .my-story__body {
     margin-block-start: 1em;
     font-family: var(--font-display--family);
+  }
+
+  .my-story__body p {
+    margin-top: 1rem;
   }
 
   .my-story__signature {
@@ -162,13 +165,15 @@
     .my-story--quoted {
       --quote-lane: calc(
         var(--quote-rendered-size) * 1.15 * var(--quote-lines, 3) - var(--quote-rendered-size) * 0.7 +
-          var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg)) + 1.5rem
+          var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg)) + 1.5rem -
+          var(--quote-rendered-size) * 1.15 * var(--quote-bleed, 0)
       );
 
-      padding-block-start: calc(var(--spacing-section) + var(--quote-rendered-size) * 0.7);
+      padding-block: var(--spacing-section);
     }
 
     .my-story__text {
+      padding-top: none;
       grid-column: 1;
       grid-row: 2;
       align-self: end;
@@ -184,7 +189,7 @@
     .my-story__quote {
       position: absolute;
       inset-block-start: calc(
-        var(--spacing-section) + var(--quote-rendered-size) * 5 * sin(var(--quote-tilt, 4deg))
+        var(--section-space) + var(--quote-rendered-size) * 5 * sin(var(--quote-tilt, 4deg))
       );
       inset-inline-start: 50%;
       width: max-content;
