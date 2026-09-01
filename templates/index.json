@@ -146,11 +146,27 @@
         "cta_label": "Create a Hike With Us",
         "cta_link": "shopify://pages/create-a-hike"
       }
+    },
+    "my_story_NdPc7m": {
+      "type": "my-story",
+      "name": "t:general.my_story",
+      "settings": {
+        "heading": "My Story",
+        "body": "<p>It started on September 25, 2022, when I went on my first hike.<br/>Without any previous experience, I was wearing old running shoes.</p><p>There were 245 km ahead. I went from Porto to the Cathedral of Santiago, right now I’m getting a pleasant shiver as I write this.</p><p>I could not wish for a more beautiful road, no, I could not even imagine what it would bring me, where it would take me.<br/>Please, go hike yourself.</p><p>Your courage is the beginning of a new path.<br/>With love, respect and gratitude for yourself, your body.</p><p>And get comfortable shoes!</p>",
+        "signature": "Gerda",
+        "quote": "The journey of a\nthousand miles begins\nwith a single step.",
+        "quote_size": 60,
+        "quote_rotation": -12,
+        "image": "shopify://shop_images/hike-your-mind-gerda.jpg",
+        "image_position": 50,
+        "image_offset": 20
+      }
     }
   },
   "order": [
     "main",
     "journey_rows",
-    "create_a_hike_mpiHwJ"
+    "create_a_hike_mpiHwJ",
+    "my_story_NdPc7m"
   ]
 }
