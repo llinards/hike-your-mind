@@ -181,10 +181,11 @@
         "review_cJdHDc": {
           "type": "review",
           "settings": {
-            "name": "Natālija",
-            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
-            "date": "",
-            "link": ""
+            "image": "shopify://shop_images/hike-review-2.jpg",
+            "name": "Laura Š.",
+            "body": "<p>You were right about the GoreTex, and about how difficult it would be to come back to everyday life after this hike. After Tuscany, the feeling wasn’t nearly as profound.</p><p>The walk to Rome gave me so much more than a physical challenge. The real adventure happened within me.</p><p>The long journey allowed me to see my life from a completely different perspective....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
           }
         },
         "review_RC77kk": {
