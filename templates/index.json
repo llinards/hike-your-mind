@@ -164,12 +164,61 @@
         "image_offset": 20,
         "show_divider": true
       }
+    },
+    "reviews_tTGrWK": {
+      "type": "reviews",
+      "blocks": {
+        "review_Vdgbzr": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/hike-review-1.jpg",
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can’t even begin to describe how much our Tuscany hike meant to me. It was theEvent of My Year 2025, and you became My Person of the Year 2025. 💜</p><p>After this journey, I didn’t make any radical life decisions. The only thing I knew was that I wanted my world back, all of its colours and I wanted myself back....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
+          }
+        },
+        "review_cJdHDc": {
+          "type": "review",
+          "settings": {
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
+            "date": "",
+            "link": ""
+          }
+        },
+        "review_RC77kk": {
+          "type": "review",
+          "settings": {
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
+            "date": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_Vdgbzr",
+        "review_cJdHDc",
+        "review_RC77kk"
+      ],
+      "name": "t:general.reviews",
+      "settings": {
+        "heading": "What Our Clients Say About Us",
+        "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
+        "show_divider": true,
+        "card_max_width": 1024,
+        "card_height": 360,
+        "card_height_mobile": 750,
+        "inactive_opacity": 40
+      }
     }
   },
   "order": [
     "main",
     "journey_rows",
     "create_a_hike_mpiHwJ",
-    "my_story_NdPc7m"
+    "my_story_NdPc7m",
+    "reviews_tTGrWK"
   ]
 }
