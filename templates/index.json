@@ -170,6 +170,7 @@
       "blocks": {
         "review_Vdgbzr": {
           "type": "review",
+          "name": "Natālija",
           "settings": {
             "image": "shopify://shop_images/hike-review-1.jpg",
             "name": "Natālija",
@@ -180,6 +181,7 @@
         },
         "review_cJdHDc": {
           "type": "review",
+          "name": "Laura Š.",
           "settings": {
             "image": "shopify://shop_images/hike-review-2.jpg",
             "name": "Laura Š.",
