@@ -9,6 +9,55 @@
   # A filter chain cannot be used inline as a `t:` argument, so the year is
   # resolved first.
   assign current_year = 'now' | date: '%Y'
+
+  # The contacts and the company address come from the store's own details
+  # rather than theme settings, so they stay in step with what the merchant set
+  # up in the Shopify admin.
+  assign has_contacts = false
+  if shop.phone != blank
+    assign has_contacts = true
+  endif
+  if shop.email != blank
+    assign has_contacts = true
+  endif
+
+  # The address reads as one line: street, city, country, postal code. Each part
+  # is appended with its separator and the leading one trimmed afterwards, so a
+  # part the merchant has not filled in cannot leave a stray comma behind.
+  assign address_line = ''
+  if shop.address.street != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.street
+  endif
+  if shop.address.city != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.city
+  endif
+  if shop.address.country != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.country
+  endif
+  if shop.address.zip != blank
+    assign address_line = address_line | append: ', LV-' | append: shop.address.zip
+  endif
+  assign address_line = address_line | remove_first: ', '
+
+  # Shopify has no field for a registration or licence number, so they come from
+  # shop metafields defined under Settings > Custom data > Shop. The values are
+  # the bare numbers; the labels are supplied by the locale file.
+  assign registration_number = shop.metafields.custom.registration_number.value
+  assign license_number = shop.metafields.custom.license_number.value
+
+  assign has_company_details = false
+  if shop.address.company != blank
+    assign has_company_details = true
+  endif
+  if address_line != blank
+    assign has_company_details = true
+  endif
+  if registration_number != blank
+    assign has_company_details = true
+  endif
+  if license_number != blank
+    assign has_company_details = true
+  endif
 -%}
 
 <footer class="footer full-width">
@@ -31,10 +80,17 @@
       <p class="footer__tagline">{{ section.settings.tagline }}</p>
     {%- endif -%}
 
-    {%- if section.settings.contact_details != blank -%}
+    {%- if has_contacts -%}
       <div class="footer__column footer__column--contacts">
         <h2 class="footer__column-title">{{ 'general.footer.contacts' | t }}</h2>
-        {{ section.settings.contact_details }}
+
+        {%- if shop.phone != blank -%}
+          <a class="footer__link" href="tel:{{ shop.phone | remove: ' ' }}">{{ shop.phone }}</a>
+        {%- endif -%}
+
+        {%- if shop.email != blank -%}
+          <a class="footer__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -49,10 +105,25 @@
       </nav>
     {%- endif -%}
 
-    {%- if section.settings.company_details != blank -%}
+    {%- if has_company_details -%}
       <div class="footer__column footer__column--company">
         <h2 class="footer__column-title">{{ 'general.footer.company_details' | t }}</h2>
-        {{ section.settings.company_details }}
+
+        {%- if shop.address.company != blank -%}
+          <p>{{ shop.address.company }}</p>
+        {%- endif -%}
+
+        {%- if registration_number != blank -%}
+          <p>{{ 'general.footer.registration_number' | t: number: registration_number }}</p>
+        {%- endif -%}
+
+        {%- if address_line != blank -%}
+          <p>{{ address_line }}</p>
+        {%- endif -%}
+
+        {%- if license_number != blank -%}
+          <p>{{ 'general.footer.license_number' | t: number: license_number }}</p>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -168,6 +239,12 @@
     text-decoration: underline;
   }
 
+  /* The contact links sit straight in the column, so stop them stretching
+     across it and taking the hover with them. */
+  .footer__column--contacts .footer__link {
+    width: fit-content;
+  }
+
   .footer__copyright {
     font-size: var(--font-size-small);
     line-height: var(--line-height-small);
@@ -267,19 +344,9 @@
       "label": "t:labels.instagram_url"
     },
     {
-      "type": "richtext",
-      "id": "contact_details",
-      "label": "t:labels.contact_details"
-    },
-    {
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
-    },
-    {
-      "type": "richtext",
-      "id": "company_details",
-      "label": "t:labels.company_details"
     },
     {
       "type": "text",

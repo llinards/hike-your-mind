@@ -48,6 +48,8 @@
       "contacts": "Contacts",
       "menu": "Menu",
       "company_details": "Company details",
+      "registration_number": "Reg. Number {{ number }}",
+      "license_number": "License Number {{ number }}",
       "copyright": "© {{ year }} {{ shop_name }}. All rights reserved."
     }
   },
