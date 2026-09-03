@@ -14,7 +14,12 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "main-menu"
+        "tagline": "Feel Free to Contact Us & Remember to Hike Your Mind!",
+        "instagram_url": "https://www.instagram.com/_hikeyourmind",
+        "contact_details": "",
+        "menu": "main-menu",
+        "company_details": "",
+        "copyright": ""
       }
     }
   },
