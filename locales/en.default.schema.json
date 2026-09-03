@@ -21,6 +21,7 @@
     "colors": "Colors",
     "column": "Column",
     "content": "Content",
+    "create_a_hike": "Create a hike section",
     "custom_section": "Custom section",
     "fonts": "Fonts",
     "footer": "Footer",
@@ -28,7 +29,6 @@
     "header": "Header",
     "image": "Image",
     "journey_rows": "Journey rows",
-    "create_a_hike": "Create a hike section",
     "layout": "Layout",
     "main": "Main",
     "mosaic_hero": "Mosaic hero",
@@ -37,6 +37,8 @@
     "password": "Password",
     "primary": "Primary",
     "product": "Product",
+    "review": "Review",
+    "reviews": "Reviews",
     "row": "Row",
     "search": "Search",
     "secondary": "Secondary",
@@ -94,7 +96,14 @@
     "quote": "Quote",
     "quote_size": "Quote size",
     "quote_rotation": "Quote tilt",
-    "signature": "Signature"
+    "signature": "Signature",
+    "reviewer": "Reviewer name",
+    "review": "Review",
+    "date": "Date",
+    "card_max_width": "Card width",
+    "card_height": "Card height",
+    "card_height_mobile": "Card height on mobile",
+    "inactive_opacity": "Opacity of surrounding reviews"
   },
   "options": {
     "alignment": {
@@ -122,10 +131,14 @@
   },
   "info": {
     "image_position": "0% holds the top of the photo in view, 100% the bottom.",
-    "image_offset": "How far the photo is pushed in from the left. Phones only \u2014 on desktop the photo sits in its own column.",
-    "image_max_size": "Desktop only \u2014 the section is as tall as the photo. On phones the photo keeps its portrait crop.",
+    "image_offset": "How far the photo is pushed in from the left. Phones only — on desktop the photo sits in its own column.",
+    "image_max_size": "Desktop only — the section is as tall as the photo. On phones the photo keeps its portrait crop.",
     "image_zoom": "Enlarges the photo inside its frame. The frame stays the same size, so higher values crop in tighter.",
     "quote": "Line breaks are kept, so you choose where each line ends.",
-    "quote_rotation": "0\u00b0 sits level. The design tilts it a few degrees anticlockwise."
+    "quote_rotation": "0° sits level. The design tilts it a few degrees anticlockwise.",
+    "date": "Shown under the review, exactly as typed — for example 05.06.2026.",
+    "review_link": "Where \"Read more\" goes — the page for this review.",
+    "card_max_width": "The card never grows past this, however wide the page is.",
+    "inactive_opacity": "How far the reviews either side of the current one fade back. 100% leaves them at full strength."
   }
 }
