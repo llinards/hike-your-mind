@@ -55,17 +55,15 @@
                 assign img_priority = 'high'
               endif
 
+              assign hike_start = product.metafields.custom.hike_start_date.value
+              assign hike_end = product.metafields.custom.hike_end_date.value
+
               if product.price_varies
-                assign price_amount = product.price_min | money
+                assign price_amount = product.price_min | money_without_trailing_zeros
               else
-                assign price_amount = product.price | money
+                assign price_amount = product.price | money_without_trailing_zeros
               endif
             -%}
-
-            {%- capture hike_dates -%}
-              {%- render 'hike-dates', dates: product.metafields.custom.hike_date.value -%}
-            {%- endcapture -%}
-            {%- assign hike_dates = hike_dates | strip -%}
 
             <li>
               <a class="hike-row" href="{{ product.url }}">
@@ -90,8 +88,14 @@
                   <div class="hike-row__text">
                     <h2 class="hike-row__title">
                       {{- product.title -}}
-                      {%- if hike_dates != blank -%}
-                        <span class="hike-row__dates"> {{ hike_dates }}</span>
+                      {%- if hike_start != blank %}
+                        <span class="hike-row__dates">
+                          {%- if hike_end != blank -%}
+                            {{ hike_start | date: '%-d' }} - {{ hike_end | date: '%-d %B' }}
+                          {%- else -%}
+                            {{ hike_start | date: '%-d %B' }}
+                          {%- endif -%}
+                        </span>
                       {%- endif -%}
                     </h2>
 
@@ -140,6 +144,16 @@
     display: flex;
     flex-direction: column;
     padding-block-start: var(--spacing-section);
+  }
+
+  .hikes__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hikes__rows {
+    padding-bottom: var(--spacing-section);
   }
 
   @media (width >= 750px) {

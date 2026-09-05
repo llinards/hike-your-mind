@@ -73,7 +73,6 @@
     "title": "Collections",
     "hikes": {
       "filters": "Filters",
-      "date_range": "{{ start }} – {{ finish }}",
       "price_from": "From {{ price }}",
       "no_results": "No hikes match this filter yet. Try another country."
     }
