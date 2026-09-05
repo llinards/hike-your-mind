@@ -62,13 +62,10 @@
               endif
             -%}
 
-            {%- capture dates -%}
-              {%- render 'hike-dates',
-                start_date: product.metafields.custom.start_date.value,
-                end_date: product.metafields.custom.end_date.value
-              -%}
+            {%- capture hike_dates -%}
+              {%- render 'hike-dates', dates: product.metafields.custom.hike_date.value -%}
             {%- endcapture -%}
-            {%- assign dates = dates | strip -%}
+            {%- assign hike_dates = hike_dates | strip -%}
 
             <li>
               <a class="hike-row" href="{{ product.url }}">
@@ -93,8 +90,8 @@
                   <div class="hike-row__text">
                     <h2 class="hike-row__title">
                       {{- product.title -}}
-                      {%- if dates != blank -%}
-                        <span class="hike-row__dates"> {{ dates }}</span>
+                      {%- if hike_dates != blank -%}
+                        <span class="hike-row__dates"> {{ hike_dates }}</span>
                       {%- endif -%}
                     </h2>
 
@@ -142,16 +139,12 @@
   .hikes__intro {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     padding-block-start: var(--spacing-section);
   }
 
   @media (width >= 750px) {
     .hikes__intro {
       flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 2rem;
     }
   }
 
@@ -175,7 +168,6 @@
   .hikes__filter-toggle {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 0.75rem;
     font-size: var(--font-size-ui);
     letter-spacing: var(--letter-spacing-ui);
@@ -296,8 +288,6 @@
     inset-inline: calc((100% - var(--content-width)) / 2);
     bottom: var(--caption-inset);
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
     gap: 1.5rem;
   }
 

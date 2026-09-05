@@ -1,30 +1,39 @@
 {% doc %}
-  Renders a departure's date range — "6 – 10 April" within one month, "April 19 – May 1" across two.
+  Renders a departure's dates — "6 – 10 April" within one month, "April 19 – May 1" across two.
 
-  @param {string} start_date - The departure's start date
-  @param {string} [end_date] - The departure's end date, omitted for a single-day hike
+  The range runs from the first entry of the list to the last; a single date renders on its own.
+
+  @param {string} dates - The hike's `hike_date` metafield value
 
   @example
-  {% render 'hike-dates',
-    start_date: product.metafields.custom.start_date.value,
-    end_date: product.metafields.custom.end_date.value
-  %}
+  {% render 'hike-dates', dates: product.metafields.custom.hike_date.value %}
 {% enddoc %}
 
-{%- if start_date != blank -%}
-  {%- liquid
-    if end_date == blank
-      echo start_date | date: '%-d %B'
-    else
-      assign start_month = start_date | date: '%m'
-      assign end_month = end_date | date: '%m'
+{%- liquid
+  assign first_date = dates | first
 
-      if start_month == end_month
-        assign range_start = start_date | date: '%-d'
-        assign range_finish = end_date | date: '%-d %B'
+  if first_date == blank
+    assign first_date = dates
+    assign last_date = dates
+  else
+    assign last_date = dates | last
+  endif
+-%}
+
+{%- if first_date != blank -%}
+  {%- liquid
+    if last_date == first_date
+      echo first_date | date: '%-d %B'
+    else
+      assign first_month = first_date | date: '%m'
+      assign last_month = last_date | date: '%m'
+
+      if first_month == last_month
+        assign range_start = first_date | date: '%-d'
+        assign range_finish = last_date | date: '%-d %B'
       else
-        assign range_start = start_date | date: '%B %-d'
-        assign range_finish = end_date | date: '%B %-d'
+        assign range_start = first_date | date: '%B %-d'
+        assign range_finish = last_date | date: '%B %-d'
       endif
 
       echo 'collections.hikes.date_range' | t: start: range_start, finish: range_finish
