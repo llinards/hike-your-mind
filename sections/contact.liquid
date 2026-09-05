@@ -72,6 +72,10 @@
     {%- endif -%}
 
     {%- form 'contact', class: 'contact__form' -%}
+      {%- if section.settings.email_subject != blank -%}
+        <input type="hidden" name="contact[subject]" value="{{ section.settings.email_subject | escape }}">
+      {%- endif -%}
+
       {%- if form.posted_successfully? -%}
         <p class="contact__notice contact__notice--success" role="status">
           {{- 'contact.form.success' | t -}}
@@ -445,6 +449,13 @@
       "id": "terms_url",
       "label": "t:labels.terms_url",
       "info": "t:info.terms_url"
+    },
+    {
+      "type": "text",
+      "id": "email_subject",
+      "label": "t:labels.email_subject",
+      "info": "t:info.email_subject",
+      "default": "Create a hike enquiry"
     }
   ],
   "blocks": [
