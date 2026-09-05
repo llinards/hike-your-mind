@@ -105,7 +105,6 @@
     "show_heading": "Show heading",
     "show_subheading": "Show subheading",
     "heading_level": "Heading level",
-    "terms_url": "Terms & privacy page",
     "image_opacity": "Background image opacity"
   },
   "options": {
@@ -147,7 +146,6 @@
     "review_link": "Where \"Read more\" goes — the page for this review.",
     "copyright": "Leave blank to keep the default line, which fills in the current year and shop name on its own.",
     "heading_level": "Use Heading 1 when this section leads its own page, Heading 2 when the page already has a title above it.",
-    "terms_url": "Where the \"Terms of Use & Privacy Policy\" link goes. Defaults to the homepage.",
     "image_opacity": "How far the panel photo fades back behind the text. The design sits at 40%."
   }
 }
