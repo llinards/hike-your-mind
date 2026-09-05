@@ -27,17 +27,15 @@
   if render_subheading
     assign has_intro = true
   endif
-
-  assign inactive_opacity = section.settings.inactive_opacity | divided_by: 100.0
 -%}
 
 {%- comment -%}
-  The card is at most `card_max_width` wide inside the centre column, and the
+  The card is at most 1024px wide inside the centre column, and the
   photo takes 42% of what is left once the card's own padding (2 × 29px) is
   taken off. Keep the 158px/60px page margins in step with `settings_schema`.
 {%- endcomment -%}
 {%- capture image_sizes -%}
-  (min-width: 750px) calc((min({{ section.settings.card_max_width }}px, 100vw - 158px) - 58px) * 0.42),
+  (min-width: 750px) calc((min(1024px, 100vw - 158px) - 58px) * 0.42),
   calc(100vw - 118px)
 {%- endcapture -%}
 
@@ -54,15 +52,7 @@
 {%- endif -%}
 
 {%- if section.blocks.size > 0 -%}
-  <review-carousel
-    class="reviews"
-    style="
-      --card-max-width: {{ section.settings.card_max_width }}px;
-      --card-height: {{ section.settings.card_height }}px;
-      --card-height-mobile: {{ section.settings.card_height_mobile }}px;
-      --inactive-opacity: {{ inactive_opacity }};
-    "
-  >
+  <review-carousel class="reviews">
     <ul class="reviews__track" tabindex="0">
       {%- for block in section.blocks -%}
         <li class="reviews__item" {{ block.shopify_attributes }}>
@@ -146,6 +136,11 @@
   }
 
   .reviews {
+    --card-max-width: 1024px;
+    --card-height: 360px;
+    --card-height-mobile: 750px;
+    --inactive-opacity: 0.4;
+
     display: block;
     padding-block-end: var(--spacing-section);
   }
@@ -427,48 +422,6 @@
       "id": "show_divider",
       "label": "t:labels.show_divider",
       "default": true
-    },
-    {
-      "type": "range",
-      "id": "card_max_width",
-      "label": "t:labels.card_max_width",
-      "info": "t:info.card_max_width",
-      "min": 600,
-      "max": 1024,
-      "step": 8,
-      "unit": "px",
-      "default": 1024
-    },
-    {
-      "type": "range",
-      "id": "card_height",
-      "label": "t:labels.card_height",
-      "min": 240,
-      "max": 360,
-      "step": 10,
-      "unit": "px",
-      "default": 360
-    },
-    {
-      "type": "range",
-      "id": "card_height_mobile",
-      "label": "t:labels.card_height_mobile",
-      "min": 450,
-      "max": 750,
-      "step": 10,
-      "unit": "px",
-      "default": 750
-    },
-    {
-      "type": "range",
-      "id": "inactive_opacity",
-      "label": "t:labels.inactive_opacity",
-      "info": "t:info.inactive_opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 40
     }
   ],
   "blocks": [

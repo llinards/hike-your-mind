@@ -99,10 +99,6 @@
     "reviewer": "Reviewer name",
     "review": "Review",
     "date": "Date",
-    "card_max_width": "Card width",
-    "card_height": "Card height",
-    "card_height_mobile": "Card height on mobile",
-    "inactive_opacity": "Opacity of surrounding reviews",
     "copyright": "Copyright line",
     "show_heading": "Show heading",
     "show_subheading": "Show subheading"
@@ -140,8 +136,6 @@
     "quote_rotation": "0° sits level. The design tilts it a few degrees anticlockwise.",
     "date": "Shown under the review, exactly as typed — for example 05.06.2026.",
     "review_link": "Where \"Read more\" goes — the page for this review.",
-    "card_max_width": "The card never grows past this, however wide the page is.",
-    "inactive_opacity": "How far the reviews either side of the current one fade back. 100% leaves them at full strength.",
     "copyright": "Leave blank to keep the default line, which fills in the current year and shop name on its own."
   }
 }

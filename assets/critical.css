@@ -13,6 +13,12 @@ body {
   min-height: 100svh;
 }
 
+/* Reserve the scrollbar track so `--content-width` is identical on every page,
+   scrolling or not, and doesn't shift when a drawer locks the scroll. */
+html {
+  scrollbar-gutter: stable;
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
