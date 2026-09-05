@@ -5,13 +5,58 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-<h1>{{ page.title }}</h1>
+<div class="page__intro">
+  <div class="page__text">
+    <h1 class="page__heading">{{ page.title }}</h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="page__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+</div>
 
 {{ page.content }}
+
+{% stylesheet %}
+
+  .page__intro {
+    --intro-gap: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--intro-gap);
+    padding-block-start: var(--spacing-section);
+  }
+
+  .page__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--intro-gap);
+  }
+  .page__subheading {
+    font-family: var(--font-display--family);
+  }
+
+  @media (width >= 750px) {
+    .page__intro {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.page",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:labels.subheading",
+      "default": "Subheading for this page"
+    }
+  ]
 }
 {% endschema %}
