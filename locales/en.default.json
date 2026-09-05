@@ -95,5 +95,18 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "phone": "Phone number",
+      "email": "Email",
+      "message": "Tell us about the hike you have in mind",
+      "terms_html": "I accept the {{ link }}",
+      "terms_link": "Terms of Use & Privacy Policy",
+      "terms_value": "Accepted",
+      "submit": "Send enquiry",
+      "success": "Thanks — your enquiry is on its way. We'll be in touch soon."
+    }
   }
 }

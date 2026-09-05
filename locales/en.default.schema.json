@@ -50,7 +50,9 @@
     "testimonials": "Testimonials",
     "text": "Text",
     "theme": "Theme",
-    "typography": "Typography"
+    "typography": "Typography",
+    "contact": "Contact form",
+    "feature": "Feature"
   },
   "labels": {
     "alignment": "Alignment",
@@ -101,7 +103,9 @@
     "date": "Date",
     "copyright": "Copyright line",
     "show_heading": "Show heading",
-    "show_subheading": "Show subheading"
+    "show_subheading": "Show subheading",
+    "heading_level": "Heading level",
+    "terms_url": "Terms & privacy page"
   },
   "options": {
     "alignment": {
@@ -125,6 +129,10 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
+    },
+    "heading_level": {
+      "h1": "Heading 1",
+      "h2": "Heading 2"
     }
   },
   "info": {
@@ -136,6 +144,8 @@
     "quote_rotation": "0° sits level. The design tilts it a few degrees anticlockwise.",
     "date": "Shown under the review, exactly as typed — for example 05.06.2026.",
     "review_link": "Where \"Read more\" goes — the page for this review.",
-    "copyright": "Leave blank to keep the default line, which fills in the current year and shop name on its own."
+    "copyright": "Leave blank to keep the default line, which fills in the current year and shop name on its own.",
+    "heading_level": "Use Heading 1 when this section leads its own page, Heading 2 when the page already has a title above it.",
+    "terms_url": "Where the \"Terms of Use & Privacy Policy\" link goes. Defaults to the homepage."
   }
 }
