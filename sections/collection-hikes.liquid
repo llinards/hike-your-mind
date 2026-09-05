@@ -1,7 +1,14 @@
-{% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
+{% comment %} Hike departures as full-bleed bands, filtered without a page reload. {% endcomment %}
 
 {%- liquid
-  assign country_filter = collection.filters | where: 'param_name', 'filter.p.m.custom.country' | first
+  assign filter_count = 0
+  for filter in collection.filters
+    if filter.param_name contains 'filter.p.m.'
+      if filter.values.size > 0
+        assign filter_count = filter_count | plus: 1
+      endif
+    endif
+  endfor
 -%}
 
 <hike-list class="hikes full-width" data-section-id="{{ section.id }}">
@@ -15,7 +22,7 @@
     </div>
 
     <div class="hikes__filters" data-filters>
-      {%- if country_filter.values.size > 0 -%}
+      {%- if filter_count > 0 -%}
         <details class="hikes__filter">
           <summary class="hikes__filter-toggle">
             {{ 'collections.hikes.filters' | t }}
@@ -24,19 +31,31 @@
             </span>
           </summary>
 
-          <ul class="hikes__filter-list" role="list">
-            {%- for value in country_filter.values -%}
-              <li>
-                {%- if value.active -%}
-                  <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
-                    {{- value.label -}}
-                  </a>
-                {%- else -%}
-                  <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
+          <div class="hikes__filter-panel">
+            {%- for filter in collection.filters -%}
+              {%- if filter.param_name contains 'filter.p.m.' -%}
+                {%- if filter.values.size > 0 -%}
+                  {%- if filter_count > 1 -%}
+                    <p class="hikes__filter-label">{{ filter.label }}</p>
+                  {%- endif -%}
+
+                  <ul class="hikes__filter-list" role="list">
+                    {%- for value in filter.values -%}
+                      <li>
+                        {%- if value.active -%}
+                          <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                            {{- value.label -}}
+                          </a>
+                        {%- else -%}
+                          <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
                 {%- endif -%}
-              </li>
+              {%- endif -%}
             {%- endfor -%}
-          </ul>
+          </div>
         </details>
       {%- endif -%}
     </div>
@@ -159,6 +178,9 @@
   @media (width >= 750px) {
     .hikes__intro {
       flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
     }
   }
 
@@ -173,8 +195,6 @@
 
   @media (width >= 750px) {
     .hikes__filters {
-      order: -1;
-      align-self: flex-start;
       flex: 0 0 auto;
     }
   }
@@ -204,24 +224,37 @@
     transform: rotate(-90deg);
   }
 
-  .hikes__filter-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .hikes__filter-panel {
     margin-block-start: 0.75rem;
     padding: 1rem;
     border: 0.5px solid var(--color-hairline);
-    list-style: none;
   }
 
   @media (width >= 750px) {
-    .hikes__filter-list {
+    .hikes__filter-panel {
       position: absolute;
       inset-inline-end: 0;
       min-width: 18rem;
       background-color: var(--color-background);
       z-index: 1;
     }
+  }
+
+  .hikes__filter-label {
+    color: var(--color-foreground-muted);
+    font-size: var(--font-size-small);
+  }
+
+  .hikes__filter-list + .hikes__filter-label {
+    margin-block-start: 1rem;
+  }
+
+  .hikes__filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
   }
 
   .hikes__filter-option {
