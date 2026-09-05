@@ -1,0 +1,459 @@
+{% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
+
+{%- liquid
+  assign country_filter = collection.filters | where: 'param_name', 'filter.p.m.custom.country' | first
+-%}
+
+<hike-list class="hikes full-width" data-section-id="{{ section.id }}">
+  <div class="hikes__intro">
+    <div class="hikes__text">
+      <h1 class="hikes__heading">{{ collection.title }}</h1>
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="hikes__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="hikes__filters" data-filters>
+      {%- if country_filter.values.size > 0 -%}
+        <details class="hikes__filter">
+          <summary class="hikes__filter-toggle">
+            {{ 'collections.hikes.filters' | t }}
+            <span class="hikes__filter-caret" aria-hidden="true">
+              {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+            </span>
+          </summary>
+
+          <ul class="hikes__filter-list" role="list">
+            {%- for value in country_filter.values -%}
+              <li>
+                {%- if value.active -%}
+                  <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                    {{- value.label -}}
+                  </a>
+                {%- else -%}
+                  <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hikes__rows" data-rows>
+    {%- paginate collection.products by 12 -%}
+      {%- if collection.products.size > 0 -%}
+        <ul class="hikes__list" role="list">
+          {%- for product in collection.products -%}
+            {%- liquid
+              assign img_loading = 'lazy'
+              assign img_priority = 'auto'
+              if forloop.first
+                assign img_loading = 'eager'
+                assign img_priority = 'high'
+              endif
+
+              if product.price_varies
+                assign price_amount = product.price_min | money
+              else
+                assign price_amount = product.price | money
+              endif
+            -%}
+
+            {%- capture dates -%}
+              {%- render 'hike-dates',
+                start_date: product.metafields.custom.start_date.value,
+                end_date: product.metafields.custom.end_date.value
+              -%}
+            {%- endcapture -%}
+            {%- assign dates = dates | strip -%}
+
+            <li>
+              <a class="hike-row" href="{{ product.url }}">
+                <div class="hike-row__media">
+                  {%- if product.featured_image != blank -%}
+                    {{
+                      product.featured_image
+                      | image_url: width: 3000
+                      | image_tag:
+                          widths: '750,1100,1500,2000,2600,3000',
+                          sizes: '100vw',
+                          loading: img_loading,
+                          fetchpriority: img_priority,
+                          alt: product.featured_image.alt
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'hike-row__placeholder' }}
+                  {%- endif -%}
+                </div>
+
+                <div class="hike-row__caption">
+                  <div class="hike-row__text">
+                    <h2 class="hike-row__title">
+                      {{- product.title -}}
+                      {%- if dates != blank -%}
+                        <span class="hike-row__dates"> {{ dates }}</span>
+                      {%- endif -%}
+                    </h2>
+
+                    <p class="hike-row__price">
+                      {%- if product.price_varies -%}
+                        {{ 'collections.hikes.price_from' | t: price: price_amount }}
+                      {%- else -%}
+                        {{ price_amount }}
+                      {%- endif -%}
+                    </p>
+                  </div>
+
+                  <span class="hike-row__arrow" aria-hidden="true">
+                    {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+                  </span>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="hikes__pagination" data-pagination>
+            {{ paginate | default_pagination }}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="hikes__empty">{{ 'collections.hikes.no_results' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</hike-list>
+
+{% stylesheet %}
+  .hikes {
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    row-gap: var(--spacing-section);
+  }
+
+  .hikes > * {
+    grid-column: 2;
+  }
+
+  .hikes__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block-start: var(--spacing-section);
+  }
+
+  @media (width >= 750px) {
+    .hikes__intro {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+  }
+
+  /* The deck is the display serif here, as in journey-rows and create-a-hike. */
+  .hikes__subheading {
+    font-family: var(--font-display--family);
+  }
+
+  .hikes__filters {
+    position: relative;
+  }
+
+  @media (width >= 750px) {
+    .hikes__filters {
+      order: -1;
+      align-self: flex-start;
+      flex: 0 0 auto;
+    }
+  }
+
+  .hikes__filter-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: var(--font-size-ui);
+    letter-spacing: var(--letter-spacing-ui);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .hikes__filter-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .hikes__filter-caret svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: rotate(90deg);
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .hikes__filter[open] .hikes__filter-caret svg {
+    transform: rotate(-90deg);
+  }
+
+  .hikes__filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block-start: 0.75rem;
+    padding: 1rem;
+    border: 0.5px solid var(--color-hairline);
+    list-style: none;
+  }
+
+  @media (width >= 750px) {
+    .hikes__filter-list {
+      position: absolute;
+      inset-inline-end: 0;
+      min-width: 18rem;
+      background-color: var(--color-background);
+      z-index: 1;
+    }
+  }
+
+  .hikes__filter-option {
+    color: var(--color-foreground-muted);
+    text-decoration: none;
+  }
+
+  .hikes__filter-option.is-active,
+  .hikes__filter-option:hover,
+  .hikes__filter-option:focus-visible {
+    color: var(--color-foreground);
+  }
+
+  .hikes__rows {
+    grid-column: 1 / -1;
+  }
+
+  .hikes__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hikes__pagination,
+  .hikes__empty {
+    width: var(--content-width);
+    margin-inline: auto;
+    padding-block: var(--spacing-section);
+  }
+
+  .hike-row {
+    --row-height: min(64vw, 380px);
+    --caption-inset: 1.5rem;
+    --row-scrim: 0.25;
+    --row-hover-wash: 0.2;
+
+    position: relative;
+    display: block;
+    height: var(--row-height);
+    overflow: hidden;
+    color: var(--color-on-image);
+    text-decoration: none;
+  }
+
+  @media (width >= 750px) {
+    .hike-row {
+      --row-height: 350px;
+      --caption-inset: 3.5rem;
+    }
+  }
+
+  .hike-row__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hike-row__media img,
+  .hike-row__media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .hike-row__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to top, rgb(0 0 0 / var(--row-scrim)) 0%, rgb(0 0 0 / 0) 65%);
+    background-color: rgb(0 0 0 / 0);
+    transition: background-color var(--duration-base) var(--easing-base);
+  }
+
+  .hike-row__caption {
+    position: absolute;
+    inset-inline: calc((100% - var(--content-width)) / 2);
+    bottom: var(--caption-inset);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .hike-row__title {
+    font-size: var(--font-size-display-compact);
+  }
+
+  @media (width >= 750px) {
+    .hike-row__title {
+      font-size: var(--font-size-display);
+    }
+  }
+
+  .hike-row__price {
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-display-compact);
+  }
+
+  @media (width >= 750px) {
+    .hike-row__price {
+      font-size: var(--font-size-display);
+    }
+  }
+
+  .hike-row__arrow {
+    margin-inline-start: auto;
+  }
+
+  .hike-row__arrow svg {
+    width: var(--size-icon);
+    height: var(--size-icon);
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  @media (width >= 750px) {
+    .hike-row__arrow svg {
+      width: 2.625rem;
+      height: 2.625rem;
+    }
+  }
+
+  .hike-row:hover .hike-row__media::after,
+  .hike-row:focus-visible .hike-row__media::after {
+    background-color: rgb(0 0 0 / var(--row-hover-wash));
+  }
+
+  .hike-row:hover .hike-row__arrow svg,
+  .hike-row:focus-visible .hike-row__arrow svg {
+    transform: translateX(0.375rem);
+  }
+
+  .hike-row:hover .hike-row__media img,
+  .hike-row:focus-visible .hike-row__media img {
+    transform: scale(1.03);
+  }
+
+  .hike-row:focus-visible {
+    outline-color: var(--color-on-image);
+    outline-offset: -6px;
+  }
+
+  .hikes[aria-busy='true'] .hikes__rows {
+    opacity: 0.5;
+    transition: opacity var(--duration-fast) var(--easing-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hikes__filter-caret svg,
+    .hike-row__media img,
+    .hike-row__media svg,
+    .hike-row__media::after,
+    .hike-row__arrow svg,
+    .hikes[aria-busy='true'] .hikes__rows {
+      transition: none;
+    }
+
+    .hike-row:hover .hike-row__arrow svg,
+    .hike-row:focus-visible .hike-row__arrow svg,
+    .hike-row:hover .hike-row__media img,
+    .hike-row:focus-visible .hike-row__media img {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Swaps the filter list and rows in place so choosing a country never reloads the page. */
+  class HikeList extends HTMLElement {
+    connectedCallback() {
+      this.sectionId = this.dataset.sectionId;
+
+      this.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        const link = event.target.closest('[data-filters] a, [data-pagination] a');
+        if (!link) return;
+
+        event.preventDefault();
+        this.load(link.href, true);
+      });
+
+      window.addEventListener('popstate', () => this.load(window.location.href, false));
+    }
+
+    async load(url, push) {
+      if (this.controller) this.controller.abort();
+      this.controller = new AbortController();
+      this.setAttribute('aria-busy', 'true');
+
+      const filters = this.querySelector('[data-filters]');
+      const wasOpen = Boolean(this.querySelector('[data-filters] details')?.open);
+      const keepFocus = Boolean(filters?.contains(document.activeElement));
+
+      try {
+        const target = new URL(url, window.location.origin);
+        target.searchParams.set('section_id', this.sectionId);
+
+        const response = await fetch(target, { signal: this.controller.signal });
+        if (!response.ok) throw new Error(response.statusText);
+
+        const markup = new DOMParser().parseFromString(await response.text(), 'text/html');
+
+        ['[data-filters]', '[data-rows]'].forEach((selector) => {
+          const next = markup.querySelector(selector);
+          const current = this.querySelector(selector);
+          if (next && current) current.replaceWith(next);
+        });
+
+        const details = this.querySelector('[data-filters] details');
+        if (details) details.open = wasOpen;
+        if (keepFocus) this.querySelector('[data-filters] summary')?.focus();
+
+        if (push) window.history.pushState({}, '', url);
+      } catch (error) {
+        if (error.name !== 'AbortError') window.location.href = url;
+      } finally {
+        this.removeAttribute('aria-busy');
+      }
+    }
+  }
+
+  if (!customElements.get('hike-list')) {
+    customElements.define('hike-list', HikeList);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.collection_hikes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:labels.subheading",
+      "default": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit"
+    }
+  ]
+}
+{% endschema %}

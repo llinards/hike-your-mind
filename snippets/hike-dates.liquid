@@ -1,0 +1,33 @@
+{% doc %}
+  Renders a departure's date range — "6 – 10 April" within one month, "April 19 – May 1" across two.
+
+  @param {string} start_date - The departure's start date
+  @param {string} [end_date] - The departure's end date, omitted for a single-day hike
+
+  @example
+  {% render 'hike-dates',
+    start_date: product.metafields.custom.start_date.value,
+    end_date: product.metafields.custom.end_date.value
+  %}
+{% enddoc %}
+
+{%- if start_date != blank -%}
+  {%- liquid
+    if end_date == blank
+      echo start_date | date: '%-d %B'
+    else
+      assign start_month = start_date | date: '%m'
+      assign end_month = end_date | date: '%m'
+
+      if start_month == end_month
+        assign range_start = start_date | date: '%-d'
+        assign range_finish = end_date | date: '%-d %B'
+      else
+        assign range_start = start_date | date: '%B %-d'
+        assign range_finish = end_date | date: '%B %-d'
+      endif
+
+      echo 'collections.hikes.date_range' | t: start: range_start, finish: range_finish
+    endif
+  -%}
+{%- endif -%}
