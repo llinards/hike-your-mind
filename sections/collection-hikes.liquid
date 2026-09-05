@@ -85,9 +85,9 @@
               assign hike_end = product.metafields.custom.hike_end_date.value
 
               if product.price_varies
-                assign price_amount = product.price_min | money_without_trailing_zeros
+                assign price_amount = product.price_min | money_without_trailing_zeros | remove: '.'
               else
-                assign price_amount = product.price | money_without_trailing_zeros
+                assign price_amount = product.price | money_without_trailing_zeros | remove: '.'
               endif
             -%}
 
@@ -117,7 +117,7 @@
                       {%- if hike_start != blank %}
                         <span class="hike-row__dates">
                           {%- if hike_end != blank -%}
-                            {{ hike_start | date: '%-d' }} - {{ hike_end | date: '%-d %B' }}
+                            {{ hike_start | date: '%-d %B' }} - {{ hike_end | date: '%-d %B' }}
                           {%- else -%}
                             {{ hike_start | date: '%-d %B' }}
                           {%- endif -%}
