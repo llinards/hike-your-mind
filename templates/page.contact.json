@@ -1,11 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "contact",
-      "settings": {}
+      "settings": {
+        "heading": "Share Your Idea with Us",
+        "heading_level": "h1",
+        "body": "<p>Do you have an idea for a special hiking experience?</p><p>Perhaps you are a photographer, yoga teacher, artist, guide, coach or simply someone with a meaningful idea to share.</p><p>Tell us about your idea, the preferred location, approximate time and how many people you imagine joining.</p>",
+        "image_opacity": 40,
+        "quote": "We can't wait\nto hear\nyour idea!",
+        "quote_size": 60,
+        "terms_url": ""
+      }
+    },
+    "reviews_ecQ9cd": {
+      "type": "reviews",
+      "blocks": {
+        "review_wxGkDa": {
+          "type": "review",
+          "name": "Natālija",
+          "settings": {
+            "image": "shopify://shop_images/hike-review-1.jpg",
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can’t even begin to describe how much our Tuscany hike meant to me. It was theEvent of My Year 2025, and you became My Person of the Year 2025. 💜</p><p>After this journey, I didn’t make any radical life decisions. The only thing I knew was that I wanted my world back, all of its colours and I wanted myself back....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
+          }
+        },
+        "review_wNQcpJ": {
+          "type": "review",
+          "name": "Laura Š.",
+          "settings": {
+            "image": "shopify://shop_images/hike-review-2.jpg",
+            "name": "Laura Š.",
+            "body": "<p>You were right about the GoreTex, and about how difficult it would be to come back to everyday life after this hike. After Tuscany, the feeling wasn’t nearly as profound.</p><p>The walk to Rome gave me so much more than a physical challenge. The real adventure happened within me.</p><p>The long journey allowed me to see my life from a completely different perspective....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
+          }
+        },
+        "review_99WV7h": {
+          "type": "review",
+          "settings": {
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
+            "date": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_wxGkDa",
+        "review_wNQcpJ",
+        "review_99WV7h"
+      ],
+      "name": "t:general.reviews",
+      "settings": {
+        "heading": "What Our Clients Say About Us",
+        "show_heading": true,
+        "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
+        "show_subheading": true,
+        "show_divider": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "reviews_ecQ9cd"
   ]
 }
