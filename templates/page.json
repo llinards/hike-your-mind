@@ -58,7 +58,9 @@
       "name": "t:general.reviews",
       "settings": {
         "heading": "What Our Clients Say About Us",
+        "show_heading": false,
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
+        "show_subheading": false,
         "show_divider": false,
         "card_max_width": 1024,
         "card_height": 360,
