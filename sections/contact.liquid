@@ -1,7 +1,8 @@
-{% comment %}Enquiry page: heading, feature icons and a quote above a Shopify contact form.{% endcomment %}
+{% comment %}Create a hike: a faded image panel of copy and icons beside a script-led contact form.{% endcomment %}
 
 {%- liquid
   assign heading_tag = section.settings.heading_level | default: 'h1'
+  assign panel_opacity = section.settings.image_opacity | divided_by: 100.0
 -%}
 
 {%- capture terms_link -%}
@@ -10,15 +11,23 @@
   </a>
 {%- endcapture -%}
 
-<div
-  class="contact"
-  style="
-    --quote-size: {{ section.settings.quote_size }}px;
-    --quote-rotation: {{ section.settings.quote_rotation }}deg;
-  "
->
-  <div class="contact__intro">
-    <div class="contact__lede">
+<div class="contact full-width">
+  <div class="contact__panel" style="--panel-opacity: {{ panel_opacity }};">
+    {%- if section.settings.image != blank -%}
+      <div class="contact__panel-media" aria-hidden="true">
+        {{
+          section.settings.image
+          | image_url: width: 2000
+          | image_tag:
+              widths: '600,800,1100,1500,2000',
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              loading: 'lazy',
+              alt: ''
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="contact__panel-content">
       {%- if section.settings.heading != blank -%}
         <{{ heading_tag }} class="contact__heading">{{ section.settings.heading }}</{{ heading_tag }}>
       {%- endif -%}
@@ -35,8 +44,8 @@
                 <span class="contact__feature-icon">
                   {{
                     block.settings.icon
-                    | image_url: width: 160
-                    | image_tag: widths: '40,60,80,120,160', sizes: '40px', loading: 'lazy', alt: block.settings.icon.alt
+                    | image_url: width: 180
+                    | image_tag: widths: '45,60,90,120,180', sizes: '60px', loading: 'lazy', alt: ''
                   }}
                 </span>
               {%- endif -%}
@@ -49,21 +58,19 @@
         </ul>
       {%- endif -%}
     </div>
-
-    {%- if section.settings.quote != blank -%}
-      <div class="contact__aside">
-        <blockquote class="contact__quote">
-          {{- section.settings.quote | escape | newline_to_br -}}
-        </blockquote>
-
-        <span class="contact__arrow" aria-hidden="true">
-          {{- 'icon-arrow-right.svg' | inline_asset_content -}}
-        </span>
-      </div>
-    {%- endif -%}
   </div>
 
-  <div class="contact__form-wrapper">
+  <div class="contact__aside">
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="contact__quote">
+        {{- section.settings.quote | escape | newline_to_br -}}
+      </blockquote>
+
+      <span class="contact__arrow" aria-hidden="true">
+        {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+      </span>
+    {%- endif -%}
+
     {%- form 'contact', class: 'contact__form' -%}
       {%- if form.posted_successfully? -%}
         <p class="contact__notice contact__notice--success" role="status">
@@ -75,49 +82,57 @@
         </div>
       {%- endif -%}
 
-      <div class="contact__fields">
-        <div class="contact__field">
-          <label class="contact__label" for="contact-name">{{ 'contact.form.name' | t }}</label>
-          <input
-            class="contact__input"
-            id="contact-name"
-            type="text"
-            name="contact[name]"
-            autocomplete="name"
-            required
-          >
-        </div>
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-name">{{ 'contact.form.name' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-name"
+          type="text"
+          name="contact[name]"
+          placeholder="{{ 'contact.form.name' | t }}"
+          autocomplete="name"
+          required
+        >
+      </div>
 
-        <div class="contact__field">
-          <label class="contact__label" for="contact-phone">{{ 'contact.form.phone' | t }}</label>
-          <input
-            class="contact__input"
-            id="contact-phone"
-            type="tel"
-            name="contact[phone]"
-            autocomplete="tel"
-            required
-          >
-        </div>
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-phone">{{ 'contact.form.phone' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-phone"
+          type="tel"
+          name="contact[phone]"
+          placeholder="{{ 'contact.form.phone' | t }}"
+          autocomplete="tel"
+          required
+        >
+      </div>
 
-        <div class="contact__field">
-          <label class="contact__label" for="contact-email">{{ 'contact.form.email' | t }}</label>
-          <input
-            class="contact__input"
-            id="contact-email"
-            type="email"
-            name="contact[email]"
-            autocomplete="email"
-            spellcheck="false"
-            autocapitalize="off"
-            required
-          >
-        </div>
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-email">{{ 'contact.form.email' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-email"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ 'contact.form.email' | t }}"
+          autocomplete="email"
+          spellcheck="false"
+          autocapitalize="off"
+          required
+        >
+      </div>
 
-        <div class="contact__field contact__field--wide">
-          <label class="contact__label" for="contact-body">{{ 'contact.form.message' | t }}</label>
-          <textarea class="contact__input contact__textarea" id="contact-body" name="contact[body]" rows="5" required></textarea>
-        </div>
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-body">{{ 'contact.form.message' | t }}</label>
+        <textarea
+          class="contact__input contact__textarea"
+          id="contact-body"
+          name="contact[body]"
+          rows="7"
+          placeholder="{{ 'contact.form.message' | t }}"
+          required
+        ></textarea>
       </div>
 
       <div class="contact__consent">
@@ -141,36 +156,57 @@
 
 {% stylesheet %}
   .contact {
-    --quote-scale: 0.55;
-    --quote-rendered-size: min(calc(var(--quote-size, 60px) * var(--quote-scale)), 7vw);
+    --quote-scale: 0.6;
+    --quote-rendered-size: min(calc(var(--quote-size, 60px) * var(--quote-scale)), 9vw);
 
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-section);
-    padding-block: var(--spacing-section);
-  }
-
-  .contact__intro {
     display: grid;
-    gap: var(--spacing-section);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   @media (width >= 750px) {
-    .contact__intro {
-      grid-template-columns: 1fr 1fr;
+    .contact {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: var(--spacing-section);
       align-items: start;
+      padding-inline-end: var(--page-margin);
     }
   }
 
-  .contact__lede {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    height: 100%;
+  .contact__panel {
+    position: relative;
+    isolation: isolate;
+    padding: var(--spacing-section) var(--page-margin);
   }
 
-  .contact__body {
-    font-family: var(--font-display--family);
+  @media (width >= 750px) {
+    .contact__panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding-block-end: calc(var(--spacing-section) * 1.5);
+    }
+  }
+
+  .contact__panel-media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background-color: var(--color-surface);
+  }
+
+  .contact__panel-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--panel-opacity, 0.4);
+  }
+
+  .contact__panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section);
+    height: 100%;
   }
 
   .contact__body p + p {
@@ -180,14 +216,13 @@
   .contact__features {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
     margin-block-start: auto;
     padding: 0;
     padding-block-start: var(--spacing-section);
     list-style: none;
   }
 
-  @media (width >= 1024px) {
+  @media (width >= 750px) {
     .contact__features {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -196,52 +231,64 @@
   .contact__feature {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0.75rem;
+    text-align: center;
+  }
+
+  /* Thin rules between the icons, as in the design — but never on a row's first cell. */
+  .contact__feature + .contact__feature {
+    border-inline-start: 0.5px solid var(--color-hairline);
+  }
+
+  @media (width < 750px) {
+    .contact__feature:nth-child(odd) {
+      border-inline-start: 0;
+    }
   }
 
   .contact__feature-icon img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3.75rem;
+    height: 3.75rem;
     object-fit: contain;
   }
 
   .contact__feature-text {
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-lead);
+    line-height: 1.15;
+    color: var(--color-neutral);
   }
 
   .contact__aside {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+    padding: var(--spacing-section) var(--page-margin);
+  }
+
+  @media (width >= 750px) {
+    .contact__aside {
+      padding-inline: 0;
+    }
   }
 
   .contact__quote {
-    rotate: var(--quote-rotation, -4deg);
-    transform-origin: 50% 50%;
+    align-self: start;
     font-family: var(--font-script--family);
     font-size: var(--quote-rendered-size);
     line-height: 1.15;
-    text-align: center;
+  }
+
+  .contact__arrow {
+    align-self: center;
+    margin-block: 1rem var(--spacing-section);
   }
 
   .contact__arrow svg {
-    width: 2.5rem;
-    height: 2.5rem;
-    rotate: 90deg;
-  }
-
-  @media (width >= 640px) {
-    .contact {
-      --quote-scale: 0.7;
-    }
-  }
-
-  @media (width >= 768px) {
-    .contact {
-      --quote-scale: 0.85;
-    }
+    width: 3.5rem;
+    height: 3.5rem;
+    rotate: 55deg;
   }
 
   @media (width >= 1024px) {
@@ -253,39 +300,12 @@
   .contact__form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .contact__fields {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  @media (width >= 750px) {
-    .contact__fields {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .contact__field--wide {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .contact__field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .contact__label,
-  .contact__consent-label {
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    gap: 1rem;
   }
 
   .contact__input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 1.125rem 1.25rem;
     border: 0.5px solid var(--color-hairline);
     border-radius: var(--style-border-radius-inputs);
     background-color: transparent;
@@ -294,33 +314,44 @@
     font-size: var(--font-size-ui);
   }
 
+  .contact__input::placeholder {
+    color: var(--color-foreground-muted);
+    opacity: 1;
+  }
+
   .contact__textarea {
     resize: vertical;
   }
 
   .contact__consent {
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .contact__checkbox {
     flex: 0 0 auto;
     width: 1.125rem;
     height: 1.125rem;
-    margin-block-start: 0.125rem;
     accent-color: var(--color-foreground);
   }
 
+  .contact__consent-label {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
   .contact__submit {
-    align-self: flex-start;
-    padding: 0.875rem 2.5rem;
-    border: 0.5px solid var(--color-foreground);
+    width: 100%;
+    padding: 1.125rem 2rem;
+    border: 0;
     border-radius: var(--style-border-radius-inputs);
     background-color: var(--color-foreground);
     color: var(--color-background);
     font-family: inherit;
     font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
     transition: opacity var(--duration-base) var(--easing-base);
   }
@@ -351,7 +382,7 @@
       "type": "text",
       "id": "heading",
       "label": "t:labels.heading",
-      "default": "Create a hike with us"
+      "default": "Share Your Idea with Us"
     },
     {
       "type": "select",
@@ -359,8 +390,14 @@
       "label": "t:labels.heading_level",
       "info": "t:info.heading_level",
       "options": [
-        { "value": "h1", "label": "t:options.heading_level.h1" },
-        { "value": "h2", "label": "t:options.heading_level.h2" }
+        {
+          "value": "h1",
+          "label": "t:options.heading_level.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.heading_level.h2"
+        }
       ],
       "default": "h1"
     },
@@ -368,14 +405,30 @@
       "type": "richtext",
       "id": "body",
       "label": "t:labels.paragraph",
-      "default": "<p>Tell us where you would like to walk and what you hope to find there. We will shape the route, the pace and the nights around you.</p>"
+      "default": "<p>Do you have an idea for a special hiking experience?</p><p>Perhaps you are a photographer, yoga teacher, artist, guide, coach or simply someone with a meaningful idea to share.</p><p>Tell us about your idea, the preferred location, approximate time and how many people you imagine joining.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.background"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "t:labels.image_opacity",
+      "info": "t:info.image_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40
     },
     {
       "type": "textarea",
       "id": "quote",
       "label": "t:labels.quote",
       "info": "t:info.quote",
-      "default": "Let's plan\nyour journey"
+      "default": "We can't wait\nto hear\nyour idea!"
     },
     {
       "type": "range",
@@ -386,17 +439,6 @@
       "step": 4,
       "unit": "px",
       "default": 60
-    },
-    {
-      "type": "range",
-      "id": "quote_rotation",
-      "label": "t:labels.quote_rotation",
-      "info": "t:info.quote_rotation",
-      "min": -15,
-      "max": 15,
-      "step": 1,
-      "unit": "deg",
-      "default": -4
     },
     {
       "type": "url",
@@ -430,10 +472,30 @@
     {
       "name": "t:general.contact",
       "blocks": [
-        { "type": "feature", "settings": { "text": "Small groups" } },
-        { "type": "feature", "settings": { "text": "Flights included" } },
-        { "type": "feature", "settings": { "text": "Curated routes" } },
-        { "type": "feature", "settings": { "text": "20% deposit" } }
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Personal Experience"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Carefully Planned"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Made for Your Group"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Memories that Last"
+          }
+        }
       ]
     }
   ]

@@ -98,12 +98,12 @@
   },
   "contact": {
     "form": {
-      "name": "Name",
-      "phone": "Phone number",
-      "email": "Email",
-      "message": "Tell us about the hike you have in mind",
+      "name": "Your Name *",
+      "phone": "Phone Number *",
+      "email": "Email Address *",
+      "message": "Tell About Your Idea *",
       "terms_html": "I accept the {{ link }}",
-      "terms_link": "Terms of Use & Privacy Policy",
+      "terms_link": "Term of Use & Privacy Policy",
       "terms_value": "Accepted",
       "submit": "Send enquiry",
       "success": "Thanks — your enquiry is on its way. We'll be in touch soon."
