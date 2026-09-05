@@ -1,14 +1,20 @@
-{% comment %} Hike departures as full-bleed bands, filtered without a page reload. {% endcomment %}
+{% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
 
 {%- liquid
-  assign filter_count = 0
-  for filter in collection.filters
-    if filter.param_name contains 'filter.p.m.'
-      if filter.values.size > 0
-        assign filter_count = filter_count | plus: 1
+  assign country_filter = collection.filters | where: 'param_name', 'filter.p.m.custom.country' | first
+
+  assign fallback_countries = ''
+  if country_filter.values.size == 0
+    for product in collection.products limit: 50
+      assign country = product.metafields.custom.country.value
+      if country != blank
+        unless fallback_countries contains country
+          assign fallback_countries = fallback_countries | append: country | append: '|'
+        endunless
       endif
-    endif
-  endfor
+    endfor
+  endif
+  assign fallback_countries = fallback_countries | split: '|' | sort
 -%}
 
 <hike-list class="hikes full-width" data-section-id="{{ section.id }}">
@@ -22,7 +28,7 @@
     </div>
 
     <div class="hikes__filters" data-filters>
-      {%- if filter_count > 0 -%}
+      {%- if country_filter.values.size > 0 or fallback_countries.size > 0 -%}
         <details class="hikes__filter">
           <summary class="hikes__filter-toggle">
             {{ 'collections.hikes.filters' | t }}
@@ -32,29 +38,30 @@
           </summary>
 
           <div class="hikes__filter-panel">
-            {%- for filter in collection.filters -%}
-              {%- if filter.param_name contains 'filter.p.m.' -%}
-                {%- if filter.values.size > 0 -%}
-                  {%- if filter_count > 1 -%}
-                    <p class="hikes__filter-label">{{ filter.label }}</p>
+            <ul class="hikes__filter-list" role="list">
+              {%- for value in country_filter.values -%}
+                <li>
+                  {%- if value.active -%}
+                    <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                      {{- value.label -}}
+                    </a>
+                  {%- else -%}
+                    <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
                   {%- endif -%}
+                </li>
+              {%- endfor -%}
 
-                  <ul class="hikes__filter-list" role="list">
-                    {%- for value in filter.values -%}
-                      <li>
-                        {%- if value.active -%}
-                          <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
-                            {{- value.label -}}
-                          </a>
-                        {%- else -%}
-                          <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
-                        {%- endif -%}
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
+              {%- for country in fallback_countries -%}
+                <li>
+                  <a
+                    class="hikes__filter-option"
+                    href="{{ collection.url }}?filter.p.m.custom.country={{ country | url_encode }}"
+                  >
+                    {{- country -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
           </div>
         </details>
       {%- endif -%}
@@ -240,14 +247,6 @@
     }
   }
 
-  .hikes__filter-label {
-    color: var(--color-foreground-muted);
-    font-size: var(--font-size-small);
-  }
-
-  .hikes__filter-list + .hikes__filter-label {
-    margin-block-start: 1rem;
-  }
 
   .hikes__filter-list {
     display: flex;
