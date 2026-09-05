@@ -1,3 +1,5 @@
 <svg overflow="visible" style="display: block;" width="27" height="16.4" viewBox="0 0 27 16.4" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Vector 14" d="M0 0.45H27M0 8.45H27M0 15.95H27" stroke="currentColor" stroke-width="0.9"/>
+<path class="icon-menu__bar icon-menu__bar--top" d="M0 0.45H27" stroke="currentColor" stroke-width="0.9"/>
+<path class="icon-menu__bar icon-menu__bar--middle" d="M0 8.45H27" stroke="currentColor" stroke-width="0.9"/>
+<path class="icon-menu__bar icon-menu__bar--bottom" d="M0 15.95H27" stroke="currentColor" stroke-width="0.9"/>
 </svg>

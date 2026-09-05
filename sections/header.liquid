@@ -8,8 +8,12 @@
 
   Mobile collapses to a single row with a hamburger that opens a <details>
   drawer holding the navigation and language switcher. `scroll-lock` is picked
-  up by critical.css to stop the page scrolling behind the open drawer, so no
-  JavaScript is involved.
+  up by critical.css to stop the page scrolling behind the open drawer.
+
+  Opening, closing and the hamburger's fold into an X are all CSS off the
+  `[open]` attribute; the only JavaScript is `header-drawer`, which delays the
+  close so the panel can animate out first. Without it the drawer still works,
+  it just shuts instantly.
 {% endcomment %}
 
 <header class="header full-width">
@@ -53,17 +57,19 @@
 
       {% render 'language-selector', class: 'header__language' %}
 
-      <details class="header__drawer" scroll-lock>
-        <summary class="header__icon header__drawer-toggle">
-          {{ 'icon-menu.svg' | inline_asset_content }}
-          <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
-        </summary>
+      <header-drawer>
+        <details class="header__drawer" scroll-lock>
+          <summary class="header__icon header__drawer-toggle">
+            {{ 'icon-menu.svg' | inline_asset_content }}
+            <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+          </summary>
 
-        <div class="header__drawer-panel">
-          {% render 'nav-menu', menu: section.settings.menu, class: 'nav-menu--stacked' %}
-          {% render 'language-selector' %}
-        </div>
-      </details>
+          <div class="header__drawer-panel">
+            {% render 'nav-menu', menu: section.settings.menu, class: 'nav-menu--stacked' %}
+            {% render 'language-selector' %}
+          </div>
+        </details>
+      </header-drawer>
     </div>
   </div>
 </header>
@@ -158,6 +164,10 @@
     line-height: 1;
   }
 
+  header-drawer {
+    display: contents;
+  }
+
   .header__drawer-toggle {
     list-style: none;
   }
@@ -169,6 +179,37 @@
   .header__drawer-toggle svg {
     width: 1.6875rem;
     height: auto;
+  }
+
+  /**
+   * The hamburger folds into an X while the drawer is open. The bars are the
+   * three paths of `icon-menu.svg`, and `view-box` puts their transform origin
+   * at the centre of the icon (13.5, 8.2 in user units).
+   *
+   * Order matters: transforms apply right to left, so the rotation must be
+   * written first for the bar to be moved onto the centre line and only then
+   * turned about it. Rotating first swings each bar around the centre while it
+   * still sits 7.75 units away, and the arms end up 4.5px apart — an X that
+   * crosses off its own middle.
+   */
+  .icon-menu__bar {
+    transform-box: view-box;
+    transform-origin: center;
+    transition:
+      transform var(--duration-base) var(--easing-base),
+      opacity var(--duration-fast) var(--easing-base);
+  }
+
+  .header__drawer[open]:not([data-closing]) .icon-menu__bar--top {
+    transform: rotate(45deg) translateY(7.75px);
+  }
+
+  .header__drawer[open]:not([data-closing]) .icon-menu__bar--middle {
+    opacity: 0;
+  }
+
+  .header__drawer[open]:not([data-closing]) .icon-menu__bar--bottom {
+    transform: rotate(-45deg) translateY(-7.75px);
   }
 
   .header__drawer-panel {
@@ -183,6 +224,38 @@
     border-block-end: 0.5px solid var(--color-hairline);
   }
 
+  /**
+   * Animations rather than transitions: a closed <details> hides its panel
+   * outright, so there is no start state for a transition to run from.
+   *
+   * Both are hung off the attributes rather than the panel itself, because the
+   * panel element survives a close. An animation on the panel's own rule stays
+   * applied and finished, so it plays once and never again; letting the
+   * selector stop matching cancels it, and re-matching starts it over.
+   */
+  .header__drawer[open] .header__drawer-panel {
+    animation: header-drawer-open var(--duration-base) var(--easing-base);
+  }
+
+  /* `header-drawer` holds the drawer open while this one runs. */
+  .header__drawer[open][data-closing] .header__drawer-panel {
+    animation: header-drawer-close var(--duration-base) var(--easing-base) forwards;
+  }
+
+  @keyframes header-drawer-open {
+    from {
+      opacity: 0;
+      transform: translateY(-0.75rem);
+    }
+  }
+
+  @keyframes header-drawer-close {
+    to {
+      opacity: 0;
+      transform: translateY(-0.75rem);
+    }
+  }
+
   .nav-menu--stacked {
     flex-direction: column;
     gap: 1.25rem;
@@ -192,6 +265,17 @@
   .header__nav,
   .header__language {
     display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-menu__bar {
+      transition: none;
+    }
+
+    .header__drawer[open] .header__drawer-panel,
+    .header__drawer[open][data-closing] .header__drawer-panel {
+      animation: none;
+    }
   }
 
   @media (width >= 1140px) {
@@ -222,6 +306,53 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  /**
+   * Holds a closing <details> open until its panel has animated out. Without
+   * this the browser tears the panel down on the click and the close is
+   * instant; opening needs no help, as the panel animates in off `[open]`.
+   */
+  class HeaderDrawer extends HTMLElement {
+    connectedCallback() {
+      const details = this.querySelector('details');
+      if (!details) return;
+
+      const summary = details.querySelector('summary');
+      const panel = details.querySelector('.header__drawer-panel');
+      if (!summary || !panel) return;
+
+      summary.addEventListener('click', (event) => {
+        if (!details.open) return;
+
+        event.preventDefault();
+
+        /* No animation runs under reduced motion, so there would be no
+           animationend to wait for. */
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          details.open = false;
+          return;
+        }
+
+        if (details.hasAttribute('data-closing')) return;
+
+        const close = (animation) => {
+          if (animation.target !== panel) return;
+          panel.removeEventListener('animationend', close);
+          details.removeAttribute('data-closing');
+          details.open = false;
+        };
+
+        panel.addEventListener('animationend', close);
+        details.setAttribute('data-closing', '');
+      });
+    }
+  }
+
+  if (!customElements.get('header-drawer')) {
+    customElements.define('header-drawer', HeaderDrawer);
+  }
+{% endjavascript %}
 
 {% schema %}
 {

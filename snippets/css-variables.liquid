@@ -21,8 +21,13 @@
     --font-display--family: 'Spectral', 'Iowan Old Style', 'Palatino', serif;
     --font-body--family: 'Rethink Sans', -apple-system, 'Segoe UI', system-ui, sans-serif;
 
+    /* The handwritten voice — pull quotes and Gerda's signature, nothing else.
+       The stack is deep because the fallback has to stay handwritten: a script
+       run set in the body sans reads as a mistake rather than a substitution. */
+    --font-script--family: 'HolidayFree', 'Segoe Script', 'Bradley Hand', cursive;
+
     /* Type scale — sizes, line heights and tracking as measured in Figma */
-    --font-size-display: 2.5rem;
+    --font-size-display: 2rem;
     --line-height-display: 1;
     --letter-spacing-display: -0.05em;
 
@@ -31,9 +36,10 @@
     --font-size-display-compact: 1.5rem;
 
     /* The home page's opening headline sits a step above the section headings.
+       Mobile-first: the desktop step is set below the 750px breakpoint.
        PROVISIONAL — scaled off the Home_D screenshot, not read from the Figma
        node, because the Figma file is not readable with the current seat. */
-    --font-size-hero: 4.5rem;
+    --font-size-hero: 3rem;
     --line-height-hero: 1.05;
     --letter-spacing-hero: -0.04em;
 
@@ -57,6 +63,10 @@
     /* Testimonial cards sit on their own 17px step in the design. */
     --font-size-quote: 1.0625rem;
     --line-height-quote: normal;
+
+    /* Spacing — the vertical rhythm a section puts around its own content.
+       Mobile-first: the desktop step is set below the 750px breakpoint. */
+    --spacing-section: 2rem;
 
     /* Colours */
     --color-background: {{ settings.background_color }};
@@ -85,5 +95,15 @@
     --duration-fast: 150ms;
     --duration-base: 300ms;
     --easing-base: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* The hero headline is the only step that changes size between breakpoints;
+     4.5rem is too wide for a phone. */
+  @media (width >= 750px) {
+    :root {
+      --font-size-hero: 4.5rem;
+      --font-size-display: 2.5rem;
+      --spacing-section: 3rem;
+    }
   }
 {% endstyle %}

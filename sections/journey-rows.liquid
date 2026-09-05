@@ -1,33 +1,4 @@
-{% comment %}
-  Journey rows — the three ways into the store, below the Home page hero.
-
-  An intro (heading plus one line of sub text) constrained to the centre column,
-  followed by full-bleed image bands. Each band carries its title low on the left
-  and an arrow on the far right, both in light ink over the photography.
-
-  The bands break out edge-to-edge, but the caption is inset by `--page-margin`,
-  so a row title lines up with the heading above it rather than with the viewport.
-
-  Rows are blocks, so the set is not fixed at three: the preset ships the three
-  from the design, and the merchant can add, remove or reorder from there. A row
-  with no link renders as a `<div>` — an anchor with no destination is a trap for
-  anyone tabbing through.
-
-  Rows with no image fall back to demo photography while the `demo_images`
-  setting is on. That is preview scaffolding — see the comment on `demo_ids`.
-{% endcomment %}
-
-{%- liquid
-  comment
-    Scaffolding: stand-in photography so the bands can be judged before any real
-    images exist. Pexels ids, hotlinked from their CDN — nothing is committed to
-    assets/. Ordered to match the preset: an Italian hillside, hikers on a ridge,
-    a group seen from behind with their packs in frame. Turn the `demo_images`
-    setting off (or pick real images) and this path is never reached. Delete the
-    setting and this list before launch.
-  endcomment
-  assign demo_ids = '11086353,733162,3297271' | split: ','
--%}
+{% comment %} The three ways into the store: an intro over full-bleed image bands, one per row block. {% endcomment %}
 
 {%- liquid
   assign intro_class = 'journey-rows__intro'
@@ -35,11 +6,6 @@
     assign intro_class = intro_class | append: ' journey-rows__intro--divided'
   endif
 
-  comment
-    The rule belongs to the heading, not to the section: with both text settings
-    empty there is nothing for it to sit above, and a hairline floating under
-    the hero reads as a mistake.
-  endcomment
   assign has_intro = false
   if section.settings.heading != blank
     assign has_intro = true
@@ -73,9 +39,6 @@
           assign wrapper = 'a'
         endif
 
-        assign scrim = block.settings.overlay | divided_by: 100.0
-        assign demo_index = forloop.index0 | modulo: demo_ids.size
-
         assign img_loading = 'lazy'
         assign img_priority = 'auto'
         if forloop.first
@@ -87,7 +50,7 @@
       <{{ wrapper }}
         class="journey-row"
         {% if wrapper == 'a' %}href="{{ block.settings.link }}"{% endif %}
-        style="--row-scrim: {{ scrim }};"
+        style="--image-position: {{ block.settings.image_position }}%;"
         {{ block.shopify_attributes }}
       >
         <div class="journey-row__media">
@@ -102,23 +65,6 @@
                   fetchpriority: img_priority,
                   alt: block.settings.image.alt
             }}
-          {%- elsif section.settings.demo_images -%}
-            {%- assign demo_id = demo_ids[demo_index] -%}
-            {% # theme-check-disable RemoteAsset %}
-            {%- comment -%}
-              Hotlinked on purpose: demo photography must not be committed to
-              assets/ or uploaded to the store. The band crops it with
-              object-fit, so these dimensions only supply the aspect hint.
-            {%- endcomment -%}
-            <img
-              src="https://images.pexels.com/photos/{{ demo_id }}/pexels-photo-{{ demo_id }}.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2000"
-              alt=""
-              width="2000"
-              height="1333"
-              loading="{{ img_loading }}"
-              fetchpriority="{{ img_priority }}"
-            >
-            {% # theme-check-enable RemoteAsset %}
           {%- else -%}
             {{ 'image' | placeholder_svg_tag: 'journey-row__placeholder' }}
           {%- endif -%}
@@ -142,23 +88,18 @@
   .journey-rows__intro {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding-block: 3rem 1.5rem;
+    gap: 1rem;
+    padding-block: var(--spacing-section);
   }
 
-  /**
-   * Same 0.5px hairline the header and footer use. The space above it is
-   * margin and the space below it padding, so the rule sits nearer the heading
-   * it introduces than the section it is separating from.
-   */
+  /* The deck is the display serif here, not the body sans — as in create-a-hike. */
+  .journey-rows__subheading {
+    font-family: var(--font-display--family);
+  }
+
   .journey-rows__intro--divided {
     border-block-start: 0.5px solid var(--color-hairline);
-    margin-block-start: 3rem;
-    padding-block-start: 2rem;
-  }
-
-  .journey-rows__subheading {
-    max-width: 90ch;
+    margin-block-start: var(--spacing-section);
   }
 
   .journey-rows {
@@ -167,17 +108,10 @@
     gap: var(--row-gap);
   }
 
-  /**
-   * The desktop band height arrives as `--row-height-desktop` on the inline
-   * style attribute, which outranks any stylesheet rule. Mapping it onto the
-   * used token inside a media query is what lets the mobile value below win at
-   * narrow widths.
-   */
   .journey-row {
     --row-height: min(56vw, 320px);
     --caption-inset: 1.5rem;
-
-    /* How far the image dims under the cursor, on top of `--row-scrim`. */
+    --row-scrim: 0.25;
     --row-hover-wash: 0.2;
 
     position: relative;
@@ -205,41 +139,19 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center var(--image-position, 50%);
     transition: transform var(--duration-base) var(--easing-base);
   }
 
-  /**
-   * A legibility ramp, not a palette colour: the caption is light ink and the
-   * photography underneath it is not guaranteed to be dark. Weighted to the
-   * bottom of the band because that is where the caption sits, and faded out
-   * well before the top so the image still reads as itself.
-   *
-   * On the media wrapper rather than the row: a pseudo-element paints after its
-   * host's children, so a scrim on the row itself would land on top of the
-   * caption and dim the very text it is there to hold up.
-   */
   .journey-row__media::after {
     content: '';
     position: absolute;
     inset: 0;
-
-    /**
-     * Two layers on one element: the merchant's bottom-weighted scrim as the
-     * background image, and a flat wash as the background colour underneath it.
-     * Keeping them on separate properties is what makes the hover state
-     * animate — a colour interpolates cleanly, a gradient does not.
-     */
     background-image: linear-gradient(to top, rgb(0 0 0 / var(--row-scrim)) 0%, rgb(0 0 0 / 0) 65%);
     background-color: rgb(0 0 0 / 0);
     transition: background-color var(--duration-base) var(--easing-base);
   }
 
-  /**
-   * Inset to the centre column rather than to `--page-margin`, so a row title
-   * starts on the same left edge as the heading above it. `--content-width`
-   * comes from the `.shopify-section` grid and resolves its percentage against
-   * the row, which is the same width as the section.
-   */
   .journey-row__caption {
     position: absolute;
     inset-inline: calc((100% - var(--content-width)) / 2);
@@ -250,7 +162,6 @@
     gap: 1.5rem;
   }
 
-  /* At the display step a title wraps and crowds the arrow on a phone. */
   .journey-row__title {
     font-size: var(--font-size-display-compact);
   }
@@ -262,7 +173,6 @@
   }
 
   .journey-row__arrow {
-    /* Pushed to the end so the arrow holds the right edge even without a title. */
     margin-inline-start: auto;
   }
 
@@ -279,11 +189,6 @@
     }
   }
 
-  /**
-   * Only linked rows respond: an unlinked row is a picture, and a picture that
-   * reacts to the cursor reads as broken. Focus-visible gets the same
-   * treatment so the keyboard sees what the mouse sees.
-   */
   a.journey-row:hover .journey-row__media::after,
   a.journey-row:focus-visible .journey-row__media::after {
     background-color: rgb(0 0 0 / var(--row-hover-wash));
@@ -299,16 +204,11 @@
     transform: scale(1.03);
   }
 
-  /* The global focus ring is black, which disappears against dark photography. */
   .journey-row:focus-visible {
     outline-color: var(--color-on-image);
     outline-offset: -6px;
   }
 
-  /**
-   * Reduced motion takes away the movement, not the feedback: the wash still
-   * comes in, it just arrives without a fade.
-   */
   @media (prefers-reduced-motion: reduce) {
     .journey-row__media img,
     .journey-row__media svg,
@@ -356,7 +256,7 @@
       "max": 600,
       "step": 10,
       "unit": "px",
-      "default": 340
+      "default": 270
     },
     {
       "type": "range",
@@ -367,12 +267,6 @@
       "step": 5,
       "unit": "px",
       "default": 30
-    },
-    {
-      "type": "checkbox",
-      "id": "demo_images",
-      "label": "t:labels.demo_images",
-      "default": true
     }
   ],
   "blocks": [
@@ -398,13 +292,14 @@
         },
         {
           "type": "range",
-          "id": "overlay",
-          "label": "t:labels.overlay",
+          "id": "image_position",
+          "label": "t:labels.image_position",
+          "info": "t:info.image_position",
           "min": 0,
-          "max": 80,
+          "max": 100,
           "step": 5,
           "unit": "%",
-          "default": 25
+          "default": 50
         }
       ]
     }

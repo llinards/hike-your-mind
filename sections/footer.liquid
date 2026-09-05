@@ -1,76 +1,138 @@
 {% comment %}
-  Site footer.
-
-  Three bands, as in the design:
-    1. Oversized wordmark, with the Instagram call-out opposite it
-    2. Closing tagline, with the Contacts / Menu / Company details columns
-    3. Copyright
-
-  The whole footer sits above a 0.5px hairline rule.
-
-  Note: the tagline renders on every template because `footer-group` is shared
-  by all of them. The design omits it on the Shop page only; leaving the
-  setting blank hides it everywhere.
+  Site footer. Three rows on desktop — wordmark opposite the Instagram call-out,
+  then tagline / contacts / menu / company details across four columns, then the
+  copyright. On phones everything stacks and the Instagram call-out drops to
+  second from last, as in the design.
 {% endcomment %}
+
+{%- liquid
+  # A filter chain cannot be used inline as a `t:` argument, so the year is
+  # resolved first.
+  assign current_year = 'now' | date: '%Y'
+
+  # The contacts and the company address come from the store's own details
+  # rather than theme settings, so they stay in step with what the merchant set
+  # up in the Shopify admin.
+  assign has_contacts = false
+  if shop.phone != blank
+    assign has_contacts = true
+  endif
+  if shop.email != blank
+    assign has_contacts = true
+  endif
+
+  # The address reads as one line: street, city, country, postal code. Each part
+  # is appended with its separator and the leading one trimmed afterwards, so a
+  # part the merchant has not filled in cannot leave a stray comma behind.
+  assign address_line = ''
+  if shop.address.street != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.street
+  endif
+  if shop.address.city != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.city
+  endif
+  if shop.address.country != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.country
+  endif
+  if shop.address.zip != blank
+    assign address_line = address_line | append: ', LV-' | append: shop.address.zip
+  endif
+  assign address_line = address_line | remove_first: ', '
+
+  # Shopify has no field for a registration or licence number, so they come from
+  # shop metafields defined under Settings > Custom data > Shop. The values are
+  # the bare numbers; the labels are supplied by the locale file.
+  assign registration_number = shop.metafields.custom.registration_number.value
+  assign license_number = shop.metafields.custom.license_number.value
+
+  assign has_company_details = false
+  if shop.address.company != blank
+    assign has_company_details = true
+  endif
+  if address_line != blank
+    assign has_company_details = true
+  endif
+  if registration_number != blank
+    assign has_company_details = true
+  endif
+  if license_number != blank
+    assign has_company_details = true
+  endif
+-%}
 
 <footer class="footer full-width">
   <div class="footer__inner">
-    <div class="footer__band footer__band--brand">
-      <div class="footer__wordmark">
-        {{ 'logo-wordmark-large.svg' | inline_asset_content }}
-        <span class="visually-hidden">{{ shop.name }}</span>
-      </div>
-
-      {% if section.settings.instagram_url != blank %}
-        <a class="footer__instagram" href="{{ section.settings.instagram_url }}">
-          <span class="footer__instagram-label">{{ 'general.social.follow_instagram' | t }}</span>
-          <span class="footer__instagram-icon">
-            {{ 'icon-instagram.svg' | inline_asset_content }}
-          </span>
-        </a>
-      {% endif %}
+    <div class="footer__wordmark">
+      {{ 'logo-wordmark-large.svg' | inline_asset_content }}
+      <span class="visually-hidden">{{ shop.name }}</span>
     </div>
 
-    <div class="footer__band footer__band--details">
-      {% if section.settings.tagline != blank %}
-        <p class="footer__tagline">{{ section.settings.tagline }}</p>
-      {% endif %}
+    {%- if section.settings.instagram_url != blank -%}
+      <a class="footer__instagram" href="{{ section.settings.instagram_url }}">
+        <span class="footer__instagram-label">{{ 'general.social.follow_instagram' | t }}</span>
+        <span class="footer__instagram-icon">
+          {{- 'icon-instagram.svg' | inline_asset_content -}}
+        </span>
+      </a>
+    {%- endif -%}
 
-      <div class="footer__columns">
-        {% if section.settings.contact_details != blank %}
-          <div class="footer__column">
-            <h2 class="footer__column-title">{{ 'general.footer.contacts' | t }}</h2>
-            {{ section.settings.contact_details }}
-          </div>
-        {% endif %}
+    {%- if section.settings.tagline != blank -%}
+      <p class="footer__tagline">{{ section.settings.tagline }}</p>
+    {%- endif -%}
 
-        {% if section.settings.menu != blank %}
-          <nav class="footer__column" aria-label="{{ 'general.footer.menu' | t }}">
-            <h2 class="footer__column-title">{{ 'general.footer.menu' | t }}</h2>
-            <ul class="footer__list">
-              {% for link in section.settings.menu.links %}
-                <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </nav>
-        {% endif %}
+    {%- if has_contacts -%}
+      <div class="footer__column footer__column--contacts">
+        <h2 class="footer__column-title">{{ 'general.footer.contacts' | t }}</h2>
 
-        {% if section.settings.company_details != blank %}
-          <div class="footer__column">
-            <h2 class="footer__column-title">{{ 'general.footer.company_details' | t }}</h2>
-            {{ section.settings.company_details }}
-          </div>
-        {% endif %}
+        {%- if shop.phone != blank -%}
+          <a class="footer__link" href="tel:{{ shop.phone | remove: ' ' }}">{{ shop.phone }}</a>
+        {%- endif -%}
+
+        {%- if shop.email != blank -%}
+          <a class="footer__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+        {%- endif -%}
       </div>
-    </div>
+    {%- endif -%}
 
-    {%- liquid
-      # A filter chain cannot be used inline as a `t:` argument, so the year is
-      # resolved first.
-      assign current_year = 'now' | date: '%Y'
-    -%}
+    {%- if section.settings.menu != blank -%}
+      <nav class="footer__column footer__column--menu" aria-label="{{ 'general.footer.menu' | t }}">
+        <h2 class="footer__column-title">{{ 'general.footer.menu' | t }}</h2>
+        <ul class="footer__list">
+          {%- for link in section.settings.menu.links -%}
+            <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- if has_company_details -%}
+      <div class="footer__column footer__column--company">
+        <h2 class="footer__column-title">{{ 'general.footer.company_details' | t }}</h2>
+
+        {%- if shop.address.company != blank -%}
+          <p>{{ shop.address.company }}</p>
+        {%- endif -%}
+
+        {%- if registration_number != blank -%}
+          <p>{{ 'general.footer.registration_number' | t: number: registration_number }}</p>
+        {%- endif -%}
+
+        {%- if address_line != blank -%}
+          <p>{{ address_line }}</p>
+        {%- endif -%}
+
+        {%- if license_number != blank -%}
+          <p>{{ 'general.footer.license_number' | t: number: license_number }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
     <p class="footer__copyright">
-      {{ 'general.footer.copyright' | t: year: current_year, shop_name: shop.name }}
+      {%- if section.settings.copyright != blank -%}
+        {{ section.settings.copyright }}
+      {%- else -%}
+        {{ 'general.footer.copyright' | t: year: current_year, shop_name: shop.name }}
+      {%- endif -%}
     </p>
   </div>
 </footer>
@@ -79,23 +141,24 @@
   .footer {
     display: grid;
     grid-template-columns: var(--content-grid);
-    margin-block-start: 5rem;
     border-block-start: 0.5px solid var(--color-hairline);
     color: var(--color-foreground-muted);
   }
 
   .footer__inner {
+    display: grid;
     grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    padding-block: 2.625rem 1.5rem;
+    row-gap: 2.5rem;
+    padding-block: 2.625rem;
   }
 
-  .footer__band {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  /* On phones the call-out leaves the wordmark and drops in above the copyright. */
+  .footer__instagram {
+    order: 1;
+  }
+
+  .footer__copyright {
+    order: 2;
   }
 
   .footer__wordmark {
@@ -111,15 +174,22 @@
   .footer__instagram {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1.5rem;
     color: inherit;
     text-decoration: none;
   }
 
-  .footer__instagram-label {
-    font-size: var(--font-size-display);
+  /* The two large lines in the footer are the body sans, not the display serif. */
+  .footer__instagram-label,
+  .footer__tagline {
+    font-size: var(--font-size-display-compact);
     line-height: var(--line-height-display);
     letter-spacing: var(--letter-spacing-display);
+  }
+
+  .footer__tagline {
+    color: var(--color-foreground);
   }
 
   .footer__instagram-icon {
@@ -131,21 +201,6 @@
   .footer__instagram-icon svg {
     width: 100%;
     height: 100%;
-  }
-
-  .footer__tagline {
-    max-width: 38ch;
-    font-family: var(--font-display--family);
-    font-size: var(--font-size-display);
-    line-height: var(--line-height-display);
-    letter-spacing: var(--letter-spacing-display);
-    color: var(--color-foreground);
-  }
-
-  .footer__columns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2.5rem;
   }
 
   .footer__column {
@@ -184,31 +239,91 @@
     text-decoration: underline;
   }
 
+  /* The contact links sit straight in the column, so stop them stretching
+     across it and taking the hover with them. */
+  .footer__column--contacts .footer__link {
+    width: fit-content;
+  }
+
   .footer__copyright {
     font-size: var(--font-size-small);
     line-height: var(--line-height-small);
     letter-spacing: var(--letter-spacing-small);
+    text-align: center;
   }
 
+  /* Tablets take the wordmark row and the three detail columns, but the tagline
+     still needs the full width — four across only fits once there is room for it. */
   @media (width >= 750px) {
     .footer__inner {
-      gap: 4.5rem;
+      /* The `min-content` floors keep an email address or a registration number
+         from being broken across two lines when the tracks get narrow. */
+      grid-template-columns:
+        minmax(min-content, 1.4fr)
+        minmax(min-content, 1fr)
+        minmax(min-content, 1.4fr);
+      grid-template-areas:
+        'brand    brand   social'
+        'tagline  tagline tagline'
+        'contacts menu    company'
+        'legal    legal   legal';
+      column-gap: 1.5rem;
     }
 
-    .footer__band {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4rem;
+    .footer__wordmark {
+      grid-area: brand;
     }
 
-    .footer__band--details {
-      align-items: flex-start;
+    .footer__instagram {
+      grid-area: social;
+      align-self: center;
+      justify-self: end;
     }
 
-    .footer__columns {
-      flex-wrap: nowrap;
-      gap: 3.5rem;
+    /* The design opens a wide band between the wordmark row and what follows. */
+    .footer__tagline {
+      grid-area: tagline;
+      margin-block-start: 4.5rem;
+      font-size: var(--font-size-display);
+    }
+
+    .footer__column--contacts {
+      grid-area: contacts;
+    }
+
+    .footer__column--menu {
+      grid-area: menu;
+    }
+
+    .footer__column--company {
+      grid-area: company;
+    }
+
+    .footer__copyright {
+      grid-area: legal;
+      text-align: left;
+    }
+  }
+
+  /* The design's four-across row. The detail columns take the width their own
+     content asks for and the tagline keeps whatever is left. */
+  @media (width >= 1280px) {
+    .footer__inner {
+      grid-template-columns: minmax(20rem, 1fr) auto auto auto;
+      grid-template-areas:
+        'brand   brand    social social'
+        'tagline contacts menu   company'
+        'legal   legal    legal  legal';
+      column-gap: 3.5rem;
+    }
+
+    .footer__inner > .footer__column {
+      margin-block-start: 4.5rem;
+    }
+
+    /* Only here is the brand row wide enough to hold the call-out on one line. */
+    .footer__instagram-label {
+      font-size: var(--font-size-display);
     }
   }
 {% endstylesheet %}
@@ -229,19 +344,15 @@
       "label": "t:labels.instagram_url"
     },
     {
-      "type": "richtext",
-      "id": "contact_details",
-      "label": "t:labels.contact_details"
-    },
-    {
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
     },
     {
-      "type": "richtext",
-      "id": "company_details",
-      "label": "t:labels.company_details"
+      "type": "text",
+      "id": "copyright",
+      "label": "t:labels.copyright",
+      "info": "t:info.copyright"
     }
   ]
 }

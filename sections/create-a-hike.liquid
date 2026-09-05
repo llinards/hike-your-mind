@@ -70,14 +70,13 @@
   .create-a-hike__intro {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding-block: 3rem 1.5rem;
+    gap: 1rem;
+    padding-block: var(--spacing-section);
   }
 
   .create-a-hike__intro--divided {
     border-block-start: 0.5px solid var(--color-hairline);
-    margin-block-start: 3rem;
-    padding-block-start: 2rem;
+    margin-block-start: var(--spacing-section);
   }
 
   /* The deck is the display serif here, not the body sans — see the design. */
@@ -90,7 +89,6 @@
    * column. Held to 4:3 on a phone, where 2.7:1 would leave a sliver.
    */
   .create-a-hike__image {
-    margin-block-start: 1rem;
     aspect-ratio: 4 / 3;
   }
 
@@ -119,7 +117,7 @@
 
   .create-a-hike__paragraph {
     max-width: 72ch;
-    margin-block-start: 2.5rem;
+    padding-block: var(--spacing-section);
     font-family: var(--font-display--family);
     font-size: var(--font-size-lead);
     line-height: var(--line-height-lead);
@@ -134,7 +132,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 0.75rem;
-    margin-block: 2rem 3rem;
+    padding-block-end: var(--spacing-section);
     color: inherit;
     font-family: var(--font-display--family);
     text-decoration: none;

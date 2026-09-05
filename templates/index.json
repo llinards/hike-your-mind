@@ -15,48 +15,56 @@
         "image-1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-clouds-hills.jpg",
             "height_ratio": 6
           }
         },
         "image-2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-sunburst-tree.jpg",
             "height_ratio": 6
           }
         },
         "image-3": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-wheat-sunset.jpg",
             "height_ratio": 1
           }
         },
         "image-4": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-valley-mist.jpg",
             "height_ratio": 6
           }
         },
         "image-5": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-sunset-ridges.jpg",
             "height_ratio": 5
           }
         },
         "image-6": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-cypresses.jpg",
             "height_ratio": 4
           }
         },
         "image-7": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-horses-fog.jpg",
             "height_ratio": 6
           }
         },
         "image-8": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hike-oak-heather-field.jpg",
             "height_ratio": 2
           }
         }
@@ -78,8 +86,7 @@
         "band_height": 1080,
         "column_width": 410,
         "column_fill": 12,
-        "speed": 30,
-        "demo_images": true
+        "speed": 30
       }
     },
     "journey_rows": {
@@ -90,7 +97,8 @@
           "settings": {
             "title": "Hiking in Italy",
             "link": "shopify://collections/hikes",
-            "overlay": 25
+            "image": "shopify://shop_images/hike-wheat-sunset.jpg",
+            "image_position": 50
           }
         },
         "row-2": {
@@ -98,7 +106,8 @@
           "settings": {
             "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
-            "overlay": 45
+            "image": "shopify://shop_images/create-a-hike-row.jpg",
+            "image_position": 30
           }
         },
         "row-3": {
@@ -106,7 +115,8 @@
           "settings": {
             "title": "Shop Hiking Essentials",
             "link": "shopify://collections/hiking-essentials-rentals",
-            "overlay": 35
+            "image": "shopify://shop_images/shop-hiking-essentials.jpg",
+            "image_position": 85
           }
         }
       },
@@ -119,9 +129,8 @@
         "heading": "Where Will Your Next Journey Begin?",
         "subheading": "From quiet trails in Latvia to sunlit paths in Italy and Portugal — find a route that feels close to you, and step into the journey at your own pace.",
         "show_divider": true,
-        "row_height": 340,
-        "row_gap": 30,
-        "demo_images": true
+        "row_height": 270,
+        "row_gap": 30
       }
     },
     "create_a_hike_mpiHwJ": {
@@ -137,11 +146,82 @@
         "cta_label": "Create a Hike With Us",
         "cta_link": "shopify://pages/create-a-hike"
       }
+    },
+    "my_story_NdPc7m": {
+      "type": "my-story",
+      "name": "t:general.my_story",
+      "settings": {
+        "heading": "My Story",
+        "body": "<p>It started on September 25, 2022, when I went on my first hike. Without any previous experience, I was wearing old running shoes.</p><p>There were 245 km ahead. I went from Porto to the Cathedral of Santiago, right now I'm getting a pleasant shiver as I write this.</p><p>I could not wish for a more beautiful road, no, I could not even imagine what it would bring me, where it would take me. Please, go hike yourself.</p><p>Your courage is the beginning of a new path. With love, respect and gratitude for yourself, your body.</p><p>And get comfortable shoes!</p>",
+        "signature": "Gerda",
+        "quote": "The journey of a\nthousand miles begins\nwith a single step.",
+        "quote_size": 48,
+        "quote_rotation": -12,
+        "image": "shopify://shop_images/hike-your-mind-gerda.jpg",
+        "image_max_width": 500,
+        "image_max_height": 550,
+        "image_zoom": 150,
+        "image_offset": 20,
+        "show_divider": true
+      }
+    },
+    "reviews_tTGrWK": {
+      "type": "reviews",
+      "blocks": {
+        "review_Vdgbzr": {
+          "type": "review",
+          "name": "Natālija",
+          "settings": {
+            "image": "shopify://shop_images/hike-review-1.jpg",
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can’t even begin to describe how much our Tuscany hike meant to me. It was theEvent of My Year 2025, and you became My Person of the Year 2025. 💜</p><p>After this journey, I didn’t make any radical life decisions. The only thing I knew was that I wanted my world back, all of its colours and I wanted myself back....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
+          }
+        },
+        "review_cJdHDc": {
+          "type": "review",
+          "name": "Laura Š.",
+          "settings": {
+            "image": "shopify://shop_images/hike-review-2.jpg",
+            "name": "Laura Š.",
+            "body": "<p>You were right about the GoreTex, and about how difficult it would be to come back to everyday life after this hike. After Tuscany, the feeling wasn’t nearly as profound.</p><p>The walk to Rome gave me so much more than a physical challenge. The real adventure happened within me.</p><p>The long journey allowed me to see my life from a completely different perspective....</p>",
+            "date": "05.06.2026.",
+            "link": "shopify://pages/reviews"
+          }
+        },
+        "review_RC77kk": {
+          "type": "review",
+          "settings": {
+            "name": "Natālija",
+            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
+            "date": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_Vdgbzr",
+        "review_cJdHDc",
+        "review_RC77kk"
+      ],
+      "name": "t:general.reviews",
+      "settings": {
+        "heading": "What Our Clients Say About Us",
+        "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
+        "show_divider": true,
+        "card_max_width": 1024,
+        "card_height": 360,
+        "card_height_mobile": 750,
+        "inactive_opacity": 40
+      }
     }
   },
   "order": [
     "main",
     "journey_rows",
-    "create_a_hike_mpiHwJ"
+    "create_a_hike_mpiHwJ",
+    "my_story_NdPc7m",
+    "reviews_tTGrWK"
   ]
 }

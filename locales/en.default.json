@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "404": {
     "title": "404",
@@ -39,6 +48,8 @@
       "contacts": "Contacts",
       "menu": "Menu",
       "company_details": "Company details",
+      "registration_number": "Reg. Number {{ number }}",
+      "license_number": "License Number {{ number }}",
       "copyright": "© {{ year }} {{ shop_name }}. All rights reserved."
     }
   },
@@ -46,6 +57,9 @@
     "read_more": "Read more",
     "read_less": "Read less",
     "empty": "No reviews have been published yet."
+  },
+  "reviews": {
+    "read_more": "Read more"
   },
   "customers": {
     "login": {
@@ -56,7 +70,13 @@
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "hikes": {
+      "filters": "Filters",
+      "date_range": "{{ start }} – {{ finish }}",
+      "price_from": "From {{ price }}",
+      "no_results": "No hikes match this filter yet. Try another country."
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
