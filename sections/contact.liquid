@@ -72,88 +72,90 @@
     {%- endif -%}
 
     {%- form 'contact', class: 'contact__form' -%}
-      {%- if section.settings.email_subject != blank -%}
-        <input type="hidden" name="contact[subject]" value="{{ section.settings.email_subject | escape }}">
-      {%- endif -%}
-
       {%- if form.posted_successfully? -%}
-        <p class="contact__notice contact__notice--success" role="status">
+        <p class="contact__notice contact__notice--success" role="status" tabindex="-1">
           {{- 'contact.form.success' | t -}}
         </p>
-      {%- elsif form.errors -%}
-        <div class="contact__notice contact__notice--error" role="alert">
-          {{ form.errors | default_errors }}
+      {%- else -%}
+        {%- if section.settings.email_subject != blank -%}
+          <input type="hidden" name="contact[subject]" value="{{ section.settings.email_subject | escape }}">
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="contact__notice contact__notice--error" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="contact__field">
+          <label class="visually-hidden" for="contact-name">{{ 'contact.form.name' | t }}</label>
+          <input
+            class="contact__input"
+            id="contact-name"
+            type="text"
+            name="contact[name]"
+            placeholder="{{ 'contact.form.name' | t }}"
+            autocomplete="name"
+            required
+          >
         </div>
+
+        <div class="contact__field">
+          <label class="visually-hidden" for="contact-phone">{{ 'contact.form.phone' | t }}</label>
+          <input
+            class="contact__input"
+            id="contact-phone"
+            type="tel"
+            name="contact[phone]"
+            placeholder="{{ 'contact.form.phone' | t }}"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <div class="contact__field">
+          <label class="visually-hidden" for="contact-email">{{ 'contact.form.email' | t }}</label>
+          <input
+            class="contact__input"
+            id="contact-email"
+            type="email"
+            name="contact[email]"
+            placeholder="{{ 'contact.form.email' | t }}"
+            autocomplete="email"
+            spellcheck="false"
+            autocapitalize="off"
+            required
+          >
+        </div>
+
+        <div class="contact__field">
+          <label class="visually-hidden" for="contact-body">{{ 'contact.form.message' | t }}</label>
+          <textarea
+            class="contact__input contact__textarea"
+            id="contact-body"
+            name="contact[body]"
+            rows="7"
+            placeholder="{{ 'contact.form.message' | t }}"
+            required
+          ></textarea>
+        </div>
+
+        <div class="contact__consent">
+          <input
+            class="contact__checkbox"
+            id="contact-terms"
+            type="checkbox"
+            name="contact[terms_accepted]"
+            value="{{ 'contact.form.terms_value' | t }}"
+            required
+          >
+          <label class="contact__consent-label" for="contact-terms">
+            {{ 'contact.form.terms_html' | t: link: terms_link }}
+          </label>
+        </div>
+
+        <button class="contact__submit" type="submit">{{ 'contact.form.submit' | t }}</button>
       {%- endif -%}
-
-      <div class="contact__field">
-        <label class="visually-hidden" for="contact-name">{{ 'contact.form.name' | t }}</label>
-        <input
-          class="contact__input"
-          id="contact-name"
-          type="text"
-          name="contact[name]"
-          placeholder="{{ 'contact.form.name' | t }}"
-          autocomplete="name"
-          required
-        >
-      </div>
-
-      <div class="contact__field">
-        <label class="visually-hidden" for="contact-phone">{{ 'contact.form.phone' | t }}</label>
-        <input
-          class="contact__input"
-          id="contact-phone"
-          type="tel"
-          name="contact[phone]"
-          placeholder="{{ 'contact.form.phone' | t }}"
-          autocomplete="tel"
-          required
-        >
-      </div>
-
-      <div class="contact__field">
-        <label class="visually-hidden" for="contact-email">{{ 'contact.form.email' | t }}</label>
-        <input
-          class="contact__input"
-          id="contact-email"
-          type="email"
-          name="contact[email]"
-          placeholder="{{ 'contact.form.email' | t }}"
-          autocomplete="email"
-          spellcheck="false"
-          autocapitalize="off"
-          required
-        >
-      </div>
-
-      <div class="contact__field">
-        <label class="visually-hidden" for="contact-body">{{ 'contact.form.message' | t }}</label>
-        <textarea
-          class="contact__input contact__textarea"
-          id="contact-body"
-          name="contact[body]"
-          rows="7"
-          placeholder="{{ 'contact.form.message' | t }}"
-          required
-        ></textarea>
-      </div>
-
-      <div class="contact__consent">
-        <input
-          class="contact__checkbox"
-          id="contact-terms"
-          type="checkbox"
-          name="contact[terms_accepted]"
-          value="{{ 'contact.form.terms_value' | t }}"
-          required
-        >
-        <label class="contact__consent-label" for="contact-terms">
-          {{ 'contact.form.terms_html' | t: link: terms_link }}
-        </label>
-      </div>
-
-      <button class="contact__submit" type="submit">{{ 'contact.form.submit' | t }}</button>
     {%- endform -%}
   </div>
 </div>
