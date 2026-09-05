@@ -167,15 +167,18 @@
   }
 
   .hikes__intro {
+    --intro-gap: 1rem;
+
     display: flex;
     flex-direction: column;
+    gap: var(--intro-gap);
     padding-block-start: var(--spacing-section);
   }
 
   .hikes__text {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--intro-gap);
   }
 
   .hikes__rows {
@@ -187,7 +190,6 @@
       flex-direction: row;
       align-items: flex-end;
       justify-content: space-between;
-      gap: 2rem;
     }
   }
 
@@ -210,7 +212,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: var(--font-size-ui);
+    font-size: var(--font-size-body);
     letter-spacing: var(--letter-spacing-ui);
     cursor: pointer;
     list-style: none;
