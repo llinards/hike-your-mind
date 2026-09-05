@@ -6,11 +6,25 @@
     assign intro_class = intro_class | append: ' reviews__intro--divided'
   endif
 
+  assign render_heading = false
+  if section.settings.show_heading
+    if section.settings.heading != blank
+      assign render_heading = true
+    endif
+  endif
+
+  assign render_subheading = false
+  if section.settings.show_subheading
+    if section.settings.subheading != blank
+      assign render_subheading = true
+    endif
+  endif
+
   assign has_intro = false
-  if section.settings.heading != blank
+  if render_heading
     assign has_intro = true
   endif
-  if section.settings.subheading != blank
+  if render_subheading
     assign has_intro = true
   endif
 
@@ -29,11 +43,11 @@
 
 {%- if has_intro -%}
   <div class="{{ intro_class }}">
-    {%- if section.settings.heading != blank -%}
+    {%- if render_heading -%}
       <h2 class="reviews__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
-    {%- if section.settings.subheading != blank -%}
+    {%- if render_subheading -%}
       <p class="reviews__subheading">{{ section.settings.subheading }}</p>
     {%- endif -%}
   </div>
@@ -391,10 +405,22 @@
       "default": "What Our Clients Say About Us"
     },
     {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "t:labels.show_heading",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "subheading",
       "label": "t:labels.subheading",
       "default": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subheading",
+      "label": "t:labels.show_subheading",
+      "default": true
     },
     {
       "type": "checkbox",
@@ -485,7 +511,17 @@
   "presets": [
     {
       "name": "t:general.reviews",
-      "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }]
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
     }
   ]
 }

@@ -103,7 +103,9 @@
     "card_height": "Card height",
     "card_height_mobile": "Card height on mobile",
     "inactive_opacity": "Opacity of surrounding reviews",
-    "copyright": "Copyright line"
+    "copyright": "Copyright line",
+    "show_heading": "Show heading",
+    "show_subheading": "Show subheading"
   },
   "options": {
     "alignment": {
