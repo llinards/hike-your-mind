@@ -1,11 +1,15 @@
-{% comment %}Create a hike: a faded image panel of copy and icons beside the Shopify Forms app block.{% endcomment %}
+{% comment %}Create a hike: a faded image panel of copy and icons beside a script-led contact form.{% endcomment %}
 
 {%- liquid
   assign heading_tag = section.settings.heading_level | default: 'h1'
   assign panel_opacity = section.settings.image_opacity | divided_by: 100.0
-  assign feature_blocks = section.blocks | where: 'type', 'feature'
-  assign app_blocks = section.blocks | where: 'type', '@app'
 -%}
+
+{%- capture terms_link -%}
+  <a class="contact__terms-link" href="{{ section.settings.terms_url | default: routes.root_url }}">
+    {{- 'contact.form.terms_link' | t -}}
+  </a>
+{%- endcapture -%}
 
 <div class="contact full-width">
   <div class="contact__panel" style="--panel-opacity: {{ panel_opacity }};">
@@ -32,9 +36,9 @@
         <div class="contact__body">{{ section.settings.body }}</div>
       {%- endif -%}
 
-      {%- if feature_blocks.size > 0 -%}
+      {%- if section.blocks.size > 0 -%}
         <ul class="contact__features" role="list">
-          {%- for block in feature_blocks -%}
+          {%- for block in section.blocks -%}
             <li class="contact__feature" {{ block.shopify_attributes }}>
               {%- if block.settings.icon != blank -%}
                 <span class="contact__feature-icon">
@@ -67,17 +71,86 @@
       </span>
     {%- endif -%}
 
-    <div class="contact__form-app">
-      {%- for block in app_blocks -%}
-        {% render block %}
-      {%- endfor -%}
-
-      {%- if app_blocks.size == 0 -%}
-        {%- if request.design_mode -%}
-          <p class="contact__hint">{{ 'contact.app_block_hint' | t }}</p>
-        {%- endif -%}
+    {%- form 'contact', class: 'contact__form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="contact__notice contact__notice--success" role="status">
+          {{- 'contact.form.success' | t -}}
+        </p>
+      {%- elsif form.errors -%}
+        <div class="contact__notice contact__notice--error" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
       {%- endif -%}
-    </div>
+
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-name">{{ 'contact.form.name' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-name"
+          type="text"
+          name="contact[name]"
+          placeholder="{{ 'contact.form.name' | t }}"
+          autocomplete="name"
+          required
+        >
+      </div>
+
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-phone">{{ 'contact.form.phone' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-phone"
+          type="tel"
+          name="contact[phone]"
+          placeholder="{{ 'contact.form.phone' | t }}"
+          autocomplete="tel"
+          required
+        >
+      </div>
+
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-email">{{ 'contact.form.email' | t }}</label>
+        <input
+          class="contact__input"
+          id="contact-email"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ 'contact.form.email' | t }}"
+          autocomplete="email"
+          spellcheck="false"
+          autocapitalize="off"
+          required
+        >
+      </div>
+
+      <div class="contact__field">
+        <label class="visually-hidden" for="contact-body">{{ 'contact.form.message' | t }}</label>
+        <textarea
+          class="contact__input contact__textarea"
+          id="contact-body"
+          name="contact[body]"
+          rows="7"
+          placeholder="{{ 'contact.form.message' | t }}"
+          required
+        ></textarea>
+      </div>
+
+      <div class="contact__consent">
+        <input
+          class="contact__checkbox"
+          id="contact-terms"
+          type="checkbox"
+          name="contact[terms_accepted]"
+          value="{{ 'contact.form.terms_value' | t }}"
+          required
+        >
+        <label class="contact__consent-label" for="contact-terms">
+          {{ 'contact.form.terms_html' | t: link: terms_link }}
+        </label>
+      </div>
+
+      <button class="contact__submit" type="submit">{{ 'contact.form.submit' | t }}</button>
+    {%- endform -%}
   </div>
 </div>
 
@@ -224,18 +297,13 @@
     }
   }
 
-  .contact__form-app {
+  .contact__form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
-  /* Shopify Forms owns this markup, so target elements rather than its class
-     names, which are not a stable contract. */
-  .contact__form-app input[type='text'],
-  .contact__form-app input[type='tel'],
-  .contact__form-app input[type='email'],
-  .contact__form-app textarea {
+  .contact__input {
     width: 100%;
     padding: 1.125rem 1.25rem;
     border: 0.5px solid var(--color-hairline);
@@ -246,23 +314,34 @@
     font-size: var(--font-size-ui);
   }
 
-  .contact__form-app input::placeholder,
-  .contact__form-app textarea::placeholder {
+  .contact__input::placeholder {
     color: var(--color-foreground-muted);
     opacity: 1;
   }
 
-  .contact__form-app textarea {
+  .contact__textarea {
     resize: vertical;
   }
 
-  .contact__form-app input[type='checkbox'] {
+  .contact__consent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact__checkbox {
+    flex: 0 0 auto;
     width: 1.125rem;
     height: 1.125rem;
     accent-color: var(--color-foreground);
   }
 
-  .contact__form-app button[type='submit'] {
+  .contact__consent-label {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  .contact__submit {
     width: 100%;
     padding: 1.125rem 2rem;
     border: 0;
@@ -274,12 +353,12 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
+    transition: opacity var(--duration-base) var(--easing-base);
   }
 
-  .contact__hint {
-    padding: 1rem;
-    border: 0.5px dashed var(--color-hairline);
-    font-size: var(--font-size-small);
+  .contact__submit:hover,
+  .contact__submit:focus-visible {
+    opacity: 0.85;
   }
 
   .contact__notice {
@@ -288,6 +367,11 @@
     font-size: var(--font-size-small);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .contact__submit {
+      transition: none;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -355,6 +439,12 @@
       "step": 4,
       "unit": "px",
       "default": 60
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "t:labels.terms_url",
+      "info": "t:info.terms_url"
     }
   ],
   "blocks": [
@@ -375,11 +465,9 @@
           "default": "Feature"
         }
       ]
-    },
-    {
-      "type": "@app"
     }
   ],
+  "max_blocks": 4,
   "presets": [
     {
       "name": "t:general.contact",

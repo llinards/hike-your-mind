@@ -97,6 +97,16 @@
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
   "contact": {
-    "app_block_hint": "Add the Shopify Forms “Create a hike” app block here to show the form."
+    "form": {
+      "name": "Your Name *",
+      "phone": "Phone Number *",
+      "email": "Email Address *",
+      "message": "Tell About Your Idea *",
+      "terms_html": "I accept the {{ link }}",
+      "terms_link": "Term of Use & Privacy Policy",
+      "terms_value": "Accepted",
+      "submit": "Send enquiry",
+      "success": "Thanks — your enquiry is on its way. We'll be in touch soon."
+    }
   }
 }
