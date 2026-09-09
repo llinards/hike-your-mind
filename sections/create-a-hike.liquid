@@ -436,12 +436,52 @@
     font-size: var(--font-size-small);
   }
 
+  .contact__notice--success {
+    --success-ink: #3f6b4a;
+
+    padding: 1.5rem;
+    border: 1px solid var(--success-ink);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: #ecead5;
+    background-color: color-mix(in oklab, var(--success-ink) 10%, var(--color-background));
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-body);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .contact__submit {
       transition: none;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  // Shopify returns from a successful post anchored on the form. Desktop has room
+  // to show the section from the top; phones stay on the message itself.
+  (function () {
+    function revealContactSuccess() {
+      var notice = document.querySelector('.contact__notice--success');
+
+      if (!notice) return;
+
+      if (window.location.hash === '#contact_form') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
+      var wide = window.matchMedia('(min-width: 1024px)').matches;
+      var target = wide ? notice.closest('.contact') : notice;
+
+      notice.focus({ preventScroll: true });
+      (target || notice).scrollIntoView({ block: 'start' });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', revealContactSuccess);
+    } else {
+      revealContactSuccess();
+    }
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
