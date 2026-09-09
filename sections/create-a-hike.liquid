@@ -78,7 +78,7 @@
         </p>
       {%- else -%}
         {%- if section.settings.email_subject != blank -%}
-          <input type="hidden" name="contact[subject]" value="{{ section.settings.email_subject | escape }}">
+          <input type="hidden" name="contact[form]" value="{{ section.settings.email_subject | escape }}">
         {%- endif -%}
 
         {%- if form.errors -%}
@@ -236,6 +236,11 @@
     height: 100%;
   }
 
+  /* Keeps the heading from dropping a single word onto its own line. */
+  .contact__heading {
+    text-wrap: balance;
+  }
+
   .contact__body p + p {
     margin-block-start: 1rem;
   }
@@ -245,11 +250,10 @@
     grid-template-columns: repeat(2, 1fr);
     margin-block-start: auto;
     padding: 0;
-    padding-block-start: var(--spacing-section);
     list-style: none;
   }
 
-  @media (width >= 750px) {
+  @media (width >= 1240px) {
     .contact__features {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -269,7 +273,12 @@
     border-inline-start: 0.5px solid var(--color-hairline);
   }
 
-  @media (width < 750px) {
+  @media (width < 1240px) {
+    /* Breaks the middle rule between rows, so it reads as one per row. */
+    .contact__features {
+      row-gap: var(--spacing-section);
+    }
+
     .contact__feature:nth-child(odd) {
       border-inline-start: 0;
     }
@@ -427,12 +436,52 @@
     font-size: var(--font-size-small);
   }
 
+  .contact__notice--success {
+    --success-ink: #3f6b4a;
+
+    padding: 1.5rem;
+    border: 1px solid var(--success-ink);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: #ecead5;
+    background-color: color-mix(in oklab, var(--success-ink) 10%, var(--color-background));
+    font-size: var(--font-size-lead);
+    line-height: var(--line-height-body);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .contact__submit {
       transition: none;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  // Shopify returns from a successful post anchored on the form. Desktop has room
+  // to show the section from the top; phones stay on the message itself.
+  (function () {
+    function revealContactSuccess() {
+      var notice = document.querySelector('.contact__notice--success');
+
+      if (!notice) return;
+
+      if (window.location.hash === '#contact_form') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+
+      var wide = window.matchMedia('(min-width: 1024px)').matches;
+      var target = wide ? notice.closest('.contact') : notice;
+
+      notice.focus({ preventScroll: true });
+      (target || notice).scrollIntoView({ block: 'start' });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', revealContactSuccess);
+    } else {
+      revealContactSuccess();
+    }
+  })();
+{% endjavascript %}
 
 {% schema %}
 {

@@ -113,16 +113,19 @@
     margin-inline-start: auto;
   }
 
+  /* The underline is drawn up front so the hover can fade its colour in. */
   .header__utility-link {
     color: var(--color-foreground);
     font-size: var(--font-size-ui);
     line-height: var(--line-height-ui);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: transparent;
     text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
   }
 
   .header__utility-link:hover {
-    text-decoration: underline;
+    text-decoration-color: currentcolor;
   }
 
   .header__icon {
