@@ -78,7 +78,7 @@
         </p>
       {%- else -%}
         {%- if section.settings.email_subject != blank -%}
-          <input type="hidden" name="contact[subject]" value="{{ section.settings.email_subject | escape }}">
+          <input type="hidden" name="contact[form]" value="{{ section.settings.email_subject | escape }}">
         {%- endif -%}
 
         {%- if form.errors -%}
