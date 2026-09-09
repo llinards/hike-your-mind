@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "contact",
+      "type": "create-a-hike",
       "settings": {
         "heading": "Share Your Idea with Us",
         "heading_level": "h1",
