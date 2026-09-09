@@ -36,6 +36,7 @@
 {%- endcapture -%}
 
 <div
+  id="myStory"
   class="{{ wrapper_class }}"
   style="
     --quote-size: {{ section.settings.quote_size }}px;
@@ -89,7 +90,7 @@
 
 {% stylesheet %}
   .my-story {
-    --quote-scale: 0.55;
+    --quote-scale: 0.5;
     --quote-rendered-size: min(calc(var(--quote-size, 60px) * var(--quote-scale)), 7vw);
     --section-space: calc(var(--spacing-section) * 0.5);
     --quote-bleed: 1.5;
@@ -225,7 +226,7 @@
       max-width: 100%;
       margin-block-end: 0;
       translate: -50% 0;
-      transform-origin: 25% 50%;
+      transform-origin: 30% 50%;
       font-size: var(--quote-size, 60px);
     }
   }
