@@ -236,6 +236,11 @@
     height: 100%;
   }
 
+  /* Keeps the heading from dropping a single word onto its own line. */
+  .contact__heading {
+    text-wrap: balance;
+  }
+
   .contact__body p + p {
     margin-block-start: 1rem;
   }
@@ -245,11 +250,10 @@
     grid-template-columns: repeat(2, 1fr);
     margin-block-start: auto;
     padding: 0;
-    padding-block-start: var(--spacing-section);
     list-style: none;
   }
 
-  @media (width >= 750px) {
+  @media (width >= 1240px) {
     .contact__features {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -269,7 +273,12 @@
     border-inline-start: 0.5px solid var(--color-hairline);
   }
 
-  @media (width < 750px) {
+  @media (width < 1240px) {
+    /* Breaks the middle rule between rows, so it reads as one per row. */
+    .contact__features {
+      row-gap: var(--spacing-section);
+    }
+
     .contact__feature:nth-child(odd) {
       border-inline-start: 0;
     }
