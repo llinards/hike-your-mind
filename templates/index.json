@@ -195,11 +195,7 @@
       "settings": {
         "heading": "What Our Clients Say About Us",
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
-        "show_divider": true,
-        "card_max_width": 1024,
-        "card_height": 360,
-        "card_height_mobile": 750,
-        "inactive_opacity": 40
+        "show_divider": true
       }
     }
   },

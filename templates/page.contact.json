@@ -11,14 +11,52 @@
   "sections": {
     "main": {
       "type": "create-a-hike",
+      "blocks": {
+        "feature_r4M97J": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/mountains-thin_1.svg",
+            "text": "Personal Experience"
+          }
+        },
+        "feature_taGJE4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/map-trifold-thin_1.svg",
+            "text": "Carefully Planned"
+          }
+        },
+        "feature_Hi4fPg": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/users-three-thin_1.svg",
+            "text": "Made for Your Group"
+          }
+        },
+        "feature_DcVWEn": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/heart-thin_1.svg",
+            "text": "Memories that Last"
+          }
+        }
+      },
+      "block_order": [
+        "feature_r4M97J",
+        "feature_taGJE4",
+        "feature_Hi4fPg",
+        "feature_DcVWEn"
+      ],
       "settings": {
         "heading": "Share Your Idea with Us",
         "heading_level": "h1",
-        "body": "<p>Do you have an idea for a special hiking experience?</p><p>Perhaps you are a photographer, yoga teacher, artist, guide, coach or simply someone with a meaningful idea to share.</p><p>Tell us about your idea, the preferred location, approximate time and how many people you imagine joining.</p>",
+        "body": "<p>Do you have an idea for a special hiking experience? </p><p>Perhaps you are a photographer, yoga teacher, artist, guide, coach or simply someone with a meaningful idea to share.</p><p>Together with HIKE YOUR MIND, you can create a hike that brings people together through movement, nature and your chosen activity. You take care of the theme — what we will do, what kind of experience you want to offer and how many people you would like to invite.</p><p>HIKE YOUR MIND will take care of the route, hiking structure and practical planning, so the experience feels safe, thoughtful and close to nature.</p><p>Tell us about your idea, the preferred location, approximate time and how many people you imagine joining. </p><p>Please also leave your contacts so we can reach you.</p>",
         "image": "shopify://shop_images/create-a-hike_0c75a4a9-c5ae-4e13-a46d-ff0953dc00fc.jpg",
         "image_opacity": 40,
         "quote": "We can't wait\nto hear\nyour idea!",
-        "quote_size": 60
+        "quote_size": 60,
+        "terms_url": "",
+        "email_subject": "Create a hike enquiry"
       }
     },
     "reviews_ecQ9cd": {

@@ -96,7 +96,6 @@
 
     {%- if section.settings.menu != blank -%}
       <nav class="footer__column footer__column--menu" aria-label="{{ 'general.footer.menu' | t }}">
-        <h2 class="footer__column-title">{{ 'general.footer.menu' | t }}</h2>
         <ul class="footer__list">
           {%- for link in section.settings.menu.links -%}
             <li><a class="footer__link" href="{{ link.url }}">{{ link.title }}</a></li>
