@@ -11,6 +11,42 @@
   "sections": {
     "main": {
       "type": "create-a-hike",
+      "blocks": {
+        "feature_r4M97J": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/mountains-thin_1.svg",
+            "text": "Personal Experience"
+          }
+        },
+        "feature_taGJE4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/map-trifold-thin_1.svg",
+            "text": "Carefully Planned"
+          }
+        },
+        "feature_Hi4fPg": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/users-three-thin_1.svg",
+            "text": "Made for Your Group"
+          }
+        },
+        "feature_DcVWEn": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/heart-thin_1.svg",
+            "text": "Memories that Last"
+          }
+        }
+      },
+      "block_order": [
+        "feature_r4M97J",
+        "feature_taGJE4",
+        "feature_Hi4fPg",
+        "feature_DcVWEn"
+      ],
       "settings": {
         "heading": "Share Your Idea with Us",
         "heading_level": "h1",
