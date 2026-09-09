@@ -170,13 +170,21 @@
     height: auto;
   }
 
+  /* A border rather than an underline, so the rule carries on under the icon. */
   .footer__instagram {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
+    padding-block-end: 0.25em;
+    border-block-end: 1px solid transparent;
     color: inherit;
     text-decoration: none;
+    transition: border-color var(--duration-base) var(--easing-base);
+  }
+
+  .footer__instagram:hover {
+    border-block-end-color: currentcolor;
   }
 
   /* The two large lines in the footer are the body sans, not the display serif. */
@@ -228,14 +236,18 @@
     list-style: none;
   }
 
+  /* The underline is always drawn and only its colour changes, because
+     text-decoration-line itself cannot be transitioned. */
   .footer__link {
     color: inherit;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: transparent;
     text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
   }
 
   .footer__link:hover {
-    text-decoration: underline;
+    text-decoration-color: currentcolor;
   }
 
   /* The contact links sit straight in the column, so stop them stretching

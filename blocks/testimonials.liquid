@@ -206,10 +206,14 @@
     opacity: 0.5;
   }
 
+  /* The underline is drawn up front so the hover can fade its colour in. */
   .testimonial__toggle {
     list-style: none;
     cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
     text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
   }
 
   .testimonial__toggle::-webkit-details-marker {
@@ -217,7 +221,7 @@
   }
 
   .testimonial__toggle:hover {
-    text-decoration: underline;
+    text-decoration-color: currentcolor;
   }
 
   .testimonial__disclosure .testimonial__toggle-less,
