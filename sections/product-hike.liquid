@@ -6,7 +6,7 @@
     to keep the prices on the page.
   endcomment
   assign variant = product.selected_or_first_available_variant | default: product.variants.first
-  assign percent_ratio = section.settings.deposit_percent | divided_by: 100.0
+  assign percent_ratio = settings.deposit_percent | divided_by: 100.0
   assign deposit_cents = variant.price
   assign full_cents = deposit_cents | divided_by: percent_ratio | round
   assign balance_cents = full_cents | minus: deposit_cents
@@ -15,7 +15,15 @@
 
   assign hike_start = product.metafields.custom.hike_start_date.value
   assign hike_end = product.metafields.custom.hike_end_date.value
-  assign features = product.metafields.custom.hike_features.value
+  comment
+    A "list of values" metafield returns an array, a single-value one returns a
+    string. Splitting on a sentinel that never occurs normalises both to an array.
+  endcomment
+  assign features_field = product.metafields.custom.hike_features
+  assign features = features_field.value
+  unless features_field.type contains 'list.'
+    assign features = features_field.value | split: '~|~'
+  endunless
 -%}
 
 {%- comment -%}
@@ -27,16 +35,16 @@
   {
     {%- for quantity in (1..max_quantity) -%}
       "{{ quantity }}": {
-        "full": {{ full_cents | times: quantity | money_without_trailing_zeros | json }},
-        "deposit": {{ deposit_cents | times: quantity | money_without_trailing_zeros | json }},
-        "balance": {{ balance_cents | times: quantity | money_without_trailing_zeros | json }}
+        "full": {{ full_cents | times: quantity | money_without_trailing_zeros | remove: '.' | json }},
+        "deposit": {{ deposit_cents | times: quantity | money_without_trailing_zeros | remove: '.' | json }},
+        "balance": {{ balance_cents | times: quantity | money_without_trailing_zeros | remove: '.' | json }}
       }{% unless forloop.last %},{% endunless %}
     {%- endfor -%}
   }
 {%- endcapture -%}
 
 {%- capture deposit_price_html -%}
-  <span data-summary="deposit">{{- deposit_cents | money_without_trailing_zeros -}}</span>
+  <span data-summary="deposit">{{- deposit_cents | money_without_trailing_zeros | remove: '.' -}}</span>
 {%- endcapture -%}
 
 <div class="hike-product">
@@ -188,7 +196,7 @@
         <div class="summary__row">
           <span class="summary__label">{{ 'product.hike.full_price' | t }}</span>
           <span class="summary__value" data-summary="full">
-            {{- full_cents | money_without_trailing_zeros -}}
+            {{- full_cents | money_without_trailing_zeros | remove: '.' -}}
           </span>
         </div>
 
@@ -203,7 +211,7 @@
           <div class="summary__row">
             <span class="summary__label">{{ 'product.hike.balance' | t: days: due_days }}</span>
             <span class="summary__value" data-summary="balance">
-              {{- balance_cents | money_without_trailing_zeros -}}
+              {{- balance_cents | money_without_trailing_zeros | remove: '.' -}}
             </span>
           </div>
         {%- endif -%}
@@ -211,7 +219,7 @@
         <div class="summary__row summary__row--total">
           <span class="summary__label">{{ 'product.hike.total' | t }}</span>
           <span class="summary__value" data-summary="deposit">
-            {{- deposit_cents | money_without_trailing_zeros -}}
+            {{- deposit_cents | money_without_trailing_zeros | remove: '.' -}}
           </span>
         </div>
       </div>
@@ -265,7 +273,9 @@
     }
   }
 
+  /* create-a-hike's bare `h1` rule is theme-wide, so the heading step is set back here. */
   .hike-product__title {
+    font-size: var(--font-size-display);
     text-wrap: balance;
   }
 
@@ -496,7 +506,7 @@
   }
 
   .hike-product__quantity-label {
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-small);
     color: var(--summary-ink);
   }
 
@@ -567,13 +577,23 @@
     align-items: baseline;
   }
 
+  .summary__label {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
   .summary__value {
     flex: 0 0 auto;
     white-space: nowrap;
   }
 
+  /* The amount and the word "deposit" share one span, so they stay on one step. */
   .summary__value--small {
     font-size: var(--font-size-small);
+  }
+
+  .summary__row--total .summary__label {
+    font-size: var(--font-size-body);
   }
 
   .summary__row--total {
@@ -763,17 +783,6 @@
 {
   "name": "t:general.product_hike",
   "settings": [
-    {
-      "type": "range",
-      "id": "deposit_percent",
-      "label": "t:labels.deposit_percent",
-      "info": "t:info.deposit_percent",
-      "min": 5,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 20
-    },
     {
       "type": "range",
       "id": "balance_due_days",
