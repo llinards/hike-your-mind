@@ -38,6 +38,7 @@
     "password": "Password",
     "primary": "Primary",
     "product": "Product",
+    "product_hike": "Hike product",
     "review": "Review",
     "reviews": "Reviews",
     "row": "Row",
@@ -107,7 +108,11 @@
     "heading_level": "Heading level",
     "terms_url": "Terms & privacy page",
     "image_opacity": "Background image opacity",
-    "email_subject": "Notification label"
+    "email_subject": "Notification label",
+    "deposit_percent": "Deposit percentage",
+    "balance_due_days": "Balance due before departure",
+    "deposit_note": "Deposit note",
+    "max_quantity": "Maximum quantity"
   },
   "options": {
     "alignment": {
@@ -150,6 +155,10 @@
     "heading_level": "Use Heading 1 when this section leads its own page, Heading 2 when the page already has a title above it.",
     "terms_url": "Where the \"Terms of Use & Privacy Policy\" link goes. Defaults to the homepage.",
     "image_opacity": "How far the panel photo fades back behind the text. The design sits at 40%.",
-    "email_subject": "Listed as a labelled line in the notification email so you can tell forms apart. Shopify sets the subject line itself and it cannot be changed here. Leave blank to omit."
+    "email_subject": "Listed as a labelled line in the notification email so you can tell forms apart. Shopify sets the subject line itself and it cannot be changed here. Leave blank to omit.",
+    "deposit_percent": "The share of the full trip price a customer pays today. The product's own price in Shopify is the deposit, so this is what the full trip price and remaining balance are worked back from.",
+    "balance_due_days": "How many days before departure the remaining balance falls due. Shown in the reservation summary — keep the deposit note in step with it.",
+    "deposit_note": "Sits under the features, above the quantity picker.",
+    "max_quantity": "The most places one customer can reserve in a single booking."
   }
 }

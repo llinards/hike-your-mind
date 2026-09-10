@@ -96,6 +96,23 @@
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
+  "product": {
+    "hike": {
+      "pay_today": "Pay today",
+      "deposit_amount_html": "{{ price }} deposit",
+      "show_image": "Show image {{ number }}",
+      "quantity": "Quantity",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "summary": "Reservation summary",
+      "full_price": "Full trip price",
+      "reserve": "Pay today to reserve your place",
+      "balance": "Remaining balance ({{ days }} days before the trip)",
+      "total": "Total",
+      "checkout": "Proceed to checkout",
+      "sold_out": "Sold out"
+    }
+  },
   "contact": {
     "form": {
       "name": "Your Name *",
