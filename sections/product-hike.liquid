@@ -1,0 +1,810 @@
+{% comment %}Hike product: a photo carousel beside the deposit reservation summary.{% endcomment %}
+
+{%- liquid
+  comment
+    A sold-out departure has no available variant, so fall back to the first one
+    to keep the prices on the page.
+  endcomment
+  assign variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign percent_ratio = section.settings.deposit_percent | divided_by: 100.0
+  assign deposit_cents = variant.price
+  assign full_cents = deposit_cents | divided_by: percent_ratio | round
+  assign balance_cents = full_cents | minus: deposit_cents
+  assign max_quantity = section.settings.max_quantity
+  assign due_days = section.settings.balance_due_days
+
+  assign hike_start = product.metafields.custom.hike_start_date.value
+  assign hike_end = product.metafields.custom.hike_end_date.value
+  assign features = product.metafields.custom.hike_features.value
+-%}
+
+{%- comment -%}
+  Every amount scales linearly with quantity, so the money strings are rendered
+  once per allowed quantity and swapped by the script. That keeps the shop's own
+  money format authoritative instead of reimplementing it in JavaScript.
+{%- endcomment -%}
+{%- capture summary_map -%}
+  {
+    {%- for quantity in (1..max_quantity) -%}
+      "{{ quantity }}": {
+        "full": {{ full_cents | times: quantity | money_without_trailing_zeros | json }},
+        "deposit": {{ deposit_cents | times: quantity | money_without_trailing_zeros | json }},
+        "balance": {{ balance_cents | times: quantity | money_without_trailing_zeros | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }
+{%- endcapture -%}
+
+{%- capture deposit_price_html -%}
+  <span data-summary="deposit">{{- deposit_cents | money_without_trailing_zeros -}}</span>
+{%- endcapture -%}
+
+<div class="hike-product">
+  <h1 class="hike-product__title">
+    {{- product.title -}}
+    {%- if hike_start != blank %}
+      <span class="hike-product__dates">
+        {%- if hike_end != blank -%}
+          {{ hike_start | date: '%-d %B' }} - {{ hike_end | date: '%-d %B' }}
+        {%- else -%}
+          {{ hike_start | date: '%-d %B' }}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </h1>
+
+  <hike-gallery class="hike-gallery">
+    <div class="hike-gallery__stage">
+      {%- if product.images.size > 0 -%}
+        <ul class="hike-gallery__track" role="list" tabindex="0" aria-label="{{ 'general.accessibility.image_gallery' | t }}" data-track>
+          {%- for image in product.images -%}
+            {%- liquid
+              assign img_loading = 'lazy'
+              assign img_priority = 'auto'
+              if forloop.first
+                assign img_loading = 'eager'
+                assign img_priority = 'high'
+              endif
+              assign img_alt = image.alt | default: product.title
+            -%}
+            <li class="hike-gallery__slide" data-slide>
+              {{
+                image
+                | image_url: width: 2000
+                | image_tag:
+                    widths: '600,800,1100,1500,2000',
+                    sizes: '(min-width: 1024px) 54vw, 100vw',
+                    loading: img_loading,
+                    fetchpriority: img_priority,
+                    alt: img_alt
+              }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <div class="hike-gallery__slide">
+          {{ 'image' | placeholder_svg_tag: 'hike-gallery__placeholder' }}
+        </div>
+      {%- endif -%}
+
+      {%- if product.images.size > 1 -%}
+        <button class="hike-gallery__arrow hike-gallery__arrow--previous" type="button" data-direction="previous">
+          {{ 'icon-arrow-right.svg' | inline_asset_content }}
+          <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
+        </button>
+        <button class="hike-gallery__arrow hike-gallery__arrow--next" type="button" data-direction="next">
+          {{ 'icon-arrow-right.svg' | inline_asset_content }}
+          <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      One row, never wrapping — the images past the fifth stay in the strip's own
+      scroller and are paged into view as the main carousel advances.
+    {%- endcomment -%}
+    {%- if product.images.size > 1 -%}
+      <ul class="hike-gallery__thumbs" role="list" data-thumbs>
+        {%- for image in product.images -%}
+          <li class="hike-gallery__thumb">
+            <button class="hike-gallery__thumb-button" type="button" data-index="{{ forloop.index0 }}">
+              {{
+                image
+                | image_url: width: 500
+                | image_tag:
+                    widths: '150,200,300,400,500',
+                    sizes: '(min-width: 1024px) 11vw, 30vw',
+                    loading: 'lazy',
+                    alt: ''
+              }}
+              <span class="visually-hidden">
+                {{- 'product.hike.show_image' | t: number: forloop.index -}}
+              </span>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </hike-gallery>
+
+  <hike-reservation class="hike-product__info" data-max="{{ max_quantity }}">
+    <p class="hike-product__deposit">
+      <span class="hike-product__deposit-lead">{{ 'product.hike.pay_today' | t }}</span>
+      {{ 'product.hike.deposit_amount_html' | t: price: deposit_price_html }}
+    </p>
+
+    {%- if features.size > 0 -%}
+      <ul class="hike-product__features" role="list">
+        {%- for feature in features limit: 5 -%}
+          <li class="hike-product__feature">{{ feature }}</li>
+        {%- endfor -%}
+      </ul>
+
+      <hr class="hike-product__rule">
+    {%- endif -%}
+
+    {%- if section.settings.deposit_note != blank -%}
+      <div class="hike-product__note">{{ section.settings.deposit_note }}</div>
+    {%- endif -%}
+
+    {%- form 'product', product, class: 'hike-product__form' -%}
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <input type="hidden" name="return_to" value="/checkout">
+
+      <div class="hike-product__quantity">
+        <label class="hike-product__quantity-label" for="hike-quantity-{{ section.id }}">
+          {{- 'product.hike.quantity' | t -}}
+        </label>
+
+        <div class="quantity">
+          <button class="quantity__button" type="button" data-step="-1">
+            <span aria-hidden="true">&minus;</span>
+            <span class="visually-hidden">{{ 'product.hike.decrease' | t }}</span>
+          </button>
+
+          <input
+            class="quantity__input"
+            id="hike-quantity-{{ section.id }}"
+            type="number"
+            name="quantity"
+            value="1"
+            min="1"
+            max="{{ max_quantity }}"
+            step="1"
+            inputmode="numeric"
+            data-quantity
+          >
+
+          <button class="quantity__button" type="button" data-step="1">
+            <span aria-hidden="true">+</span>
+            <span class="visually-hidden">{{ 'product.hike.increase' | t }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="summary">
+        <h2 class="summary__title">{{ 'product.hike.summary' | t }}</h2>
+
+        <div class="summary__row">
+          <span class="summary__label">{{ 'product.hike.full_price' | t }}</span>
+          <span class="summary__value" data-summary="full">
+            {{- full_cents | money_without_trailing_zeros -}}
+          </span>
+        </div>
+
+        <div class="summary__row">
+          <span class="summary__label">{{ 'product.hike.reserve' | t }}</span>
+          <span class="summary__value summary__value--small">
+            {{- 'product.hike.deposit_amount_html' | t: price: deposit_price_html -}}
+          </span>
+        </div>
+
+        {%- if balance_cents > 0 -%}
+          <div class="summary__row">
+            <span class="summary__label">{{ 'product.hike.balance' | t: days: due_days }}</span>
+            <span class="summary__value" data-summary="balance">
+              {{- balance_cents | money_without_trailing_zeros -}}
+            </span>
+          </div>
+        {%- endif -%}
+
+        <div class="summary__row summary__row--total">
+          <span class="summary__label">{{ 'product.hike.total' | t }}</span>
+          <span class="summary__value" data-summary="deposit">
+            {{- deposit_cents | money_without_trailing_zeros -}}
+          </span>
+        </div>
+      </div>
+
+      <button class="hike-product__checkout" type="submit" {% unless variant.available %}disabled{% endunless %}>
+        {%- if variant.available -%}
+          {{ 'product.hike.checkout' | t }}
+        {%- else -%}
+          {{ 'product.hike.sold_out' | t }}
+        {%- endif -%}
+      </button>
+    {%- endform -%}
+
+    <script type="application/json" data-summary-map>{{ summary_map }}</script>
+  </hike-reservation>
+</div>
+
+{% stylesheet %}
+  .hike-product {
+    --gallery-gap: 0.75rem;
+    --thumbs-per-view: 3;
+    --summary-ink: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
+
+    display: grid;
+    gap: 1.5rem;
+    padding-block: var(--spacing-section);
+  }
+
+  @media (width >= 1024px) {
+    .hike-product {
+      --thumbs-per-view: 5;
+
+      grid-template-columns: minmax(0, 54fr) minmax(0, 42fr);
+      column-gap: var(--spacing-section);
+      align-items: start;
+    }
+
+    .hike-product__title {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .hike-gallery {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .hike-product__info {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
+  .hike-product__title {
+    text-wrap: balance;
+  }
+
+  .hike-product__dates::before {
+    content: ' ';
+  }
+
+  /* Gallery */
+
+  .hike-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gallery-gap);
+    min-width: 0;
+  }
+
+  .hike-gallery__stage {
+    position: relative;
+  }
+
+  .hike-gallery__track {
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .hike-gallery__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hike-gallery__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .hike-gallery__slide img,
+  .hike-gallery__slide svg {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  @media (width >= 1024px) {
+    .hike-gallery__slide img,
+    .hike-gallery__slide svg {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  .hike-gallery__arrow {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: var(--color-on-image);
+    cursor: pointer;
+    transition: opacity var(--duration-fast) var(--easing-base);
+  }
+
+  .hike-gallery__arrow--previous {
+    inset-inline-start: 0.75rem;
+    rotate: 180deg;
+  }
+
+  .hike-gallery__arrow--next {
+    inset-inline-end: 0.75rem;
+  }
+
+  .hike-gallery__arrow svg {
+    width: 2.625rem;
+    height: 2.625rem;
+    filter: drop-shadow(0 0 6px rgb(0 0 0 / 35%));
+  }
+
+  .hike-gallery__arrow[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .hike-gallery__thumbs {
+    position: relative;
+    display: flex;
+    gap: var(--gallery-gap);
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    list-style: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .hike-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hike-gallery__thumb {
+    flex: 0 0 calc((100% - var(--gallery-gap) * (var(--thumbs-per-view) - 1)) / var(--thumbs-per-view));
+    scroll-snap-align: start;
+  }
+
+  .hike-gallery__thumb-button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity var(--duration-base) var(--easing-base);
+  }
+
+  .hike-gallery__thumb-button.is-active,
+  .hike-gallery__thumb-button:hover {
+    opacity: 1;
+  }
+
+  .hike-gallery__thumb-button img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  /* Reservation column */
+
+  .hike-product__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 0;
+  }
+
+  .hike-product__deposit {
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-display-compact);
+    line-height: 1.1;
+    letter-spacing: var(--letter-spacing-display);
+  }
+
+  @media (width >= 1024px) {
+    .hike-product__deposit {
+      font-size: 1.75rem;
+    }
+
+    /* "Pay today" takes its own line beside the photo, as in the design. */
+    .hike-product__deposit-lead {
+      display: block;
+    }
+  }
+
+  .hike-product__features {
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-display--family);
+    list-style: none;
+  }
+
+  .hike-product__feature {
+    line-height: 1.45;
+  }
+
+  @media (width < 1024px) {
+    .hike-product__features {
+      padding-inline-start: 1.5rem;
+      list-style: disc;
+    }
+  }
+
+  @media (width >= 1024px) {
+    .hike-product__features {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0.5rem;
+    }
+
+    .hike-product__feature + .hike-product__feature::before {
+      content: '|';
+      margin-inline-end: 0.5rem;
+      color: var(--summary-ink);
+    }
+  }
+
+  .hike-product__rule {
+    border: 0;
+    border-block-start: 0.5px solid var(--color-hairline);
+  }
+
+  @media (width >= 1024px) {
+    /* Desktop runs the features straight into the note, so the rule is mobile-only. */
+    .hike-product__rule {
+      display: none;
+    }
+
+    .hike-product__info {
+      gap: 1.5rem;
+    }
+
+    .hike-product__rule + .hike-product__note {
+      margin-block-start: -1.5rem;
+    }
+  }
+
+  .hike-product__note {
+    font-family: var(--font-display--family);
+    line-height: 1.45;
+  }
+
+  .hike-product__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hike-product__quantity {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: start;
+  }
+
+  .hike-product__quantity-label {
+    font-size: var(--font-size-body);
+    color: var(--summary-ink);
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+  }
+
+  .quantity__button {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .quantity__button[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .quantity__input {
+    width: 2.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: var(--font-size-ui);
+    text-align: center;
+    appearance: textfield;
+  }
+
+  .quantity__input::-webkit-outer-spin-button,
+  .quantity__input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: var(--font-size-body);
+    color: var(--summary-ink);
+  }
+
+  .summary__title {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-small);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-small);
+    text-transform: uppercase;
+    color: var(--color-foreground);
+  }
+
+  .summary__row {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .summary__value {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .summary__value--small {
+    font-size: var(--font-size-small);
+  }
+
+  .summary__row--total {
+    padding-block-start: 1rem;
+    border-block-start: 0.5px solid var(--color-hairline);
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  .hike-product__checkout {
+    padding: 1.125rem 2rem;
+    border: 0;
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-family: inherit;
+    font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity var(--duration-base) var(--easing-base);
+  }
+
+  .hike-product__checkout:hover,
+  .hike-product__checkout:focus-visible {
+    opacity: 0.85;
+  }
+
+  .hike-product__checkout[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hike-gallery__arrow,
+    .hike-gallery__thumb-button,
+    .hike-product__checkout {
+      transition: none;
+    }
+
+    .hike-gallery__thumbs {
+      scroll-behavior: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Keeps the thumbnail strip in step with the main carousel and pages it when the active image scrolls off. */
+  class HikeGallery extends HTMLElement {
+    connectedCallback() {
+      this.track = this.querySelector('[data-track]');
+      if (!this.track) return;
+
+      this.slides = Array.from(this.querySelectorAll('[data-slide]'));
+      this.thumbs = this.querySelector('[data-thumbs]');
+      this.buttons = Array.from(this.querySelectorAll('[data-index]'));
+      this.controls = Array.from(this.querySelectorAll('[data-direction]'));
+      this.active = 0;
+      this.update = this.update.bind(this);
+
+      this.track.addEventListener(
+        'scroll',
+        () => {
+          cancelAnimationFrame(this.frame);
+          this.frame = requestAnimationFrame(this.update);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener('resize', this.update, { passive: true });
+
+      this.addEventListener('click', (event) => {
+        const thumb = event.target.closest('[data-index]');
+        if (thumb) {
+          this.goTo(Number(thumb.dataset.index));
+          return;
+        }
+
+        const control = event.target.closest('[data-direction]');
+        if (control) {
+          this.goTo(this.active + (control.dataset.direction === 'next' ? 1 : -1));
+        }
+      });
+
+      this.update();
+    }
+
+    goTo(index) {
+      const target = this.slides[Math.min(Math.max(index, 0), this.slides.length - 1)];
+      if (target) this.track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    }
+
+    update() {
+      const position = this.track.scrollLeft;
+      const distance = (slide) => Math.abs(slide.offsetLeft - position);
+
+      this.active = this.slides.reduce(
+        (nearest, slide, index) => (distance(slide) < distance(this.slides[nearest]) ? index : nearest),
+        0
+      );
+
+      this.buttons.forEach((button, index) => button.classList.toggle('is-active', index === this.active));
+
+      this.controls.forEach((control) => {
+        control.disabled =
+          control.dataset.direction === 'next' ? this.active === this.slides.length - 1 : this.active === 0;
+      });
+
+      this.revealThumb();
+    }
+
+    /* scrollIntoView would drag the page with it, so the strip is nudged by hand. */
+    revealThumb() {
+      const button = this.buttons[this.active];
+      if (!this.thumbs || !button) return;
+
+      const thumb = button.parentElement;
+      const start = thumb.offsetLeft;
+      const end = start + thumb.offsetWidth;
+
+      if (start < this.thumbs.scrollLeft) {
+        this.thumbs.scrollLeft = start;
+      } else if (end > this.thumbs.scrollLeft + this.thumbs.clientWidth) {
+        this.thumbs.scrollLeft = end - this.thumbs.clientWidth;
+      }
+    }
+  }
+
+  /* Swaps in the money strings Liquid pre-rendered for each quantity. */
+  class HikeReservation extends HTMLElement {
+    connectedCallback() {
+      this.input = this.querySelector('[data-quantity]');
+      if (!this.input) return;
+
+      this.max = Number(this.dataset.max) || 10;
+      this.steps = Array.from(this.querySelectorAll('[data-step]'));
+      this.amounts = Array.from(this.querySelectorAll('[data-summary]'));
+
+      const map = this.querySelector('[data-summary-map]');
+      try {
+        this.prices = map ? JSON.parse(map.textContent) : {};
+      } catch (error) {
+        this.prices = {};
+      }
+
+      this.addEventListener('click', (event) => {
+        const step = event.target.closest('[data-step]');
+        if (step) this.setQuantity(this.quantity() + Number(step.dataset.step));
+      });
+
+      this.input.addEventListener('change', () => this.setQuantity(this.quantity()));
+
+      this.render();
+    }
+
+    quantity() {
+      return Math.round(Number(this.input.value)) || 1;
+    }
+
+    setQuantity(value) {
+      this.input.value = Math.min(Math.max(value, 1), this.max);
+      this.render();
+    }
+
+    render() {
+      const quantity = this.quantity();
+      const prices = this.prices[quantity];
+
+      this.steps.forEach((step) => {
+        step.disabled = Number(step.dataset.step) < 0 ? quantity <= 1 : quantity >= this.max;
+      });
+
+      if (!prices) return;
+
+      this.amounts.forEach((amount) => {
+        const value = prices[amount.dataset.summary];
+        if (value) amount.textContent = value;
+      });
+    }
+  }
+
+  if (!customElements.get('hike-gallery')) customElements.define('hike-gallery', HikeGallery);
+  if (!customElements.get('hike-reservation')) customElements.define('hike-reservation', HikeReservation);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.product_hike",
+  "settings": [
+    {
+      "type": "range",
+      "id": "deposit_percent",
+      "label": "t:labels.deposit_percent",
+      "info": "t:info.deposit_percent",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "balance_due_days",
+      "label": "t:labels.balance_due_days",
+      "info": "t:info.balance_due_days",
+      "min": 10,
+      "max": 180,
+      "step": 5,
+      "unit": "d",
+      "default": 60
+    },
+    {
+      "type": "richtext",
+      "id": "deposit_note",
+      "label": "t:labels.deposit_note",
+      "info": "t:info.deposit_note",
+      "default": "<p>Your deposit secures your place. The remaining balance is due 60 days before the trip.</p>"
+    },
+    {
+      "type": "range",
+      "id": "max_quantity",
+      "label": "t:labels.max_quantity",
+      "info": "t:info.max_quantity",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
