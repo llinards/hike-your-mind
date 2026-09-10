@@ -13,7 +13,7 @@
 
 <div class="product-info">
   <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
+  <p>{{ product.price | money | remove: '.' }}</p>
   <p>{{ product.description }}</p>
 </div>
 
@@ -29,7 +29,7 @@
             selected="selected"
           {% endif %}
         >
-          {{ variant.title }} - {{ variant.price | money }}
+          {{ variant.title }} - {{ variant.price | money | remove: '.' }}
         </option>
       {% endfor %}
     </select>

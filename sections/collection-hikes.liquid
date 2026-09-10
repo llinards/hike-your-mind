@@ -85,10 +85,13 @@
               assign hike_end = product.metafields.custom.hike_end_date.value
 
               if product.price_varies
-                assign price_amount = product.price_min | money_without_trailing_zeros | remove: '.'
+                assign deposit_cents = product.price_min
               else
-                assign price_amount = product.price | money_without_trailing_zeros | remove: '.'
+                assign deposit_cents = product.price
               endif
+              assign percent_ratio = settings.deposit_percent | divided_by: 100.0
+              assign full_cents = deposit_cents | divided_by: percent_ratio | round
+              assign price_amount = full_cents | money_without_trailing_zeros | remove: '.'
             -%}
 
             <li>
