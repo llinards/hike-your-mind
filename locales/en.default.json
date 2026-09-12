@@ -111,6 +111,26 @@
       "total": "Total",
       "checkout": "Proceed to checkout",
       "sold_out": "Sold out"
+    },
+    "details": {
+      "trip_details": "Trip Details",
+      "what_to_expect": "What to Expect",
+      "itinerary": "Itinerary",
+      "included": "Included",
+      "cancellation_policy": "Cancellation Policy",
+      "to": "to",
+      "dates": "Dates",
+      "date_range": "{{ start }} to {{ end }}",
+      "location": "Location",
+      "duration": "Duration",
+      "duration_days": "{{ count }} days",
+      "walking_distance": "Walking Distance",
+      "walking_distance_value": "approx. {{ distance }} km per Day",
+      "group_size": "Group Size",
+      "group_size_value": "max. {{ size }} people",
+      "full_price": "Full Price",
+      "deposit": "Deposit",
+      "remaining_balance": "Remaining Balance"
     }
   },
   "contact": {

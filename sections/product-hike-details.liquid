@@ -1,0 +1,497 @@
+{% comment %}Hike detail tabs: a trip-details table beside four metafield panels, stacked into curtains on phones.{% endcomment %}
+
+{%- liquid
+  assign percent_ratio = settings.deposit_percent | divided_by: 100.0
+  assign variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign deposit_cents = variant.price
+  assign full_cents = deposit_cents | divided_by: percent_ratio | round
+
+  assign hike_start = product.metafields.custom.hike_start_date.value
+  assign hike_end = product.metafields.custom.hike_end_date.value
+
+  comment
+    Inclusive day count — 11 to 18 May reads as 8 days. Rounded rather than
+    floored so an hour of daylight saving can't shave a day off.
+  endcomment
+  assign duration_days = 0
+  if hike_start != blank
+    if hike_end != blank
+      assign start_seconds = hike_start | date: '%s' | plus: 0
+      assign end_seconds = hike_end | date: '%s' | plus: 0
+      assign duration_days = end_seconds | minus: start_seconds | divided_by: 86400.0 | round | plus: 1
+    endif
+  endif
+
+  comment
+    Either a city or a region stands in for each end of the route, so a merchant
+    only ever fills one of the pair.
+  endcomment
+  assign from_place = product.metafields.custom.from_city.value | default: product.metafields.custom.from_region.value
+  assign to_place = product.metafields.custom.to_city.value | default: product.metafields.custom.to_region.value
+  assign country = product.metafields.custom.country.value
+
+  assign walking_distance = product.metafields.custom.walking_distance.value
+  assign group_size = product.metafields.custom.group_size.value
+  assign remaining_balance = product.metafields.custom.remaining_balance.value
+
+  assign panel_keys = 'what_to_expect,itineary,included,cancellation_policy' | split: ','
+  assign panel_labels = 'what_to_expect,itinerary,included,cancellation_policy' | split: ','
+-%}
+
+{%- capture location -%}
+  {%- if from_place != blank -%}
+    {{- from_place -}}
+    {%- if to_place != blank -%}
+      {%- unless to_place == from_place -%}
+        {{ ' ' }}{{ 'product.details.to' | t }} {{ to_place }}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- elsif to_place != blank -%}
+    {{- to_place -}}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- liquid
+  assign location = location | strip
+  if country != blank
+    if location == blank
+      assign location = country
+    else
+      assign location = location | append: ', ' | append: country
+    endif
+  endif
+-%}
+
+<hike-tabs class="hike-tabs">
+  <div class="hike-tabs__list">
+    <button
+      class="hike-tabs__tab"
+      type="button"
+      data-tab="trip"
+      aria-controls="{{ section.id }}-trip"
+      aria-expanded="true"
+    >
+      {{- 'product.details.trip_details' | t -}}
+    </button>
+
+    {%- for key in panel_keys -%}
+      {%- assign field = product.metafields.custom[key] -%}
+      {%- if field != blank -%}
+        {%- assign label_key = 'product.details.' | append: panel_labels[forloop.index0] -%}
+        <button
+          class="hike-tabs__tab"
+          type="button"
+          data-tab="{{ key }}"
+          aria-controls="{{ section.id }}-{{ key }}"
+          aria-expanded="false"
+        >
+          {{- label_key | t -}}
+        </button>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="hike-tabs__panels">
+    <div class="hike-tabs__item">
+      <button
+        class="hike-tabs__curtain"
+        type="button"
+        id="{{ section.id }}-trip-label"
+        data-tab="trip"
+        aria-controls="{{ section.id }}-trip"
+        aria-expanded="true"
+      >
+        {{- 'product.details.trip_details' | t -}}
+        <span class="hike-tabs__chevron" aria-hidden="true">
+          {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      <div class="hike-tabs__panel is-open" id="{{ section.id }}-trip" role="region" aria-labelledby="{{ section.id }}-trip-label">
+        <div class="hike-tabs__panel-inner">
+          <dl class="trip-details">
+            {%- if hike_start != blank -%}
+              <div class="trip-details__row">
+                <dt class="trip-details__label">{{ 'product.details.dates' | t }}</dt>
+                <dd class="trip-details__value">
+                  {%- if hike_end != blank -%}
+                    {%- assign range_start = hike_start | date: '%B %-d' -%}
+                    {%- assign range_end = hike_end | date: '%B %-d' -%}
+                    {{- 'product.details.date_range' | t: start: range_start, end: range_end -}}
+                  {%- else -%}
+                    {{ hike_start | date: '%B %-d' }}
+                  {%- endif -%}
+                </dd>
+              </div>
+            {%- endif -%}
+
+            {%- if location != blank -%}
+              <div class="trip-details__row">
+                <dt class="trip-details__label">{{ 'product.details.location' | t }}</dt>
+                <dd class="trip-details__value">{{ location }}</dd>
+              </div>
+            {%- endif -%}
+
+            {%- if duration_days > 0 -%}
+              <div class="trip-details__row">
+                <dt class="trip-details__label">{{ 'product.details.duration' | t }}</dt>
+                <dd class="trip-details__value">
+                  {{- 'product.details.duration_days' | t: count: duration_days -}}
+                </dd>
+              </div>
+            {%- endif -%}
+
+            {%- if walking_distance != blank -%}
+              <div class="trip-details__row">
+                <dt class="trip-details__label">{{ 'product.details.walking_distance' | t }}</dt>
+                <dd class="trip-details__value">
+                  {{- 'product.details.walking_distance_value' | t: distance: walking_distance -}}
+                </dd>
+              </div>
+            {%- endif -%}
+
+            {%- if group_size != blank -%}
+              <div class="trip-details__row">
+                <dt class="trip-details__label">{{ 'product.details.group_size' | t }}</dt>
+                <dd class="trip-details__value">
+                  {{- 'product.details.group_size_value' | t: size: group_size -}}
+                </dd>
+              </div>
+            {%- endif -%}
+
+            <div class="trip-details__row">
+              <dt class="trip-details__label">{{ 'product.details.full_price' | t }}</dt>
+              <dd class="trip-details__value">
+                {{- full_cents | money_without_trailing_zeros | remove: '.' -}}
+              </dd>
+            </div>
+
+            <div class="trip-details__row">
+              <dt class="trip-details__label">{{ 'product.details.deposit' | t }}</dt>
+              <dd class="trip-details__value">
+                {{- deposit_cents | money_without_trailing_zeros | remove: '.' -}}
+              </dd>
+            </div>
+
+            <div class="trip-details__row">
+              <dt class="trip-details__label">{{ 'product.details.remaining_balance' | t }}</dt>
+              <dd class="trip-details__value">
+                {%- if remaining_balance != blank -%}
+                  {{ remaining_balance }}
+                {%- else -%}
+                  {{ full_cents | minus: deposit_cents | money_without_trailing_zeros | remove: '.' }}
+                {%- endif -%}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    {%- for key in panel_keys -%}
+      {%- assign field = product.metafields.custom[key] -%}
+      {%- if field != blank -%}
+        {%- assign label_key = 'product.details.' | append: panel_labels[forloop.index0] -%}
+        <div class="hike-tabs__item">
+          <button
+            class="hike-tabs__curtain"
+            type="button"
+            id="{{ section.id }}-{{ key }}-label"
+            data-tab="{{ key }}"
+            aria-controls="{{ section.id }}-{{ key }}"
+            aria-expanded="false"
+          >
+            {{- label_key | t -}}
+            <span class="hike-tabs__chevron" aria-hidden="true">
+              {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+            </span>
+          </button>
+
+          <div class="hike-tabs__panel" id="{{ section.id }}-{{ key }}" role="region" aria-labelledby="{{ section.id }}-{{ key }}-label">
+            <div class="hike-tabs__panel-inner">
+              <div class="hike-tabs__prose">
+                {%- if field.type == 'rich_text_field' -%}
+                  {{ field | metafield_tag }}
+                {%- else -%}
+                  {{ field.value | escape | newline_to_br }}
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</hike-tabs>
+
+{% stylesheet %}
+  .hike-tabs {
+    --tab-ink-inactive: color-mix(in oklab, var(--color-foreground) 45%, var(--color-background));
+    --curtain-duration: 300ms;
+    --detail-ink: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
+
+    display: block;
+    font-family: var(--font-display--family);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-lead);
+  }
+
+  @media (width >= 750px) {
+    .hike-tabs {
+      padding-top: var(--spacing-section);
+      font-size: var(--font-size-display-compact);
+    }
+  }
+
+  @media (width >= 1024px) {
+    .hike-tabs {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Phones get the curtains instead, so the row of tabs is desktop-only. */
+  .hike-tabs__list {
+    display: none;
+  }
+
+  @media (width >= 750px) {
+    .hike-tabs__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 2rem;
+      justify-content: center;
+    }
+  }
+
+  .hike-tabs__tab {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--tab-ink-inactive);
+    font: inherit;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--easing-base);
+  }
+
+  .hike-tabs__tab[aria-expanded='true'] {
+    color: var(--color-foreground);
+  }
+
+  .hike-tabs__tab:hover {
+    color: var(--color-foreground);
+  }
+
+  @media (width >= 750px) {
+    .hike-tabs__panels {
+      margin-block-start: 1rem;
+      border-block-start: 0.5px solid var(--color-hairline);
+    }
+  }
+
+  .hike-tabs__curtain {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    border: 0;
+    border-block-end: 0.5px solid var(--color-hairline);
+    background: none;
+    color: var(--color-foreground);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .hike-tabs__curtain[aria-expanded='false'] {
+    color: var(--tab-ink-inactive);
+  }
+
+  @media (width >= 750px) {
+    .hike-tabs__curtain {
+      display: none;
+    }
+  }
+
+  .hike-tabs__chevron svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    rotate: 90deg;
+    transition: rotate var(--duration-base) var(--easing-base);
+  }
+
+  .hike-tabs__curtain[aria-expanded='true'] .hike-tabs__chevron svg {
+    rotate: -90deg;
+  }
+
+  .hike-tabs__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows var(--curtain-duration) var(--easing-base),
+      opacity var(--curtain-duration) var(--easing-base),
+      visibility 0s linear var(--curtain-duration);
+  }
+
+  .hike-tabs__panel.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      grid-template-rows var(--curtain-duration) var(--easing-base),
+      opacity var(--curtain-duration) var(--easing-base),
+      visibility 0s;
+  }
+
+  .hike-tabs__panel-inner {
+    overflow: hidden;
+  }
+
+  /* Matches the my-story body: display serif at the body step, a rem between paragraphs. */
+  .hike-tabs__prose {
+    font-size: var(--font-size-body);
+  }
+
+  .hike-tabs__prose p {
+    margin-top: 1rem;
+  }
+
+  /* Trip details table */
+
+  .trip-details {
+    margin: 0;
+  }
+
+  .trip-details__row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-block: 0.5rem;
+    border-block-end: 0.5px solid var(--color-hairline);
+  }
+
+  .trip-details__label {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .trip-details__value {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    text-align: end;
+  }
+
+  /* Phones close each row's rule and put one under the curtain's content instead. */
+  @media (width < 750px) {
+    .trip-details__row {
+      border-block-end: 0;
+    }
+
+    .hike-tabs__panel-inner > * {
+      padding-block-end: 1rem;
+      border-block-end: 0.5px solid var(--color-hairline);
+    }
+
+    .trip-details__value {
+      color: var(--detail-ink);
+    }
+
+    /* Nothing follows the last curtain, so it closes with neither a rule nor space. */
+    .hike-tabs__item:last-child .hike-tabs__curtain[aria-expanded='false'] {
+      border-block-end: 0;
+    }
+
+    .hike-tabs__item:last-child .hike-tabs__panel-inner > * {
+      padding-block-end: 0;
+      border-block-end: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hike-tabs__tab,
+    .hike-tabs__chevron svg,
+    .hike-tabs__panel,
+    .hike-tabs__panel.is-open {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Desktop shows one panel at a time; phones let each curtain open and close on its own. */
+  class HikeTabs extends HTMLElement {
+    connectedCallback() {
+      this.triggers = Array.from(this.querySelectorAll('[data-tab]'));
+      if (!this.triggers.length) return;
+
+      this.wide = window.matchMedia('(min-width: 750px)');
+
+      this.addEventListener('click', (event) => {
+        const trigger = event.target.closest('[data-tab]');
+        if (trigger) this.toggle(trigger.dataset.tab);
+      });
+
+      this.wide.addEventListener('change', () => this.reset());
+      this.reset();
+    }
+
+    panelFor(trigger) {
+      return this.querySelector(`#${CSS.escape(trigger.getAttribute('aria-controls'))}`);
+    }
+
+    isOpen(name) {
+      const trigger = this.triggers.find((candidate) => candidate.dataset.tab === name);
+      const panel = trigger && this.panelFor(trigger);
+      return panel ? panel.classList.contains('is-open') : false;
+    }
+
+    toggle(name) {
+      if (this.wide.matches) {
+        this.apply((tab) => tab === name);
+        return;
+      }
+
+      const open = this.isOpen(name);
+      this.apply((tab) => (tab === name ? !open : this.isOpen(tab)));
+    }
+
+    /* Crossing the breakpoint drops any multi-open state the tabs can't represent. */
+    reset() {
+      const first = this.triggers[0].dataset.tab;
+      this.apply((tab) => tab === first);
+    }
+
+    apply(shouldOpen) {
+      this.triggers.forEach((trigger) => {
+        const open = shouldOpen(trigger.dataset.tab);
+        trigger.setAttribute('aria-expanded', String(open));
+
+        const panel = this.panelFor(trigger);
+        if (panel) panel.classList.toggle('is-open', open);
+      });
+    }
+  }
+
+  if (!customElements.get('hike-tabs')) customElements.define('hike-tabs', HikeTabs);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.product_hike_details",
+  "settings": [],
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "presets": [
+    {
+      "name": "t:general.product_hike_details"
+    }
+  ]
+}
+{% endschema %}

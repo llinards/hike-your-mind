@@ -17,6 +17,10 @@
         "max_quantity": 10
       }
     },
+    "details": {
+      "type": "product-hike-details",
+      "settings": {}
+    },
     "reviews_NVhYNR": {
       "type": "reviews",
       "blocks": {
@@ -69,6 +73,7 @@
   },
   "order": [
     "main",
+    "details",
     "reviews_NVhYNR"
   ]
 }

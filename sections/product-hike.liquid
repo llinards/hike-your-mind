@@ -47,6 +47,10 @@
   <span data-summary="deposit">{{- deposit_cents | money_without_trailing_zeros | remove: '.' -}}</span>
 {%- endcapture -%}
 
+{%- capture deposit_price_static -%}
+  {{- deposit_cents | money_without_trailing_zeros | remove: '.' -}}
+{%- endcapture -%}
+
 <div class="hike-product">
   <h1 class="hike-product__title">
     {{- product.title -}}
@@ -138,7 +142,7 @@
   <hike-reservation class="hike-product__info" data-max="{{ max_quantity }}">
     <p class="hike-product__deposit">
       <span class="hike-product__deposit-lead">{{ 'product.hike.pay_today' | t }}</span>
-      {{ 'product.hike.deposit_amount_html' | t: price: deposit_price_html }}
+      {{ 'product.hike.deposit_amount_html' | t: price: deposit_price_static }}
     </p>
 
     {%- if features.size > 0 -%}
@@ -578,8 +582,7 @@
   }
 
   .summary__label {
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    font-size: var(--font-size-body);
   }
 
   .summary__value {
@@ -589,10 +592,6 @@
 
   /* The amount and the word "deposit" share one span, so they stay on one step. */
   .summary__value--small {
-    font-size: var(--font-size-small);
-  }
-
-  .summary__row--total .summary__label {
     font-size: var(--font-size-body);
   }
 

@@ -48,7 +48,7 @@
     --font-size-lead: 1.25rem;
     --line-height-lead: 1.3;
 
-    --font-size-body: 1.125rem;
+    --font-size-body: 1rem;
     --line-height-body: 1.3;
     --letter-spacing-body: -0.02em;
 
@@ -97,12 +97,13 @@
     --easing-base: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* The hero headline is the only step that changes size between breakpoints;
-     4.5rem is too wide for a phone. */
+  /* The steps that change between breakpoints — the phone takes the smaller of
+     each pair. */
   @media (width >= 750px) {
     :root {
       --font-size-hero: 4.5rem;
       --font-size-display: 2.5rem;
+      --font-size-body: 1.125rem;
       --spacing-section: 3rem;
       --spacing-section-large: 4rem;
     }
