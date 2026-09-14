@@ -575,7 +575,6 @@
     margin: 0;
     overflow-x: auto;
     list-style: none;
-    scroll-behavior: smooth;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
@@ -840,10 +839,6 @@
     .hike-lightbox[open] {
       animation: none;
     }
-
-    .hike-gallery__thumbs {
-      scroll-behavior: auto;
-    }
   }
 {% endstylesheet %}
 
@@ -870,7 +865,14 @@
         { passive: true }
       );
 
-      window.addEventListener('resize', this.update, { passive: true });
+      window.addEventListener(
+        'resize',
+        () => {
+          this.update();
+          this.revealThumb('instant');
+        },
+        { passive: true }
+      );
 
       this.addEventListener('click', (event) => {
         const thumb = event.target.closest('[data-index]');
@@ -908,6 +910,7 @@
     }
 
     update() {
+      const previous = this.active;
       this.active = this.nearest(this.track, this.slides);
 
       this.buttons.forEach((button, index) => button.classList.toggle('is-active', index === this.active));
@@ -917,7 +920,7 @@
           control.dataset.direction === 'next' ? this.active === this.slides.length - 1 : this.active === 0;
       });
 
-      this.revealThumb();
+      if (this.active !== previous) this.revealThumb();
     }
 
     setupLightbox() {
@@ -987,19 +990,25 @@
     }
 
     /* scrollIntoView would drag the page with it, so the strip is nudged by hand. */
-    revealThumb() {
+    revealThumb(behavior) {
       const button = this.buttons[this.active];
       if (!this.thumbs || !button) return;
 
       const thumb = button.parentElement;
       const start = thumb.offsetLeft;
       const end = start + thumb.offsetWidth;
+      let left;
 
       if (start < this.thumbs.scrollLeft) {
-        this.thumbs.scrollLeft = start;
+        left = start;
       } else if (end > this.thumbs.scrollLeft + this.thumbs.clientWidth) {
-        this.thumbs.scrollLeft = end - this.thumbs.clientWidth;
+        left = end - this.thumbs.clientWidth;
+      } else {
+        return;
       }
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.thumbs.scrollTo({ left, behavior: behavior || (reduceMotion ? 'instant' : 'smooth') });
     }
   }
 
