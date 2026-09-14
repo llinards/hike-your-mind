@@ -80,16 +80,19 @@
               assign img_alt = image.alt | default: product.title
             -%}
             <li class="hike-gallery__slide" data-slide>
-              {{
-                image
-                | image_url: width: 2000
-                | image_tag:
-                    widths: '600,800,1100,1500,2000',
-                    sizes: '(min-width: 1024px) 54vw, 100vw',
-                    loading: img_loading,
-                    fetchpriority: img_priority,
-                    alt: img_alt
-              }}
+              <button class="hike-gallery__zoom" type="button" data-open="{{ forloop.index0 }}">
+                {{
+                  image
+                  | image_url: width: 2000
+                  | image_tag:
+                      widths: '600,800,1100,1500,2000',
+                      sizes: '(min-width: 1024px) 54vw, 100vw',
+                      loading: img_loading,
+                      fetchpriority: img_priority,
+                      alt: img_alt
+                }}
+                <span class="visually-hidden">{{ 'product.hike.view_full_size' | t }}</span>
+              </button>
             </li>
           {%- endfor -%}
         </ul>
@@ -136,6 +139,50 @@
           </li>
         {%- endfor -%}
       </ul>
+    {%- endif -%}
+
+    {%- if product.images.size > 0 -%}
+      <dialog class="hike-lightbox" aria-label="{{ 'general.accessibility.image_gallery' | t }}" scroll-lock data-lightbox>
+        <ul class="hike-lightbox__track" role="list" tabindex="0" data-lightbox-track>
+          {%- for image in product.images -%}
+            {%- assign img_alt = image.alt | default: product.title -%}
+            <li class="hike-lightbox__slide" data-lightbox-slide>
+              {{
+                image
+                | image_url: width: 3840
+                | image_tag:
+                    widths: '1100,1600,2200,3000,3840',
+                    sizes: '100vw',
+                    loading: 'lazy',
+                    alt: img_alt
+              }}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if product.images.size > 1 -%}
+          {%- capture lightbox_current -%}<span data-lightbox-current>1</span>{%- endcapture -%}
+          <p class="hike-lightbox__counter" aria-live="polite">
+            {{- 'product.hike.image_counter_html' | t: current: lightbox_current, total: product.images.size -}}
+          </p>
+        {%- endif -%}
+
+        <button class="hike-lightbox__close" type="button" data-lightbox-close>
+          {{ 'icon-close.svg' | inline_asset_content }}
+          <span class="visually-hidden">{{ 'general.accessibility.close' | t }}</span>
+        </button>
+
+        {%- if product.images.size > 1 -%}
+          <button class="hike-gallery__arrow hike-gallery__arrow--previous" type="button" data-lightbox-direction="previous">
+            {{ 'icon-arrow-right.svg' | inline_asset_content }}
+            <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
+          </button>
+          <button class="hike-gallery__arrow hike-gallery__arrow--next" type="button" data-lightbox-direction="next">
+            {{ 'icon-arrow-right.svg' | inline_asset_content }}
+            <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
+          </button>
+        {%- endif -%}
+      </dialog>
     {%- endif -%}
   </hike-gallery>
 
@@ -249,7 +296,13 @@
 
     display: grid;
     gap: 1.5rem;
-    padding-block: var(--spacing-section);
+    padding-top: var(--spacing-section);
+  }
+
+  @media (width >= 750px) {
+    .hike-product {
+      --thumbs-per-view: 4;
+    }
   }
 
   @media (width >= 1024px) {
@@ -262,25 +315,53 @@
     }
 
     .hike-product__title {
-      grid-column: 2;
+      grid-column: 1 / -1;
       grid-row: 1;
     }
 
     .hike-gallery {
       grid-column: 1;
-      grid-row: 1 / span 2;
+      grid-row: 2;
     }
 
     .hike-product__info {
       grid-column: 2;
       grid-row: 2;
+      align-self: stretch;
+    }
+
+    .hike-product__form {
+      flex-grow: 1;
+    }
+
+    .hike-product__checkout {
+      margin-block-start: auto;
+    }
+  }
+
+  @media (width >= 1280px) {
+    .hike-product {
+      grid-template-rows: auto 1fr;
+    }
+
+    .hike-product__title {
+      grid-column: 2;
+    }
+
+    .hike-gallery {
+      grid-row: 1 / span 2;
     }
   }
 
   /* create-a-hike's bare `h1` rule is theme-wide, so the heading step is set back here. */
   .hike-product__title {
     font-size: var(--font-size-display);
-    text-wrap: balance;
+  }
+
+  @media (width >= 1280px) {
+    .hike-product__title {
+      text-wrap: balance;
+    }
   }
 
   .hike-product__dates::before {
@@ -327,11 +408,129 @@
     object-fit: cover;
   }
 
-  @media (width >= 1024px) {
+  .hike-gallery__zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  @media (1024px <= width < 1280px) {
+    .hike-gallery {
+      align-self: stretch;
+    }
+
+    .hike-gallery__stage {
+      flex-grow: 1;
+      aspect-ratio: 4 / 3;
+    }
+
+    .hike-gallery__track,
+    .hike-gallery__stage > .hike-gallery__slide {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hike-gallery__zoom {
+      height: 100%;
+    }
+
     .hike-gallery__slide img,
     .hike-gallery__slide svg {
-      aspect-ratio: 3 / 2;
+      height: 100%;
+      aspect-ratio: auto;
     }
+  }
+
+  .hike-lightbox {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: rgb(0 0 0 / 92%);
+    color: var(--color-on-image);
+  }
+
+  .hike-lightbox[open] {
+    animation: hike-lightbox-in var(--duration-base) var(--easing-base);
+  }
+
+  .hike-lightbox::backdrop {
+    background: none;
+  }
+
+  @keyframes hike-lightbox-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .hike-lightbox__track {
+    display: flex;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .hike-lightbox__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hike-lightbox__slide {
+    flex: 0 0 100%;
+    padding: 4rem 1rem;
+    scroll-snap-align: start;
+  }
+
+  @media (width >= 1024px) {
+    .hike-lightbox__slide {
+      padding: 4rem 6rem;
+    }
+  }
+
+  .hike-lightbox__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .hike-lightbox__counter {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 1.25rem;
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    font-size: var(--font-size-ui);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+
+  .hike-lightbox__close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .hike-lightbox__close svg {
+    width: 2rem;
+    height: 2rem;
   }
 
   .hike-gallery__arrow {
@@ -358,8 +557,8 @@
   }
 
   .hike-gallery__arrow svg {
-    width: 2.625rem;
-    height: 2.625rem;
+    width: 2rem;
+    height: 2rem;
     filter: drop-shadow(0 0 6px rgb(0 0 0 / 35%));
   }
 
@@ -432,8 +631,9 @@
     .hike-product__deposit {
       font-size: 1.75rem;
     }
+  }
 
-    /* "Pay today" takes its own line beside the photo, as in the design. */
+  @media (width >= 1440px) {
     .hike-product__deposit-lead {
       display: block;
     }
@@ -454,6 +654,10 @@
     .hike-product__features {
       padding-inline-start: 1.5rem;
       list-style: disc;
+    }
+    
+    .hike-product {
+      padding-bottom: var(--spacing-section);
     }
   }
 
@@ -603,7 +807,7 @@
   }
 
   .hike-product__checkout {
-    padding: 1.125rem 2rem;
+    padding: 1rem;
     border: 0;
     border-radius: var(--style-border-radius-inputs);
     background-color: var(--color-foreground);
@@ -633,6 +837,10 @@
       transition: none;
     }
 
+    .hike-lightbox[open] {
+      animation: none;
+    }
+
     .hike-gallery__thumbs {
       scroll-behavior: auto;
     }
@@ -640,7 +848,7 @@
 {% endstylesheet %}
 
 {% javascript %}
-  /* Keeps the thumbnail strip in step with the main carousel and pages it when the active image scrolls off. */
+  /* Keeps the thumbnail strip in step with the main carousel and opens the full-size lightbox. */
   class HikeGallery extends HTMLElement {
     connectedCallback() {
       this.track = this.querySelector('[data-track]');
@@ -674,25 +882,33 @@
         const control = event.target.closest('[data-direction]');
         if (control) {
           this.goTo(this.active + (control.dataset.direction === 'next' ? 1 : -1));
+          return;
         }
+
+        const zoom = event.target.closest('[data-open]');
+        if (zoom) this.openLightbox(Number(zoom.dataset.open));
       });
 
+      this.setupLightbox();
       this.update();
     }
 
-    goTo(index) {
-      const target = this.slides[Math.min(Math.max(index, 0), this.slides.length - 1)];
-      if (target) this.track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    nearest(track, slides) {
+      const distance = (slide) => Math.abs(slide.offsetLeft - track.scrollLeft);
+      return slides.reduce((nearest, slide, index) => (distance(slide) < distance(slides[nearest]) ? index : nearest), 0);
+    }
+
+    scrollToSlide(track, slides, index, behavior) {
+      const target = slides[Math.min(Math.max(index, 0), slides.length - 1)];
+      if (target) track.scrollTo({ left: target.offsetLeft, behavior });
+    }
+
+    goTo(index, behavior = 'smooth') {
+      this.scrollToSlide(this.track, this.slides, index, behavior);
     }
 
     update() {
-      const position = this.track.scrollLeft;
-      const distance = (slide) => Math.abs(slide.offsetLeft - position);
-
-      this.active = this.slides.reduce(
-        (nearest, slide, index) => (distance(slide) < distance(this.slides[nearest]) ? index : nearest),
-        0
-      );
+      this.active = this.nearest(this.track, this.slides);
 
       this.buttons.forEach((button, index) => button.classList.toggle('is-active', index === this.active));
 
@@ -702,6 +918,72 @@
       });
 
       this.revealThumb();
+    }
+
+    setupLightbox() {
+      this.lightbox = this.querySelector('[data-lightbox]');
+      if (!this.lightbox) return;
+
+      this.lightboxTrack = this.lightbox.querySelector('[data-lightbox-track]');
+      this.lightboxSlides = Array.from(this.lightbox.querySelectorAll('[data-lightbox-slide]'));
+      this.lightboxControls = Array.from(this.lightbox.querySelectorAll('[data-lightbox-direction]'));
+      this.lightboxCurrent = this.lightbox.querySelector('[data-lightbox-current]');
+      this.lightboxActive = 0;
+
+      this.lightboxTrack.addEventListener(
+        'scroll',
+        () => {
+          cancelAnimationFrame(this.lightboxFrame);
+          this.lightboxFrame = requestAnimationFrame(() => this.updateLightbox());
+        },
+        { passive: true }
+      );
+
+      this.lightbox.addEventListener('click', (event) => {
+        if (event.target.closest('[data-lightbox-close]') || event.target.matches('[data-lightbox-slide]')) {
+          this.lightbox.close();
+          return;
+        }
+
+        const control = event.target.closest('[data-lightbox-direction]');
+        if (control) this.stepLightbox(control.dataset.lightboxDirection === 'next' ? 1 : -1);
+      });
+
+      this.lightbox.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        this.stepLightbox(event.key === 'ArrowRight' ? 1 : -1);
+      });
+
+      this.lightbox.addEventListener('close', () => this.goTo(this.lightboxActive, 'instant'));
+    }
+
+    openLightbox(index) {
+      if (!this.lightbox) return;
+
+      this.lightbox.showModal();
+      this.scrollToSlide(this.lightboxTrack, this.lightboxSlides, index, 'instant');
+      this.updateLightbox();
+    }
+
+    stepLightbox(step) {
+      this.scrollToSlide(this.lightboxTrack, this.lightboxSlides, this.lightboxActive + step, 'smooth');
+    }
+
+    updateLightbox() {
+      this.lightboxActive = this.nearest(this.lightboxTrack, this.lightboxSlides);
+
+      const current = String(this.lightboxActive + 1);
+      if (this.lightboxCurrent && this.lightboxCurrent.textContent !== current) {
+        this.lightboxCurrent.textContent = current;
+      }
+
+      this.lightboxControls.forEach((control) => {
+        control.disabled =
+          control.dataset.lightboxDirection === 'next'
+            ? this.lightboxActive === this.lightboxSlides.length - 1
+            : this.lightboxActive === 0;
+      });
     }
 
     /* scrollIntoView would drag the page with it, so the strip is nudged by hand. */

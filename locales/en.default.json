@@ -36,7 +36,8 @@
       "primary_navigation": "Primary",
       "previous": "Previous",
       "next": "Next",
-      "image_gallery": "Image gallery"
+      "image_gallery": "Image gallery",
+      "close": "Close"
     },
     "language": {
       "label": "Language"
@@ -101,6 +102,8 @@
       "pay_today": "Pay today",
       "deposit_amount_html": "{{ price }} deposit",
       "show_image": "Show image {{ number }}",
+      "view_full_size": "View full size",
+      "image_counter_html": "{{ current }} / {{ total }}",
       "quantity": "Quantity",
       "decrease": "Decrease quantity",
       "increase": "Increase quantity",
