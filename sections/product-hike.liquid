@@ -575,8 +575,7 @@
     margin: 0;
     overflow-x: auto;
     list-style: none;
-    scroll-behavior: smooth;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
 
@@ -840,10 +839,6 @@
     .hike-lightbox[open] {
       animation: none;
     }
-
-    .hike-gallery__thumbs {
-      scroll-behavior: auto;
-    }
   }
 {% endstylesheet %}
 
@@ -869,6 +864,24 @@
         },
         { passive: true }
       );
+
+      const settle = () => {
+        this.update();
+        this.revealThumb();
+      };
+
+      if ('onscrollend' in window) {
+        this.track.addEventListener('scrollend', settle);
+      } else {
+        this.track.addEventListener(
+          'scroll',
+          () => {
+            clearTimeout(this.settleTimer);
+            this.settleTimer = setTimeout(settle, 150);
+          },
+          { passive: true }
+        );
+      }
 
       window.addEventListener('resize', this.update, { passive: true });
 
@@ -916,8 +929,6 @@
         control.disabled =
           control.dataset.direction === 'next' ? this.active === this.slides.length - 1 : this.active === 0;
       });
-
-      this.revealThumb();
     }
 
     setupLightbox() {
@@ -986,20 +997,25 @@
       });
     }
 
-    /* scrollIntoView would drag the page with it, so the strip is nudged by hand. */
+    /* Waits for the carousel to settle, then slides the strip one thumbnail at a time, as the carousel moves. */
     revealThumb() {
       const button = this.buttons[this.active];
       if (!this.thumbs || !button) return;
 
       const thumb = button.parentElement;
-      const start = thumb.offsetLeft;
-      const end = start + thumb.offsetWidth;
+      const view = this.thumbs.clientWidth;
+      const current = this.thumbs.scrollLeft;
+      let left;
 
-      if (start < this.thumbs.scrollLeft) {
-        this.thumbs.scrollLeft = start;
-      } else if (end > this.thumbs.scrollLeft + this.thumbs.clientWidth) {
-        this.thumbs.scrollLeft = end - this.thumbs.clientWidth;
+      if (thumb.offsetLeft + thumb.offsetWidth > current + view + 1) {
+        left = thumb.offsetLeft + thumb.offsetWidth - view;
+      } else if (thumb.offsetLeft < current - 1) {
+        left = thumb.offsetLeft;
+      } else {
+        return;
       }
+
+      this.thumbs.scrollTo({ left, behavior: 'smooth' });
     }
   }
 

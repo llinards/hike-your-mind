@@ -5,15 +5,50 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/404
 {% endcomment %}
 
-<h1>{{ '404.title' | t }}</h1>
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
+<div class="non_found__section">
+  <h1>{{ '404.title' | t }}</h1>
 
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+  <p>
+    {{ '404.not_found' | t }}
+  </p>
+
+  <a href="{{ routes.root_url}}" class="non_found__btn" >
+    {{ '404.back_to_homepage' | t }}
+  </a>
+</div>
+
+{% stylesheet %}
+  .non_found__section {
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 0.75rem;
+  }
+
+  .non_found__btn {
+    padding: 1rem;
+    border: 0;
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-family: inherit;
+    font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity var(--duration-base) var(--easing-base);
+  }
+
+  .non_found__btn:hover,
+  .non_found__btn:focus-visible {
+    opacity: 0.85;
+  }
+{% endstylesheet %}
+
 
 {% schema %}
 {
