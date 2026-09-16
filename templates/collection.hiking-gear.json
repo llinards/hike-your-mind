@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection-hiking-gear",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

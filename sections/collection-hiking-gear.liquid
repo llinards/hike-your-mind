@@ -1,0 +1,498 @@
+{% comment %}Hiking gear as a product grid with quick add, paged without a reload.{% endcomment %}
+
+<gear-grid class="gear" data-section-id="{{ section.id }}">
+  <h1 class="gear__heading">{{ collection.title }}</h1>
+
+  <div class="gear__results" data-results>
+    <div class="gear__loader" aria-hidden="true"><span class="gear__spinner"></span></div>
+
+    {%- paginate collection.products by 16 -%}
+      {%- if collection.products.size > 0 -%}
+        <ul class="gear__grid" role="list">
+          {%- for product in collection.products -%}
+            {%- liquid
+              assign variant = product.selected_or_first_available_variant | default: product.variants.first
+
+              assign quick_add = false
+              if product.available and product.variants.size == 1
+                assign quick_add = true
+              endif
+
+              assign on_sale = false
+              if product.compare_at_price > product.price
+                assign on_sale = true
+              endif
+
+              assign img_loading = 'lazy'
+              if forloop.index <= 4
+                assign img_loading = 'eager'
+              endif
+
+              if product.price_varies
+                assign price_amount = product.price_min | money
+              else
+                assign price_amount = product.price | money
+              endif
+
+              assign add_label = 'collections.gear.add' | t: title: product.title
+              assign choose_label = 'collections.gear.choose' | t: title: product.title
+              assign added_label = 'collections.gear.added' | t
+            -%}
+
+            {%- capture card -%}
+              <div class="gear-card__media">
+                {%- if product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 1200
+                    | image_tag:
+                        widths: '300,450,600,900,1200',
+                        sizes: '(min-width: 1024px) 23vw, 45vw',
+                        loading: img_loading,
+                        alt: product.featured_image.alt
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'gear-card__placeholder' }}
+                {%- endif -%}
+
+                {%- if on_sale -%}
+                  <span class="gear-card__badge">{{ 'collections.gear.sale' | t }}</span>
+                {%- endif -%}
+
+                {%- if quick_add -%}
+                  <button class="gear-card__add gear-card__add--plus" type="submit">
+                    {{- 'icon-plus.svg' | inline_asset_content -}}
+                    <span class="visually-hidden">{{ add_label }}</span>
+                  </button>
+                {%- elsif product.available -%}
+                  <a class="gear-card__add gear-card__add--plus" href="{{ product.url }}">
+                    {{- 'icon-plus.svg' | inline_asset_content -}}
+                    <span class="visually-hidden">{{ choose_label }}</span>
+                  </a>
+                {%- endif -%}
+              </div>
+
+              <div class="gear-card__info">
+                <h2 class="gear-card__title">
+                  <a class="gear-card__link" href="{{ product.url }}">{{ product.title }}</a>
+                </h2>
+
+                {%- if quick_add -%}
+                  <button class="gear-card__add gear-card__add--cart" type="submit">
+                    {{- 'icon-cart.svg' | inline_asset_content -}}
+                    <span class="visually-hidden">{{ add_label }}</span>
+                  </button>
+                {%- elsif product.available -%}
+                  <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
+                    {{- 'icon-cart.svg' | inline_asset_content -}}
+                    <span class="visually-hidden">{{ choose_label }}</span>
+                  </a>
+                {%- else -%}
+                  <button class="gear-card__add gear-card__add--cart" type="button" disabled>
+                    {{- 'icon-cart.svg' | inline_asset_content -}}
+                    <span class="visually-hidden">{{ 'collections.gear.sold_out' | t }}</span>
+                  </button>
+                {%- endif -%}
+
+                <p class="gear-card__price">
+                  {%- if product.price_varies -%}
+                    {{ 'collections.gear.price_from' | t: price: price_amount }}
+                  {%- else -%}
+                    {{ price_amount }}
+                  {%- endif -%}
+
+                  {%- if on_sale -%}
+                    <s class="gear-card__compare">{{ product.compare_at_price | money }}</s>
+                  {%- endif -%}
+                </p>
+              </div>
+            {%- endcapture -%}
+
+            <li class="gear-card">
+              {%- if quick_add -%}
+                {%- form 'product', product, class: 'gear-card__form', data-quick-add: '', data-added: added_label -%}
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  {{ card }}
+                {%- endform -%}
+              {%- else -%}
+                <div class="gear-card__form">{{ card }}</div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="gear__pagination" data-pagination>
+            {{ paginate | default_pagination }}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="gear__empty">{{ 'collections.gear.no_results' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+
+  <p class="visually-hidden" role="status" data-status></p>
+</gear-grid>
+
+{% stylesheet %}
+  .gear {
+    --gear-columns: 2;
+    --gear-column-gap: 1rem;
+    --gear-row-gap: 2rem;
+
+    display: grid;
+    grid-template-columns: var(--content-grid);
+    row-gap: var(--spacing-section);
+    padding-block: var(--spacing-section);
+  }
+
+  .gear > * {
+    grid-column: 2;
+  }
+
+  @media (width >= 1024px) {
+    .gear {
+      --gear-columns: 4;
+      --gear-column-gap: 1.75rem;
+      --gear-row-gap: 2.5rem;
+    }
+  }
+
+  .gear__results {
+    position: relative;
+  }
+
+  .gear__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--gear-columns), minmax(0, 1fr));
+    column-gap: var(--gear-column-gap);
+    row-gap: var(--gear-row-gap);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .gear-card__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+  }
+
+  .gear-card__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gear-card__media img,
+  .gear-card__media svg {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .gear-card:hover .gear-card__media img {
+    transform: scale(1.03);
+  }
+
+  .gear-card__badge {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-size: var(--font-size-small);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gear-card__add {
+    --icon-stroke-width: 1.5;
+
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .gear-card__add--plus {
+    position: absolute;
+    inset-block-end: 0.5rem;
+    inset-inline-start: 0.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .gear-card__add--plus svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .gear-card__add--cart {
+    grid-column: 2;
+    grid-row: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .gear-card__add--cart svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gear-card__add[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* The tick replaces the icon for a moment once the item is in the cart. */
+  .gear-card__form.is-added .gear-card__add svg {
+    display: none;
+  }
+
+  .gear-card__form.is-added .gear-card__add::before {
+    content: '✓';
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .gear-card__form.is-busy {
+    opacity: 0.6;
+  }
+
+  .gear-card__info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 0.75rem;
+    row-gap: 0.25rem;
+    align-items: start;
+  }
+
+  .gear-card__title {
+    grid-column: 1;
+    grid-row: 1;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-small);
+    font-weight: 400;
+    letter-spacing: var(--letter-spacing-ui);
+    line-height: var(--line-height-small);
+  }
+
+  .gear-card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .gear-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .gear-card {
+    position: relative;
+  }
+
+  .gear-card__price {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    gap: 0.5rem;
+    font-size: var(--font-size-small);
+  }
+
+  .gear-card__compare {
+    color: var(--color-foreground-muted);
+    opacity: 0.6;
+  }
+
+  .gear__pagination,
+  .gear__empty {
+    padding-block-start: var(--spacing-section);
+  }
+
+  .gear__loader {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gear__spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--color-hairline);
+    border-block-start-color: var(--color-foreground);
+    border-radius: 50%;
+    animation: gear-spin 700ms linear infinite;
+  }
+
+  @keyframes gear-spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  .gear[aria-busy='true'] .gear__grid,
+  .gear[aria-busy='true'] .gear__pagination {
+    opacity: 0.4;
+  }
+
+  .gear[aria-busy='true'] .gear__loader {
+    opacity: 1;
+  }
+
+  .gear__grid,
+  .gear__pagination,
+  .gear__loader {
+    transition: opacity var(--duration-fast) var(--easing-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gear-card__media img,
+    .gear-card__media svg {
+      transition: none;
+    }
+
+    .gear-card:hover .gear-card__media img {
+      transform: none;
+    }
+
+    .gear__spinner {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Pages the grid in place and adds single-variant products to the cart without leaving the page. */
+  class GearGrid extends HTMLElement {
+    connectedCallback() {
+      this.sectionId = this.dataset.sectionId;
+      this.status = this.querySelector('[data-status]');
+
+      this.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        const link = event.target.closest('[data-pagination] a');
+        if (!link) return;
+
+        event.preventDefault();
+        this.load(link.href, true);
+      });
+
+      this.addEventListener('submit', (event) => {
+        const form = event.target.closest('[data-quick-add]');
+        if (!form) return;
+
+        event.preventDefault();
+        this.add(form);
+      });
+
+      window.addEventListener('popstate', () => this.load(window.location.href, false));
+    }
+
+    async load(url, push) {
+      if (this.controller) this.controller.abort();
+      this.controller = new AbortController();
+      this.setAttribute('aria-busy', 'true');
+
+      try {
+        const target = new URL(url, window.location.origin);
+        target.searchParams.set('section_id', this.sectionId);
+
+        const response = await fetch(target, { signal: this.controller.signal });
+        if (!response.ok) throw new Error(response.statusText);
+
+        const markup = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const next = markup.querySelector('[data-results]');
+        const current = this.querySelector('[data-results]');
+        if (next && current) current.replaceWith(next);
+
+        if (push) window.history.pushState({}, '', url);
+
+        const top = this.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: 'smooth' });
+      } catch (error) {
+        if (error.name !== 'AbortError') window.location.href = url;
+      } finally {
+        this.removeAttribute('aria-busy');
+      }
+    }
+
+    async add(form) {
+      if (form.classList.contains('is-busy')) return;
+      form.classList.add('is-busy');
+
+      try {
+        const root = window.Shopify?.routes?.root || '/';
+        const response = await fetch(`${root}cart/add.js`, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        if (!response.ok) throw new Error(response.statusText);
+
+        await this.refreshCount(root);
+
+        if (this.status) this.status.textContent = form.dataset.added;
+
+        form.classList.add('is-added');
+        clearTimeout(form.tick);
+        form.tick = setTimeout(() => form.classList.remove('is-added'), 2000);
+      } catch (error) {
+        form.submit();
+      } finally {
+        form.classList.remove('is-busy');
+      }
+    }
+
+    async refreshCount(root) {
+      const cart = await (await fetch(`${root}cart.js`)).json();
+      const link = document.querySelector('.header__cart');
+      if (!link) return;
+
+      let count = link.querySelector('.header__cart-count');
+
+      if (!cart.item_count) {
+        if (count) count.remove();
+        return;
+      }
+
+      if (!count) {
+        count = document.createElement('span');
+        count.className = 'header__cart-count';
+        count.setAttribute('aria-hidden', 'true');
+        link.append(count);
+      }
+
+      count.textContent = cart.item_count;
+    }
+  }
+
+  if (!customElements.get('gear-grid')) {
+    customElements.define('gear-grid', GearGrid);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.collection_hiking_gear",
+  "settings": []
+}
+{% endschema %}
