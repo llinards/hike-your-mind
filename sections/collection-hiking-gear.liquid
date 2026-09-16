@@ -1,6 +1,6 @@
 {% comment %}Hiking gear as a product grid with quick add, paged without a reload.{% endcomment %}
 
-<gear-grid class="gear" data-section-id="{{ section.id }}">
+<gear-grid class="gear full-width" data-section-id="{{ section.id }}">
   <h1 class="gear__heading">{{ collection.title }}</h1>
 
   <div class="gear__results" data-results>
@@ -13,9 +13,47 @@
             {%- liquid
               assign variant = product.selected_or_first_available_variant | default: product.variants.first
 
+              comment
+                Colour is the option worth showing on a card; language is the fallback.
+              endcomment
+              assign option_kind = ''
+              assign option_label = ''
+              for option in product.options_with_values
+                assign option_name = option.name | downcase
+                if option_kind == ''
+                  if option_name == 'color' or option_name == 'colour'
+                    assign option_kind = 'color'
+                    assign option_label = option.name
+                    assign option_values = option.values
+                  endif
+                endif
+              endfor
+
+              if option_kind == ''
+                for option in product.options_with_values
+                  assign option_name = option.name | downcase
+                  if option_name == 'language'
+                    assign option_kind = 'language'
+                    assign option_label = option.name
+                    assign option_values = option.values
+                  endif
+                endfor
+              endif
+
+              assign pick_variant = false
+              if option_kind != ''
+                if product.options.size == 1
+                  assign pick_variant = true
+                endif
+              endif
+
               assign quick_add = false
-              if product.available and product.variants.size == 1
-                assign quick_add = true
+              if product.available
+                if product.variants.size == 1
+                  assign quick_add = true
+                elsif pick_variant
+                  assign quick_add = true
+                endif
               endif
 
               assign on_sale = false
@@ -28,11 +66,30 @@
                 assign img_loading = 'eager'
               endif
 
-              if product.price_varies
+              assign compare_amount = ''
+              if quick_add
+                assign price_amount = variant.price | money
+                if variant.compare_at_price > variant.price
+                  assign compare_amount = variant.compare_at_price | money
+                endif
+              elsif product.price_varies
                 assign price_amount = product.price_min | money
+                if on_sale
+                  assign compare_amount = product.compare_at_price | money
+                endif
               else
                 assign price_amount = product.price | money
+                if on_sale
+                  assign compare_amount = product.compare_at_price | money
+                endif
               endif
+
+              assign card_image = product.featured_image
+              if variant.featured_image != blank
+                assign card_image = variant.featured_image
+              endif
+
+              assign image_widths = '300,450,600,900,1200' | split: ','
 
               assign add_label = 'collections.gear.add' | t: title: product.title
               assign choose_label = 'collections.gear.choose' | t: title: product.title
@@ -41,15 +98,15 @@
 
             {%- capture card -%}
               <div class="gear-card__media">
-                {%- if product.featured_image != blank -%}
+                {%- if card_image != blank -%}
                   {{
-                    product.featured_image
+                    card_image
                     | image_url: width: 1200
                     | image_tag:
                         widths: '300,450,600,900,1200',
                         sizes: '(min-width: 1024px) 23vw, 45vw',
                         loading: img_loading,
-                        alt: product.featured_image.alt
+                        alt: card_image.alt
                   }}
                 {%- else -%}
                   {{ 'image' | placeholder_svg_tag: 'gear-card__placeholder' }}
@@ -95,23 +152,107 @@
                 {%- endif -%}
 
                 <p class="gear-card__price">
-                  {%- if product.price_varies -%}
-                    {{ 'collections.gear.price_from' | t: price: price_amount }}
-                  {%- else -%}
-                    {{ price_amount }}
-                  {%- endif -%}
-
-                  {%- if on_sale -%}
-                    <s class="gear-card__compare">{{ product.compare_at_price | money }}</s>
-                  {%- endif -%}
+                  <s class="gear-card__compare" data-compare>{{ compare_amount }}</s>
+                  <span data-price>
+                    {%- if product.price_varies and quick_add == false -%}
+                      {{ 'collections.gear.price_from' | t: price: price_amount }}
+                    {%- else -%}
+                      {{ price_amount }}
+                    {%- endif -%}
+                  </span>
                 </p>
+
+                {%- if option_kind != '' -%}
+                  <div class="gear-card__options"
+                    {% if pick_variant %}role="radiogroup" aria-label="{{ option_label }}"{% endif %}
+                  >
+                    {%- for value in option_values -%}
+                      {%- liquid
+                        assign value_variant = value.variant
+                        assign value_compare = ''
+                        if value_variant.compare_at_price > value_variant.price
+                          assign value_compare = value_variant.compare_at_price | money
+                        endif
+
+                        assign value_image = value_variant.featured_image
+                        if value_image == blank
+                          assign value_image = product.featured_image
+                        endif
+
+                        assign value_selectable = false
+                        if pick_variant
+                          if value_variant != blank
+                            if value.available
+                              assign value_selectable = true
+                            endif
+                          endif
+                        endif
+                      -%}
+
+                      {%- capture value_srcset -%}
+                        {%- liquid
+                          for width in image_widths
+                            assign width_number = width | times: 1
+                            echo value_image | image_url: width: width_number
+                            echo ' '
+                            echo width_number
+                            echo 'w'
+                            unless forloop.last
+                              echo ', '
+                            endunless
+                          endfor
+                        -%}
+                      {%- endcapture -%}
+
+                      {%- capture value_mark -%}
+                        {%- if option_kind == 'color' and value.swatch.color -%}
+                          <span class="gear-card__dot" style="--dot: {{ value.swatch.color }}"></span>
+                          <span class="visually-hidden">{{ value.name }}</span>
+                        {%- elsif option_kind == 'color' and value.swatch.image -%}
+                          <span
+                            class="gear-card__dot"
+                            style="background-image: url({{ value.swatch.image | image_url: width: 40 }})"
+                          ></span>
+                          <span class="visually-hidden">{{ value.name }}</span>
+                        {%- else -%}
+                          <span class="gear-card__option-label">{{ value.name }}</span>
+                        {%- endif -%}
+                      {%- endcapture -%}
+
+                      {%- if value_selectable -%}
+                        <label class="gear-card__option">
+                          <input
+                            class="visually-hidden"
+                            type="radio"
+                            name="id"
+                            value="{{ value_variant.id }}"
+                            data-variant
+                            data-price="{{ value_variant.price | money }}"
+                            data-compare="{{ value_compare }}"
+                            data-image="{{ value_image | image_url: width: 1200 }}"
+                            data-image-srcset="{{ value_srcset | strip }}"
+                            data-image-alt="{{ value_image.alt | escape }}"
+                            {% if value_variant.id == variant.id %}checked{% endif %}
+                          >
+                          {{ value_mark }}
+                        </label>
+                      {%- else -%}
+                        <span class="gear-card__option{% unless value.available %} is-unavailable{% endunless %}">
+                          {{- value_mark -}}
+                        </span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
               </div>
             {%- endcapture -%}
 
             <li class="gear-card">
               {%- if quick_add -%}
                 {%- form 'product', product, class: 'gear-card__form', data-quick-add: '', data-added: added_label -%}
-                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  {%- unless pick_variant -%}
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                  {%- endunless -%}
                   <input type="hidden" name="quantity" value="1">
                   {{ card }}
                 {%- endform -%}
@@ -139,17 +280,16 @@
 {% stylesheet %}
   .gear {
     --gear-columns: 2;
+    --gear-sale-ink: color-mix(in oklab, var(--color-foreground) 45%, var(--color-background));
     --gear-column-gap: 1rem;
     --gear-row-gap: 2rem;
 
-    display: grid;
-    grid-template-columns: var(--content-grid);
-    row-gap: var(--spacing-section);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-section);
+    width: 100%;
     padding-block: var(--spacing-section);
-  }
-
-  .gear > * {
-    grid-column: 2;
+    padding-inline: var(--page-margin);
   }
 
   @media (width >= 1024px) {
@@ -191,7 +331,11 @@
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    transition: transform var(--duration-base) var(--easing-base);
+    transition: transform var(--duration-base) var(--easing-base), opacity var(--duration-base) var(--easing-base);
+  }
+
+  .gear-card__media img.is-swapping {
+    opacity: 0;
   }
 
   .gear-card:hover .gear-card__media img {
@@ -257,15 +401,29 @@
     cursor: default;
   }
 
-  /* The tick replaces the icon for a moment once the item is in the cart. */
-  .gear-card__form.is-added .gear-card__add svg {
-    display: none;
+  /* The tick and the icon share one cell, so one fades in as the other fades out. */
+  .gear-card__add svg,
+  .gear-card__add::before {
+    grid-area: 1 / 1;
+    transition: opacity var(--duration-base) var(--easing-base), scale var(--duration-base) var(--easing-base);
   }
 
-  .gear-card__form.is-added .gear-card__add::before {
+  .gear-card__add::before {
     content: '✓';
     font-size: 1rem;
     line-height: 1;
+    opacity: 0;
+    scale: 0.6;
+  }
+
+  .gear-card__form.is-added .gear-card__add svg {
+    opacity: 0;
+    scale: 0.6;
+  }
+
+  .gear-card__form.is-added .gear-card__add::before {
+    opacity: 1;
+    scale: 1;
   }
 
   .gear-card__form.is-busy {
@@ -313,14 +471,106 @@
     font-size: var(--font-size-small);
   }
 
+  /* Same muted ink as the inactive tabs on the hike product page. */
   .gear-card__compare {
+    color: var(--gear-sale-ink);
+  }
+
+  .gear-card__compare:empty {
+    display: none;
+  }
+
+  .gear-card__options {
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    padding-block-start: 0.25rem;
+  }
+
+  .gear-card__option {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .gear-card__option.is-unavailable {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .gear-card__dot {
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: 50%;
+    background-color: var(--dot, transparent);
+    background-size: cover;
+  }
+
+  .gear-card__option-label {
+    font-size: var(--font-size-small);
     color: var(--color-foreground-muted);
-    opacity: 0.6;
+  }
+
+  .gear-card__option:has(input:checked) .gear-card__dot {
+    outline: 1px solid var(--color-foreground);
+    outline-offset: 2px;
+  }
+
+  .gear-card__option:has(input:checked) .gear-card__option-label {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .gear-card__option:has(input:focus-visible) {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 3px;
   }
 
   .gear__pagination,
   .gear__empty {
     padding-block-start: var(--spacing-section);
+  }
+
+  /* Shopify's pagination markup may or may not carry a wrapper, so both lay the row out. */
+  .gear__pagination,
+  .gear__pagination .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* The page links wear the checkout button's shape, muted until hovered. */
+  .gear__pagination a,
+  .gear__pagination .current {
+    display: block;
+    padding: 0.625rem 1rem;
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--gear-sale-ink);
+    color: var(--color-background);
+    font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color var(--duration-base) var(--easing-base);
+  }
+
+  .gear__pagination a:hover,
+  .gear__pagination a:focus-visible,
+  .gear__pagination .current {
+    background-color: var(--color-foreground);
+  }
+
+  .gear__pagination .deco {
+    color: var(--gear-sale-ink);
   }
 
   .gear__loader {
@@ -376,6 +626,15 @@
     .gear__spinner {
       display: none;
     }
+
+    .gear__pagination a {
+      transition: none;
+    }
+
+    .gear-card__add svg,
+    .gear-card__add::before {
+      transition: none;
+    }
   }
 {% endstylesheet %}
 
@@ -396,6 +655,14 @@
         this.load(link.href, true);
       });
 
+      this.addEventListener('change', (event) => {
+        const input = event.target.closest('[data-variant]');
+        if (!input) return;
+
+        this.showPrice(input);
+        this.showImage(input);
+      });
+
       this.addEventListener('submit', (event) => {
         const form = event.target.closest('[data-quick-add]');
         if (!form) return;
@@ -405,6 +672,44 @@
       });
 
       window.addEventListener('popstate', () => this.load(window.location.href, false));
+    }
+
+    showPrice(input) {
+      const card = input.closest('.gear-card');
+      const price = card?.querySelector('[data-price]');
+      const compare = card?.querySelector('[data-compare]');
+
+      if (price) price.textContent = input.dataset.price;
+      if (compare) compare.textContent = input.dataset.compare;
+    }
+
+    /* The next image is decoded before the swap, so the card fades between two ready images. */
+    async showImage(input) {
+      const image = input.closest('.gear-card')?.querySelector('.gear-card__media img');
+      if (!image || !input.dataset.image) return;
+      if (image.getAttribute('src') === input.dataset.image) return;
+
+      const next = new Image();
+      next.sizes = image.sizes;
+      next.srcset = input.dataset.imageSrcset;
+      next.src = input.dataset.image;
+
+      try {
+        await next.decode();
+      } catch (error) {
+        return;
+      }
+
+      const duration = parseFloat(getComputedStyle(image).transitionDuration) * 1000 || 0;
+
+      image.classList.add('is-swapping');
+
+      setTimeout(() => {
+        image.srcset = next.srcset;
+        image.src = next.src;
+        image.alt = input.dataset.imageAlt;
+        image.classList.remove('is-swapping');
+      }, duration);
     }
 
     async load(url, push) {
