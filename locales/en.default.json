@@ -81,6 +81,7 @@
       "add": "Add {{ title }} to cart",
       "added": "Added to cart",
       "choose": "Choose options for {{ title }}",
+      "view_images": "View images of {{ title }}",
       "sold_out": "Sold out",
       "sale": "Sale",
       "price_from": "From {{ price }}",
