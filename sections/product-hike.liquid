@@ -65,126 +65,8 @@
     {%- endif -%}
   </h1>
 
-  <hike-gallery class="hike-gallery">
-    <div class="hike-gallery__stage">
-      {%- if product.images.size > 0 -%}
-        <ul class="hike-gallery__track" role="list" tabindex="0" aria-label="{{ 'general.accessibility.image_gallery' | t }}" data-track>
-          {%- for image in product.images -%}
-            {%- liquid
-              assign img_loading = 'lazy'
-              assign img_priority = 'auto'
-              if forloop.first
-                assign img_loading = 'eager'
-                assign img_priority = 'high'
-              endif
-              assign img_alt = image.alt | default: product.title
-            -%}
-            <li class="hike-gallery__slide" data-slide>
-              <button class="hike-gallery__zoom" type="button" data-open="{{ forloop.index0 }}">
-                {{
-                  image
-                  | image_url: width: 2000
-                  | image_tag:
-                      widths: '600,800,1100,1500,2000',
-                      sizes: '(min-width: 1024px) 54vw, 100vw',
-                      loading: img_loading,
-                      fetchpriority: img_priority,
-                      alt: img_alt
-                }}
-                <span class="visually-hidden">{{ 'product.hike.view_full_size' | t }}</span>
-              </button>
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- else -%}
-        <div class="hike-gallery__slide">
-          {{ 'image' | placeholder_svg_tag: 'hike-gallery__placeholder' }}
-        </div>
-      {%- endif -%}
 
-      {%- if product.images.size > 1 -%}
-        <button class="hike-gallery__arrow hike-gallery__arrow--previous" type="button" data-direction="previous">
-          {{ 'icon-arrow-right.svg' | inline_asset_content }}
-          <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
-        </button>
-        <button class="hike-gallery__arrow hike-gallery__arrow--next" type="button" data-direction="next">
-          {{ 'icon-arrow-right.svg' | inline_asset_content }}
-          <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
-        </button>
-      {%- endif -%}
-    </div>
-
-    {%- comment -%}
-      One row, never wrapping — the images past the fifth stay in the strip's own
-      scroller and are paged into view as the main carousel advances.
-    {%- endcomment -%}
-    {%- if product.images.size > 1 -%}
-      <ul class="hike-gallery__thumbs" role="list" data-thumbs>
-        {%- for image in product.images -%}
-          <li class="hike-gallery__thumb">
-            <button class="hike-gallery__thumb-button" type="button" data-index="{{ forloop.index0 }}">
-              {{
-                image
-                | image_url: width: 500
-                | image_tag:
-                    widths: '150,200,300,400,500',
-                    sizes: '(min-width: 1024px) 11vw, 30vw',
-                    loading: 'lazy',
-                    alt: ''
-              }}
-              <span class="visually-hidden">
-                {{- 'product.hike.show_image' | t: number: forloop.index -}}
-              </span>
-            </button>
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-
-    {%- if product.images.size > 0 -%}
-      <dialog class="hike-lightbox" aria-label="{{ 'general.accessibility.image_gallery' | t }}" scroll-lock data-lightbox>
-        <ul class="hike-lightbox__track" role="list" tabindex="0" data-lightbox-track>
-          {%- for image in product.images -%}
-            {%- assign img_alt = image.alt | default: product.title -%}
-            <li class="hike-lightbox__slide" data-lightbox-slide>
-              {{
-                image
-                | image_url: width: 3840
-                | image_tag:
-                    widths: '1100,1600,2200,3000,3840',
-                    sizes: '100vw',
-                    loading: 'lazy',
-                    alt: img_alt
-              }}
-            </li>
-          {%- endfor -%}
-        </ul>
-
-        {%- if product.images.size > 1 -%}
-          {%- capture lightbox_current -%}<span data-lightbox-current>1</span>{%- endcapture -%}
-          <p class="hike-lightbox__counter" aria-live="polite">
-            {{- 'product.hike.image_counter_html' | t: current: lightbox_current, total: product.images.size -}}
-          </p>
-        {%- endif -%}
-
-        <button class="hike-lightbox__close" type="button" data-lightbox-close>
-          {{ 'icon-close.svg' | inline_asset_content }}
-          <span class="visually-hidden">{{ 'general.accessibility.close' | t }}</span>
-        </button>
-
-        {%- if product.images.size > 1 -%}
-          <button class="hike-gallery__arrow hike-gallery__arrow--previous" type="button" data-lightbox-direction="previous">
-            {{ 'icon-arrow-right.svg' | inline_asset_content }}
-            <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
-          </button>
-          <button class="hike-gallery__arrow hike-gallery__arrow--next" type="button" data-lightbox-direction="next">
-            {{ 'icon-arrow-right.svg' | inline_asset_content }}
-            <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
-          </button>
-        {%- endif -%}
-      </dialog>
-    {%- endif -%}
-  </hike-gallery>
+  {% render 'product-gallery', product: product %}
 
   <hike-reservation class="hike-product__info" data-max="{{ max_quantity }}">
     <p class="hike-product__deposit">
@@ -208,7 +90,7 @@
 
     {%- form 'product', product, class: 'hike-product__form' -%}
       <input type="hidden" name="id" value="{{ variant.id }}">
-      <input type="hidden" name="return_to" value="/checkout">
+      <input type="hidden" name="return_to" value="{{ routes.cart_url }}">
 
       <div class="hike-product__quantity">
         <label class="hike-product__quantity-label" for="hike-quantity-{{ section.id }}">
@@ -277,7 +159,7 @@
 
       <button class="hike-product__checkout" type="submit" {% unless variant.available %}disabled{% endunless %}>
         {%- if variant.available -%}
-          {{ 'product.hike.checkout' | t }}
+          {{ 'product.hike.add_to_cart' | t }}
         {%- else -%}
           {{ 'product.hike.sold_out' | t }}
         {%- endif -%}
@@ -319,7 +201,7 @@
       grid-row: 1;
     }
 
-    .hike-gallery {
+    .product-gallery {
       grid-column: 1;
       grid-row: 2;
     }
@@ -348,7 +230,7 @@
       grid-column: 2;
     }
 
-    .hike-gallery {
+    .product-gallery {
       grid-row: 1 / span 2;
     }
   }
@@ -366,248 +248,6 @@
 
   .hike-product__dates::before {
     content: ' ';
-  }
-
-  /* Gallery */
-
-  .hike-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gallery-gap);
-    min-width: 0;
-  }
-
-  .hike-gallery__stage {
-    position: relative;
-  }
-
-  .hike-gallery__track {
-    position: relative;
-    display: flex;
-    padding: 0;
-    margin: 0;
-    overflow-x: auto;
-    list-style: none;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .hike-gallery__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hike-gallery__slide {
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-  }
-
-  .hike-gallery__slide img,
-  .hike-gallery__slide svg {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-  }
-
-  .hike-gallery__zoom {
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-  }
-
-  @media (1024px <= width < 1280px) {
-    .hike-gallery {
-      align-self: stretch;
-    }
-
-    .hike-gallery__stage {
-      flex-grow: 1;
-      aspect-ratio: 4 / 3;
-    }
-
-    .hike-gallery__track,
-    .hike-gallery__stage > .hike-gallery__slide {
-      position: absolute;
-      inset: 0;
-    }
-
-    .hike-gallery__zoom {
-      height: 100%;
-    }
-
-    .hike-gallery__slide img,
-    .hike-gallery__slide svg {
-      height: 100%;
-      aspect-ratio: auto;
-    }
-  }
-
-  .hike-lightbox {
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    max-height: none;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-color: rgb(0 0 0 / 92%);
-    color: var(--color-on-image);
-  }
-
-  .hike-lightbox[open] {
-    animation: hike-lightbox-in var(--duration-base) var(--easing-base);
-  }
-
-  .hike-lightbox::backdrop {
-    background: none;
-  }
-
-  @keyframes hike-lightbox-in {
-    from {
-      opacity: 0;
-    }
-  }
-
-  .hike-lightbox__track {
-    display: flex;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    overflow-x: auto;
-    list-style: none;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .hike-lightbox__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hike-lightbox__slide {
-    flex: 0 0 100%;
-    padding: 4rem 1rem;
-    scroll-snap-align: start;
-  }
-
-  @media (width >= 1024px) {
-    .hike-lightbox__slide {
-      padding: 4rem 6rem;
-    }
-  }
-
-  .hike-lightbox__slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .hike-lightbox__counter {
-    position: absolute;
-    inset-block-start: 0.75rem;
-    inset-inline-start: 1.25rem;
-    display: flex;
-    align-items: center;
-    height: 3rem;
-    font-size: var(--font-size-ui);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.08em;
-  }
-
-  .hike-lightbox__close {
-    position: absolute;
-    inset-block-start: 0.75rem;
-    inset-inline-end: 0.75rem;
-    display: grid;
-    place-items: center;
-    padding: 0.5rem;
-    border: 0;
-    background: none;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .hike-lightbox__close svg {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .hike-gallery__arrow {
-    position: absolute;
-    top: 50%;
-    translate: 0 -50%;
-    display: grid;
-    place-items: center;
-    padding: 0.5rem;
-    border: 0;
-    background: none;
-    color: var(--color-on-image);
-    cursor: pointer;
-    transition: opacity var(--duration-fast) var(--easing-base);
-  }
-
-  .hike-gallery__arrow--previous {
-    inset-inline-start: 0.75rem;
-    rotate: 180deg;
-  }
-
-  .hike-gallery__arrow--next {
-    inset-inline-end: 0.75rem;
-  }
-
-  .hike-gallery__arrow svg {
-    width: 2rem;
-    height: 2rem;
-    filter: drop-shadow(0 0 6px rgb(0 0 0 / 35%));
-  }
-
-  .hike-gallery__arrow[disabled] {
-    opacity: 0.35;
-    cursor: default;
-  }
-
-  .hike-gallery__thumbs {
-    position: relative;
-    display: flex;
-    gap: var(--gallery-gap);
-    padding: 0;
-    margin: 0;
-    overflow-x: auto;
-    list-style: none;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .hike-gallery__thumbs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hike-gallery__thumb {
-    flex: 0 0 calc((100% - var(--gallery-gap) * (var(--thumbs-per-view) - 1)) / var(--thumbs-per-view));
-    scroll-snap-align: start;
-  }
-
-  .hike-gallery__thumb-button {
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    opacity: 0.55;
-    transition: opacity var(--duration-base) var(--easing-base);
-  }
-
-  .hike-gallery__thumb-button.is-active,
-  .hike-gallery__thumb-button:hover {
-    opacity: 1;
-  }
-
-  .hike-gallery__thumb-button img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
   }
 
   /* Reservation column */
@@ -830,195 +470,13 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hike-gallery__arrow,
-    .hike-gallery__thumb-button,
     .hike-product__checkout {
       transition: none;
-    }
-
-    .hike-lightbox[open] {
-      animation: none;
     }
   }
 {% endstylesheet %}
 
 {% javascript %}
-  /* Keeps the thumbnail strip in step with the main carousel and opens the full-size lightbox. */
-  class HikeGallery extends HTMLElement {
-    connectedCallback() {
-      this.track = this.querySelector('[data-track]');
-      if (!this.track) return;
-
-      this.slides = Array.from(this.querySelectorAll('[data-slide]'));
-      this.thumbs = this.querySelector('[data-thumbs]');
-      this.buttons = Array.from(this.querySelectorAll('[data-index]'));
-      this.controls = Array.from(this.querySelectorAll('[data-direction]'));
-      this.active = 0;
-      this.update = this.update.bind(this);
-
-      this.track.addEventListener(
-        'scroll',
-        () => {
-          cancelAnimationFrame(this.frame);
-          this.frame = requestAnimationFrame(this.update);
-        },
-        { passive: true }
-      );
-
-      const settle = () => {
-        this.update();
-        this.revealThumb();
-      };
-
-      if ('onscrollend' in window) {
-        this.track.addEventListener('scrollend', settle);
-      } else {
-        this.track.addEventListener(
-          'scroll',
-          () => {
-            clearTimeout(this.settleTimer);
-            this.settleTimer = setTimeout(settle, 150);
-          },
-          { passive: true }
-        );
-      }
-
-      window.addEventListener('resize', this.update, { passive: true });
-
-      this.addEventListener('click', (event) => {
-        const thumb = event.target.closest('[data-index]');
-        if (thumb) {
-          this.goTo(Number(thumb.dataset.index));
-          return;
-        }
-
-        const control = event.target.closest('[data-direction]');
-        if (control) {
-          this.goTo(this.active + (control.dataset.direction === 'next' ? 1 : -1));
-          return;
-        }
-
-        const zoom = event.target.closest('[data-open]');
-        if (zoom) this.openLightbox(Number(zoom.dataset.open));
-      });
-
-      this.setupLightbox();
-      this.update();
-    }
-
-    nearest(track, slides) {
-      const distance = (slide) => Math.abs(slide.offsetLeft - track.scrollLeft);
-      return slides.reduce((nearest, slide, index) => (distance(slide) < distance(slides[nearest]) ? index : nearest), 0);
-    }
-
-    scrollToSlide(track, slides, index, behavior) {
-      const target = slides[Math.min(Math.max(index, 0), slides.length - 1)];
-      if (target) track.scrollTo({ left: target.offsetLeft, behavior });
-    }
-
-    goTo(index, behavior = 'smooth') {
-      this.scrollToSlide(this.track, this.slides, index, behavior);
-    }
-
-    update() {
-      this.active = this.nearest(this.track, this.slides);
-
-      this.buttons.forEach((button, index) => button.classList.toggle('is-active', index === this.active));
-
-      this.controls.forEach((control) => {
-        control.disabled =
-          control.dataset.direction === 'next' ? this.active === this.slides.length - 1 : this.active === 0;
-      });
-    }
-
-    setupLightbox() {
-      this.lightbox = this.querySelector('[data-lightbox]');
-      if (!this.lightbox) return;
-
-      this.lightboxTrack = this.lightbox.querySelector('[data-lightbox-track]');
-      this.lightboxSlides = Array.from(this.lightbox.querySelectorAll('[data-lightbox-slide]'));
-      this.lightboxControls = Array.from(this.lightbox.querySelectorAll('[data-lightbox-direction]'));
-      this.lightboxCurrent = this.lightbox.querySelector('[data-lightbox-current]');
-      this.lightboxActive = 0;
-
-      this.lightboxTrack.addEventListener(
-        'scroll',
-        () => {
-          cancelAnimationFrame(this.lightboxFrame);
-          this.lightboxFrame = requestAnimationFrame(() => this.updateLightbox());
-        },
-        { passive: true }
-      );
-
-      this.lightbox.addEventListener('click', (event) => {
-        if (event.target.closest('[data-lightbox-close]') || event.target.matches('[data-lightbox-slide]')) {
-          this.lightbox.close();
-          return;
-        }
-
-        const control = event.target.closest('[data-lightbox-direction]');
-        if (control) this.stepLightbox(control.dataset.lightboxDirection === 'next' ? 1 : -1);
-      });
-
-      this.lightbox.addEventListener('keydown', (event) => {
-        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-        event.preventDefault();
-        this.stepLightbox(event.key === 'ArrowRight' ? 1 : -1);
-      });
-
-      this.lightbox.addEventListener('close', () => this.goTo(this.lightboxActive, 'instant'));
-    }
-
-    openLightbox(index) {
-      if (!this.lightbox) return;
-
-      this.lightbox.showModal();
-      this.scrollToSlide(this.lightboxTrack, this.lightboxSlides, index, 'instant');
-      this.updateLightbox();
-    }
-
-    stepLightbox(step) {
-      this.scrollToSlide(this.lightboxTrack, this.lightboxSlides, this.lightboxActive + step, 'smooth');
-    }
-
-    updateLightbox() {
-      this.lightboxActive = this.nearest(this.lightboxTrack, this.lightboxSlides);
-
-      const current = String(this.lightboxActive + 1);
-      if (this.lightboxCurrent && this.lightboxCurrent.textContent !== current) {
-        this.lightboxCurrent.textContent = current;
-      }
-
-      this.lightboxControls.forEach((control) => {
-        control.disabled =
-          control.dataset.lightboxDirection === 'next'
-            ? this.lightboxActive === this.lightboxSlides.length - 1
-            : this.lightboxActive === 0;
-      });
-    }
-
-    /* Waits for the carousel to settle, then slides the strip one thumbnail at a time, as the carousel moves. */
-    revealThumb() {
-      const button = this.buttons[this.active];
-      if (!this.thumbs || !button) return;
-
-      const thumb = button.parentElement;
-      const view = this.thumbs.clientWidth;
-      const current = this.thumbs.scrollLeft;
-      let left;
-
-      if (thumb.offsetLeft + thumb.offsetWidth > current + view + 1) {
-        left = thumb.offsetLeft + thumb.offsetWidth - view;
-      } else if (thumb.offsetLeft < current - 1) {
-        left = thumb.offsetLeft;
-      } else {
-        return;
-      }
-
-      this.thumbs.scrollTo({ left, behavior: 'smooth' });
-    }
-  }
-
   /* Swaps in the money strings Liquid pre-rendered for each quantity. */
   class HikeReservation extends HTMLElement {
     connectedCallback() {
@@ -1072,7 +530,6 @@
     }
   }
 
-  if (!customElements.get('hike-gallery')) customElements.define('hike-gallery', HikeGallery);
   if (!customElements.get('hike-reservation')) customElements.define('hike-reservation', HikeReservation);
 {% endjavascript %}
 

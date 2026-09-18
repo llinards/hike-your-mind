@@ -1,0 +1,213 @@
+{% comment %}Shopify's product recommendations, fetched after the page has loaded.{% endcomment %}
+
+{%- liquid
+  assign limit = section.settings.products_to_show
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = 'product.standard.related' | t
+  endif
+-%}
+
+<related-products
+  class="related"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}"
+>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <h2 class="related__heading">{{ heading }}</h2>
+
+    <ul class="related__grid" role="list">
+      {%- for item in recommendations.products -%}
+        {%- liquid
+          assign item_tags = item.tags | join: ',' | downcase
+          assign item_per_day = false
+          if item_tags contains 'bookeasy'
+            assign item_per_day = true
+          endif
+
+          assign item_compare = ''
+          if item.compare_at_price > item.price
+            assign item_compare = item.compare_at_price | money
+          endif
+        -%}
+
+        <li class="related__card">
+          <a class="related__link" href="{{ item.url }}">
+            <div class="related__media">
+              {%- if item.featured_image != blank -%}
+                {{
+                  item.featured_image
+                  | image_url: width: 1200
+                  | image_tag:
+                      widths: '300,450,600,900,1200',
+                      sizes: '(min-width: 1024px) 23vw, 45vw',
+                      loading: 'lazy',
+                      alt: item.featured_image.alt
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'related__placeholder' }}
+              {%- endif -%}
+            </div>
+
+            <h3 class="related__title">{{ item.title }}</h3>
+
+            <p class="related__price">
+              <s class="related__compare">{{ item_compare }}</s>
+              <span>
+                {%- if item.price_varies -%}
+                  {{ 'collections.gear.price_from' | t: price: item.price_min | money }}
+                {%- else -%}
+                  {{ item.price | money }}
+                {%- endif -%}
+              </span>
+              {%- if item_per_day -%}
+                <span class="related__unit">{{ 'collections.gear.per_day' | t }}</span>
+              {%- endif -%}
+            </p>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</related-products>
+
+{% stylesheet %}
+  .related {
+    --related-ink: color-mix(in oklab, var(--color-foreground) 45%, var(--color-background));
+
+    display: block;
+    padding-block-end: var(--spacing-section);
+  }
+
+  .related:empty {
+    display: none;
+  }
+
+  .related__heading {
+    font-size: var(--font-size-display-compact);
+    margin-block-end: 1.5rem;
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 2rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  @media (width >= 1024px) {
+    .related__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 1.75rem;
+    }
+  }
+
+  .related__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .related__media {
+    overflow: hidden;
+  }
+
+  .related__media img,
+  .related__media svg {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .related__link:hover .related__media img,
+  .related__link:focus-visible .related__media img {
+    transform: scale(1.03);
+  }
+
+  .related__title {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-small);
+    font-weight: 400;
+    letter-spacing: var(--letter-spacing-ui);
+    line-height: var(--line-height-small);
+  }
+
+  .related__price {
+    display: flex;
+    gap: 0.5rem;
+    font-size: var(--font-size-small);
+  }
+
+  .related__compare,
+  .related__unit {
+    color: var(--related-ink);
+  }
+
+  .related__compare:empty {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .related__media img,
+    .related__media svg {
+      transition: none;
+    }
+
+    .related__link:hover .related__media img {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Shopify renders the recommendations only for its own endpoint, so the section fetches itself. */
+  class RelatedProducts extends HTMLElement {
+    async connectedCallback() {
+      if (this.children.length > 0 || !this.dataset.url) return;
+
+      try {
+        const response = await fetch(this.dataset.url);
+        if (!response.ok) throw new Error(response.statusText);
+
+        const markup = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const section = markup.querySelector('related-products');
+        if (section) this.replaceChildren(...section.childNodes);
+      } catch (error) {
+        this.replaceChildren();
+      }
+    }
+  }
+
+  if (!customElements.get('related-products')) customElements.define('related-products', RelatedProducts);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.related_products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "t:labels.products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

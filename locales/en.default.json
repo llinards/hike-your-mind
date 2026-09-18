@@ -81,9 +81,11 @@
       "add": "Add {{ title }} to cart",
       "added": "Added to cart",
       "choose": "Choose options for {{ title }}",
+      "view_images": "View images of {{ title }}",
       "sold_out": "Sold out",
       "sale": "Sale",
       "price_from": "From {{ price }}",
+      "per_day": "/ per day",
       "no_results": "No gear has been added to this collection yet."
     }
   },
@@ -107,12 +109,28 @@
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
   "product": {
+    "gallery": {
+      "show_image": "Show image {{ number }}",
+      "view_full_size": "View full size",
+      "image_counter_html": "{{ current }} / {{ total }}"
+    },
+    "standard": {
+      "purchase_summary": "Purchase summary",
+      "rent_summary": "Rent summary",
+      "tax_note": "Tax included. Shipping calculated at checkout.",
+      "quantity": "Quantity",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "unit_price": "Price",
+      "day_rate": "Price per day",
+      "total": "Total",
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "related": "You may also like"
+    },
     "hike": {
       "pay_today": "Pay today",
       "deposit_amount_html": "{{ price }} deposit",
-      "show_image": "Show image {{ number }}",
-      "view_full_size": "View full size",
-      "image_counter_html": "{{ current }} / {{ total }}",
       "quantity": "Quantity",
       "decrease": "Decrease quantity",
       "increase": "Increase quantity",
@@ -121,7 +139,7 @@
       "reserve": "Pay today to reserve your place",
       "balance": "Remaining balance ({{ days }} days before the trip)",
       "total": "Total",
-      "checkout": "Proceed to checkout",
+      "add_to_cart": "Add to cart",
       "sold_out": "Sold out"
     },
     "details": {

@@ -1,6 +1,6 @@
 {% comment %}Hiking gear as a product grid with quick add, paged without a reload.{% endcomment %}
 
-<gear-grid class="gear full-width" data-section-id="{{ section.id }}">
+<gear-grid class="gear" data-section-id="{{ section.id }}">
   <h1 class="gear__heading">{{ collection.title }}</h1>
 
   <div class="gear__results" data-results>
@@ -47,14 +47,28 @@
                 endif
               endif
 
-              assign quick_add = false
-              if product.available
-                if product.variants.size == 1
-                  assign quick_add = true
-                elsif pick_variant
-                  assign quick_add = true
-                endif
+              comment
+                BookX marks its bookable products with this tag; their price is a daily rate.
+              endcomment
+              assign product_tags = product.tags | join: ',' | downcase
+              assign per_day = false
+              if product_tags contains 'bookeasy'
+                assign per_day = true
               endif
+
+              comment
+                Bookable products need dates, so they are booked on their own page.
+              endcomment
+              assign quick_add = false
+              unless per_day
+                if product.available
+                  if product.variants.size == 1
+                    assign quick_add = true
+                  elsif pick_variant
+                    assign quick_add = true
+                  endif
+                endif
+              endunless
 
               assign on_sale = false
               if product.compare_at_price > product.price
@@ -92,6 +106,7 @@
               assign image_widths = '300,450,600,900,1200' | split: ','
 
               assign add_label = 'collections.gear.add' | t: title: product.title
+              assign gallery_label = 'collections.gear.view_images' | t: title: product.title
               assign choose_label = 'collections.gear.choose' | t: title: product.title
               assign added_label = 'collections.gear.added' | t
             -%}
@@ -116,16 +131,28 @@
                   <span class="gear-card__badge">{{ 'collections.gear.sale' | t }}</span>
                 {%- endif -%}
 
-                {%- if quick_add -%}
-                  <button class="gear-card__add gear-card__add--plus" type="submit">
+                {%- if product.images.size > 0 -%}
+                  <a class="gear-card__add gear-card__add--plus" href="{{ product.url }}" data-gallery>
                     {{- 'icon-plus.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ add_label }}</span>
-                  </button>
-                {%- elsif product.available -%}
-                  <a class="gear-card__add gear-card__add--plus" href="{{ product.url }}">
-                    {{- 'icon-plus.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ choose_label }}</span>
+                    <span class="visually-hidden">{{ gallery_label }}</span>
                   </a>
+
+                  <template data-slides>
+                    {%- for image in product.images -%}
+                      {%- assign slide_alt = image.alt | default: product.title -%}
+                      <li class="gear-lightbox__slide" data-lightbox-slide>
+                        {{
+                          image
+                          | image_url: width: 3840
+                          | image_tag:
+                              widths: '1100,1600,2200,3000,3840',
+                              sizes: '100vw',
+                              loading: 'lazy',
+                              alt: slide_alt
+                        }}
+                      </li>
+                    {%- endfor -%}
+                  </template>
                 {%- endif -%}
               </div>
 
@@ -134,22 +161,24 @@
                   <a class="gear-card__link" href="{{ product.url }}">{{ product.title }}</a>
                 </h2>
 
-                {%- if quick_add -%}
-                  <button class="gear-card__add gear-card__add--cart" type="submit">
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ add_label }}</span>
-                  </button>
-                {%- elsif product.available -%}
-                  <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ choose_label }}</span>
-                  </a>
-                {%- else -%}
-                  <button class="gear-card__add gear-card__add--cart" type="button" disabled>
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ 'collections.gear.sold_out' | t }}</span>
-                  </button>
-                {%- endif -%}
+                {%- unless per_day -%}
+                  {%- if quick_add -%}
+                    <button class="gear-card__add gear-card__add--cart" type="submit">
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ add_label }}</span>
+                    </button>
+                  {%- elsif product.available -%}
+                    <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ choose_label }}</span>
+                    </a>
+                  {%- else -%}
+                    <button class="gear-card__add gear-card__add--cart" type="button" disabled>
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ 'collections.gear.sold_out' | t }}</span>
+                    </button>
+                  {%- endif -%}
+                {%- endunless -%}
 
                 <p class="gear-card__price">
                   <s class="gear-card__compare" data-compare>{{ compare_amount }}</s>
@@ -160,6 +189,9 @@
                       {{ price_amount }}
                     {%- endif -%}
                   </span>
+                  {%- if per_day -%}
+                    <span class="gear-card__unit">{{ 'collections.gear.per_day' | t }}</span>
+                  {%- endif -%}
                 </p>
 
                 {%- if option_kind != '' -%}
@@ -275,6 +307,27 @@
   </div>
 
   <p class="visually-hidden" role="status" data-status></p>
+
+  <dialog class="gear-lightbox" aria-label="{{ 'general.accessibility.image_gallery' | t }}" scroll-lock data-lightbox>
+    <ul class="gear-lightbox__track" role="list" tabindex="0" data-lightbox-track></ul>
+
+    <p class="gear-lightbox__counter" aria-live="polite" data-counter hidden></p>
+
+    <button class="gear-lightbox__close" type="button" data-lightbox-close>
+      {{ 'icon-close.svg' | inline_asset_content }}
+      <span class="visually-hidden">{{ 'general.accessibility.close' | t }}</span>
+    </button>
+
+    <button class="gear-lightbox__arrow gear-lightbox__arrow--previous" type="button" data-lightbox-direction="previous">
+      {{ 'icon-arrow-right.svg' | inline_asset_content }}
+      <span class="visually-hidden">{{ 'general.accessibility.previous' | t }}</span>
+    </button>
+
+    <button class="gear-lightbox__arrow gear-lightbox__arrow--next" type="button" data-lightbox-direction="next">
+      {{ 'icon-arrow-right.svg' | inline_asset_content }}
+      <span class="visually-hidden">{{ 'general.accessibility.next' | t }}</span>
+    </button>
+  </dialog>
 </gear-grid>
 
 {% stylesheet %}
@@ -287,9 +340,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-section);
-    width: 100%;
     padding-block: var(--spacing-section);
-    padding-inline: var(--page-margin);
   }
 
   @media (width >= 1024px) {
@@ -402,13 +453,13 @@
   }
 
   /* The tick and the icon share one cell, so one fades in as the other fades out. */
-  .gear-card__add svg,
-  .gear-card__add::before {
+  .gear-card__add--cart svg,
+  .gear-card__add--cart::before {
     grid-area: 1 / 1;
     transition: opacity var(--duration-base) var(--easing-base), scale var(--duration-base) var(--easing-base);
   }
 
-  .gear-card__add::before {
+  .gear-card__add--cart::before {
     content: '✓';
     font-size: 1rem;
     line-height: 1;
@@ -416,12 +467,12 @@
     scale: 0.6;
   }
 
-  .gear-card__form.is-added .gear-card__add svg {
+  .gear-card__form.is-added .gear-card__add--cart svg {
     opacity: 0;
     scale: 0.6;
   }
 
-  .gear-card__form.is-added .gear-card__add::before {
+  .gear-card__form.is-added .gear-card__add--cart::before {
     opacity: 1;
     scale: 1;
   }
@@ -446,6 +497,11 @@
     font-weight: 400;
     letter-spacing: var(--letter-spacing-ui);
     line-height: var(--line-height-small);
+  }
+
+  /* With no cart icon beside it, the title takes the whole row. */
+  .gear-card__info:not(:has(.gear-card__add--cart)) .gear-card__title {
+    grid-column: 1 / -1;
   }
 
   .gear-card__link {
@@ -473,6 +529,10 @@
 
   /* Same muted ink as the inactive tabs on the hike product page. */
   .gear-card__compare {
+    color: var(--gear-sale-ink);
+  }
+
+  .gear-card__unit {
     color: var(--gear-sale-ink);
   }
 
@@ -573,6 +633,134 @@
     color: var(--gear-sale-ink);
   }
 
+  .gear-lightbox {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: rgb(0 0 0 / 92%);
+    color: var(--color-on-image);
+  }
+
+  .gear-lightbox[open] {
+    animation: gear-lightbox-in var(--duration-base) var(--easing-base);
+  }
+
+  .gear-lightbox::backdrop {
+    background: none;
+  }
+
+  @keyframes gear-lightbox-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .gear-lightbox__track {
+    display: flex;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gear-lightbox__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gear-lightbox__slide {
+    flex: 0 0 100%;
+    padding: 4rem 1rem;
+    scroll-snap-align: start;
+  }
+
+  @media (width >= 1024px) {
+    .gear-lightbox__slide {
+      padding: 4rem 6rem;
+    }
+  }
+
+  .gear-lightbox__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .gear-lightbox__counter {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 1.25rem;
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    font-size: var(--font-size-ui);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+
+  .gear-lightbox__close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .gear-lightbox__close svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .gear-lightbox__arrow {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .gear-lightbox__arrow--previous {
+    inset-inline-start: 0.75rem;
+    rotate: 180deg;
+  }
+
+  .gear-lightbox__arrow--next {
+    inset-inline-end: 0.75rem;
+  }
+
+  .gear-lightbox__arrow svg {
+    width: 2rem;
+    height: 2rem;
+    filter: drop-shadow(0 0 6px rgb(0 0 0 / 35%));
+  }
+
+  .gear-lightbox__arrow[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* Both are laid out with display, so hiding needs saying outright. */
+  .gear-lightbox__counter[hidden],
+  .gear-lightbox__arrow[hidden] {
+    display: none;
+  }
+
   .gear__loader {
     position: absolute;
     inset: 0;
@@ -631,8 +819,12 @@
       transition: none;
     }
 
-    .gear-card__add svg,
-    .gear-card__add::before {
+    .gear-lightbox[open] {
+      animation: none;
+    }
+
+    .gear-card__add--cart svg,
+    .gear-card__add--cart::before {
       transition: none;
     }
   }
@@ -648,12 +840,21 @@
       this.addEventListener('click', (event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
 
+        const trigger = event.target.closest('[data-gallery]');
+        if (trigger) {
+          event.preventDefault();
+          this.openGallery(trigger);
+          return;
+        }
+
         const link = event.target.closest('[data-pagination] a');
         if (!link) return;
 
         event.preventDefault();
         this.load(link.href, true);
       });
+
+      this.setupLightbox();
 
       this.addEventListener('change', (event) => {
         const input = event.target.closest('[data-variant]');
@@ -672,6 +873,86 @@
       });
 
       window.addEventListener('popstate', () => this.load(window.location.href, false));
+    }
+
+    setupLightbox() {
+      this.lightbox = this.querySelector('[data-lightbox]');
+      if (!this.lightbox) return;
+
+      this.track = this.lightbox.querySelector('[data-lightbox-track]');
+      this.counter = this.lightbox.querySelector('[data-counter]');
+      this.arrows = Array.from(this.lightbox.querySelectorAll('[data-lightbox-direction]'));
+
+      this.track.addEventListener(
+        'scroll',
+        () => {
+          cancelAnimationFrame(this.frame);
+          this.frame = requestAnimationFrame(() => this.updateGallery());
+        },
+        { passive: true }
+      );
+
+      this.lightbox.addEventListener('click', (event) => {
+        if (event.target.closest('[data-lightbox-close]') || event.target.matches('[data-lightbox-slide]')) {
+          this.lightbox.close();
+          return;
+        }
+
+        const arrow = event.target.closest('[data-lightbox-direction]');
+        if (arrow) this.stepGallery(arrow.dataset.lightboxDirection === 'next' ? 1 : -1);
+      });
+
+      this.lightbox.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        this.stepGallery(event.key === 'ArrowRight' ? 1 : -1);
+      });
+
+      /* The slides belong to the card, so they leave with it when the dialog closes. */
+      this.lightbox.addEventListener('close', () => {
+        this.track.replaceChildren();
+        this.slides = [];
+      });
+    }
+
+    openGallery(trigger) {
+      const slides = trigger.closest('.gear-card')?.querySelector('[data-slides]');
+      if (!this.lightbox || !slides) return;
+
+      this.track.replaceChildren(slides.content.cloneNode(true));
+      this.slides = Array.from(this.track.querySelectorAll('[data-lightbox-slide]'));
+
+      this.lightbox.showModal();
+      this.track.scrollTo({ left: 0, behavior: 'instant' });
+      this.updateGallery();
+    }
+
+    stepGallery(step) {
+      const target = this.slides[Math.min(Math.max(this.active + step, 0), this.slides.length - 1)];
+      if (target) this.track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    }
+
+    updateGallery() {
+      if (!this.slides || this.slides.length === 0) return;
+
+      const distance = (slide) => Math.abs(slide.offsetLeft - this.track.scrollLeft);
+      this.active = this.slides.reduce(
+        (nearest, slide, index) => (distance(slide) < distance(this.slides[nearest]) ? index : nearest),
+        0
+      );
+
+      const many = this.slides.length > 1;
+
+      if (this.counter) {
+        this.counter.hidden = !many;
+        this.counter.textContent = `${this.active + 1} / ${this.slides.length}`;
+      }
+
+      this.arrows.forEach((arrow) => {
+        arrow.hidden = !many;
+        arrow.disabled =
+          arrow.dataset.lightboxDirection === 'next' ? this.active === this.slides.length - 1 : this.active === 0;
+      });
     }
 
     showPrice(input) {
