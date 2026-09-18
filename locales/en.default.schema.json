@@ -41,6 +41,7 @@
     "primary": "Primary",
     "product": "Product",
     "product_hike": "Hike product",
+    "related_products": "Related products",
     "product_hike_details": "Hike trip details",
     "review": "Review",
     "reviews": "Reviews",
@@ -59,6 +60,7 @@
     "feature": "Feature"
   },
   "labels": {
+    "products_to_show": "Products to show",
     "alignment": "Alignment",
     "background": "Background",
     "foreground": "Foreground",
