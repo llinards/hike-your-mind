@@ -208,7 +208,7 @@
 
     {%- form 'product', product, class: 'hike-product__form' -%}
       <input type="hidden" name="id" value="{{ variant.id }}">
-      <input type="hidden" name="return_to" value="/checkout">
+      <input type="hidden" name="return_to" value="{{ routes.cart_url }}">
 
       <div class="hike-product__quantity">
         <label class="hike-product__quantity-label" for="hike-quantity-{{ section.id }}">
@@ -277,7 +277,7 @@
 
       <button class="hike-product__checkout" type="submit" {% unless variant.available %}disabled{% endunless %}>
         {%- if variant.available -%}
-          {{ 'product.hike.checkout' | t }}
+          {{ 'product.hike.add_to_cart' | t }}
         {%- else -%}
           {{ 'product.hike.sold_out' | t }}
         {%- endif -%}

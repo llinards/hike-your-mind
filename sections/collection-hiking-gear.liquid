@@ -47,14 +47,28 @@
                 endif
               endif
 
-              assign quick_add = false
-              if product.available
-                if product.variants.size == 1
-                  assign quick_add = true
-                elsif pick_variant
-                  assign quick_add = true
-                endif
+              comment
+                BookX marks its bookable products with this tag; their price is a daily rate.
+              endcomment
+              assign product_tags = product.tags | join: ',' | downcase
+              assign per_day = false
+              if product_tags contains 'bookeasy'
+                assign per_day = true
               endif
+
+              comment
+                Bookable products need dates, so they are booked on their own page.
+              endcomment
+              assign quick_add = false
+              unless per_day
+                if product.available
+                  if product.variants.size == 1
+                    assign quick_add = true
+                  elsif pick_variant
+                    assign quick_add = true
+                  endif
+                endif
+              endunless
 
               assign on_sale = false
               if product.compare_at_price > product.price
@@ -147,22 +161,24 @@
                   <a class="gear-card__link" href="{{ product.url }}">{{ product.title }}</a>
                 </h2>
 
-                {%- if quick_add -%}
-                  <button class="gear-card__add gear-card__add--cart" type="submit">
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ add_label }}</span>
-                  </button>
-                {%- elsif product.available -%}
-                  <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ choose_label }}</span>
-                  </a>
-                {%- else -%}
-                  <button class="gear-card__add gear-card__add--cart" type="button" disabled>
-                    {{- 'icon-cart.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ 'collections.gear.sold_out' | t }}</span>
-                  </button>
-                {%- endif -%}
+                {%- unless per_day -%}
+                  {%- if quick_add -%}
+                    <button class="gear-card__add gear-card__add--cart" type="submit">
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ add_label }}</span>
+                    </button>
+                  {%- elsif product.available -%}
+                    <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ choose_label }}</span>
+                    </a>
+                  {%- else -%}
+                    <button class="gear-card__add gear-card__add--cart" type="button" disabled>
+                      {{- 'icon-cart.svg' | inline_asset_content -}}
+                      <span class="visually-hidden">{{ 'collections.gear.sold_out' | t }}</span>
+                    </button>
+                  {%- endif -%}
+                {%- endunless -%}
 
                 <p class="gear-card__price">
                   <s class="gear-card__compare" data-compare>{{ compare_amount }}</s>
@@ -173,6 +189,9 @@
                       {{ price_amount }}
                     {%- endif -%}
                   </span>
+                  {%- if per_day -%}
+                    <span class="gear-card__unit">{{ 'collections.gear.per_day' | t }}</span>
+                  {%- endif -%}
                 </p>
 
                 {%- if option_kind != '' -%}
@@ -480,6 +499,11 @@
     line-height: var(--line-height-small);
   }
 
+  /* With no cart icon beside it, the title takes the whole row. */
+  .gear-card__info:not(:has(.gear-card__add--cart)) .gear-card__title {
+    grid-column: 1 / -1;
+  }
+
   .gear-card__link {
     color: inherit;
     text-decoration: none;
@@ -505,6 +529,10 @@
 
   /* Same muted ink as the inactive tabs on the hike product page. */
   .gear-card__compare {
+    color: var(--gear-sale-ink);
+  }
+
+  .gear-card__unit {
     color: var(--gear-sale-ink);
   }
 

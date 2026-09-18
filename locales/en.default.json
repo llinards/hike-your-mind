@@ -85,6 +85,7 @@
       "sold_out": "Sold out",
       "sale": "Sale",
       "price_from": "From {{ price }}",
+      "per_day": "/ per day",
       "no_results": "No gear has been added to this collection yet."
     }
   },
@@ -122,7 +123,7 @@
       "reserve": "Pay today to reserve your place",
       "balance": "Remaining balance ({{ days }} days before the trip)",
       "total": "Total",
-      "checkout": "Proceed to checkout",
+      "add_to_cart": "Add to cart",
       "sold_out": "Sold out"
     },
     "details": {
