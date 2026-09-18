@@ -8,5 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "content_for_index": [],
+    "blocks": {
+      "15659862187755629035": {
+        "type": "shopify://apps/bookx/blocks/app-embed/865cd10f-9515-4d8b-8e41-efece9c83f71",
+        "disabled": false,
+        "settings": {
+          "enable_cart_validation": true
+        }
+      }
+    }
+  }
 }
