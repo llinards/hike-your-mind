@@ -1,6 +1,6 @@
 {% comment %}Hiking gear as a product grid with quick add, paged without a reload.{% endcomment %}
 
-<gear-grid class="gear full-width" data-section-id="{{ section.id }}">
+<gear-grid class="gear" data-section-id="{{ section.id }}">
   <h1 class="gear__heading">{{ collection.title }}</h1>
 
   <div class="gear__results" data-results>
@@ -321,9 +321,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-section);
-    width: 100%;
     padding-block: var(--spacing-section);
-    padding-inline: var(--page-margin);
   }
 
   @media (width >= 1024px) {
