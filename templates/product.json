@@ -9,7 +9,8 @@
     "related": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Related products",
+        "subheading": "Find your perfect fit.",
         "products_to_show": 4
       }
     }

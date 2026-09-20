@@ -172,8 +172,6 @@
 
 {% stylesheet %}
   .hike-product {
-    --gallery-gap: 0.75rem;
-    --thumbs-per-view: 3;
     --summary-ink: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
 
     display: grid;
@@ -181,16 +179,8 @@
     padding-top: var(--spacing-section);
   }
 
-  @media (width >= 750px) {
-    .hike-product {
-      --thumbs-per-view: 4;
-    }
-  }
-
   @media (width >= 1024px) {
     .hike-product {
-      --thumbs-per-view: 5;
-
       grid-template-columns: minmax(0, 54fr) minmax(0, 42fr);
       grid-template-areas:
         'title title'
