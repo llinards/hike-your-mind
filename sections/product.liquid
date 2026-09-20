@@ -627,7 +627,8 @@
       });
 
       this.adoptBooking();
-      this.watchQuantity();
+      this.watch(this.input);
+      this.watchBookedDays();
       this.render();
     }
 
@@ -668,23 +669,47 @@
       }
     }
 
-    /* BookX writes the booking length straight into the quantity field, which fires no event. */
-    watchQuantity() {
+    /* BookX fills these fields in script, which fires no event, so writes to them are intercepted. */
+    watch(input) {
       const native = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
 
-      Object.defineProperty(this.input, 'value', {
+      Object.defineProperty(input, 'value', {
         configurable: true,
-        get: () => native.get.call(this.input),
+        get: () => native.get.call(input),
         set: (value) => {
-          native.set.call(this.input, value);
+          native.set.call(input, value);
           this.render();
         },
       });
 
-      new MutationObserver(() => this.render()).observe(this.input, {
+      new MutationObserver(() => this.render()).observe(input, {
         attributes: true,
         attributeFilter: ['value'],
       });
+    }
+
+    /* The app lists the booked days in a property field as soon as they are chosen. */
+    watchBookedDays() {
+      const form = this.querySelector('form');
+      if (!form) return;
+
+      const attach = () => {
+        const field = form.querySelector('[name="properties[Date]"]');
+        if (!field || field === this.dates) return;
+
+        this.dates = field;
+        this.watch(field);
+        this.render();
+      };
+
+      attach();
+      new MutationObserver(attach).observe(form, { childList: true, subtree: true });
+    }
+
+    /* Each booked day carries its year, whatever order the date is written in. */
+    bookedDays() {
+      if (!this.dates) return 0;
+      return (this.dates.value.match(/\d{4}/g) || []).length;
     }
 
     quantity() {
@@ -722,7 +747,7 @@
     }
 
     render() {
-      const quantity = this.quantity();
+      const quantity = this.bookedDays() || this.quantity();
       const variant = this.variants[this.current];
 
       this.steps.forEach((step) => {
