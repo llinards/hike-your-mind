@@ -126,7 +126,8 @@
       "total": "Total",
       "add_to_cart": "Add to cart",
       "sold_out": "Sold out",
-      "related": "You may also like"
+      "related": "Related products",
+      "related_subtext": "Find your perfect fit."
     },
     "hike": {
       "pay_today": "Pay today",

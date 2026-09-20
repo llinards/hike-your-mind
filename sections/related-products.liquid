@@ -6,6 +6,11 @@
   if heading == blank
     assign heading = 'product.standard.related' | t
   endif
+
+  assign subheading = section.settings.subheading
+  if subheading == blank
+    assign subheading = 'product.standard.related_subtext' | t
+  endif
 -%}
 
 <related-products
@@ -13,7 +18,10 @@
   data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}"
 >
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
-    <h2 class="related__heading">{{ heading }}</h2>
+    <div class="related__intro">
+      <h2 class="related__heading">{{ heading }}</h2>
+      <p class="related__subheading">{{ subheading }}</p>
+    </div>
 
     <ul class="related__grid" role="list">
       {%- for item in recommendations.products -%}
@@ -82,9 +90,17 @@
     display: none;
   }
 
-  .related__heading {
-    font-size: var(--font-size-display-compact);
-    margin-block-end: 1.5rem;
+  .related__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-block-start: 0.5px solid var(--color-hairline);
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .related__subheading {
+    font-family: var(--font-display--family);
   }
 
   .related__grid {
@@ -194,7 +210,13 @@
       "type": "text",
       "id": "heading",
       "label": "t:labels.heading",
-      "default": "You may also like"
+      "default": "Related products"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:labels.subheading",
+      "default": "Find your perfect fit."
     },
     {
       "type": "range",
