@@ -149,29 +149,38 @@
           {{- 'product.standard.quantity' | t -}}
         </label>
 
-        <div class="quantity">
-          <button class="quantity__button" type="button" data-step="-1">
-            <span aria-hidden="true">&minus;</span>
-            <span class="visually-hidden">{{ 'product.standard.decrease' | t }}</span>
-          </button>
+        <div class="product-page__quantity-row">
+          <div class="quantity">
+            <button class="quantity__button" type="button" data-step="-1">
+              <span aria-hidden="true">&minus;</span>
+              <span class="visually-hidden">{{ 'product.standard.decrease' | t }}</span>
+            </button>
 
-          <input
-            class="quantity__input"
-            id="product-quantity-{{ section.id }}"
-            type="number"
-            name="quantity"
-            value="1"
-            min="1"
-            max="{{ max_quantity }}"
-            step="1"
-            inputmode="numeric"
-            data-quantity
-          >
+            <input
+              class="quantity__input"
+              id="product-quantity-{{ section.id }}"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max="{{ max_quantity }}"
+              step="1"
+              inputmode="numeric"
+              data-quantity
+            >
 
-          <button class="quantity__button" type="button" data-step="1">
-            <span aria-hidden="true">+</span>
-            <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
-          </button>
+            <button class="quantity__button" type="button" data-step="1">
+              <span aria-hidden="true">+</span>
+              <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
+            </button>
+          </div>
+
+          {%- if per_day -%}
+            {%- comment -%}
+              The BookX app injects its button elsewhere on the page; the script moves it in here.
+            {%- endcomment -%}
+            <div class="product-page__booking" data-booking></div>
+          {%- endif -%}
         </div>
       </div>
 
@@ -372,7 +381,45 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    align-items: start;
+  }
+
+  .product-page__quantity-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .product-page__booking {
+    flex: 1 1 12rem;
+  }
+
+  /* The app's own button, restyled to sit beside the stepper. */
+  .product-page__booking :is(button, a) {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem 1.5rem;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--duration-base) var(--easing-base),
+      color var(--duration-base) var(--easing-base);
+  }
+
+  .product-page__booking :is(button, a):hover,
+  .product-page__booking :is(button, a):focus-visible {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
   }
 
   .product-page__quantity-label {
@@ -488,7 +535,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .product-page__submit {
+    .product-page__submit,
+    .product-page__booking :is(button, a) {
       transition: none;
     }
   }
@@ -529,7 +577,28 @@
         if (event.target.closest('[data-option]')) this.selectVariant();
       });
 
+      this.adoptBooking();
       this.render();
+    }
+
+    /* The app adds its button after the page loads, so it is moved in whenever it appears. */
+    adoptBooking() {
+      const slot = this.querySelector('[data-booking]');
+      if (!slot) return;
+
+      const move = () => {
+        const widget = document.querySelector('.bookeasy-button-container');
+        if (!widget || widget.parentElement === slot) return;
+        slot.append(widget);
+      };
+
+      move();
+      this.watcher = new MutationObserver(move);
+      this.watcher.observe(document.body, { childList: true, subtree: true });
+    }
+
+    disconnectedCallback() {
+      if (this.watcher) this.watcher.disconnect();
     }
 
     quantity() {
