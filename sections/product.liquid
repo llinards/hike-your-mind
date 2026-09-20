@@ -19,13 +19,16 @@
   endif
 
   comment
-    With one option the radios carry variant ids, so choosing works without
-    JavaScript. With more, a hidden field holds the match the script works out.
+    With exactly one real option the radios carry variant ids, so choosing works
+    without JavaScript. Otherwise — no options at all, or several — a hidden
+    field holds the id, which the script keeps in step with the choices.
   endcomment
-  assign single_option = false
-  if product.options.size == 1
-    assign single_option = true
-  endif
+  assign variant_radios = false
+  unless product.has_only_default_variant
+    if product.options.size == 1
+      assign variant_radios = true
+    endif
+  endunless
 
   assign compare_amount = ''
   if variant.compare_at_price > variant.price
@@ -72,7 +75,7 @@
     class="product-page__info"
     data-max="{{ max_quantity }}"
     data-variant="{{ variant.id }}"
-    {% if single_option %}data-single-option{% endif %}
+    {% if variant_radios %}data-variant-radios{% endif %}
   >
     <p class="product-page__price">
       <s class="product-page__compare" data-compare>{{ compare_amount }}</s>
@@ -90,7 +93,7 @@
 
     {%- form 'product', product, class: 'product-page__form' -%}
       <input type="hidden" name="return_to" value="{{ routes.cart_url }}">
-      {%- unless single_option -%}
+      {%- unless variant_radios -%}
         <input type="hidden" name="id" value="{{ variant.id }}" data-variant-id>
       {%- endunless -%}
 
@@ -113,7 +116,7 @@
                   <input
                     class="visually-hidden"
                     type="radio"
-                    {% if single_option %}
+                    {% if variant_radios %}
                       name="id"
                       value="{{ value.variant.id }}"
                     {% else %}
@@ -557,7 +560,7 @@
     }
 
     selectVariant() {
-      if (this.hasAttribute('data-single-option')) {
+      if (this.hasAttribute('data-variant-radios')) {
         const picked = this.options.find((option) => option.checked);
         if (picked) this.current = picked.value;
         this.render();
