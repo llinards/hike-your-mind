@@ -148,35 +148,45 @@
       {%- endunless -%}
 
       <div class="product-page__quantity">
-        <label class="product-page__quantity-label" for="product-quantity-{{ section.id }}">
-          {{- 'product.standard.quantity' | t -}}
-        </label>
+        {%- unless per_day -%}
+          <label class="product-page__quantity-label" for="product-quantity-{{ section.id }}">
+            {{- 'product.standard.quantity' | t -}}
+          </label>
+        {%- endunless -%}
 
         <div class="product-page__quantity-row">
-          <div class="quantity">
-            <button class="quantity__button" type="button" data-step="-1">
-              <span aria-hidden="true">&minus;</span>
-              <span class="visually-hidden">{{ 'product.standard.decrease' | t }}</span>
-            </button>
+          {%- comment -%}
+            A rental's quantity is the booking length, so the app sets it on a plain
+            hidden field rather than a stepper the shopper could fight with.
+          {%- endcomment -%}
+          {%- if per_day -%}
+            <input type="hidden" name="quantity" value="1" data-quantity>
+          {%- else -%}
+            <div class="quantity">
+              <button class="quantity__button" type="button" data-step="-1">
+                <span aria-hidden="true">&minus;</span>
+                <span class="visually-hidden">{{ 'product.standard.decrease' | t }}</span>
+              </button>
 
-            <input
-              class="quantity__input"
-              id="product-quantity-{{ section.id }}"
-              type="number"
-              name="quantity"
-              value="1"
-              min="1"
-              max="{{ max_quantity }}"
-              step="1"
-              inputmode="numeric"
-              data-quantity
-            >
+              <input
+                class="quantity__input"
+                id="product-quantity-{{ section.id }}"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                max="{{ max_quantity }}"
+                step="1"
+                inputmode="numeric"
+                data-quantity
+              >
 
-            <button class="quantity__button" type="button" data-step="1">
-              <span aria-hidden="true">+</span>
-              <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
-            </button>
-          </div>
+              <button class="quantity__button" type="button" data-step="1">
+                <span aria-hidden="true">+</span>
+                <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
+              </button>
+            </div>
+          {%- endif -%}
 
           {%- comment -%}
             The BookX app injects its button elsewhere on the page; the script moves it in here.
@@ -199,10 +209,12 @@
           <span class="summary__value" data-price>{{ variant.price | money }}</span>
         </div>
 
-        <div class="summary__row">
-          <span class="summary__label">{{ 'product.standard.quantity' | t }}</span>
-          <span class="summary__value" data-count>1</span>
-        </div>
+        {%- unless per_day -%}
+          <div class="summary__row">
+            <span class="summary__label">{{ 'product.standard.quantity' | t }}</span>
+            <span class="summary__value" data-count>1</span>
+          </div>
+        {%- endunless -%}
 
         <div class="summary__row summary__row--total">
           <span class="summary__label">{{ 'product.standard.total' | t }}</span>
