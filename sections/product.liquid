@@ -584,6 +584,10 @@
       });
 
       this.input.addEventListener('change', () => this.setQuantity(this.quantity()));
+
+      this.addEventListener('submit', (event) => {
+        if (event.submitter && event.submitter.closest('[data-booking]')) event.preventDefault();
+      });
       this.addEventListener('change', (event) => {
         if (event.target.closest('[data-option]')) this.selectVariant();
       });
@@ -599,8 +603,14 @@
 
       const move = () => {
         const widget = document.querySelector('.bookeasy-button-container');
-        if (!widget || widget.parentElement === slot) return;
-        slot.append(widget);
+        if (!widget) return;
+
+        if (widget.parentElement !== slot) slot.append(widget);
+
+        /* Inside a form an untyped button submits, which would add to cart behind the app's back. */
+        widget.querySelectorAll('button:not([type])').forEach((button) => {
+          button.type = 'button';
+        });
       };
 
       move();
