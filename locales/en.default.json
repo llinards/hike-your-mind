@@ -122,6 +122,11 @@
       "decrease": "Decrease quantity",
       "increase": "Increase quantity",
       "unit_price": "Price",
+      "rental_length": "Rental length",
+      "days": {
+        "one": "{{ count }} day",
+        "other": "{{ count }} days"
+      },
       "day_rate": "Price per day",
       "total": "Total",
       "add_to_cart": "Add to cart",
