@@ -394,6 +394,11 @@
     flex: 1 1 12rem;
   }
 
+  /* The app sets its own margin inline, so only !important can undo it. */
+  .product-page__booking > * {
+    margin: 0 !important;
+  }
+
   /* The app's own button, restyled to sit beside the stepper. */
   .product-page__booking :is(button, a) {
     display: grid;
