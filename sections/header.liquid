@@ -313,37 +313,47 @@
    */
   class HeaderDrawer extends HTMLElement {
     connectedCallback() {
-      const details = this.querySelector('details');
-      if (!details) return;
+      this.details = this.querySelector('details');
+      if (!this.details) return;
 
-      const summary = details.querySelector('summary');
-      const panel = details.querySelector('.header__drawer-panel');
-      if (!summary || !panel) return;
+      const summary = this.details.querySelector('summary');
+      this.panel = this.details.querySelector('.header__drawer-panel');
+      if (!summary || !this.panel) return;
 
       summary.addEventListener('click', (event) => {
-        if (!details.open) return;
+        if (!this.details.open) return;
 
         event.preventDefault();
-
-        /* No animation runs under reduced motion, so there would be no
-           animationend to wait for. */
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          details.open = false;
-          return;
-        }
-
-        if (details.hasAttribute('data-closing')) return;
-
-        const close = (animation) => {
-          if (animation.target !== panel) return;
-          panel.removeEventListener('animationend', close);
-          details.removeAttribute('data-closing');
-          details.open = false;
-        };
-
-        panel.addEventListener('animationend', close);
-        details.setAttribute('data-closing', '');
+        this.close();
       });
+
+      /* A link to a section of the same page never navigates, so the drawer
+         would stay open — and keep the page from scrolling. */
+      this.panel.addEventListener('click', (event) => {
+        if (!this.details.open) return;
+        if (event.target.closest('a')) this.close();
+      });
+    }
+
+    close() {
+      /* No animation runs under reduced motion, so there would be no
+         animationend to wait for. */
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.details.open = false;
+        return;
+      }
+
+      if (this.details.hasAttribute('data-closing')) return;
+
+      const finish = (animation) => {
+        if (animation.target !== this.panel) return;
+        this.panel.removeEventListener('animationend', finish);
+        this.details.removeAttribute('data-closing');
+        this.details.open = false;
+      };
+
+      this.panel.addEventListener('animationend', finish);
+      this.details.setAttribute('data-closing', '');
     }
   }
 
