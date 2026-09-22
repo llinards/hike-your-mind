@@ -57,8 +57,8 @@
       {%- for block in section.blocks -%}
         <li class="reviews__item" {{ block.shopify_attributes }}>
           <article class="review">
-            <div class="review__media">
-              {%- if block.settings.image != blank -%}
+            {%- if block.settings.image != blank -%}
+              <div class="review__media">
                 {{
                   block.settings.image
                   | image_url: width: 1200
@@ -68,10 +68,8 @@
                       loading: 'lazy',
                       alt: block.settings.image.alt | default: block.settings.name
                 }}
-              {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'review__placeholder' }}
-              {%- endif -%}
-            </div>
+              </div>
+            {%- endif -%}
 
             <div class="review__content">
               {%- if block.settings.name != blank -%}
@@ -196,8 +194,7 @@
     flex: 0 0 auto;
   }
 
-  .review__media img,
-  .review__media svg {
+  .review__media img {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
@@ -316,8 +313,7 @@
       align-self: stretch;
     }
 
-    .review__media img,
-    .review__media svg {
+    .review__media img {
       height: 100%;
       aspect-ratio: auto;
     }
