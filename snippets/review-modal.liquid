@@ -1,0 +1,339 @@
+{% doc %}
+  Renders the dialog that shows a review in full, filled on open from the card
+  that was clicked. Rendered once per reviews section; it serves every card
+  inside its own parent element.
+
+  @param {string} id - Suffix for the heading id the dialog is labelled by
+
+  @example
+  {% render 'review-modal', id: section.id %}
+{% enddoc %}
+
+<review-modal>
+  <dialog
+    class="review-modal"
+    aria-labelledby="ReviewModalName-{{ id }}"
+    aria-label="{{ 'reviews.full_review' | t }}"
+    scroll-lock
+    data-review-modal
+  >
+    <div class="review-modal__inner">
+      <div class="review-modal__media" data-media hidden></div>
+
+      <div class="review-modal__content">
+        <h2 class="review-modal__name" id="ReviewModalName-{{ id }}" data-name></h2>
+
+        <hr class="review-modal__rule">
+
+        <div class="review-modal__text" data-text></div>
+
+        <footer class="review-modal__footer">
+          <span class="review-modal__date" data-date></span>
+          <a class="review-modal__more" data-more hidden>{{ 'reviews.read_more' | t }}</a>
+        </footer>
+      </div>
+
+      <button class="review-modal__close" type="button" data-close>
+        {{ 'icon-close.svg' | inline_asset_content }}
+        <span class="visually-hidden">{{ 'general.accessibility.close' | t }}</span>
+      </button>
+    </div>
+  </dialog>
+</review-modal>
+
+{% stylesheet %}
+  .review-modal {
+    position: fixed;
+    inset: 0;
+    width: min(36.5rem, calc(100vw - var(--page-margin) * 2));
+    max-width: none;
+    height: fit-content;
+    max-height: calc(100dvh - var(--page-margin) * 2);
+    overflow-y: auto;
+    /* With both insets pinned, the auto margins centre it on each axis. */
+    margin: auto;
+    padding: 0;
+    border: 0.5px solid var(--color-hairline);
+    background-color: var(--color-background);
+    color: var(--color-ink-soft);
+  }
+
+  .review-modal[open] {
+    animation: review-modal-in var(--duration-base) var(--easing-base);
+  }
+
+  .review-modal[data-closing] {
+    animation: review-modal-out var(--duration-base) var(--easing-base) forwards;
+  }
+
+  .review-modal::backdrop {
+    background-color: rgb(0 0 0 / 45%);
+  }
+
+  .review-modal[open]::backdrop {
+    animation: review-modal-in var(--duration-base) var(--easing-base);
+  }
+
+  .review-modal[data-closing]::backdrop {
+    animation: review-modal-out var(--duration-base) var(--easing-base) forwards;
+  }
+
+  @keyframes review-modal-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes review-modal-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  .review-modal__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 3.25rem 1.6rem;
+    font-size: var(--font-size-quote);
+    line-height: 1.35;
+  }
+
+  .review-modal__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.9375rem;
+    min-width: 0;
+  }
+
+  .review-modal__media {
+    flex: 0 0 auto;
+  }
+
+  /* Stacked, the photo keeps the card's square crop, capped so a tall one
+     can't push the opening lines of the review off the screen. */
+  .review-modal__media img {
+    width: 100%;
+    max-height: 40dvh;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .review-modal__name {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-quote);
+    font-weight: 700;
+    line-height: var(--line-height-ui);
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .review-modal__rule {
+    height: 0;
+    margin: 0;
+    border: 0;
+    border-block-start: 0.5px solid var(--color-ink-soft);
+  }
+
+  .review-modal__text > * + * {
+    margin-block-start: 1em;
+  }
+
+  /* Beside a photo taller than the review, the footer settles at the foot of
+     the column rather than floating under the last line, as on the card. */
+  .review-modal__footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-start: auto;
+    padding-block-start: 0.5rem;
+  }
+
+  .review-modal__date {
+    opacity: 0.5;
+  }
+
+  /* The underline is drawn up front so the hover can fade its colour in. */
+  .review-modal__more {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    white-space: nowrap;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .review-modal__more:hover,
+  .review-modal__more:focus-visible {
+    text-decoration-color: currentcolor;
+  }
+
+  /* A review with no name, date or link leaves its element empty rather than
+     absent, so the gap it would otherwise hold has to go. */
+  .review-modal__name:empty,
+  .review-modal__date:empty,
+  .review-modal__more[hidden] {
+    display: none;
+  }
+
+  .review-modal__footer:has(> .review-modal__date:empty):has(> .review-modal__more[hidden]) {
+    display: none;
+  }
+
+  .review-modal__close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0.25rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .review-modal__close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Desktop takes the card's layout: photo beside the review, on the same 42%
+     split and gutter, at the breakpoint the card itself switches on. */
+  @media (width >= 750px) {
+    .review-modal {
+      width: min(56rem, calc(100vw - var(--page-margin) * 2));
+    }
+
+    .review-modal__inner {
+      flex-direction: row;
+      gap: 1.8125rem;
+      padding: 2.6rem 2.6rem;
+    }
+
+    .review-modal__media {
+      flex: 0 0 42%;
+      align-self: stretch;
+    }
+
+    .review-modal__media img {
+      height: 100%;
+      max-height: none;
+      aspect-ratio: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .review-modal[open],
+    .review-modal[data-closing],
+    .review-modal[open]::backdrop,
+    .review-modal[data-closing]::backdrop {
+      animation: none;
+    }
+
+    .review-modal__more {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Opened by any review card in the same section; closes on the X, a click
+     outside, or Escape. The card holds the only copy of the review, so the
+     dialog is filled from it rather than rendering all of them up front. */
+  class ReviewModal extends HTMLElement {
+    /* The card's photo is cropped to the card's width; in the dialog it is 42%
+       of a 56rem column less its 2.6rem padding, or the full width on mobile. */
+    static imageSizes = '(min-width: 750px) 320px, calc(100vw - 111px)';
+
+    connectedCallback() {
+      this.dialog = this.querySelector('[data-review-modal]');
+      const scope = this.parentElement;
+      if (!this.dialog || !scope) return;
+
+      this.media = this.querySelector('[data-media]');
+      this.name = this.querySelector('[data-name]');
+      this.text = this.querySelector('[data-text]');
+      this.date = this.querySelector('[data-date]');
+      this.more = this.querySelector('[data-more]');
+
+      scope.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        const card = event.target.closest('[data-review]');
+        if (!card) return;
+
+        /* A link inside the review's own text still goes where it points; only
+           the card's own control is taken over. */
+        const link = event.target.closest('a');
+        if (link && !link.hasAttribute('data-review-open')) return;
+
+        event.preventDefault();
+        this.open(card);
+      });
+
+      this.dialog.addEventListener('click', (event) => {
+        if (event.target.closest('[data-close]') || event.target === this.dialog) this.close();
+      });
+
+      /* Escape closes the dialog itself, so the fade is run first. */
+      this.dialog.addEventListener('cancel', (event) => {
+        if (this.dialog.hasAttribute('data-closing')) return;
+
+        event.preventDefault();
+        this.close();
+      });
+    }
+
+    open(card) {
+      const image = card.querySelector('[data-review-image] img');
+      const text = card.querySelector('[data-review-text]');
+      const more = card.dataset.reviewMore;
+
+      this.media.replaceChildren();
+      if (image) {
+        const copy = image.cloneNode();
+        copy.removeAttribute('loading');
+        copy.setAttribute('sizes', ReviewModal.imageSizes);
+        this.media.append(copy);
+      }
+      this.media.hidden = !image;
+
+      this.name.textContent = this.readText(card, '[data-review-name]');
+      this.date.textContent = this.readText(card, '[data-review-date]');
+      this.text.replaceChildren(...(text ? text.cloneNode(true).childNodes : []));
+
+      this.more.hidden = !more;
+      if (more) this.more.href = more;
+
+      this.dialog.showModal();
+    }
+
+    readText(card, selector) {
+      const element = card.querySelector(selector);
+      return element ? element.textContent.trim() : '';
+    }
+
+    close() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.dialog.close();
+        return;
+      }
+
+      if (this.dialog.hasAttribute('data-closing')) return;
+
+      const finish = () => {
+        this.dialog.removeEventListener('animationend', finish);
+        this.dialog.removeAttribute('data-closing');
+        this.dialog.close();
+      };
+
+      this.dialog.addEventListener('animationend', finish);
+      this.dialog.setAttribute('data-closing', '');
+    }
+  }
+
+  if (!customElements.get('review-modal')) customElements.define('review-modal', ReviewModal);
+{% endjavascript %}

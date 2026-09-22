@@ -1,0 +1,100 @@
+{% doc %}
+  Renders the shop's contact details or its company details, both taken from the
+  Shopify admin rather than theme settings. Shared by the footer and the contact
+  modal so the two can never drift apart.
+
+  @param {string} part - Which block to render: 'contacts' or 'company'
+  @param {string} prefix - Class prefix for the markup, e.g. 'footer'
+
+  @example
+  {% render 'shop-details', part: 'contacts', prefix: 'footer' %}
+  {% render 'shop-details', part: 'company', prefix: 'contact-modal' %}
+{% enddoc %}
+
+{%- liquid
+  comment
+    The address reads as one line: street, city, country, postal code. Each part
+    is appended with its separator and the leading one trimmed afterwards, so a
+    part the merchant has not filled in cannot leave a stray comma behind.
+  endcomment
+  assign address_line = ''
+  if shop.address.street != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.street
+  endif
+  if shop.address.city != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.city
+  endif
+  if shop.address.country != blank
+    assign address_line = address_line | append: ', ' | append: shop.address.country
+  endif
+  if shop.address.zip != blank
+    assign address_line = address_line | append: ', LV-' | append: shop.address.zip
+  endif
+  assign address_line = address_line | remove_first: ', '
+
+  comment
+    Shopify has no field for a registration or licence number, so they come from
+    shop metafields defined under Settings > Custom data > Shop. The values are
+    the bare numbers; the labels are supplied by the locale file.
+  endcomment
+  assign registration_number = shop.metafields.custom.registration_number.value
+  assign license_number = shop.metafields.custom.license_number.value
+
+  assign has_contacts = false
+  if shop.phone != blank
+    assign has_contacts = true
+  endif
+  if shop.email != blank
+    assign has_contacts = true
+  endif
+
+  assign has_company_details = false
+  if shop.address.company != blank
+    assign has_company_details = true
+  endif
+  if address_line != blank
+    assign has_company_details = true
+  endif
+  if registration_number != blank
+    assign has_company_details = true
+  endif
+  if license_number != blank
+    assign has_company_details = true
+  endif
+-%}
+
+{%- if part == 'contacts' and has_contacts -%}
+  <div class="{{ prefix }}__column {{ prefix }}__column--contacts">
+    <h2 class="{{ prefix }}__column-title">{{ 'general.footer.contacts' | t }}</h2>
+
+    {%- if shop.phone != blank -%}
+      <a class="{{ prefix }}__link" href="tel:{{ shop.phone | remove: ' ' }}">{{ shop.phone }}</a>
+    {%- endif -%}
+
+    {%- if shop.email != blank -%}
+      <a class="{{ prefix }}__link" href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if part == 'company' and has_company_details -%}
+  <div class="{{ prefix }}__column {{ prefix }}__column--company">
+    <h2 class="{{ prefix }}__column-title">{{ 'general.footer.company_details' | t }}</h2>
+
+    {%- if shop.address.company != blank -%}
+      <p>{{ shop.address.company }}</p>
+    {%- endif -%}
+
+    {%- if registration_number != blank -%}
+      <p>{{ 'general.footer.registration_number' | t: number: registration_number }}</p>
+    {%- endif -%}
+
+    {%- if address_line != blank -%}
+      <p>{{ address_line }}</p>
+    {%- endif -%}
+
+    {%- if license_number != blank -%}
+      <p>{{ 'general.footer.license_number' | t: number: license_number }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

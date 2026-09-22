@@ -10,10 +10,10 @@
   drawer holding the navigation and language switcher. `scroll-lock` is picked
   up by critical.css to stop the page scrolling behind the open drawer.
 
-  Opening, closing and the hamburger's fold into an X are all CSS off the
-  `[open]` attribute; the only JavaScript is `header-drawer`, which delays the
-  close so the panel can animate out first. Without it the drawer still works,
-  it just shuts instantly.
+  Opening and the hamburger's fold into an X are CSS off the `[open]`
+  attribute; `header-drawer` handles the rest of the closing — delaying it so
+  the panel can animate out, and dismissing the drawer on a link or an outside
+  click. Without it the drawer still opens and shuts from the hamburger alone.
 {% endcomment %}
 
 <header class="header full-width">
@@ -218,7 +218,7 @@
   .header__drawer-panel {
     position: absolute;
     inset-inline: 0;
-    z-index: 1;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -259,11 +259,6 @@
     }
   }
 
-  .nav-menu--stacked {
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
   /* Mobile: the drawer carries navigation and language, so both rows collapse. */
   .header__nav,
   .header__language {
@@ -281,7 +276,7 @@
     }
   }
 
-  @media (width >= 1140px) {
+  @media (width >= 1180px) {
     .header {
       /* 340px - 79px in the 1440px design: language and nav share this offset. */
       --header-inset: 16.3125rem;
@@ -318,37 +313,55 @@
    */
   class HeaderDrawer extends HTMLElement {
     connectedCallback() {
-      const details = this.querySelector('details');
-      if (!details) return;
+      this.details = this.querySelector('details');
+      if (!this.details) return;
 
-      const summary = details.querySelector('summary');
-      const panel = details.querySelector('.header__drawer-panel');
-      if (!summary || !panel) return;
+      const summary = this.details.querySelector('summary');
+      this.panel = this.details.querySelector('.header__drawer-panel');
+      if (!summary || !this.panel) return;
 
       summary.addEventListener('click', (event) => {
-        if (!details.open) return;
+        if (!this.details.open) return;
 
         event.preventDefault();
-
-        /* No animation runs under reduced motion, so there would be no
-           animationend to wait for. */
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          details.open = false;
-          return;
-        }
-
-        if (details.hasAttribute('data-closing')) return;
-
-        const close = (animation) => {
-          if (animation.target !== panel) return;
-          panel.removeEventListener('animationend', close);
-          details.removeAttribute('data-closing');
-          details.open = false;
-        };
-
-        panel.addEventListener('animationend', close);
-        details.setAttribute('data-closing', '');
+        this.close();
       });
+
+      /* A link to a section of the same page never navigates, so the drawer
+         would stay open — and keep the page from scrolling. */
+      this.panel.addEventListener('click', (event) => {
+        if (!this.details.open) return;
+        if (event.target.closest('a')) this.close();
+      });
+
+      /* A click anywhere else dismisses the drawer, as a tap outside a sheet
+         would. The listener sits on the document so it also catches the area
+         the scroll lock covers. */
+      document.addEventListener('click', (event) => {
+        if (!this.details.open) return;
+        if (!this.contains(event.target)) this.close();
+      });
+    }
+
+    close() {
+      /* No animation runs under reduced motion, so there would be no
+         animationend to wait for. */
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.details.open = false;
+        return;
+      }
+
+      if (this.details.hasAttribute('data-closing')) return;
+
+      const finish = (animation) => {
+        if (animation.target !== this.panel) return;
+        this.panel.removeEventListener('animationend', finish);
+        this.details.removeAttribute('data-closing');
+        this.details.open = false;
+      };
+
+      this.panel.addEventListener('animationend', finish);
+      this.details.setAttribute('data-closing', '');
     }
   }
 

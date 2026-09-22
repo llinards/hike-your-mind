@@ -55,10 +55,27 @@
   <review-carousel class="reviews">
     <ul class="reviews__track" tabindex="0">
       {%- for block in section.blocks -%}
+        {%- liquid
+          # The modal's "Read more" is dropped once the link points at the page
+          # being read, which is what makes it absent on the reviews page itself.
+          assign modal_link = block.settings.link
+          if modal_link != blank
+            if request.path contains modal_link
+              assign modal_link = blank
+            endif
+          endif
+        -%}
+
         <li class="reviews__item" {{ block.shopify_attributes }}>
-          <article class="review">
-            <div class="review__media">
-              {%- if block.settings.image != blank -%}
+          <article
+            class="review"
+            data-review
+            {% if modal_link != blank %}
+              data-review-more="{{ modal_link }}"
+            {% endif %}
+          >
+            {%- if block.settings.image != blank -%}
+              <div class="review__media" data-review-image>
                 {{
                   block.settings.image
                   | image_url: width: 1200
@@ -68,32 +85,44 @@
                       loading: 'lazy',
                       alt: block.settings.image.alt | default: block.settings.name
                 }}
-              {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'review__placeholder' }}
-              {%- endif -%}
-            </div>
+              </div>
+            {%- endif -%}
 
             <div class="review__content">
               {%- if block.settings.name != blank -%}
-                <h3 class="review__name">{{ block.settings.name }}</h3>
+                <h3 class="review__name" data-review-name>{{ block.settings.name }}</h3>
               {%- endif -%}
 
               <hr class="review__rule">
 
               {%- if block.settings.body != blank -%}
-                <div class="review__text">{{ block.settings.body }}</div>
+                <div class="review__text" data-review-text>{{ block.settings.body }}</div>
               {%- endif -%}
 
               <footer class="review__footer">
-                <span class="review__date">{{ block.settings.date }}</span>
+                <span class="review__date" data-review-date>{{ block.settings.date }}</span>
+
+                {%- comment -%}
+                  The control opens the modal. It keeps its href where there is
+                  one, so without JavaScript it still goes to the review's page;
+                  a review with no link falls back to a button so every card
+                  keeps a control the keyboard can reach.
+                {%- endcomment -%}
+                {%- capture more_label -%}
+                  {{- 'reviews.read_more' | t -}}
+                  {%- if block.settings.name != blank -%}
+                    <span class="visually-hidden"> — {{ block.settings.name }}</span>
+                  {%- endif -%}
+                {%- endcapture -%}
 
                 {%- if block.settings.link != blank -%}
-                  <a class="review__more" href="{{ block.settings.link }}">
-                    {{- 'reviews.read_more' | t -}}
-                    {%- if block.settings.name != blank -%}
-                      <span class="visually-hidden"> — {{ block.settings.name }}</span>
-                    {%- endif -%}
+                  <a class="review__more" href="{{ block.settings.link }}" data-review-open>
+                    {{- more_label -}}
                   </a>
+                {%- else -%}
+                  <button class="review__more" type="button" data-review-open>
+                    {{- more_label -}}
+                  </button>
                 {%- endif -%}
               </footer>
             </div>
@@ -114,6 +143,8 @@
         </button>
       </div>
     {%- endif -%}
+
+    {%- render 'review-modal', id: section.id -%}
   </review-carousel>
 {%- endif -%}
 
@@ -196,8 +227,7 @@
     flex: 0 0 auto;
   }
 
-  .review__media img,
-  .review__media svg {
+  .review__media img {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
@@ -255,9 +285,21 @@
     opacity: 0.5;
   }
 
-  /* The underline is drawn up front so the hover can fade its colour in. */
+  /* The whole card opens the review, so it reads as one target. */
+  .review {
+    cursor: pointer;
+  }
+
+  /* The underline is drawn up front so the hover can fade its colour in.
+     A review with no link renders this as a button, which needs the reset. */
   .review__more {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
     color: inherit;
+    cursor: pointer;
     text-decoration: underline;
     text-decoration-color: transparent;
     text-underline-offset: 0.25em;
@@ -265,7 +307,8 @@
     transition: text-decoration-color var(--duration-base) var(--easing-base);
   }
 
-  .review__more:hover {
+  .review__more:hover,
+  .review__more:focus-visible {
     text-decoration-color: currentcolor;
   }
 
@@ -316,8 +359,7 @@
       align-self: stretch;
     }
 
-    .review__media img,
-    .review__media svg {
+    .review__media img {
       height: 100%;
       aspect-ratio: auto;
     }

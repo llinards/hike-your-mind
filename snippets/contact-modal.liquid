@@ -1,0 +1,210 @@
+{% doc %}
+  Renders the contact details as a modal, opened by any menu link pointing at the
+  contact page.
+
+  @example
+  {% render 'contact-modal' %}
+{% enddoc %}
+
+<contact-modal>
+  <dialog class="contact-modal" aria-label="{{ 'general.footer.contacts' | t }}" scroll-lock data-contact-modal>
+    <div class="contact-modal__inner">
+      <div class="contact-modal__logo">
+        {{ 'logo-wordmark.svg' | inline_asset_content }}
+        <span class="visually-hidden">{{ shop.name }}</span>
+      </div>
+
+      {% render 'shop-details', part: 'contacts', prefix: 'contact-modal' %}
+      {% render 'shop-details', part: 'company', prefix: 'contact-modal' %}
+
+      <button class="contact-modal__close" type="button" data-close>
+        {{ 'icon-close.svg' | inline_asset_content }}
+        <span class="visually-hidden">{{ 'general.accessibility.close' | t }}</span>
+      </button>
+    </div>
+  </dialog>
+</contact-modal>
+
+{% stylesheet %}
+  .contact-modal {
+    position: fixed;
+    inset: 0;
+    width: min(36.5rem, calc(100vw - var(--page-margin) * 2));
+    max-width: none;
+    height: fit-content;
+    max-height: calc(100dvh - var(--page-margin) * 2);
+    overflow-y: auto;
+    /* With both insets pinned, the auto margins centre it on each axis. */
+    margin: auto;
+    padding: 0;
+    border: 0.5px solid var(--color-hairline);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .contact-modal[open] {
+    animation: contact-modal-in var(--duration-base) var(--easing-base);
+  }
+
+  .contact-modal[data-closing] {
+    animation: contact-modal-out var(--duration-base) var(--easing-base) forwards;
+  }
+
+  .contact-modal::backdrop {
+    background-color: rgb(0 0 0 / 45%);
+  }
+
+  .contact-modal[open]::backdrop {
+    animation: contact-modal-in var(--duration-base) var(--easing-base);
+  }
+
+  .contact-modal[data-closing]::backdrop {
+    animation: contact-modal-out var(--duration-base) var(--easing-base) forwards;
+  }
+
+  @keyframes contact-modal-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes contact-modal-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  .contact-modal__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    padding: 3.25rem 2.6rem;
+  }
+
+  .contact-modal__logo svg {
+    width: 15.5rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .contact-modal__column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    color: var(--color-foreground-muted);
+  }
+
+  .contact-modal__column-title {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-small);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-small);
+    text-transform: uppercase;
+    color: var(--color-foreground);
+  }
+
+  /* The details read at the same size as a section's subtext. */
+  .contact-modal__link,
+  .contact-modal__column :where(p) {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+
+  .contact-modal__link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .contact-modal__link:hover,
+  .contact-modal__link:focus-visible {
+    text-decoration-color: currentcolor;
+  }
+
+  .contact-modal__close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0.25rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .contact-modal__close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-modal[open],
+    .contact-modal[data-closing],
+    .contact-modal[open]::backdrop,
+    .contact-modal[data-closing]::backdrop {
+      animation: none;
+    }
+
+    .contact-modal__link {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Opened from the menu's contact link; closes on the X, a click outside, or Escape. */
+  class ContactModal extends HTMLElement {
+    connectedCallback() {
+      this.dialog = this.querySelector('[data-contact-modal]');
+      if (!this.dialog) return;
+
+      document.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        const link = event.target.closest('[data-contact-link]');
+        if (!link) return;
+
+        event.preventDefault();
+        this.dialog.showModal();
+      });
+
+      this.dialog.addEventListener('click', (event) => {
+        if (event.target.closest('[data-close]') || event.target === this.dialog) this.close();
+      });
+
+      /* Escape closes the dialog itself, so the fade is run first. */
+      this.dialog.addEventListener('cancel', (event) => {
+        if (this.dialog.hasAttribute('data-closing')) return;
+
+        event.preventDefault();
+        this.close();
+      });
+    }
+
+    close() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.dialog.close();
+        return;
+      }
+
+      if (this.dialog.hasAttribute('data-closing')) return;
+
+      const finish = () => {
+        this.dialog.removeEventListener('animationend', finish);
+        this.dialog.removeAttribute('data-closing');
+        this.dialog.close();
+      };
+
+      this.dialog.addEventListener('animationend', finish);
+      this.dialog.setAttribute('data-closing', '');
+    }
+  }
+
+  if (!customElements.get('contact-modal')) customElements.define('contact-modal', ContactModal);
+{% endjavascript %}

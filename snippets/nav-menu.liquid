@@ -5,7 +5,7 @@
   inside the mobile drawer — so the two can never drift apart.
 
   The active link is underlined, matching the design's treatment of the
-  current page.
+  current page. A link with sublinks becomes a dropdown.
 
   @param {linklist} menu - The link list to render
   @param {string} [class] - Optional class added to the <ul>
@@ -15,30 +15,87 @@
   {% render 'nav-menu', menu: section.settings.menu, class: 'header__nav-list--drawer' %}
 {% enddoc %}
 
-<ul class="nav-menu {{ class }}">
-  {% for link in menu.links %}
-    <li>
-      <a
-        href="{{ link.url }}"
-        class="nav-menu__link"
-        {% if link.active %}
-          aria-current="page"
+<nav-menu>
+  <ul class="nav-menu {{ class }}">
+    {% for link in menu.links %}
+      <li class="nav-menu__item">
+        {% if link.links.size > 0 %}
+          <details class="nav-menu__details">
+            <summary
+              class="nav-menu__link nav-menu__toggle"
+              {% if link.active or link.child_active %}
+                aria-current="page"
+              {% endif %}
+            >
+              {{ link.title }}
+              <span class="nav-menu__caret" aria-hidden="true">
+                {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+              </span>
+            </summary>
+
+            <ul class="nav-menu__submenu" role="list">
+              {% for child in link.links %}
+                <li>
+                  <a
+                    href="{{ child.url }}"
+                    class="nav-menu__link"
+                    {% if child.url contains '/pages/contact' %}
+                      data-contact-link
+                    {% endif %}
+                    {% if child.active %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    {{ child.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% else %}
+          {%- comment -%}
+            The contact page opens as a modal; the link still works without JavaScript.
+          {%- endcomment -%}
+          <a
+            href="{{ link.url }}"
+            class="nav-menu__link"
+            {% if link.url contains '/pages/contact' %}
+              data-contact-link
+            {% endif %}
+            {% if link.active %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{ link.title }}
+          </a>
         {% endif %}
-      >
-        {{ link.title }}
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+      </li>
+    {% endfor %}
+  </ul>
+</nav-menu>
 
 {% stylesheet %}
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
     gap: 1.875rem;
+    /* The caret makes the toggle taller than a plain link, so the text lines up by baseline. */
+    align-items: baseline;
     padding: 0;
     margin: 0;
     list-style: none;
+  }
+
+  .nav-menu--stacked {
+    --nav-menu-gap: 1.25rem;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--nav-menu-gap);
+  }
+
+  .nav-menu__item {
+    position: relative;
   }
 
   /* The underline is drawn up front so the hover can fade its colour in. */
@@ -56,4 +113,126 @@
   .nav-menu__link:hover {
     text-decoration-color: currentcolor;
   }
+
+  .nav-menu__toggle {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nav-menu__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-menu__caret svg {
+    width: 1rem;
+    height: 1rem;
+    rotate: 90deg;
+    transition: rotate var(--duration-base) var(--easing-base);
+  }
+
+  .nav-menu__details[open] .nav-menu__caret svg {
+    rotate: -90deg;
+  }
+
+  .nav-menu__submenu {
+    position: absolute;
+    inset-inline-start: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 12rem;
+    padding: 1rem;
+    border: 0.5px solid var(--color-hairline);
+    background-color: var(--color-background);
+    list-style: none;
+  }
+
+  /* In the drawer the submenu opens in place, indented under its parent. */
+  .nav-menu--stacked .nav-menu__submenu {
+    position: static;
+    min-width: 0;
+    gap: var(--nav-menu-gap);
+    padding: var(--nav-menu-gap) 0 0 var(--nav-menu-gap);
+    border: 0;
+    background: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-menu__link,
+    .nav-menu__caret svg {
+      transition: none;
+    }
+  }
+
+  @media (width >= 1180px) {
+    .nav-menu__submenu {
+      margin-block-start: 0.75rem;
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  /* A dropdown stays open until the next click lands elsewhere, or Escape. */
+  class NavMenu extends HTMLElement {
+    connectedCallback() {
+      this.menus = Array.from(this.querySelectorAll('.nav-menu__details'));
+      if (this.menus.length === 0) return;
+
+      this.addEventListener('toggle', (event) => this.closeOthers(event.target), true);
+
+      /* With a mouse the dropdown follows the pointer; a tap or a key still works as before. */
+      const pointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+      this.menus.forEach((menu) => {
+        const item = menu.closest('.nav-menu__item');
+
+        item.addEventListener('pointerenter', () => {
+          if (!pointer.matches) return;
+          clearTimeout(this.timer);
+          menu.open = true;
+        });
+
+        /* A short delay covers the gap between the toggle and the panel. */
+        item.addEventListener('pointerleave', () => {
+          if (!pointer.matches) return;
+          this.timer = setTimeout(() => {
+            menu.open = false;
+          }, 150);
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!this.contains(event.target)) this.closeAll();
+      });
+
+      this.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+
+        const open = this.menus.find((menu) => menu.open);
+        if (!open) return;
+
+        open.open = false;
+        open.querySelector('summary').focus();
+      });
+    }
+
+    closeOthers(current) {
+      if (!current.open) return;
+      this.menus.forEach((menu) => {
+        if (menu !== current) menu.open = false;
+      });
+    }
+
+    closeAll() {
+      this.menus.forEach((menu) => {
+        menu.open = false;
+      });
+    }
+  }
+
+  if (!customElements.get('nav-menu')) customElements.define('nav-menu', NavMenu);
+{% endjavascript %}

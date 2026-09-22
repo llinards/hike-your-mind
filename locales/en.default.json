@@ -37,13 +37,14 @@
       "previous": "Previous",
       "next": "Next",
       "image_gallery": "Image gallery",
+      "back_to_top": "Back to top",
       "close": "Close"
     },
     "language": {
       "label": "Language"
     },
     "social": {
-      "follow_instagram": "Follow us on Instagram"
+      "follow_instagram": "Follow Us on Instagram"
     },
     "footer": {
       "contacts": "Contacts",
@@ -60,7 +61,8 @@
     "empty": "No reviews have been published yet."
   },
   "reviews": {
-    "read_more": "Read more"
+    "read_more": "Read more",
+    "full_review": "Full review"
   },
   "customers": {
     "login": {
