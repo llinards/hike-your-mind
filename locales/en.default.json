@@ -61,7 +61,8 @@
     "empty": "No reviews have been published yet."
   },
   "reviews": {
-    "read_more": "Read more"
+    "read_more": "Read more",
+    "full_review": "Full review"
   },
   "customers": {
     "login": {
