@@ -55,7 +55,7 @@
         "image_opacity": 40,
         "quote": "We can't wait\nto hear\nyour idea!",
         "quote_size": 60,
-        "terms_url": "",
+        "terms_url": "shopify://policies/privacy-policy",
         "email_subject": "Create a hike enquiry"
       }
     },
