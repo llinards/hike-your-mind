@@ -94,6 +94,7 @@
     --quote-rendered-size: min(calc(var(--quote-size, 60px) * var(--quote-scale)), 7vw);
     --section-space: calc(var(--spacing-section) * 0.5);
     --quote-bleed: 1.5;
+    --quote-line-height: 1.5;
 
     position: relative;
     display: flex;
@@ -120,7 +121,7 @@
     transform-origin: 50% 50%;
     font-family: var(--font-script--family);
     font-size: var(--quote-rendered-size);
-    line-height: 1.15;
+    line-height: var(--quote-line-height);
   }
 
   .my-story__media {
@@ -174,6 +175,7 @@
   @media (width >= 1024px) {
     .my-story {
       --quote-rendered-size: var(--quote-size, 60px);
+      --quote-line-height: 4.75rem;
       --quote-lane: 0px;
 
       display: grid;
@@ -183,11 +185,12 @@
       row-gap: 0;
     }
 
+    /* The lane follows the quote's own line height, so changing it keeps the rows clear. */
     .my-story--quoted {
       --quote-lane: calc(
-        var(--quote-rendered-size) * 1.15 * var(--quote-lines, 3) - var(--quote-rendered-size) * 0.7 +
-          var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg)) + 1.5rem -
-          var(--quote-rendered-size) * 1.15 * var(--quote-bleed, 0)
+        var(--quote-line-height) * var(--quote-lines, 3) - var(--quote-rendered-size) * 0.7 +
+          var(--quote-rendered-size) * 10 * sin(var(--quote-tilt, 4deg)) + 2.5rem -
+          var(--quote-line-height) * var(--quote-bleed, 0)
       );
 
       padding-block: var(--spacing-section);
@@ -228,6 +231,7 @@
       translate: -50% 0;
       transform-origin: 30% 50%;
       font-size: var(--quote-size, 60px);
+      line-height: var(--quote-line-height);
     }
   }
 {% endstylesheet %}
