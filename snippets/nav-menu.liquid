@@ -39,6 +39,9 @@
                   <a
                     href="{{ child.url }}"
                     class="nav-menu__link"
+                    {% if child.url contains '/pages/contact' %}
+                      data-contact-link
+                    {% endif %}
                     {% if child.active %}
                       aria-current="page"
                     {% endif %}
@@ -50,9 +53,15 @@
             </ul>
           </details>
         {% else %}
+          {%- comment -%}
+            The contact page opens as a modal; the link still works without JavaScript.
+          {%- endcomment -%}
           <a
             href="{{ link.url }}"
             class="nav-menu__link"
+            {% if link.url contains '/pages/contact' %}
+              data-contact-link
+            {% endif %}
             {% if link.active %}
               aria-current="page"
             {% endif %}
