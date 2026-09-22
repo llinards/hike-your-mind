@@ -31,6 +31,11 @@
   <body>
     {% sections 'header-group' %}
 
+    {% # Shop policies are rendered into this layout by Shopify, unstyled %}
+    {%- if request.page_type == 'policy' -%}
+      {% render 'policy-styles' %}
+    {%- endif -%}
+
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}

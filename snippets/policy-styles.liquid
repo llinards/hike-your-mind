@@ -1,0 +1,77 @@
+{% doc %}
+  Styles the shop policy pages.
+
+  Shopify renders the policy text itself into this theme's layout, with markup
+  the theme can't reach — there is no template or section behind it, and these
+  class names are the only hooks. Rendered from the layout on policy pages only.
+
+  @example
+  {% render 'policy-styles' %}
+{% enddoc %}
+
+{% stylesheet %}
+  /* The column the header and footer sit on. `.shopify-section` carries this
+     formula for sections, and a policy page isn't one. */
+  .shopify-policy__container {
+    width: min(calc(var(--page-width) - var(--page-margin) * 2), calc(100% - var(--page-margin) * 2));
+    max-width: none;
+    margin-inline: auto;
+    /* The shorthand also clears the 20px inline padding Shopify sets, which
+       would otherwise hold the text off the content edge. */
+    padding: var(--spacing-section) 0;
+  }
+
+  .shopify-policy__container h2 {
+    font-weight: bold;
+  }
+
+  .shopify-policy__title {
+    padding: 0;
+    margin-block-end: var(--spacing-section);
+    text-align: start;
+  }
+
+  /* The body runs the full column, like every other page. Shopify caps it
+     otherwise, so the override is explicit. */
+  .shopify-policy__body {
+    max-width: none;
+  }
+
+  /* The theme's reset clears every margin, so the policy's own rhythm has to be
+     put back before it reads as prose rather than one block. */
+  .shopify-policy__body :is(p, ul, ol, h1, h2, h3, h4, h5, h6, blockquote, table) + * {
+    margin-block-start: 1.25em;
+  }
+
+  .shopify-policy__body :is(h2, h3, h4, h5, h6):not(:first-child) {
+    margin-block-start: 2rem;
+  }
+
+  /* Every heading is the display serif at one size in this theme; a document
+     this long needs the steps back. */
+  .shopify-policy__body :is(h2, h3) {
+    font-size: var(--font-size-display-compact);
+    line-height: var(--line-height-display);
+  }
+
+  .shopify-policy__body :is(h4, h5, h6) {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-body);
+    font-weight: 700;
+    line-height: var(--line-height-ui);
+  }
+
+  .shopify-policy__body :is(ul, ol) {
+    padding-inline-start: 1.25em;
+  }
+
+  .shopify-policy__body li + li {
+    margin-block-start: 0.5em;
+  }
+
+  .shopify-policy__body a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+{% endstylesheet %}
