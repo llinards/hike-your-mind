@@ -1,0 +1,112 @@
+{% doc %}
+  Renders a button that returns the page to the top, revealed once the hero has
+  mostly scrolled away.
+
+  @example
+  {% render 'scroll-to-top' %}
+{% enddoc %}
+
+<scroll-top class="scroll-top">
+  <button class="scroll-top__button" type="button">
+    {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+    <span class="visually-hidden">{{ 'general.accessibility.back_to_top' | t }}</span>
+  </button>
+</scroll-top>
+
+{% stylesheet %}
+  .scroll-top {
+    position: fixed;
+    inset-block-end: 1.5rem;
+    inset-inline-end: 1.5rem;
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-base) var(--easing-base), visibility var(--duration-base);
+  }
+
+  @media (width >= 750px) {
+    .scroll-top {
+      inset-block-end: 2rem;
+      inset-inline-end: 2rem;
+    }
+  }
+
+  .scroll-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .scroll-top__button {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    cursor: pointer;
+    transition: background-color var(--duration-base) var(--easing-base),
+      color var(--duration-base) var(--easing-base);
+  }
+
+  .scroll-top__button:hover,
+  .scroll-top__button:focus-visible {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .scroll-top__button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    rotate: -90deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-top,
+    .scroll-top__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Appears once three quarters of the first section has scrolled away. */
+  class ScrollTop extends HTMLElement {
+    connectedCallback() {
+      this.button = this.querySelector('button');
+      if (!this.button) return;
+
+      this.update = this.update.bind(this);
+
+      this.button.addEventListener('click', () => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' });
+      });
+
+      window.addEventListener('scroll', this.update, { passive: true });
+      window.addEventListener('resize', this.update, { passive: true });
+
+      this.update();
+    }
+
+    threshold() {
+      const hero = document.querySelector(
+        '.shopify-section:not([class*="shopify-section-group-"])'
+      );
+
+      if (!hero) return window.innerHeight * 0.75;
+      return hero.offsetTop + hero.offsetHeight * 0.75;
+    }
+
+    update() {
+      cancelAnimationFrame(this.frame);
+      this.frame = requestAnimationFrame(() => {
+        this.classList.toggle('is-visible', window.scrollY > this.threshold());
+      });
+    }
+  }
+
+  if (!customElements.get('scroll-top')) customElements.define('scroll-top', ScrollTop);
+{% endjavascript %}
