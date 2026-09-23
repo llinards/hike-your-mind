@@ -414,7 +414,9 @@
     }
   }
 
-  @media (width >= 750px) {
+  /* The three columns need room for the stepper and the dates, so the stacked
+     layout is held further up than the theme's usual 750px. */
+  @media (width >= 1024px) {
     .cart__head-row {
       display: grid;
     }
