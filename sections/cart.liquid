@@ -55,11 +55,25 @@
                   {%- endunless -%}
 
                   {%- if per_day -%}
-                    {%- assign booked = item.properties.Date -%}
-                    {%- if booked != blank -%}
+                    {%- liquid
+                      # The app lists every booked day — "Sun, 18 Oct 2026 , Mon, 19 Oct
+                      # 2026" — so only the first and last are shown. The separator is
+                      # " , "; the comma inside a day has no spaces around it.
+                      assign booked = item.properties.Date | split: ' , '
+                      assign from_day = booked | first | strip
+                      assign to_day = booked | last | strip
+                      assign from_date = from_day | date: '%B %-d, %Y' | default: from_day
+                      assign to_date = to_day | date: '%B %-d, %Y' | default: to_day
+                    -%}
+
+                    {%- if from_date != blank -%}
                       <p class="cart__dates">
                         <span class="cart__dates-label">{{ 'cart.dates' | t }}</span>
-                        <span data-dates>{{ booked }}</span>
+                        {%- if from_date == to_date -%}
+                          {{ from_date }}
+                        {%- else -%}
+                          {{ from_date }} &ndash; {{ to_date }}
+                        {%- endif -%}
                       </p>
                     {%- endif -%}
                   {%- endif -%}
@@ -449,7 +463,6 @@
         this.change(input, this.line(input), this.quantity(input));
       });
 
-      this.formatDates();
     }
 
     line(element) {
@@ -521,7 +534,6 @@
       }
 
       this.innerHTML = fresh.innerHTML;
-      this.formatDates();
 
       const restored = this.querySelector(focusKey);
       if (restored) restored.focus();
@@ -536,31 +548,6 @@
       } else {
         badge.remove();
       }
-    }
-
-    /* The booking app writes its own date text; the first and last day it names are
-       shown as a range, and anything unparseable is left exactly as it came. */
-    formatDates() {
-      this.querySelectorAll('[data-dates]').forEach((element) => {
-        const days = (element.textContent.match(/[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}[./]\d{1,2}[./]\d{4}/g) || [])
-          .map((day) => day.replace(/(\d{1,2})[./](\d{1,2})[./](\d{4})/, '$3-$2-$1'))
-          .map((day) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(day) ? `${day}T00:00` : day))
-          .filter((date) => !Number.isNaN(date.valueOf()))
-          .sort((a, b) => a - b);
-
-        if (days.length === 0) return;
-
-        const format = new Intl.DateTimeFormat(document.documentElement.lang || 'en', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        });
-
-        const first = format.format(days[0]);
-        const last = format.format(days[days.length - 1]);
-
-        element.textContent = first === last ? first : `${first} – ${last}`;
-      });
     }
   }
 
