@@ -64,6 +64,7 @@
                       assign to_day = booked | last | strip
                       assign from_date = from_day | date: '%B %-d, %Y' | default: from_day
                       assign to_date = to_day | date: '%B %-d, %Y' | default: to_day
+                      assign day_count = booked | size
                     -%}
 
                     {%- if from_date != blank -%}
@@ -74,11 +75,17 @@
                         {%- else -%}
                           {{ from_date }} &ndash; {{ to_date }}
                         {%- endif -%}
+                        ({{ 'product.standard.days' | t: count: day_count }})
                       </p>
                     {%- endif -%}
                   {%- endif -%}
 
-                  <p class="cart__unit-price">{{ item.final_price | money }}</p>
+                  <p class="cart__unit-price">
+                    {{- item.final_price | money -}}
+                    {%- if per_day -%}
+                      <span class="cart__unit">{{ 'collections.gear.per_day' | t }}</span>
+                    {%- endif -%}
+                  </p>
                 </div>
               </td>
 
@@ -263,6 +270,11 @@
 
   .cart__unit-price {
     margin-block-start: 0.25rem;
+  }
+
+  /* The suffix carries its own leading slash, as on the product page. */
+  .cart__unit {
+    color: var(--color-foreground-muted);
   }
 
   .cart__quantity-row {
