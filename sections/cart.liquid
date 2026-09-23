@@ -272,9 +272,9 @@
     margin-block-start: 0.25rem;
   }
 
-  /* The suffix carries its own leading slash, as on the product page. */
+  /* The suffix carries its own leading slash and the product page's grey. */
   .cart__unit {
-    color: var(--color-foreground-muted);
+    color: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
   }
 
   .cart__quantity-row {

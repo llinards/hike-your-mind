@@ -95,7 +95,7 @@
       "sold_out": "Sold out",
       "sale": "Sale",
       "price_from": "From {{ price }}",
-      "per_day": "/ per day",
+      "per_day": " / per day",
       "no_results": "No gear has been added to this collection yet."
     }
   },
