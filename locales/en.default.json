@@ -26,7 +26,15 @@
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "remove_item": "Remove {{ title }}",
+    "product": "Product",
+    "quantity": "Quantity",
+    "quantity_for": "Quantity for {{ title }}",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "dates": "Dates",
+    "empty": "Your cart is empty."
   },
   "general": {
     "accessibility": {

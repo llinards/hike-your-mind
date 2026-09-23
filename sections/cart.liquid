@@ -1,37 +1,586 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+{% comment %}Cart: a row per line item — product, quantity, line total — with checkout beneath.{% endcomment %}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+{%- liquid
+  assign max_quantity = section.settings.max_quantity
+-%}
 
-<h1>{{ 'cart.title' | t }}</h1>
+<cart-items class="cart" data-section="{{ section.id }}">
+  <h1 class="cart__title">{{ 'cart.title' | t }}</h1>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+  {%- if cart.item_count == 0 -%}
+    <p class="cart__empty">{{ 'cart.empty' | t }}</p>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post">
+      <table class="cart__table" role="table">
+        <thead role="rowgroup">
+          <tr class="cart__head-row" role="row">
+            <th class="cart__heading" role="columnheader" scope="col">{{ 'cart.product' | t }}</th>
+            <th class="cart__heading" role="columnheader" scope="col">{{ 'cart.quantity' | t }}</th>
+            <th class="cart__heading cart__heading--total" role="columnheader" scope="col">
+              {{- 'cart.total' | t -}}
+            </th>
+          </tr>
+        </thead>
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+        <tbody role="rowgroup">
+          {%- for item in cart.items -%}
+            {%- liquid
+              # BookX marks its bookable products with this tag; those are rented by the
+              # day, so the app owns the quantity and the booked dates ride along as a
+              # line item property.
+              assign item_tags = item.product.tags | join: ',' | downcase
+              assign per_day = false
+              if item_tags contains 'bookeasy'
+                assign per_day = true
+              endif
+            -%}
+
+            <tr class="cart__row" role="row" data-line="{{ forloop.index }}">
+              <td class="cart__cell cart__cell--product" role="cell">
+                <a class="cart__media" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                  {%- if item.image -%}
+                    {{
+                      item.image
+                      | image_url: width: 288
+                      | image_tag: widths: '96,144,192,288', sizes: '96px', loading: 'lazy', alt: ''
+                    }}
+                  {%- endif -%}
+                </a>
+
+                <div class="cart__details">
+                  <a class="cart__product" href="{{ item.url }}">{{ item.product.title }}</a>
+
+                  {%- unless item.product.has_only_default_variant -%}
+                    <p class="cart__variant">{{ item.variant.title }}</p>
+                  {%- endunless -%}
+
+                  {%- if per_day -%}
+                    {%- assign booked = item.properties.Date -%}
+                    {%- if booked != blank -%}
+                      <p class="cart__dates">
+                        <span class="cart__dates-label">{{ 'cart.dates' | t }}</span>
+                        <span data-dates>{{ booked }}</span>
+                      </p>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  <p class="cart__unit-price">{{ item.final_price | money }}</p>
+                </div>
+              </td>
+
+              <td class="cart__cell cart__cell--quantity" role="cell">
+                <div class="cart__quantity-row">
+                  {%- comment -%}
+                    Every line needs an `updates[]` field in order for a plain form post to
+                    work, so a rental keeps a hidden one in place of the stepper.
+                  {%- endcomment -%}
+                  {%- if per_day -%}
+                    <input type="hidden" name="updates[]" value="{{ item.quantity }}">
+                  {%- else -%}
+                    <div class="quantity">
+                      <button class="quantity__button" type="button" data-step="-1">
+                        <span aria-hidden="true">&minus;</span>
+                        <span class="visually-hidden">{{ 'product.standard.decrease' | t }}</span>
+                      </button>
+
+                      <input
+                        class="quantity__input"
+                        type="number"
+                        name="updates[]"
+                        value="{{ item.quantity }}"
+                        min="0"
+                        max="{{ max_quantity }}"
+                        step="1"
+                        inputmode="numeric"
+                        aria-label="{{ 'cart.quantity_for' | t: title: item.product.title }}"
+                        data-quantity
+                      >
+
+                      <button class="quantity__button" type="button" data-step="1">
+                        <span aria-hidden="true">+</span>
+                        <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
+                      </button>
+                    </div>
+                  {%- endif -%}
+
+                  {%- comment -%}
+                    A link rather than a button, so removing still works without the script.
+                  {%- endcomment -%}
+                  <a class="cart__remove" href="{{ item.url_to_remove }}" data-remove>
+                    {{ 'icon-trash.svg' | inline_asset_content }}
+                    <span class="visually-hidden">
+                      {{- 'cart.remove_item' | t: title: item.product.title -}}
+                    </span>
+                  </a>
+                </div>
+              </td>
+
+              <td class="cart__cell cart__cell--total" role="cell">
+                <span class="cart__cell-label" aria-hidden="true">{{ 'cart.total' | t }}</span>
+                <span class="cart__line-total">{{ item.final_line_price | money }}</span>
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="cart__footer">
+        <p class="cart__subtotal">
+          <span>{{ 'cart.subtotal' | t }}</span>
+          <span class="cart__subtotal-amount">{{ cart.total_price | money }}</span>
+        </p>
+
+        <noscript>
+          <input class="cart__update" type="submit" name="update" value="{{ 'cart.update' | t }}">
+        </noscript>
+
+        <input class="cart__checkout" type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+      </div>
+    </form>
+  {%- endif -%}
+</cart-items>
+
+{% stylesheet %}
+  .cart {
+    display: block;
+    padding-block: var(--spacing-section);
+  }
+
+  .cart__title {
+    margin-block-end: var(--spacing-section);
+  }
+
+  /* Each row lays itself out as a grid, so the table boxes are taken out of the
+     way; the roles on the markup keep the semantics the display would drop. */
+  .cart__table,
+  .cart__table thead,
+  .cart__table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  /* The column headings are desktop-only; stacked, each cell says what it is. */
+  .cart__head-row {
+    display: none;
+  }
+
+  .cart__heading {
+    padding-block-end: 1rem;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-small);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-small);
+    text-align: start;
+    text-transform: uppercase;
+  }
+
+  .cart__heading--total {
+    text-align: end;
+  }
+
+  /* The hairline the home page puts between its sections. */
+  .cart__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.25rem;
+    padding-block: 1.5rem;
+    border-block-start: 0.5px solid var(--color-hairline);
+  }
+
+  .cart__row:last-child {
+    border-block-end: 0.5px solid var(--color-hairline);
+  }
+
+  .cart__cell {
+    display: flex;
+    align-items: center;
+  }
+
+  .cart__cell--product {
+    grid-column: 1 / -1;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .cart__media {
+    flex: 0 0 auto;
+    width: 6rem;
+  }
+
+  .cart__media img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .cart__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  /* The underline is drawn up front so the hover can fade its colour in. */
+  .cart__product {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .cart__product:hover,
+  .cart__product:focus-visible {
+    text-decoration-color: currentcolor;
+  }
+
+  .cart__variant,
+  .cart__dates {
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+    color: var(--color-foreground-muted);
+  }
+
+  .cart__dates-label {
+    font-weight: 700;
+  }
+
+  .cart__unit-price {
+    margin-block-start: 0.25rem;
+  }
+
+  .cart__quantity-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cart__remove {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: inherit;
+    cursor: pointer;
+    transition: opacity var(--duration-fast) var(--easing-base);
+  }
+
+  .cart__remove:hover,
+  .cart__remove:focus-visible {
+    opacity: 0.6;
+  }
+
+  .cart__remove svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .cart__cell--total {
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .cart__cell-label {
+    font-size: var(--font-size-small);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.5;
+  }
+
+  .cart__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.25rem;
+    padding-block-start: var(--spacing-section);
+  }
+
+  .cart__subtotal {
+    display: flex;
+    gap: 1rem;
+    font-size: var(--font-size-quote);
+  }
+
+  .cart__subtotal-amount {
+    font-weight: 700;
+  }
+
+  .cart[data-busy] .cart__table {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+  }
+
+  .quantity__button {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .quantity__button[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .quantity__input {
+    width: 2.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: var(--font-size-ui);
+    text-align: center;
+    appearance: textfield;
+  }
+
+  .quantity__input::-webkit-outer-spin-button,
+  .quantity__input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .cart__checkout,
+  .cart__update {
+    padding: 1rem;
+    border: 0;
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-family: inherit;
+    font-size: var(--font-size-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity var(--duration-base) var(--easing-base);
+  }
+
+  .cart__checkout:hover,
+  .cart__checkout:focus-visible {
+    opacity: 0.85;
+  }
+
+  .cart__checkout[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cart__product,
+    .cart__remove,
+    .cart__checkout,
+    .cart__update {
+      transition: none;
+    }
+  }
+
+  @media (width >= 750px) {
+    .cart__head-row {
+      display: grid;
+    }
+
+    .cart__head-row,
+    .cart__row {
+      grid-template-columns: 1fr 14rem 8rem;
+      gap: 1.875rem;
+      align-items: center;
+    }
+
+    .cart__cell--product {
+      grid-column: auto;
+    }
+
+    .cart__cell--total {
+      justify-content: flex-end;
+    }
+
+    .cart__cell-label {
+      display: none;
+    }
+
+    .cart__footer {
+      gap: 1.875rem;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Quantity and removal go through the Cart AJAX API, and the section is asked to
+     re-render itself so every money string is still formatted by Liquid. Without the
+     script the form posts to /cart as it always did. */
+  class CartItems extends HTMLElement {
+    connectedCallback() {
+      this.addEventListener('click', (event) => {
+        const step = event.target.closest('[data-step]');
+        if (step) {
+          const input = step.parentElement.querySelector('[data-quantity]');
+          if (!input) return;
+
+          input.value = this.clamp(this.quantity(input) + Number(step.dataset.step), input);
+          this.change(step, this.line(step), this.quantity(input));
+          return;
+        }
+
+        const remove = event.target.closest('[data-remove]');
+        if (!remove) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+        event.preventDefault();
+        this.change(remove, this.line(remove), 0);
+      });
+
+      this.addEventListener('change', (event) => {
+        const input = event.target.closest('[data-quantity]');
+        if (!input) return;
+        this.change(input, this.line(input), this.quantity(input));
+      });
+
+      this.formatDates();
+    }
+
+    line(element) {
+      const row = element.closest('[data-line]');
+      return row ? Number(row.dataset.line) : 0;
+    }
+
+    quantity(input) {
+      return this.clamp(Math.round(Number(input.value)) || 0, input);
+    }
+
+    clamp(value, input) {
+      return Math.min(Math.max(value, 0), Number(input.max) || Infinity);
+    }
+
+    async change(origin, line, quantity) {
+      if (!line || this.busy) return;
+
+      this.busy = true;
+      this.dataset.busy = '';
+
+      try {
+        const root = window.Shopify?.routes?.root || '/';
+
+        const response = await fetch(`${root}cart/change.js`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ line, quantity, sections: this.dataset.section }),
+        });
+
+        if (!response.ok) throw new Error(response.statusText);
+
+        const cart = await response.json();
+        this.render(cart, this.focusKey(origin, line));
+        this.count(cart.item_count);
+      } catch (error) {
+        /* Fall back to the plain page: the link for a removal, the form for a
+           quantity, whose field already holds the value that was asked for. */
+        if (quantity === 0 && origin.href) {
+          window.location.href = origin.href;
+          return;
+        }
+
+        this.querySelector('form')?.submit();
+      } finally {
+        this.busy = false;
+        delete this.dataset.busy;
+      }
+    }
+
+    /* Replacing the markup drops focus, so the control that was used is found again. */
+    focusKey(origin, line) {
+      if (origin.dataset.step) return `[data-line="${line}"] [data-step="${origin.dataset.step}"]`;
+      if (origin.dataset.remove !== undefined) return `[data-line="${line}"] [data-remove]`;
+      return `[data-line="${line}"] [data-quantity]`;
+    }
+
+    render(cart, focusKey) {
+      const markup = cart.sections?.[this.dataset.section];
+      if (!markup) {
+        window.location.reload();
+        return;
+      }
+
+      const fresh = new DOMParser().parseFromString(markup, 'text/html').querySelector('cart-items');
+      if (!fresh) {
+        window.location.reload();
+        return;
+      }
+
+      this.innerHTML = fresh.innerHTML;
+      this.formatDates();
+
+      const restored = this.querySelector(focusKey);
+      if (restored) restored.focus();
+    }
+
+    count(total) {
+      const badge = document.querySelector('.header__cart-count');
+      if (!badge) return;
+
+      if (total > 0) {
+        badge.textContent = total;
+      } else {
+        badge.remove();
+      }
+    }
+
+    /* The booking app writes its own date text; the first and last day it names are
+       shown as a range, and anything unparseable is left exactly as it came. */
+    formatDates() {
+      this.querySelectorAll('[data-dates]').forEach((element) => {
+        const days = (element.textContent.match(/[A-Za-z]{3,}\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}[./]\d{1,2}[./]\d{4}/g) || [])
+          .map((day) => day.replace(/(\d{1,2})[./](\d{1,2})[./](\d{4})/, '$3-$2-$1'))
+          .map((day) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(day) ? `${day}T00:00` : day))
+          .filter((date) => !Number.isNaN(date.valueOf()))
+          .sort((a, b) => a - b);
+
+        if (days.length === 0) return;
+
+        const format = new Intl.DateTimeFormat(document.documentElement.lang || 'en', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+
+        const first = format.format(days[0]);
+        const last = format.format(days[days.length - 1]);
+
+        element.textContent = first === last ? first : `${first} – ${last}`;
+      });
+    }
+  }
+
+  if (!customElements.get('cart-items')) customElements.define('cart-items', CartItems);
+{% endjavascript %}
 
 {% schema %}
 {
   "name": "t:general.cart",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "max_quantity",
+      "label": "t:labels.max_quantity",
+      "info": "t:info.max_quantity",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ]
 }
 {% endschema %}
