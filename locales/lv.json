@@ -2629,7 +2629,12 @@
           "accessibility": {
             "status": {
               "validating": "PVN numura validācija norit šobrīd",
-              "valid": "PVN numurs ir derīgs"
+              "valid": "PVN numurs ir derīgs",
+              "applied": "Pievienotā vērtības nodokļa atbrīvojums ir piemērots",
+              "domestic": "PVN atbrīvojums nav piemērots",
+              "invalid_number": "PVN atbrīvojums nav izdevies",
+              "service_unavailable": "Nav iespējams pārbaudīt PVN atbrīvojumu",
+              "service_error": "Nav iespējams pārbaudīt PVN atbrīvojumu"
             }
           }
         }
@@ -2953,12 +2958,20 @@
           },
           "label": "Nav piegādes"
         }
+      },
+      "address_management": {
+        "saved_with_store": "Saglabāts ar šo veikalu"
       }
     },
     "errors": {
       "shop_404": {
         "owner_ctas": {
-          "admin_link_text": "administrators"
+          "admin_link_text": "administrators",
+          "header": "Vai jūs esat veikala īpašnieks?",
+          "fix_domain": "Pabeidziet savas jaunās tīmekļa adreses iestatīšanu, dodieties uz %{domain_settings_link}. Noklikšķiniet uz “Pievienot domēnu” (Connect domain) un ievadiet: %{domain}.<br>Ja jums ir grūtības piekļūt savam veikalam, izmēģiniet lapu %{forgot_your_store_link}.",
+          "fix_domain_link_text": "jūsu domēna iestatījumi",
+          "forgot_your_store_link_text": "aizmirsāt savu veikalu",
+          "add_storefront": "Savu vietni varat iestatīt, pievienojot tiešsaistes veikala kanālu savā %{admin_link}. Ja jums rodas grūtības piekļūt savam veikalam, izmēģiniet %{forgot_your_store_link} lapu."
         },
         "ctas": {
           "sell_in_person": {
@@ -2981,8 +2994,71 @@
             "caption": "Vai jums ir problēmas ar piekļuvi savam veikalam? Izmēģiniet funkciju %{forgot_your_store_link}. Ja vēlaties atkārtoti aktivizēt savu veikalu, sazinieties ar %{shopify_support_link}.",
             "shopify_support_link_text": "Shopify atbalsts"
           }
+        },
+        "title": "Izveido e-komercijas vietni un pārdod tiešsaistē! E-komercijas programmatūra no Shopify",
+        "title_unavailable": "Veikals nav pieejams",
+        "heros": {
+          "store_will_be_right_back": "Veikals tūlīt atkal būs pieejams",
+          "store_unavailable": "Šis veikals pašlaik nav pieejams.",
+          "store_not_exist": "Šis veikals nepastāv.",
+          "no_storefront": "Šim veikalam vēl nav savas tīmekļa vietnes."
+        },
+        "subtitles": {
+          "store_will_be_right_back": "Shopify strādā, lai pēc iespējas ātrāk to atkal padarītu pieejamu tiešsaistē."
+        },
+        "links": {
+          "refresh_page": "Atsvaidzināt lapu",
+          "explore_other_stores": "Izpētiet citus veikalus",
+          "start_free_trial": "Sākt bezmaksas izmēģinājuma periodu"
+        },
+        "status_card": {
+          "eyebrow": "Palīdzība veikalu īpašniekiem",
+          "header": "Pārbaudīt Shopify statusu",
+          "caption": "Noskaidrojiet, vai vietnē Shopify ir plašāks darbības pārtraukums, kas ietekmē ne tikai šo veikalu.",
+          "link_text": "Skatīt Shopify sistēmu statusu"
         }
-      }
+      },
+      "blank": "nevar būt tukšs",
+      "blocked_address": "Šī atrašanās vieta netiek atbalstīta",
+      "credit_card_session_expired": "Kredītkartes autorizācija ir beigusies, lūdzu, ievadiet savu maksājuma informāciju vēlreiz. No jūsu kartes maksa nav iekasēta.",
+      "empty": "nevar būt tukšs",
+      "invalid_email": "jābūt derīgai e-pasta adresei",
+      "discount_disabled": "Šī atlaide ir deaktivizēta",
+      "discount_expired": "Šī atlaide vairs nav spēkā.",
+      "discount_limit_reached": "Šīs atlaides izmantošanas limits ir sasniegts.",
+      "discount_not_found": "Ievadītajam kodam atbilstošu derīgu atlaidi neizdevās atrast",
+      "customer_already_used_once_per_customer_discount_notice": "Šīs atlaides izmantošanas limits ir sasniegts.",
+      "gift_card_already_applied": "Atlaides kods jau ir piemērots jūsu pasūtījumam",
+      "gift_card_code_invalid": "Kods nav derīgs",
+      "gift_card_currency_mismatch": "Šo dāvanu karti nevar izmantot šim pirkumam. Sazinieties ar %{shop_name}, lai to atkārtoti izsniegtu.",
+      "gift_card_depleted": "Šajā dāvanu kartē vairs nav līdzekļu.",
+      "gift_card_disabled": "Dāvanu karte ir deaktivizēta",
+      "gift_card_expired": "Dāvanu karte ir derīguma termiņu beigusies",
+      "invalid": "ir nederīgs",
+      "bad_domain": "satur nederīgu domēna vārdu",
+      "taken": "jau ir aizņemts",
+      "contains_html_tags": "nedrīkst saturēt HTML tagus",
+      "too_short": "ir pārāk īss (minimālais garums ir %{count} rakstzīmes)",
+      "too_long": "ir pārāk garš (maksimālais garums ir %{count} rakstzīmes)",
+      "password_mismatch": "jāsakrīt ar norādīto paroli",
+      "contains_spaces": "sākas vai beidzas ar atstarpēm.",
+      "invalid_for_country": "nav derīgs valstij %{country}",
+      "invalid_for_country_and_province": "nav derīgs %{province} un %{country}",
+      "invalid_province_in_country": "nav derīga province valstī %{country}",
+      "invalid_state_in_country": "nav derīgs štats valstī %{country}",
+      "invalid_region_in_country": "nav derīgs reģions valstī %{country}",
+      "less_than_or_equal_to": "jābūt mazākam vai vienādam ar %{count}",
+      "not_supported": "nav atbalstīts",
+      "full_name_required": "Ievadiet vārdu un uzvārdu",
+      "invalid_for_card_type": "nav derīgs",
+      "invalid_type": "Atvainojiet, mēs nepieņemam šāda veida kartes",
+      "invalid_format": "formāts nav derīgs",
+      "expired": "ir beidzies termiņš",
+      "invalid_start_date_or_issue_number_for_debit": "ir nepieciešams derīgs sākuma datums vai problēmas numurs",
+      "invalid_expiry_year": "nav derīgs derīguma termiņa gads",
+      "reset_password_html": "Šī e-pasta adrese jau ir piesaistīta citam kontam. Ja šis konts pieder jums, varat <a href=\"/account/login#recover\">atiestatīt savu paroli</a>",
+      "verify_email": "Mēs nosūtījām e-pasta vēstuli uz %{customer_email}, lūdzu, noklikšķiniet uz tajā iekļautās saites, lai verificētu savu e-pasta adresi.",
+      "product_not_available": "Produkts šim klientam nav publicēts."
     },
     "notices": {
       "customer": {
@@ -3219,6 +3295,54 @@
       "buyer_consent": "Veicot pasūtījumu, jūs piekrītat iegādāties no Global-e kā reģistrētā tirgotāja saskaņā ar Global-e %{termsAndConditionsLink} un %{privacyPolicyLink} un kopīgot savu informāciju ar %{shopName}.",
       "terms_and_conditions": "Noteikumi un nosacījumi",
       "privacy_policy": "Privātuma politika"
+    },
+    "pagination": {
+      "previous": "Iepriekšējais",
+      "next": "Nākamais"
+    },
+    "links": {
+      "powered_by_shopify": "Nodrošina Shopify",
+      "learn_more": "Uzzināt vairāk"
+    },
+    "feed": {
+      "more": "Vairāk"
+    },
+    "attributes": {
+      "email": "e-pasts",
+      "password": "parole",
+      "password_confirmation": "Paroles apstiprinājums",
+      "first_name": "vārds",
+      "last_name": "uzvārds",
+      "body": "ķermenis",
+      "signature": "Adrese"
+    },
+    "addresses": {
+      "zip_code": "Pasta indekss",
+      "postal_code": "Pasta indekss",
+      "postcode": "Pasta indekss",
+      "pincode": "PIN kods",
+      "region": "Reģions",
+      "prefecture": "Prefektūra",
+      "province": "Province",
+      "state": "Valsts",
+      "state_and_territory": "Valsts/teritorija",
+      "county": "Apriņķis",
+      "emirate": "Emirāts",
+      "governorate": "Governorāts",
+      "confirm": "Vai esat pārliecināts, ka vēlaties dzēst šo adresi?"
+    },
+    "collections": {
+      "sorting": {
+        "manual": "Piedāvātie",
+        "best_selling": "Vispirktākais",
+        "az": "Alfabēta secībā, A-Z",
+        "za": "Alfabētiski, Z–A",
+        "price_ascending": "Cena, no zemākās uz augstāko",
+        "price_descending": "Cena, no augstākās uz zemāko",
+        "date_ascending": "Datums, no vecākā uz jaunāko",
+        "date_descending": "Datums, no jaunākā uz vecāko",
+        "most_relevant": "Vissvarīgākais"
+      }
     }
   },
   "customer_accounts": {
