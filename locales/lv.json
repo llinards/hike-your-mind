@@ -3801,6 +3801,16 @@
       "three_d_secure": {
         "title": "3D Secure",
         "verification_failed": "Jūsu maksājumu neizdevās apstiprināt. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu."
+      },
+      "edit_payment_method": {
+        "title": "Rediģēt maksājuma veidu",
+        "save_payment_method_button": "Saglabāt",
+        "cancel_edit_payment_method_button": "Atcelt",
+        "payment_method_updated_toast": "Maksājuma veids ir atjaunināts",
+        "billing_address": "Norēķinu adrese",
+        "billing_address_add_new": "Pievienot jaunu",
+        "billing_address_choose_from_list": "Izvēlēties no saraksta",
+        "future_purchases_notice": "Šī maksājuma metode tiks saglabāta turpmākiem pirkumiem."
       }
     },
     "callback": {
@@ -4315,7 +4325,26 @@
             "description_due_on_receipt_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Rēķinu saņemsiet, kad pienāks maksājuma termiņš.",
             "description_due_on_fulfillment": "Maksājums ir jāveic, tiklīdz visi šajā pasūtījumā iekļautie vienumi ir izpildīti.",
             "description_due_on_fulfillment_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Samaksa jāveic, tiklīdz visas preces šajā pasūtījumā ir izpildītas.",
-            "description_due_on_fulfillment_partially_paid_next": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums."
+            "description_due_on_fulfillment_partially_paid_next": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums.",
+            "banner_overdue": {
+              "one": "Jūsu maksājums kavējas {{count}} dienu",
+              "other": "Jūsu maksājums kavējas par {{count}} dienām"
+            },
+            "banner_due": {
+              "one": "Jūsu maksājums ir jāveic {{count}} dienas laikā",
+              "other": "Jūsu maksājums ir jāveic {{count}} dienu laikā"
+            },
+            "banner_due_today": "Jūsu maksājuma termiņš ir šodien",
+            "banner_due_today_for_multiple_fulfillments": "Maksājums par {{count}} izpildēm jāveic šodien",
+            "banner_overdue_for_multiple_fulfillments": "Maksājums par {{count}} izpildēm",
+            "title": "Maksājuma termiņš",
+            "title_with_date": "Maksājuma termiņš {{date}}",
+            "title_due_on_receipt": "Maksājuma termiņš vēl nav pienācis",
+            "title_due_on_fulfillment": "Maksājums jāveic pēc pasūtījuma izpildes",
+            "description_overdue": "Jūsu maksājums kavējas.",
+            "description_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums.",
+            "description_authorized": "Maksa no jūsu maksājuma veida tiks iekasēta noteiktajā termiņā, vai arī varat samaksāt tagad.",
+            "description_waiting_for_manual_payment": "Šim pasūtījumam ir neapmaksāts maksājums. Bilance tiks atjaunināta, kad maksājums tiks saņemts."
           },
           "draft": {
             "description": "Maksājuma informācija tiek noteikta pēc pasūtījuma apstiprināšanas.",
@@ -4371,7 +4400,10 @@
           "hide_events_accessibility_label": "Paslēpt melnraksta pasūtījuma informāciju"
         },
         "subtitle": "Iesniegts {{date}}",
-        "title": "Pasūtīt {{name}}"
+        "title": "Pasūtīt {{name}}",
+        "draft_order_subtitle": "Apstiprināts {{date}} no pasūtījuma {{draftOrderName}}",
+        "loading": "Notiek pasūtījuma informācijas ielāde",
+        "loading_finished_accessibility_message": "Pasūtījuma informācija ir ielādēta"
       },
       "payment_methods": {
         "payment_delete": {
@@ -4407,7 +4439,97 @@
         "contact_email": "E-pasts",
         "contact_list_title": "Cilvēki",
         "contact_name": "Vārds",
-        "contact_permissions": "Atļaujas"
+        "contact_permissions": "Atļaujas",
+        "contact_phone_number": "Tālruņa numurs",
+        "location_picker_label": "Atrašanās vietas nosaukums",
+        "location_picker_accessibility_label": "Atrašanās vietas nosaukums: {{locationName}}",
+        "net_payment_terms_description": "{{name}}: maksājumi jāveic {{numberOfDays}} dienu laikā",
+        "deposit_percentage": "{{percentage}} depozīts",
+        "own_role_contact_name": "Tu",
+        "pagination": {
+          "load_more": "Rādīt vairāk",
+          "load_more_accessibility_label": "Rādīt vairāk atrašanās vietu"
+        },
+        "payment_details_title": "Maksājuma informācija",
+        "payment_terms": "Apmaksas nosacījumi",
+        "permissions_label": "Jūsu atļaujas",
+        "permissions_title": "Atļaujas",
+        "section_title": "Atrašanās vieta",
+        "shipping_address_required": "Lai sāktu veikt pasūtījumus, pievienojiet piegādes adresi šai atrašanās vietai.",
+        "staff_and_permissions_title": "Personāls un atļaujas",
+        "tax_details_title": "Nodokļu informācija",
+        "tax_id": "Nodokļu maksātāja reģistrācijas numurs",
+        "tax_exemptions": "Nodokļu atvieglojumi",
+        "multiple_tax_exemptions": "{{taxExemptionsCount}} vairāk",
+        "multiple_tax_exemptions_and": "un",
+        "tax_exemptions_modal_close": "Aizvērt",
+        "taxes_none": "Neviens",
+        "tax_exemption_not_applicable": "N/P",
+        "tax_exemptions_modal_button_accessibility_label": "Skatīt visus nodokļu atvieglojumus"
+      },
+      "location_selection": {
+        "continue_to_store": "Turpināt uz veikalu",
+        "description": "Ja tavā grozā jau ir preces, atrašanās vietas maiņa var ietekmēt preču cenas un daudzumu.",
+        "description_switch_later": "Vienmēr varēsi pārslēgties vēlāk",
+        "error_loading_locations": "Radās problēma ar atrašanās vietu ielādi. Pārbaudiet interneta savienojumu un mēģiniet vēlreiz.",
+        "list_accessibility_label": "Atrašanās vietu saraksts",
+        "list_item_without_address_accessibility_label": "{{name}}: Nav adreses",
+        "list_loading_accessibility_message": "Notiek atrašanās vietu saraksta ielāde",
+        "list_loading_address_accessibility_message": "Ielādes adrese: {{locationName}}",
+        "list_loading_finished_accessibility_message": "Atrašanās vietu saraksts ir ielādēts",
+        "loading_store_accessibility_message": "Eju uz veikalu",
+        "no_location_title": "Tikai personīgie pasūtījumi",
+        "no_location_description": "Jums vairs nav atļauts veikt pasūtījumus uzņēmumam {{company}}. Jūs joprojām varat veikt personīgos pasūtījumus.",
+        "no_locations_found": "Atrašanās vietas nav atrastas",
+        "search": "Meklēt atrašanās vietas",
+        "search_location_title": "Izvēlieties atrašanās vietu",
+        "selection_cancel_button": "Atcelt",
+        "selection_confirmation_button": "Izvēlieties atrašanās vietu",
+        "selection_continue_button": "Turpināt",
+        "title": "Kurai atrašanās vietai jūs veicat pirkumu?",
+        "title_choose_location": "Izvēlieties atrašanās vietu",
+        "clear_search": "Notīrīt meklēšanu",
+        "try_new_search": "Izmēģiniet jaunu meklēšanu"
+      },
+      "addresses": {
+        "add_billing_address_button": "Pievienot norēķinu adresi",
+        "add_billing_address_section_accessibility_label": "Pievienot norēķinu adresi",
+        "add_shipping_address_button": "Pievienot piegādes adresi",
+        "add_shipping_address_section_accessibility_label": "Pievienot piegādes adresi",
+        "billing_address_card_title": "Norēķinu adrese",
+        "no_billing_address_banner": "Norēķinu adrese nav pievienota",
+        "cancel_adding_billing_address_accessibility_label": "Atcelt norēķinu adreses pievienošanu",
+        "cancel_adding_shipping_address_accessibility_label": "Atcelt piegādes adreses pievienošanu",
+        "save_new_billing_address_accessibility_label": "Saglabāt rēķina adresi",
+        "save_new_shipping_address_accessibility_label": "Saglabāt piegādes adresi",
+        "shipping_address_card_title": "Piegādes adrese"
+      },
+      "orders": {
+        "draft_order_list": {
+          "hide_all": "Paslēpt visu",
+          "show_all": "Rādīt visu",
+          "hide_all_accessibility_label": "Paslēpt visus pārskatāmos pasūtījumus",
+          "show_all_accessibility_label": "Rādīt visus pārskatāmos pasūtījumus",
+          "show_all_orders_in_review": "Rādīt visus pārskatāmos pasūtījumus",
+          "show_less_orders_in_review": "Rādīt mazāk pasūtījumu pārskatīšanā",
+          "title": "Gaida apstrādi",
+          "pending_tab_accessibility_label": {
+            "no_pending_orders": "Jums nav neapstiprinātu pasūtījumu",
+            "pending_orders": {
+              "one": "Jums ir {{count}} neizpildīts pasūtījums",
+              "other": "Jums ir {{count}} neapstiprināti pasūtījumi"
+            },
+            "more_than_pagination_length": "Jums ir vairāk nekā {{count}} neapstiprinātu pasūtījumu"
+          },
+          "pending_orders_count_more_than_pagination_length": "{{count}}+",
+          "pagination": {
+            "nav_accessibility_label": "Pasūtījumu pārskatīšanas navigācijas pogas"
+          }
+        },
+        "order_list_column_headers_location": "Atrašanās vieta",
+        "order_list_column_headers_contact": "Kontakti",
+        "order_list_column_headers_status": "Statuss",
+        "removed_company_contact_tooltip": "Atlaists no uzņēmuma"
       }
     },
     "errors": {
