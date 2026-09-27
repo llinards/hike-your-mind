@@ -1231,8 +1231,10 @@
           "modal": {
             "heading": "Mainīt valsti?",
             "content": "Jūsu saņemšanas un piegādes vietām jāatrodas vienā valstī. Mainot valsti, visas preces tiks iestatītas piegādei.",
-            "country_changed_heading": "Valsts mainīta"
-          }
+            "country_changed_heading": "Valsts mainīta",
+            "change_country": "Mainīt valsti"
+          },
+          "banner": "Jūsu piegādes veids tika atjaunināts"
         }
       },
       "thank_you": {
@@ -1938,6 +1940,152 @@
           "shipping_credential_tw": "Personas kods/PVN numurs",
           "tax_credential_tr": "Turcijas Republikas identifikācijas numurs/PVN",
           "shipping_credential_tr": "Turcijas Republikas identifikācijas numurs/PVN"
+        }
+      },
+      "captcha": {
+        "title": "Lai turpinātu, aizpildiet CAPTCHA.",
+        "errors": {
+          "not_solved": "Lai turpinātu, aizpildiet CAPTCHA."
+        }
+      },
+      "clipboard": {
+        "copied": "Kopēts",
+        "failed_to_copy": "Neizdevās kopēt"
+      },
+      "discount_errors": {
+        "generic_error": "Jūsu pasūtījumu neizdevās apstrādāt, jo jūsu atlaižu kods vairs nav derīgs. Pārskatiet pasūtījuma kopsummu un mēģiniet vēlreiz."
+      },
+      "b2b_errors": {
+        "lost_b2b_purchasing_permissions": "Jums vairs nav atļaujas veikt B2B pasūtījumus. %{logout_url}, lai tā vietā veiktu personisku pasūtījumu.",
+        "log_out_link_text": "Izrakstīties",
+        "lost_permissions_subtitle": "Jums vairs nav atļaujas veikt B2B pasūtījumus. Izrakstieties, lai veiktu personīgo pasūtījumu.",
+        "lost_permissions_title": "Nav atrašanās vietas atļauju"
+      },
+      "shop_pay_external": {
+        "title": "Shop Pay norēķins",
+        "errors": {
+          "problem_loading": "Radās problēma, ielādējot Shop Pay",
+          "try_again_later": "Pārbaudiet savienojumu vai aizveriet šo logu un mēģiniet vēlreiz pēc mirkļa.",
+          "checkout_has_expired": "Jūsu pasūtījuma noformēšanas sesija ir beigusies. Aizveriet šo logu un mēģiniet vēlreiz veikt pasūtījumu no {{shopName}}."
+        },
+        "return_to_store": "Atgriezties uz {{shopName}}",
+        "return_to_store_simple": "Atgriezties veikalā"
+      },
+      "wallets": {
+        "return_to_store": "Atgriezties veikalā",
+        "return_to_checkout": "Atgriezties pie norēķiniem",
+        "redirect_hint": "Jums tiks lūgts pierakstīties ar {{walletName}}.",
+        "logged_in": "Savienots ar {{email}}",
+        "shipping_line_label": "Piegāde",
+        "payment_in_progress_title": "Maksājums tiek apstrādāts",
+        "payment_in_progress_body": "Jūsu maksājums tiek apstrādāts. Jūsu pasūtījums drīz tiks izpildīts.",
+        "deceleration": {
+          "one_more_step_to_complete_order": "Vēl tikai viens solis līdz pasūtījuma pabeigšanai",
+          "one_more_step": "Vēl viens solis..."
+        },
+        "continue_with": "Turpināt ar {{walletName}}",
+        "call_to_action": "Maksāt ar {{walletName}}",
+        "place_order": "Veikt pasūtījumu",
+        "redirection_notice": "Jūs tiksiet novirzīts uz {{walletName}}, lai pabeigtu pirkumu",
+        "recovery_notice": "Jūsu pasūtījuma informācijā ir radusies kļūda. Atjauniniet savus datus, lai pabeigtu maksājumu.",
+        "errors": {
+          "unavailable": {
+            "title": "{{walletName}} nav pieejams",
+            "description": "{{walletName}} nebija pieejams. Izmantojiet citu maksājuma veidu vai mēģiniet vēlreiz vēlāk.",
+            "instructions": "Radās problēma ar {{walletName}}. Atgriezieties veikalā, lai mēģinātu vēlreiz, vai izvēlieties citu norēķinu veidu.",
+            "unavailable_for_country": "{{walletName}} nav pieejams valstī {{countryName}}. Lūdzu, izvēlieties citu maksājumu veidu, lai pabeigtu pirkumu"
+          },
+          "sdk_load_failure": "Radās problēma, ielādējot {{walletName}}. {{refresh_link}}, lai mēģinātu vēlreiz, vai izmantojiet citu maksājuma veidu.",
+          "refresh_link": "Atsvaidzināt",
+          "unavailable_terminal": {
+            "instructions": "{{walletName}} pašlaik nav pieejams jūsu pasūtījumam. Lai turpinātu pirkumu, lūdzu, izvēlieties citu maksājuma metodi."
+          },
+          "subscription_review_required": "Jūsu pasūtījumā ir iekļauts abonements. Pirms pasūtījuma pabeigšanas jums ir jāiepazīstas ar tālāk minētajiem noteikumiem.",
+          "generic": "Radās problēma ar {{walletName}}. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+          "discount_code": "Šo atlaižu kodu nav iespējams piemērot. Pārbaudiet kodu un mēģiniet vēlreiz.",
+          "terminal": "Radās problēma ar {{walletName}}. Izmantojiet citu maksājuma veidu.",
+          "detour": {
+            "stock_problems": "Dažas preces vairs nav pieejamas. Aizveriet {{walletName}} un mēģiniet vēlreiz.",
+            "price_change": "Dažu preču cenas ir mainījušās. Aizveriet {{walletName}}, lai pārskatītu pasūtījumu un mēģinātu vēlreiz.",
+            "queue": "Jūs esat ievietots rindā, lai samaksātu. Aizveriet {{walletName}}, lai turpinātu.",
+            "currency_change": "Jūs nevarat izmantot citu adresi ar {{walletName}}. Izmantojiet sākotnējo adresi vai izmēģiniet citu maksājuma metodi."
+          },
+          "unsupported": {
+            "address": "Tirgotājs nevar piegādāt preces uz šo adresi.",
+            "wallet_is_unavailable": "{{walletName}} nevar izmantot ar šo adresi. Izvēlieties citu adresi vai aizveriet {{walletName}}, lai pabeigtu pirkumu",
+            "postal_code": "Šī atrašanās vieta netiek atbalstīta"
+          },
+          "outdated": {
+            "shipping_method": "Piegādes iespējas jūsu pasūtījumam ir mainījušās. Pārskatiet savu izvēli.",
+            "payment_terms": "Apmaksas noteikumi ir mainījušies. Pārskatiet savu pasūtījumu."
+          },
+          "invalid": {
+            "shipping_address": "Ievadiet derīgu piegādes adresi",
+            "billing_address": "Ievadiet derīgu norēķinu adresi",
+            "shipping_option": "Izvēlieties derīgu piegādes veidu",
+            "email": "Ievadiet derīgu e-pasta adresi",
+            "zone": "Ievadiet derīgu štatu / provinci",
+            "billing_zone": "Ievadiet derīgu norēķinu adreses štatu / provinci",
+            "emirate": "Ievadiet derīgu emirātu",
+            "postal_code": "Ievadiet derīgu pasta indeksu",
+            "phone": "Ievadiet derīgu tālruņa numuru",
+            "billing_phone": "Ievadiet derīgu norēķinu adreses tālruņa numuru",
+            "reduction_code": "Ievadiet derīgu atlaižu kodu vai dāvanu karti",
+            "billing_must_match_shipping": "Jāatbilst piegādes adresei",
+            "billing_zip": "Ievadiet derīgu norēķinu adreses pasta indeksu"
+          },
+          "missing": {
+            "first_name": "Ievadiet vārdu",
+            "billing_first_name": "Ievadiet norēķinu adreses vārdu",
+            "last_name": "Ievadiet uzvārdu",
+            "address1": "Ievadiet adresi",
+            "billing_address1": "Ievadiet norēķinu adresi",
+            "address2": "Ieiet dzīvoklī, apartamentos u. tml.",
+            "billing_address2": "Ievadiet norēķinu adreses dzīvokli, biroju utt.",
+            "city": "Ievadiet pilsētu",
+            "billing_city": "Ievadiet norēķinu adreses pilsētu",
+            "province": "Izvēlieties štatu / provinci",
+            "billing_province": "Izvēlieties norēķinu adreses štatu / provinci",
+            "country": "Izvēlieties valsti/reģionu",
+            "zip": "Ievadiet pasta indeksu",
+            "billing_zip": "Ievadiet norēķinu adreses pasta indeksu",
+            "phone": "Ievadiet tālruņa numuru",
+            "contact_info": "Ievadiet kontaktinformāciju"
+          },
+          "formatting": {
+            "name_contains_emojis": "Izdzēs emocijzīmi no sava vārda",
+            "postal_code_contains_emoji": "Izdzēsiet emocijzīmes no sava pasta indeksa",
+            "first_name_too_long": "Vārdā ir pārāk daudz burtu",
+            "last_name_too_long": "Uzvārdā ir pārāk daudz burtu",
+            "address_too_long": "Adreses rinda ir pārāk gara"
+          },
+          "select_different_shipping_address_to_resolve_errors": "Jūsu piegādes adrese nav derīga. Izvēlieties citu adresi vai izmantojiet jaunu.",
+          "processing_error_checkout_as_guest": "Radās problēma ar maksājuma apstrādi. Mēģiniet vēlreiz vai {{checkout_as_guest_link}}."
+        },
+        "scrim": {
+          "continue_purchase_in_window": "Turpiniet pirkumu {{walletName}} logā",
+          "and_return_to_checkout": "un atgriezties pie pasūtījuma noformēšanas",
+          "cancel": "Atcelt"
+        }
+      },
+      "note": {
+        "length_exceeds_maximum": "Samaziniet piezīmes izmēru līdz 5000 vai mazāk rakstzīmēm."
+      },
+      "offsite_payment_failed": {
+        "title": "Maksājums ārpus sistēmas neizdevās",
+        "payment_not_processed_title": "Maksājums neizdevās",
+        "payment_not_processed_text": "Mēģiniet noskenēt QR kodu vēlreiz. Ja tas joprojām nedarbojas, informējiet mūsu darbiniekus un izmantojiet citu maksājuma veidu.",
+        "payment_link_expired_title": "Maksājuma saites derīguma termiņš ir beidzies",
+        "payment_link_expired_text": "Mēģiniet vēlreiz noskenēt QR kodu."
+      },
+      "one": {
+        "errors": {
+          "merchandise": {
+            "gift_card_price_must_be_greater_than_zero": "Dāvanu kartes cenai jābūt lielākai par 0.",
+            "gift_card_price_must_not_exceed_limit": "Dāvanu kartes summa nedrīkst pārsniegt %{gift_card_limit}.",
+            "subtotal_limit_reached": "Ir sasniegta maksimālā rindu vienumu vērtība.",
+            "signature_mismatch": "Preces paraksta neatbilstība rindai %{stable_id}."
+          }
         }
       }
     },
