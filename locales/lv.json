@@ -5659,6 +5659,7 @@
     "title": "Meklēt",
     "placeholder": "Meklēt rakstus, lapas vai produktus",
     "submit": "Meklēt",
-    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}"
+    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}",
+    "results_for_html": "{{ count }} atrasti priekš {{ terms }}"
   }
 }
