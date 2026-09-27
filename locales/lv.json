@@ -3498,7 +3498,8 @@
         "open_submenu": "{{title}}, atver apakšizvēlni",
         "loading_menu": "Ielādē izvēlni",
         "account": "Konts",
-        "sign_in_with_email": "Pierakstīties ar e-pastu"
+        "sign_in_with_email": "Pierakstīties ar e-pastu",
+        "sign_in": "Pierakstīties"
       }
     },
     "payment_methods": {
@@ -4242,6 +4243,17 @@
         "modal_po_number_input_max_length_error": "PO numuru garums nedrīkst pārsniegt {{maxLength}} rakstzīmes.",
         "save": "Saglabāt",
         "title": "PO #{{poNumber}}"
+      },
+      "account_information": {
+        "company_card_name_label": "Uzņēmuma nosaukums",
+        "company_card_section_accessibility_label": "Uzņēmums"
+      },
+      "locations": {
+        "contact_contact": "Sazināties",
+        "contact_email": "E-pasts",
+        "contact_list_title": "Cilvēki",
+        "contact_name": "Vārds",
+        "contact_permissions": "Atļaujas"
       }
     },
     "errors": {
