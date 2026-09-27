@@ -427,6 +427,220 @@
             "revoked": "Šī pasūtījuma noformēšana vairs nav pieejama."
           }
         }
+      },
+      "field_errors": {
+        "address_address2_contains_emojis": "Adrese 2 nedrīkst saturēt emocijzīmes",
+        "address_address2_contains_html_tags": "Adrese 2 nedrīkst saturēt HTML tagus",
+        "address_address2_contains_mathematical_symbols": "Adreses otrajā rindā nedrīkst būt matemātiskas zīmes",
+        "address_neighborhood_blank": "Ievadiet apkaimi",
+        "address_neighborhood_too_long": "Apkaimes nosaukums ir pārāk garš (maksimāli atļautas {{count}} zīmes)",
+        "address_neighborhood_contains_emojis": "Apkaimē nedrīkst būt emocijzīmes",
+        "address_neighborhood_contains_html_tags": "Apkaime nedrīkst saturēt HTML tagus",
+        "address_neighborhood_contains_mathematical_symbols": "Apkaime nedrīkst saturēt matemātiskus simbolus",
+        "address_barangay_blank": "Ievadiet barangay nosaukumu",
+        "address_barangay_too_long": "Barangay ir pārāk garš (maksimālais garums ir {{count}} rakstzīmes)",
+        "address_barangay_contains_emojis": "Barangay nedrīkst saturēt emocijzīmes",
+        "address_barangay_contains_html_tags": "Barangay nevar saturēt HTML tagus",
+        "address_barangay_contains_mathematical_symbols": "Barangajs nedrīkst saturēt matemātiskus simbolus",
+        "address_colony_blank": "Ienākt kolonijā",
+        "address_colony_too_long": "Kolonija ir pārāk gara (maksimālais garums ir {{count}} rakstzīmes)",
+        "address_colony_contains_emojis": "Kolonijā nedrīkst būt emocijzīmes",
+        "address_colony_contains_html_tags": "Kolonija nedrīkst saturēt HTML tagus",
+        "address_colony_contains_mathematical_symbols": "Kolonijā nevar būt matemātiski simboli",
+        "address_commune_blank": "Ievadiet komūnu",
+        "address_commune_too_long": "Komūnas nosaukums ir pārāk garš (maksimālais rakstzīmju skaits ir {{count}})",
+        "address_commune_contains_emojis": "Komūnā nedrīkst būt emocijzīmes",
+        "address_commune_contains_html_tags": "Kopiena nedrīkst saturēt HTML tagus",
+        "address_commune_contains_mathematical_symbols": "Komūna nevar saturēt matemātiskus simbolus",
+        "address_district_blank": "Ievadiet novadu",
+        "address_district_too_long": "Apriņķis ir pārāk garš (maksimālais garums ir {{count}} rakstzīmes)",
+        "address_district_contains_emojis": "Apgabals nedrīkst saturēt emocijzīmes",
+        "address_district_contains_html_tags": "Rajons nevar saturēt HTML tagus",
+        "address_district_contains_mathematical_symbols": "Novads nedrīkst saturēt matemātiskus simbolus",
+        "address_subdistrict_blank": "Ievadiet apakšrajonu",
+        "address_subdistrict_too_long": "Apakšrajons ir pārāk garš (maksimālais garums ir {{count}} rakstzīmes)",
+        "address_subdistrict_contains_emojis": "Apakšrajons nedrīkst saturēt emocijzīmes",
+        "address_subdistrict_contains_html_tags": "Apakšrajons nedrīkst saturēt HTML tagus",
+        "address_subdistrict_contains_mathematical_symbols": "Apakšrajons nedrīkst saturēt matemātiskus simbolus",
+        "address_ward_blank": "Ienākt nodaļā",
+        "address_ward_too_long": "Apmeklējums ir pārāk garš (maksimāli – {{count}} rakstzīmes)",
+        "address_ward_contains_emojis": "Palāta nevar saturēt emocijzīmes",
+        "address_ward_contains_html_tags": "Nodaļa nedrīkst saturēt HTML tagus",
+        "address_ward_contains_mathematical_symbols": "Vards nevar saturēt matemātiskos simbolus",
+        "address_block_blank": "Ievadiet bloku",
+        "address_block_too_long": "Bloks ir pārāk garš (maksimāli {{count}} rakstzīmes)",
+        "address_block_contains_emojis": "Bloks nedrīkst saturēt emocijzīmes.",
+        "address_block_contains_html_tags": "Bloks nedrīkst saturēt HTML tagus",
+        "address_block_contains_mathematical_symbols": "Blokā nedrīkst būt matemātiski simboli",
+        "address_area_blank": "Ievadiet apgabalu",
+        "address_area_too_long": "Apgabals ir pārāk garš (maksimums ir {{count}} rakstzīmes)",
+        "address_area_contains_emojis": "Apgabals nedrīkst saturēt emocijzīmes",
+        "address_area_contains_html_tags": "Lauks nedrīkst saturēt HTML tagus",
+        "address_area_contains_mathematical_symbols": "Laukums nedrīkst saturēt matemātiskus simbolus",
+        "address_city_blank": "Ievadiet pilsētu",
+        "address_city_too_long": "Pilsētas nosaukums ir pārāk garš (maksimālais garums ir 255 rakstzīmes)",
+        "address_city_contains_emojis": "Pilsētas nosaukums nedrīkst saturēt emocijzīmes",
+        "address_city_contains_html_tags": "Pilsētas nosaukums nedrīkst saturēt HTML tagus",
+        "address_city_contains_mathematical_symbols": "Pilsētas nosaukums nedrīkst saturēt matemātiskus simbolus",
+        "address_country_blank": "Izvēlieties valsti/reģionu",
+        "address_country_not_supported": "Mēs neveicam piegādi uz šo valsti vai reģionu. Ievadiet jaunu piegādes adresi un mēģiniet vēlreiz.",
+        "address_province_blank": "Izvēlieties štatu / provinci",
+        "address_province_invalid": "Izvēlieties derīgu štatu / provinci",
+        "address_company_blank": "Ievadiet uzņēmuma nosaukumu",
+        "address_company_too_long": "Uzņēmuma nosaukums ir pārāk garš (maksimālais garums ir 255 rakstzīmes)",
+        "address_company_contains_emojis": "Uzņēmuma nosaukums nedrīkst saturēt emocijzīmes",
+        "address_company_contains_html_tags": "Uzņēmuma nosaukums nedrīkst saturēt HTML tagus",
+        "address_company_contains_mathematical_symbols": "Uzņēmuma nosaukums nedrīkst saturēt matemātiskus simbolus",
+        "address_phone_blank": "Ievadiet derīgu tālruņa numuru",
+        "address_phone_contains_emojis": "Tālruņa numurs nedrīkst saturēt emocijzīmes",
+        "address_phone_invalid": "Ievadiet derīgu tālruņa numuru",
+        "address_zip_blank": "Ievadiet pasta indeksu",
+        "address_zip_blocked_address": "Šī atrašanās vieta netiek atbalstīta",
+        "address_zip_too_long": "Pasta indekss ir pārāk garš (maksimālais garums ir 255 rakstzīmes)",
+        "address_zip_not_supported": "Šī atrašanās vieta netiek atbalstīta",
+        "address_zip_invalid_for_country": "Ievadiet derīgu pasta indeksu valstij %{country}",
+        "address_zip_invalid_for_province": "Ievadiet derīgu pasta indeksu reģionam %{province}",
+        "address_zip_invalid_for_country_and_province": "Ievadiet derīgu pasta indeksu reģionam %{province}, %{country}",
+        "address_zip_contains_emojis": "Pasta indekss nedrīkst saturēt emocijzīmes",
+        "address_zip_contains_mathematical_symbols": "Pasta indekss nedrīkst saturēt matemātiskus simbolus",
+        "address_generic_blank": "Obligāts lauks",
+        "address_generic_invalid": "Nederīgs ieraksts",
+        "address_generic_error": "Lauka kļūda",
+        "credit_card_name_blank": "Ievadiet savu vārdu tieši tā, kā tas ir rakstīts uz jūsu kartes",
+        "credit_card_name_invalid": "Ievadiet savu vārdu tieši tā, kā tas ir rakstīts uz jūsu kartes",
+        "credit_card_name_billing_invalid": "Vispirms ievadiet savu vārdu norēķinu adresē",
+        "credit_card_number_invalid": "Ievadiet derīgu kartes numuru",
+        "credit_card_expiry_invalid": "Ievadiet derīgu derīguma termiņu",
+        "credit_card_month_invalid": "Ievadiet derīgu derīguma termiņa mēnesi",
+        "credit_card_year_invalid": "Ievadiet derīgu derīguma termiņa gadu",
+        "credit_card_start_invalid": "Ievadiet derīgu kartes darbības sākuma datumu",
+        "credit_card_start_month_invalid": "Ievadiet derīgu kartes darbības sākuma mēnesi",
+        "credit_card_start_year_invalid": "Ievadiet derīgu kartes sākuma gadu",
+        "credit_card_number_blank": "Ievadiet kartes numuru",
+        "credit_card_verification_value_blank": "Ievadiet CVV vai drošības kodu, kas norādīts uz jūsu kartes",
+        "delivery_line_detail_changed": "Dažas piegādes detaļas var būt mainījušās. Pārbaudiet savu piegādes veidu un mēģiniet vēlreiz.",
+        "delivery_zone_not_found": "Norādītā zona nav atrasta norādītajā valstī.",
+        "reduction_code_code_not_found": "Ievadiet derīgu atlaižu kodu vai dāvanu karti",
+        "reduction_code_discount_not_found": "Ievadiet derīgu atlaižu kodu",
+        "reduction_code_gift_card_code_invalid": "Ievadiet derīgu dāvanu karti",
+        "reduction_code_gift_card_unusable": "Dāvanu karti nevar izmantot citas dāvanu kartes iegādei.",
+        "reduction_code_gift_cards_not_supported_with_deferred_purchase_options": "Dāvanu kartes netiek atbalstītas ar atliktā maksājuma iespējām.",
+        "shipping_line_phone_blank": "Ievadiet tālruņa numuru, lai izmantotu šo piegādes veidu",
+        "shipping_line_phone_invalid": "Ievadiet derīgu tālruņa numuru",
+        "tips_invalid_tip_amount": "Ievadiet dzeramnaudu, kas mazāka par %{amount}",
+        "gift_card_already_applied": "Šī dāvanu karte jau ir izmantota jūsu pasūtījumā"
+      },
+      "payment": {
+        "crypto_modal": {
+          "error": {
+            "close": "aizvērt",
+            "sandbox_error": "Kaut kas nogāja greizi",
+            "web_component_error": "Radās problēma, ielādējot šo lapu"
+          }
+        },
+        "saved_by_payment_method": "Saglabāts ar %{payment_method}",
+        "pay_with_payment_method": "Maksāt ar %{payment_method}",
+        "pay_with_credit_card": "Apmaksāt ar kredītkarti",
+        "pay_with_debit_card": "Maksāt ar debetkarti",
+        "different_credit_card_label": "Izmantojiet citu maksājumu karti",
+        "same_billing_address_label": "Tas pats, kas piegādes adrese",
+        "different_billing_address_label": "Izmantot citu rēķina adresi",
+        "billing_address_associated_with_mandate": "Izmantot maksājuma metodei piesaistīto adresi",
+        "billing_address_associated_with_mandate_info": "Ja vēlaties mainīt savu norēķinu adresi, noņemiet un atkārtoti ievadiet savas kredītkartes datus",
+        "free_order_notice_html": "Jūsu pasūtījums ir <strong>bezmaksas</strong>. Maksājums nav nepieciešams.",
+        "express_checkout_free_order": "Par bezmaksas pasūtījumu maksa netiks iekasēta.",
+        "order_covered_by_gift_cards_notice": {
+          "one": "Jūsu pasūtījums ir segts ar dāvanu karti.",
+          "other": "Jūsu pasūtījums ir segts ar dāvanu kartēm."
+        },
+        "offsite_gateway_redirect_hint": "Jūs tiksiet novirzīts uz %{gateway_label}, lai pabeigtu pirkumu",
+        "offsite_gateway_review_page_redirect_hint": "Pēc pasūtījuma pārskatīšanas tiksiet novirzīts uz %{gateway_label}, lai pabeigtu pirkumu.",
+        "offsite_gateway_redirect_hint_multi_currency_html": "%{gateway_label} kopā %{total_shop_price}",
+        "offsite_gateway_redirect_hint_no_button_label": "Jūs tiksiet novirzīts uz %{gateway_label}, lai pabeigtu pirkumu",
+        "receiver_payment_experience_hint": "Pēc pasūtījuma veikšanas jūs saņemsiet maksājuma rekvizītus. Veiciet maksājumu Multibanco sistēmā vai tiešsaistē %{due_days} dienu laikā.",
+        "billing_address_title": "Norēķinu adrese",
+        "billing_address_rollup_accessibility_label": "Norēķinu adreses opcijas",
+        "billing_address_description": "Izvēlieties adresi, kas atbilst jūsu kartei vai maksājuma metodei.",
+        "billing_address_description_no_shipping_address": "Ievadiet adresi, kas atbilst jūsu kartei vai maksājuma metodei.",
+        "no_js_credit_card_fields_redirect_hint": "Jūs tiksiet novirzīts uz maksājuma informācijas ievadi.",
+        "card_fields_container_prefix": "Lauka konteiners priekš:",
+        "card_fields_unavailable_html": {
+          "one": "Maksājumi ar kredītkartēm un debetkartēm šobrīd nav pieejami.<br><a href=\"%{current_url}\">Atsvaidziniet šo lapu</a> vai mēģiniet vēlreiz vēlāk.",
+          "other": "Maksājumi ar kredītkarti un debetkarti pašlaik nav pieejami.<br><a href=\"%{current_url}\">Atsvaidziniet šo lapu</a> vai izmēģiniet citu maksājuma veidu."
+        },
+        "card_fields_processing_error": "Radās problēma ar maksājuma apstrādi. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet savienojumu ar internetu.",
+        "technical_error": "Maksājumus pašlaik nav iespējams apstrādāt tehnisku problēmu dēļ. Mēģiniet vēlreiz pēc dažām minūtēm.",
+        "no_method_error": "Šis veikals pašlaik nevar pieņemt maksājumus.",
+        "not_configured_error": "Šis veikals pašlaik nevar pieņemt maksājumus.",
+        "missing_credit_card_error": "Ievadiet savas kartes datus, lai pabeigtu maksājumu",
+        "shop_pay_ideal_unavailable_error": "iDEAL | Wero nav pieejams šim pasūtījumam. Izvēlieties citu maksājuma veidu.",
+        "payment_method_not_available_for_shipping_address_error": "Izvēlētajai piegādes adresei maksājuma veids nav pieejams. Izvēlieties citu maksājuma veidu.",
+        "payment_method_unavailable_error": "Šis maksājuma veids pašlaik nav pieejams. Izvēlieties citu maksājuma veidu.",
+        "payment_method_loading_error": "Šis maksājuma veids joprojām tiek ielādēts. Mēģiniet vēlreiz pēc dažām sekundēm.",
+        "bank_payment_method_label": "Bankas maksājuma veids",
+        "billing_address_not_supported_for_payment_method_error": "Šī maksājuma metode nav pieejama jūsu norēķinu adresei un valūtai. Izmēģiniet citu maksājuma metodi.",
+        "generic_incorrect_card_info": "Maksājuma datus neizdevās verificēt. Pārbaudiet kartes datus un mēģiniet vēlreiz.",
+        "sofort_label": "Tūlītējs bankas pārskaitījums",
+        "paypal_label": "PayPal",
+        "paypal_wallet_label": "PayPal maks",
+        "shop_pay_installments_label": "Shop Pay nomaksa",
+        "default": "Noklusējuma",
+        "set_as_default_card": "Iestatīt kā noklusējuma karti",
+        "continue_to_guest_checkout": "Turpināt kā viesim",
+        "paypal_modal": {
+          "order_contains_subscriptions": "Abonements",
+          "order_contains_fixed_selling_plans": "Kopējā summā var nebūt iekļauti nodokļi, piegādes izmaksas, atliktie maksājumi un dažas atlaides. Turpiniet norēķināties, lai redzētu šodien maksājamo summu."
+        },
+        "klarna_label": "Klarna",
+        "klarna_pay_later_label": "Maksājiet vēlāk ar Klarna",
+        "klarna_pay_now_label": "Maksājiet tagad ar Klarna",
+        "bancontact_label": "Bancontact",
+        "giropay_label": "Giropay",
+        "multibanco_label": "Multibanco",
+        "mb_way_label": "MB WAY",
+        "bizum_label": "Bizum",
+        "eps_label": "eps-pārskaitījums",
+        "klarna_slice_it_label": "Finansējums ar Klarna",
+        "ideal_label": "iDEAL | Wero",
+        "bank_picker_label": "Banka",
+        "afterpay_label": "Pēcapmaksa",
+        "cashapppay_label": "Cash App Pay",
+        "przelewy24_label": "Przelewy24",
+        "blik_label": "BLIK",
+        "twint_label": "TWINT",
+        "mobilepay_label": "MobilePay",
+        "swish_label": "Švīkstiens",
+        "vipps_label": "Vipps",
+        "grabpay_label": "GrabPay",
+        "kcp_creditcard_label": "KCP kredītkarte",
+        "alipay_label": "Alipay",
+        "wechat_pay_label": "WeChat Pay",
+        "wechat_app_label": "WeChat",
+        "oxxo_label": "OXXO",
+        "konbini_label": "Konbini",
+        "satispay_label": "Satispay",
+        "paynow_label": "Maksāt tūlīt",
+        "paypay_label": "PayPay",
+        "scalapay_label": "Scalapay",
+        "usdc_label": "USDC",
+        "usdc_cashback_title": "%{incentive_percentage}% naudas atmaksa",
+        "usdc_cashback_additional_info": "Maksājiet ar USDC, izmantojot Base, un 30 dienu laikā saņemiet %{incentive_percentage}% atpakaļ savā makā.",
+        "usdc_cashback_terms": "Tiek piemēroti noteikumi un ierobežojumi.",
+        "purchase_options_card_update_agreement_label_html": "Atjauninot savu maksājuma metodi, jūs pilnvarojat veikt maksājumus par jebkādiem periodiskiem vai atliktiem pirkumiem saskaņā ar šī veikala <a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{cancellation_policy}\" href=\"%{policy_href}\">atteikuma politiku</a>.",
+        "subscription_card_update_agreement_label": "Maksājuma veida maiņa atjauninās jūsu abonementu un turpmākos regulāros maksājumus.",
+        "subscription_agreement_label": "Viens vai vairāki preču grozā esošie vienumi ir atliktais vai abonēšanas pirkums. Turpinot maksājumu, jūs piekrītat, ka no jūsu maksājuma metodes tiks automātiski iekasēta maksa par šajā lapā norādīto cenu un biežumu, līdz termiņa beigām vai līdz brīdim, kad atcelsiet abonementu. Uz visiem atcelšanas gadījumiem attiecas %{cancelled}.",
+        "subscription_agreement_cancelled": "atteikuma politika",
+        "subscription_heading": "Abonēšanas līgums",
+        "subscription_agreement_label_html": "Esmu informēts, ka piekrītu abonementam. Tas tiks atjaunots par norādīto cenu un biežumu, līdz tas beigsies vai tiks\n<a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{subscription_policy}\" href=\"%{policy_href}\">atcelts</a>.\n",
+        "purchase_options_agreement_label": "Viens vai vairāki jūsu grozā esošie priekšmeti ir atliktais vai periodiskais pirkums. Turpinot apmaksu, jūs piekrītat, ka jūsu maksājuma metode tiks automātiski iekasēta par šajā lapā norādīto cenu un biežumu, līdz abonements beigsies vai jūs to atcelsiet. Uz visiem atcelšanas gadījumiem attiecas %{cancellation_policy_label}.",
+        "purchase_options_agreement_label_html": "Es saprotu, ka viens vai vairāki groza produkti ir atliktais vai atkārtotais pirkums. Turpinot, es piekrītu\n<a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{subscription_policy}\" href=\"%{policy_href}\">atcelšanas politikai</a>\nun pilnvaroju jūs iekasēt maksu no mana maksājumu veida par šajā lapā norādītajām cenām, biežumu un datumiem, līdz mans\npasūtījums tiks izpildīts vai es to atcelšu, ja tas ir atļauts.\n",
+        "purchase_options_agreement_label_wallets": "Turpinot maksājumu, jūs piekrītat šajā lapā uzskaitītajiem nākotnes maksājumiem un %{cancellation_policy_label}.",
+        "purchase_options_subscription_confirmation_title": "Apstipriniet savu abonementu",
+        "purchase_options_subscription_agreement_label": "Jūsu grozā ir automātiski atjaunojams abonements. Noklikšķinot uz „%{button_label}”, %{consent_text} %{cancellation_instructions}",
+        "purchase_options_subscription_agreement_label_wallets": "Jūsu grozā ir abonements ar automātisko atjaunošanu. Izmantojot ātro norēķināšanos, %{consent_text} %{cancellation_instructions}",
+        "purchase_options_subscription_consent_text": "jūs skaidri un nepārprotami piekrītat, ka jums tiks automātiski iekasēta atkārtota summa (summas), kas norādīta jūsu grozā (plus piegāde un nodokļi), līdz abonements beigsies vai jūs to atcelsiet.",
+        "purchase_options_subscription_cancellation_instructions": "%{cancel_text} Lūdzu, iepazīstieties ar %{cancellation_policy_label}.",
+        "purchase_options_subscription_cancel_text": "Varat atcelt jebkurā laikā, dodoties uz savu kontu vai sazinoties ar veikalu."
       }
     },
     "errors": {
@@ -571,6 +785,186 @@
       "tags": {
         "add_articles": "Sašaurināt meklēšanu līdz rakstiem, kuriem ir arī tags %{tag}",
         "add_products": "Sašaurināt atlasi līdz produktiem, kas atbilst tagam %{tag}"
+      }
+    }
+  },
+  "customer_accounts": {
+    "B2B": {
+      "draft_order_details": {
+        "payment_status": {
+          "pending": {
+            "description_due_on_receipt": "Jūs saņemsiet rēķinu, kad pienāks maksājuma termiņš.",
+            "description_due_on_receipt_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Rēķinu saņemsiet, kad pienāks maksājuma termiņš.",
+            "description_due_on_fulfillment": "Maksājums ir jāveic, tiklīdz visi šajā pasūtījumā iekļautie vienumi ir izpildīti.",
+            "description_due_on_fulfillment_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Samaksa jāveic, tiklīdz visas preces šajā pasūtījumā ir izpildītas.",
+            "description_due_on_fulfillment_partially_paid_next": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums."
+          },
+          "draft": {
+            "description": "Maksājuma informācija tiek noteikta pēc pasūtījuma apstiprināšanas.",
+            "title": "Maksājuma termiņš vēl nav pienācis",
+            "in_review": {
+              "description": "Maksājuma informācija tiek noteikta pēc pasūtījuma apstiprināšanas.",
+              "title": "Maksājuma termiņš vēl nav pienācis"
+            },
+            "submitted": {
+              "description": "Veiciet maksājumu, lai apstiprinātu šo pasūtījumu.",
+              "title": "Veiciet maksājumu, lai apstiprinātu",
+              "deposit": {
+                "title": "Maksājuma termiņš ir pienācis",
+                "due_later": "Atlikušais atlikums ir saskaņā ar {{translatedName}} noteikumiem, un tā apmaksas termiņš ir {{dueDate}}.",
+                "due_on_fulfillment": "Atlikusī summa ir jāsamaksā, tiklīdz visas šajā pasūtījumā iekļautās preces ir izpildītas.",
+                "due_on_receipt": "Jūs saņemsiet rēķinu par atlikušo summu.",
+                "due_on_date": "Atlikusī summa jāiemaksā līdz {{dueDate}}."
+              }
+            },
+            "deposit": {
+              "due_later": "{{depositAmount}} būs jāmaksā pēc pasūtījuma apstiprināšanas. Atlikusī summa tiks maksāta saskaņā ar {{translatedName}} noteikumiem.",
+              "due_on_fulfillment": "{{depositAmount}} būs jāmaksā pēc pasūtījuma apstiprināšanas. Atlikusī summa būs jāmaksā pēc pasūtījuma izpildes.",
+              "due_on_receipt": "{{depositAmount}} būs jāmaksā, tiklīdz jūsu pasūtījums tiks apstiprināts. Atlikusī summa būs jāmaksā vēlāk.",
+              "due_on_date": "{{depositAmount}} būs jāmaksā, kad pasūtījums tiks apstiprināts. Atlikusī summa būs jāmaksā līdz {{dueDate}}."
+            }
+          },
+          "paid": {
+            "title": "Apmaksāts",
+            "title_with_date": "Apmaksāts {{date}}",
+            "description": "Jūsu pasūtījums ir pilnībā apmaksāts."
+          },
+          "refund": {
+            "title": "Atmaksāts",
+            "title_with_date": "Atmaksāts {{date}}",
+            "description_full_refund": "Jūs saņēmāt pilnu atmaksu par šo pasūtījumu.",
+            "description_single_refund": "Jūs saņēmāt daļēju atmaksu par šo pasūtījumu.",
+            "description_multiple_refunds": "Jūs saņēmāt daļēju atmaksu par šo pasūtījumu."
+          },
+          "canceled": {
+            "title": "Maksājums atcelts",
+            "description": "Jums maksa netika iekasēta."
+          },
+          "due_date": "Līdz {{date}}",
+          "total_balance": "Kopējais atlikums",
+          "pay_now": "Maksāt tagad",
+          "pay_now_accessibility_label": "Apmaksāt pasūtījumu {{orderName}} tagad",
+          "title": "Maksājuma statuss"
+        },
+        "order_timeline": {
+          "expand_events_label": "Rādīt informāciju",
+          "expand_events_accessibility_label": "Rādīt uzmetuma pasūtījuma informāciju",
+          "hide_events_label": "Paslēpt informāciju",
+          "hide_events_accessibility_label": "Paslēpt melnraksta pasūtījuma informāciju"
+        },
+        "subtitle": "Iesniegts {{date}}",
+        "title": "Pasūtīt {{name}}"
+      },
+      "payment_methods": {
+        "payment_delete": {
+          "description_without_replacement": "Šis maksājuma veids turpmākajiem pirkumiem no šīs atrašanās vietas vairs nebūs pieejams.",
+          "description_with_replacement": "Dzēšot šo maksājuma veidu, tiks ietekmēti iepriekš autorizētie maksājumi šai atrašanās vietai. Aizstājiet to ar alternatīvu maksājuma veidu, lai turpinātu saņemt gaidāmos pasūtījumus."
+        },
+        "payment_details": {
+          "order_label": "Pasūtīt {{name}}",
+          "draft_label": "Pasūtījuma uzmetums {{name}}"
+        }
+      },
+      "purchase_order_number": {
+        "add_accessibility_label": "Pievienojiet pasūtījuma numuru",
+        "add_modal_title": "Pievienojiet pasūtījuma numuru",
+        "cancel": "Atcelt",
+        "close_modal_accessibility_label": "Aizvērt PO numura modālo logu",
+        "discard": "Izmest",
+        "discard_changes_modal_title": "Vai atmest izmaiņas?",
+        "edit_accessibility_label": "Rediģēt pasūtījuma numuru",
+        "edit_modal_title": "Rediģēt pasūtījuma numuru",
+        "empty_state": "Nav pasūtījuma numura",
+        "modal_po_number_input_label": "Pasūtījuma numurs",
+        "modal_po_number_input_max_length_error": "PO numuru garums nedrīkst pārsniegt {{maxLength}} rakstzīmes.",
+        "save": "Saglabāt",
+        "title": "PO #{{poNumber}}"
+      }
+    },
+    "errors": {
+      "address_deletion_error": {
+        "description": "Radās problēma, dzēšot šo adresi. Mēģiniet vēlreiz vai atsvaidziniet lapu."
+      },
+      "addresses_loading_issue": {
+        "description": "Savienojuma kļūda. Pārbaudiet interneta savienojumu un mēģiniet vēlreiz."
+      },
+      "banner_title": {
+        "one": "Ir {{count}} kļūda",
+        "other": "Ir {{count}} kļūdas"
+      },
+      "failed_address_creation": {
+        "description": "Radās problēma, izveidojot jūsu adresi. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "failed_address_update": {
+        "description": "Radās problēma, atjauninot jūsu adresi. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "load_address_form_error": {
+        "title": "Neizdevās ielādēt adreses veidlapu",
+        "description": "Neizdevās ielādēt adreses formu.",
+        "refresh_button": "Atsvaidzināt lapu"
+      },
+      "load_orders_error": {
+        "title": "Neizdevās ielādēt pasūtījumus",
+        "description": "Mēģiniet vēlreiz vai atgriezieties vēlāk.",
+        "retry_button": "Mēģināt vēlreiz"
+      },
+      "load_paypal_error": {
+        "description": "Radās problēma, ielādējot PayPal. Lūdzu, mēģiniet vēlreiz."
+      },
+      "logout_everywhere": {
+        "description": "Izrakstīšanās laikā radās kļūda. Lūdzu, mēģiniet vēlreiz."
+      },
+      "no_access_to_locations": {
+        "description": "Jums nav piekļuves nevienai atrašanās vietai"
+      },
+      "not_found": {
+        "description": "Pārbaudiet URL vai mēģiniet vēlreiz pēc dažām minūtēm.",
+        "title": "Šīs lapas ielādēšanā radās problēma"
+      },
+      "order_not_found": {
+        "description": "Šis pasūtījums neeksistē vai jums nav atļaujas to skatīt.",
+        "title": "Pasūtījums nav atrasts"
+      },
+      "profile_update_error": {
+        "description": "Radās problēma, atjauninot jūsu profilu. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "profile_name_update_error": {
+        "description": "Radās problēma, atjauninot jūsu vārdu. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "retry_action_label": "Mēģini vēlreiz",
+      "resend_link": {
+        "too_many_requests": "Pārāk daudz pieprasījumu. Mēģiniet vēlreiz vēlāk.",
+        "generic": "Neveiksmīgs pieprasījums"
+      },
+      "load_extension_error": {
+        "title": "Kļūda",
+        "description": "Atjauniniet šo lapu vai mēģiniet vēlreiz pēc dažām minūtēm.",
+        "refresh_button": "Atsvaidzināt lapu"
+      },
+      "already_upgraded": "Klientu konti jau ir atjaunināti.",
+      "failed_to_upgrade": "Neizdevās atjaunināt klienta konta iestatījumus.",
+      "not_upgraded": "Klientu konti netiek atjaunināti.",
+      "failed_to_revert": "Neizdevās atjaunot klienta konta iestatījumus.",
+      "revert_window_expired": "Atgriešanas periods ir beidzies."
+    },
+    "throttle": {
+      "too_many_attempts": {
+        "message": "Pārāk daudz mēģinājumu",
+        "description": "Lūdzu, mēģiniet vēlreiz pēc dažām minūtēm"
+      }
+    },
+    "payment_methods": {
+      "replacement_payment_method_title": "Aizstājošā maksājuma metode",
+      "title": "Maksājuma veidi",
+      "add_payment_method_button": "Pievienot maksājuma veidu",
+      "add_payment_method_dropdown": {
+        "bank_account_consent": "Pievienojot maksājuma metodi, jūs pilnvarojat veikt maksājumus no savas kartes vai bankas konta par turpmākajiem pirkumiem, kurus apstiprināsiet, līdz brīdim, kad atcelsiet šo atļauju."
+      },
+      "bank_account": {
+        "loading_accessibility_message": "Bankas konta poga ielādējas",
+        "iframe_title_accessibility_label": "Bankas konta izveide",
+        "display_name": "Bankas konts",
+        "generic_error": "Neizdevās pievienot bankas kontu. Mēģiniet vēlreiz vēlāk."
       }
     }
   }
