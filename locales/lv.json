@@ -2838,7 +2838,34 @@
       "dismiss_toast": "Noraidīt",
       "document_title": "{{sectionName}} — {{shopName}} — Konts",
       "loading_message": "Notiek ielāde",
-      "loading_policy_content_accessibility_label": "Notiek politikas satura ielāde"
+      "loading_policy_content_accessibility_label": "Notiek politikas satura ielāde",
+      "loading_section_accessibility_label": "Ielādē {{sectionName}}",
+      "policy_load_error": "Nevarēja ielādēt {{policyName}}",
+      "policy_try_again": "Mēģini vēlreiz",
+      "log_out_link": "Izrakstīties",
+      "logout_overlay_label": "Notiek izrakstīšanās...",
+      "nav_label_accessibility_label": "Galvenā navigācija",
+      "navigation_accessibility_message": "Jūs pārgājāt uz {{sectionName}}",
+      "open_menu_accessibility_label": "Atvērt galveno navigāciju",
+      "shop_logo_accessibility_label": "{{shopName}} logotips",
+      "store_credit_accessibility_label": "{{formattedBalance}} veikala kredīts",
+      "store_credit_balances_list_accessibility_label": "Veikala kredītu atlikumi",
+      "store_credit_multi_currency_accessibility_label": {
+        "one": "{{formattedBalance}} un vēl {{count}} valūtas veikala kredīta",
+        "other": "{{formattedBalance}} un {{count}} citām valūtām ir pieejams kredīts"
+      },
+      "settings_link": "Iestatījumi",
+      "country_switcher_toast_message": "Valsts nomainīta uz {{countryName}}",
+      "switch_country": "Mainīt valsti",
+      "no_countries_found": "Valstis nav atrastas",
+      "location_switcher_toast_message": "Atrašanās vieta nomainīta uz {{locationName}}",
+      "switch_location": "Mainīt atrašanās vietu",
+      "no_locations_found": "Atrašanās vietas nav atrastas",
+      "try_new_search": "Izmēģiniet jaunu meklēšanu",
+      "view_details": "Skatīt informāciju",
+      "company_location": "Uzņēmuma atrašanās vieta",
+      "search": "Meklēt",
+      "skip_to_content": "Pāriet uz saturu"
     },
     "orders": {
       "order_status": {
@@ -2897,7 +2924,110 @@
       "manage": "Pārvaldīt",
       "manage_accessiblity_label": "Pārvaldīt pasūtījumu {{orderId}}",
       "group_title_label": "Daļa no: {{groupTitle}}",
-      "group_title_label_with_parent": "Par: {{groupTitle}}"
+      "group_title_label_with_parent": "Par: {{groupTitle}}",
+      "list_layout_accessibility_label": "Izkārtojuma opcijas",
+      "list_title": "Pasūtījumi",
+      "list_title_confirmed_orders_accessibility_label": "Pasūtījumi: apstiprināti",
+      "list_title_pending_orders_accessibility_label": "Pasūtījumi: gaida izpildi",
+      "switch_order_type_pending_orders_accessibility_label": "Mainīt pasūtījuma veidu, pašlaik tiek rādīti neizpildītie pasūtījumi",
+      "switch_order_type_confirmed_orders_accessibility_label": "Mainīt pasūtījuma veidu, pašlaik tiek rādīti apstiprinātie pasūtījumi",
+      "order_list": {
+        "column_headers": {
+          "order": "Pasūtījums",
+          "total": "Kopā",
+          "actions_accessibility_label": "Darbības",
+          "products_accessibility_label": "Produkti"
+        },
+        "delivered": "Piegādāts {{date}}",
+        "empty_state_order_source_description": "Šeit tiks rādīti tikai pasūtījumi, ko veicis {{email}}.",
+        "empty_state_redesign_cta": "Iepērcies tagad"
+      }
+    },
+    "announcement_bar": {
+      "expand_label": "Izvērst paziņojumu joslu",
+      "collapse_label": "Sakļaut paziņojumu joslu",
+      "close_label": "Aizvērt paziņojumu joslu"
+    },
+    "account_information": {
+      "loading_accessibility_message": "Notiek konta informācijas ielāde",
+      "loading_finished_accessibility_message": "Konta informācija ir ielādēta",
+      "profile_card": {
+        "cancel": "Atcelt",
+        "cancel_accessibility_label": "Atcelt profila rediģēšanu",
+        "edit": "Rediģēt",
+        "edit_accessibility_label": "Rediģēt profilu",
+        "email_help_text": "E-pastu nevar rediģēt",
+        "editable_email_help_text": "Šī e-pasta adrese tiek izmantota pieteikšanās nolūkos un pasūtījumu atjauninājumu saņemšanai.",
+        "first_name": "Vārds",
+        "last_name": "Uzvārds",
+        "email": "E-pasts",
+        "no_name_provided_accessibility_label": "Vārds nav norādīts",
+        "phone_number_help_text": "Tālruņa numuru nav iespējams rediģēt",
+        "save": "Saglabāt",
+        "save_accessibility_label": "Saglabāt profilu",
+        "title": "Profils",
+        "errors": {
+          "name_too_long": "{{fieldName}} ir pārāk garš (maksimāli 255 rakstzīmes)",
+          "name_cannot_contain_url": "{{fieldName}} nedrīkst saturēt URL",
+          "name_cannot_contain_html_tags": "{{fieldName}} nedrīkst saturēt HTML tagus",
+          "email_cant_be_blank": "E-pasts nevar būt tukšs",
+          "invalid_email_format": "Ievadiet derīgu e-pasta adresi"
+        }
+      },
+      "verify_current_email_modal": {
+        "cancel_button": "Atcelt",
+        "cancel_button_accessibility_label": "Atcelt profila rediģēšanu",
+        "description": "Ievadiet sešciparu kodu, kas tika nosūtīts uz jūsu sākotnējo e-pastu:",
+        "email_resend_button_accessibility_label": "Nosūtīt verifikācijas kodu atkārtoti",
+        "title": "Apstipriniet, ka tas esat jūs.",
+        "verify_button": "Nākamais",
+        "verify_button_accessibility_label": "Verificēt savu pašreizējo e-pastu"
+      },
+      "verify_new_email_modal": {
+        "title": "Apstipriniet savu jauno e-pastu",
+        "description": "Tagad ievadiet 6 ciparu kodu, kas nosūtīts uz jūsu jauno e-pasta adresi:",
+        "one_time_password_label": "6 ciparu kods",
+        "email_resend_button": "Nosūtīt kodu atkārtoti",
+        "email_resend_button_accessibility_label": "Nosūtīt verifikācijas kodu atkārtoti",
+        "verify_button": "Apstiprināt",
+        "verify_button_accessibility_label": "Apstipriniet vienreizējo paroli",
+        "cancel_button": "Atcelt",
+        "cancel_button_accessibility_label": "Atcelt profila rediģēšanu",
+        "email_resend_button_success_toast_message": "Verifikācijas kods nosūtīts",
+        "email_resend_button_failure_banner_message": "Neizdevās nosūtīt verifikācijas kodu"
+      },
+      "marketing_preferences": {
+        "email_label": "E-pasts",
+        "pending_confirmation": "Noklikšķiniet uz saites savā e-pastā, lai apstiprinātu.",
+        "resend_email": "Nosūtīt e-pastu atkārtoti",
+        "resend_email_success": "Saite nosūtīta",
+        "title": "Mārketinga preferences",
+        "unsubscribe_confirmation": {
+          "cancel": "Atcelt",
+          "description": "Jūs vairs nesaņemsiet e-pasta mārketinga ziņojumus no {{shopName}}",
+          "title": "Atteikties no e-pasta ziņojumiem?",
+          "unsubscribe": "Abonēt atcelt"
+        },
+        "update_error": {
+          "description": "Radās problēma, atjauninot jūsu mārketinga preferences. Mēģiniet atsvaidzināt lapu vai pārbaudiet savu interneta savienojumu."
+        },
+        "update_success": "Mārketinga preferences atjauninātas"
+      },
+      "email_update_success_modal": {
+        "title": "Apstiprināt e-pastu",
+        "description": "E-pasts veiksmīgi atjaunināts. Tieku novirzīts uz pieteikšanos."
+      },
+      "profile_update_confirmation_message": "Profils atjaunināts",
+      "email_update_confirmation_message": "E-pasts atjaunināts uz {{email}}",
+      "title": "Profils",
+      "people": {
+        "pagination": {
+          "load_more": "Rādīt vairāk",
+          "load_more_accessibility_label": "Parādīt vairāk cilvēku",
+          "loading_accessibility_label": "Notiek cilvēku ielāde"
+        }
+      },
+      "add_button": "Pievienot"
     }
   }
 }
