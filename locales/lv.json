@@ -3010,7 +3010,14 @@
         "contracts_updated": {
           "one": "Veiksmīgi atjaunināts {{count}} abonēšanas līgums",
           "other": "Veiksmīgi atjaunināti {{count}} abonēšanas līgumi"
-        }
+        },
+        "contracts_update_failed": "Neizdevās atjaunināt dažus abonēšanas līgumus",
+        "subscription_contracts_updated": "Atjauninātas {{succeeded}} no {{total}} abonementiem",
+        "invalid_wallet_type_error": "Nederīgs maka veids."
+      },
+      "three_d_secure": {
+        "title": "3D Secure",
+        "verification_failed": "Jūsu maksājumu neizdevās apstiprināt. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu."
       }
     },
     "callback": {
@@ -3386,7 +3393,73 @@
     "ui_components": {
       "reviewItemHeaderChangeValue": "Mainīt vērtību",
       "reviewItemHeaderSection": "Sadaļa",
-      "reviewItemHeaderValue": "Vērtība"
+      "reviewItemHeaderValue": "Vērtība",
+      "clear": "Skaidrs",
+      "clipboardCopied": "Kopēts",
+      "clipboardFailedToCopy": "Neizdevās kopēt",
+      "closeNotification": "Aizvērt",
+      "expandNotification": "Skatīt vairāk",
+      "closeModal": "Aizvērt",
+      "submit": "Iesniegt",
+      "processing": "Apstrādā…",
+      "increase": "Palielināt {{type}}",
+      "decrease": "Samazināt {{type}}",
+      "minimumReached": "Sasniedzis minimumu: {{value}}",
+      "maximumReached": "Maksimālais skaits: {{value}} ir sasniegts",
+      "january": "Janvāris",
+      "february": "Februāris",
+      "march": "Marts",
+      "april": "Aprīlis",
+      "may": "Maijs",
+      "june": "Jūnijs",
+      "july": "Jūlijs",
+      "august": "Augusts",
+      "september": "Septembris",
+      "october": "Oktobris",
+      "november": "Novembris",
+      "december": "Decembris",
+      "monday": "Pirmdiena",
+      "tuesday": "Otrdiena",
+      "wednesday": "Trešdiena",
+      "thursday": "Ceturtdiena",
+      "friday": "Piektdiena",
+      "saturday": "Sestdiena",
+      "sunday": "Svētdiena",
+      "mondayAbbreviation": "Mo",
+      "tuesdayAbbreviation": "Tu",
+      "wednesdayAbbreviation": "Mēs",
+      "thursdayAbbreviation": "Tas",
+      "fridayAbbreviation": "Tiešām",
+      "saturdayAbbreviation": "Sa",
+      "sundayAbbreviation": "Su",
+      "showNextMonth": "Rādīt nākamo mēnesi, {{month}} {{year}}",
+      "showPreviousMonth": "Rādīt iepriekšējo mēnesi, {{month}} {{year}}",
+      "rangeStart": "Diapazona sākums",
+      "inRange": "Sasniedzamības robežās",
+      "rangeEnd": "Diapazona beigas",
+      "autocompleteOptionsAvailable": {
+        "one": "Ir pieejama {{count}} prece",
+        "other": "{{count}} vienības pieejamas"
+      },
+      "removeItem": "Noņemt {{label}}",
+      "removeTag": "Noņemt tagu",
+      "mapClusterTitle": {
+        "one": "{{number}} atzīmju kopa",
+        "other": "Klasteris ar {{number}} marķieriem"
+      },
+      "expandSheet": "Izvērst",
+      "qrCode": "QR kods",
+      "addFile": "Pievienot failu",
+      "dropzoneInvalidFileType": "Faila tips netiek atbalstīts",
+      "dropzoneDraggedOver": "Lai augšupielādētu, nometiet failu šeit",
+      "external": "Atver ārējo vietni.",
+      "externalNewWindow": "Atver ārēju vietni jaunā logā.",
+      "loading": "Notiek ielāde…",
+      "moneyLinesHeaderItem": "Vienība",
+      "moneyLinesHeaderValue": "Vērtība",
+      "newWindow": "Atveras jaunā logā.",
+      "productThumbnailQuantityLabel": "Daudzums",
+      "removeChip": "Noņemt vienumu"
     },
     "profile_preview_bar": {
       "badge_active": "Aktīvs",
@@ -3711,6 +3784,43 @@
       "aria_labels": {
         "sign_in": "Pierakstīties"
       }
+    },
+    "payment_method_brands": {
+      "visa": "Vīza",
+      "mastercard": "Mastercard",
+      "americanexpress": "American Express",
+      "discover": "Atklāj",
+      "dinersclub": "Diners Club",
+      "jcb": "JCB",
+      "elo": "Sveiki",
+      "visaelectron": "Visa Electron",
+      "maestro": "Maestro",
+      "forbrugsforeningen": "Forbrugsforeningen",
+      "dankort": "Dankort",
+      "hipercard": "Hipercard",
+      "unionpay": "UnionPay",
+      "laser": "Lāzers",
+      "shoppay": "Shop Pay",
+      "applepay": "Apple Pay",
+      "googlepay": "Google Pay",
+      "paypal": "PayPal",
+      "storecredit": "Veikala kredīts",
+      "bogus": "Viltots",
+      "klarna_pay_now": "Klarna",
+      "klarna_pay_later": "Klarna",
+      "klarna_slice_it": "Klarna",
+      "blik": "BLIK",
+      "ideal": "iDEAL",
+      "klarna": "Klarna",
+      "mobilepay": "MobilePay",
+      "przelewy24": "Przelewy24",
+      "swish": "Švīkstiens",
+      "twint": "TWINT",
+      "vipps": "Vipps",
+      "usdc": "Kriptovalūta: USDC"
+    },
+    "privacy_banner": {
+      "cookie_preferences_link": "Sīkfailu iestatījumi"
     }
   },
   "product": {
