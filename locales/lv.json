@@ -716,7 +716,20 @@
           }
         },
         "pay_merchant_label": "Maksāt %{merchant_name}",
-        "discount_applies_to_subscription_items_only": "Šī atlaide attiecas tikai uz abonēšanas precēm"
+        "discount_applies_to_subscription_items_only": "Šī atlaide attiecas tikai uz abonēšanas precēm",
+        "title": "Pasūtījuma kopsavilkums",
+        "product_disclosures": {
+          "title": "Informācija par produktu"
+        },
+        "group_title_label": "Daļa no \"%{group_title}\"",
+        "for_add_on": "Paredzēts: %{group_title}",
+        "from_shop_heading": "No %{shop_name}",
+        "from_other_stores_heading": "No citiem veikaliem",
+        "from_multiple_stores_heading": "No vairākiem veikaliem",
+        "number_items": {
+          "one": "%{count} vienība",
+          "other": "%{count} vienumi"
+        }
       },
       "shipping": {
         "title": "Piegāde",
@@ -1042,6 +1055,161 @@
             "content": "Jūsu saņemšanas un piegādes vietām jāatrodas vienā valstī. Mainot valsti, visas preces tiks iestatītas piegādei.",
             "country_changed_heading": "Valsts mainīta"
           }
+        }
+      },
+      "customer_account": {
+        "saved_address_option_link": "Izmantot saglabātu adresi",
+        "saved_address_modal_title": "Izmantot manu saglabāto adresi"
+      },
+      "remote_merchandise_only": {
+        "title": "Pabeidziet pirkumu",
+        "remote_only_notice": "Šīs preces pārdod un piegādā citi veikali. Lai pabeigtu pirkumu, veiciet norēķinu katrā veikalā atsevišķi.",
+        "return_to_store_label": "Atgriezties veikalā",
+        "detail_item_label": {
+          "one": "{{count}} vienums",
+          "other": "{{count}} vienumi"
+        },
+        "checkout_on_shop_label": "Veikt pasūtījumu vietnē %{shop_name}",
+        "single_shop_transition": "Novirzām jūs uz %{advertiser}, lai pabeigtu pirkumu."
+      },
+      "stock": {
+        "page_title": "Krājumu problēmas",
+        "title": "Nav noliktavā",
+        "items_unavailable_notice": "Dažas preces vairs nav pieejamas.",
+        "product_column_header": "Produkti",
+        "quantity_column_header": "Daudzums",
+        "price_column_header": "Cena",
+        "status_column_header": "Statuss",
+        "removed_from_cart_notice": "Izņemts no groza",
+        "sold_out_label": "Izpārdots",
+        "reduced_label": "Samazināts",
+        "reduced_with_quantity_label": "Atlikusi tikai %{quantity_available}",
+        "remove_from_cart_button_label": "Izņemt no groza",
+        "continue_shopping_button_label": "Turpināt",
+        "go_back_to_cart_button_label": "Atgriezties grozā",
+        "remove": "Noņemt",
+        "return_to_store_label": "Atgriezties veikalā",
+        "continue_cta_label": "Turpināt noformēt pasūtījumu",
+        "item_label": {
+          "one": "{{count}} vienums",
+          "other": "{{count}} vienumi"
+        },
+        "empty_cart_label": "Jūsu grozs ir tukšs",
+        "quantity_update": {
+          "page_title": "Daudzuma atjauninājums",
+          "title": "Daudzuma atjauninājums",
+          "description": "Šo preču pieejamais daudzums ir mainījies un ir atjaunināts jūsu grozā."
+        },
+        "unpurchasable_product": {
+          "title": "Nopērkama produkta nav",
+          "header": "Dažas preces tika izņemtas no jūsu groza",
+          "message": "Šīs preces nav pieejamas B2B pasūtījumiem.",
+          "status_column_header": "Nav pieejams"
+        },
+        "unpurchasable_product_generic": {
+          "title": "Nopērkama produkta nav",
+          "header": "Dažas preces tika izņemtas no jūsu groza",
+          "message": "Šīs preces nav pieejamas.",
+          "status_column_header": "Nav pieejams"
+        },
+        "unfulfillable_product": {
+          "title": "Piegāde nav pieejama",
+          "message": {
+            "one": "%{delivery_method} šai precei vairs nav pieejama.",
+            "other": "%{delivery_method} šīm precēm vairs nav pieejams."
+          },
+          "default_message": {
+            "one": "Izvēlētā piegādes metode šai precei vairs nav pieejama.",
+            "other": "Izvēlētā piegādes metode šīm precēm vairs nav pieejama."
+          }
+        },
+        "unshippable_product": {
+          "title": "Piegāde nav pieejama",
+          "header": {
+            "one": "Piegāde nav pieejama %{count} precei",
+            "other": "%{count} precēm piegāde nav pieejama"
+          },
+          "message": {
+            "one": "Šī prece tiks izņemta no jūsu groza, jo jūsu adresei nav pieejami piegādes veidi.",
+            "other": "Šīs preces tiks izņemtas no jūsu groza, jo jūsu adresei nav pieejami piegādes veidi."
+          },
+          "status_column_header": "Nav piegādes"
+        },
+        "price_update": {
+          "title": "Cenas atjauninājums",
+          "description": "Šo preču cenas ir mainījušās un ir atjauninātas jūsu grozā.",
+          "updated_price": "Atjauninātā cena"
+        },
+        "price_and_quantity_update": {
+          "title": "Cenas un daudzuma atjauninājums",
+          "description": "Šo preču cenas un pieejamie daudzumi ir mainījušies un atjaunināti jūsu grozā."
+        },
+        "out_of_stock": {
+          "description": "Šīs preces vairs nav pieejamas un tiks izņemtas no Jūsu groza.",
+          "items_unavailable": "Dažas preces vairs nav pieejamas, un tās tiks izņemtas no Jūsu groza.",
+          "missing_items": {
+            "title": {
+              "one": "{{count}} prece vairs nav pieejama",
+              "other": "{{count}} preces vairs nav pieejamas"
+            },
+            "some_available_notice": {
+              "one": "Pārējās preces joprojām ir pieejamas izrakstīšanai. Nepieejamā prece tiks izņemta no groza.",
+              "other": "Atlikušās preces joprojām ir pieejamas pirkumam. Nepieejamās preces tiks izņemtas no groza."
+            },
+            "none_available_notice": {
+              "one": "Šī prece vairs nav pieejama, un tā ir izņemta no jūsu groza.",
+              "other": "Šīs preces vairs nav pieejamas un ir izņemtas no jūsu groza."
+            },
+            "mixed_issues_title": "Dažas preces vairs nav pieejamas"
+          }
+        },
+        "out_of_stock_in_context_label": "Šis produkts nav pieejams jūsu valstī/reģionā."
+      },
+      "contextual_availability": {
+        "title": {
+          "one": "Nepieejama prece",
+          "other": "Nepieejami produkti"
+        },
+        "products_not_available": {
+          "one": "Šī prece tiks izņemta no jūsu groza, jo tā nav pieejama jūsu valstī/reģionā.",
+          "other": "Šie produkti tiks izņemti no jūsu groza, jo tie nav pieejami jūsu valstī/reģionā."
+        },
+        "all_products_in_cart_unavailable": {
+          "one": "Šis produkts nav pieejams jūsu valstī/reģionā.",
+          "other": "Šie produkti nav pieejami jūsu valstī/reģionā."
+        },
+        "unavailable_label": "Nav pieejams"
+      },
+      "merchandise_unavailable_in_buyer_location": {
+        "banner_title": {
+          "some_products_one": "Šo produktu nav iespējams piegādāt uz %{location_name}.",
+          "some_products_other": "Šos produktus uz %{location_name} nevar piegādāt.",
+          "all_products_one": "Prece jūsu grozā nav pieejama piegādei uz %{location_name}.",
+          "all_products_other": "Jūsu grozā esošās preces nav pieejamas piegādei uz %{location_name}."
+        },
+        "missing_country_fallback": "jūsu valsts",
+        "indeterminate_location_fallback": "jūsu atrašanās vieta",
+        "cart_updated": "Jūsu grozs ir atjaunināts.",
+        "change_address_only": "Lai turpinātu, mainiet piegādes adresi.",
+        "change_address_or_remove": "Mainīt piegādes adresi vai %{remove_action}.",
+        "remove_items_action": {
+          "one": "noņemt nepieejamo vienumu",
+          "other": "noņemt nepieejamās preces"
+        },
+        "empty_cart_action": "Iztukšot grozu un atgriezties veikalā",
+        "unavailable_line_item": "%{product_name} / %{variant_label}"
+      },
+      "deliverability": {
+        "not_deliverable": {
+          "title": {
+            "one": "Piegāde nav pieejama %{count} precei",
+            "other": "%{count} precēm piegāde nav pieejama"
+          },
+          "message": {
+            "one": "Šī prece tiks izņemta no jūsu groza, jo jūsu adresei nav pieejami piegādes veidi.",
+            "other": "Šīs preces tiks izņemtas no jūsu groza, jo jūsu adresei nav pieejami piegādes veidi."
+          },
+          "label": "Nav piegādes"
         }
       }
     },
