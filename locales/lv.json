@@ -1044,6 +1044,280 @@
           }
         }
       }
+    },
+    "errors": {
+      "shop_404": {
+        "owner_ctas": {
+          "admin_link_text": "administrators"
+        },
+        "ctas": {
+          "sell_in_person": {
+            "header": "Pārdod klātienē",
+            "caption": "Iegūstiet funkcijas, kas nepieciešamas mazumtirdzniecības veikala vadīšanai – neatkarīgi no tā, vai tikko sākat darbību vai paplašināties.",
+            "link_text": "Sākt bezmaksas izmēģinājumu"
+          },
+          "open_a_store": {
+            "header": "Atveriet jaunu Shopify veikalu",
+            "caption": "Sāciet 3 dienu bezmaksas izmēģinājumu, pēc tam turpiniet par 1 $/mēnesī nākamos 3 mēnešus.",
+            "link_text": "Reģistrējieties tagad"
+          },
+          "editions": {
+            "header": "Iepazīstieties ar Shopify Editions",
+            "caption": "Pateicoties vairāk nekā 100 produktu atjauninājumiem, jūs varat būt produktīvāki, radošāki un tirdzniecībā jaudīgāki, nekā jebkad iedomājāties.",
+            "link_text": "Izpētiet jaunākos izdevumus"
+          },
+          "store_owner": {
+            "header": "Vai jūs esat veikala īpašnieks?",
+            "caption": "Vai jums ir problēmas ar piekļuvi savam veikalam? Izmēģiniet funkciju %{forgot_your_store_link}. Ja vēlaties atkārtoti aktivizēt savu veikalu, sazinieties ar %{shopify_support_link}.",
+            "shopify_support_link_text": "Shopify atbalsts"
+          }
+        }
+      }
+    },
+    "notices": {
+      "customer": {
+        "password_reset_error": "Paroles atiestatīšanas kļūda",
+        "subscribe_error": "Abonēšanas kļūda",
+        "unsubscribe_error": "Kļūda anulējot abonēšanu",
+        "open_tracking_error": "Atvēršanas izsekošanas kļūda",
+        "no_account_found": "Ar šādu e-pasta adresi konts netika atrasts.",
+        "invalid_credentials": "Nepareizs e-pasts vai parole.",
+        "denylisted_reset_password": "Jūsu kontam nevarēja piekļūt, jo pašreizējā parole nav droša. Jūs saņemsiet e-pastu par paroles atjaunināšanu.",
+        "signup_disabled": "Klienta konta izveide ir atspējota."
+      },
+      "address": {
+        "updated": "Adrese veiksmīgi atjaunināta.",
+        "error_updating": "Kļūda adreses atjaunināšanā",
+        "created": "Adrese veiksmīgi izveidota",
+        "error_creating": "Kļūda, izveidojot adresi.",
+        "deleted": "Adrese veiksmīgi izdzēsta",
+        "error_deleting": "Kļūda, dzēšot adresi."
+      },
+      "line_item": {
+        "item_status": {
+          "add_variant": "Pievienots %{delta}",
+          "increment_item": "Pievienots %{delta}",
+          "decrement_item": "Noņemti %{delta} no %{total}",
+          "decrement_fulfilled_line_item": "Atgriezti %{delta} no %{total}",
+          "decrement_return_line_item": "Izņemts %{delta} no atgriešanas"
+        }
+      },
+      "order": {
+        "not_available": "Šis pasūtījums nav pieejams",
+        "financial_status": {
+          "authorized": "Autorizēts",
+          "pending": "Gaida apstrādi",
+          "paid": "Apmaksāts",
+          "unpaid": "Neapmaksāts",
+          "voided": "Anulēts",
+          "partially_paid": "Daļēji apmaksāts",
+          "partially_refunded": "Daļēji atmaksāts",
+          "refunded": "Atmaksāts",
+          "expired": "Beidzies derīguma termiņš"
+        },
+        "fulfillment_status": {
+          "fulfilled": "Izpildīts",
+          "complete": "Pabeigt",
+          "partial": "Daļējs",
+          "unfulfilled": "Neapmierināts",
+          "restocked": "Atkārtoti noliktavā"
+        },
+        "transaction_status": {
+          "success": "Panākumi",
+          "pending": "Gaida apstrādi",
+          "failure": "Neveiksme",
+          "error": "Kļūda"
+        },
+        "cancel_reason": {
+          "declined": "Maksājums noraidīts",
+          "inventory": "Preces nav pieejamas",
+          "fraud": "Krāpniecisks pasūtījums",
+          "customer": "Klients mainīja/atcēla pasūtījumu",
+          "staff": "Personāla kļūda",
+          "other": "Cits"
+        },
+        "cash_on_delivery": "Pēcapmaksa (skaidrā naudā piegādes brīdī)"
+      },
+      "cart": {
+        "not_found": "Grozs nav atrasts",
+        "only_n_items_available": "Grozā varat pievienot tikai %{count} %{name}.",
+        "too_many_items_in_cart": "Jūs vairs nevarat pievienot grozam vairāk %{name}.",
+        "only_one_added_to_cart": "Preču pieejamības dēļ jūsu grozam tika pievienota tikai 1 prece.",
+        "only_n_added_to_cart": "Pieejamības dēļ grozam tika pievienotas tikai %{quantity} preces.",
+        "maximum_available_quantity_reached": "Šīs preces maksimālais daudzums jau ir jūsu grozā.",
+        "less_than_minimum": "Šai precei ir noteikts vismaz %{min} daudzums.",
+        "more_than_maximum": "Šai precei ir noteikts maksimums %{max}.",
+        "not_respect_step": "Šo vienumu varat pievienot tikai pa %{step}.",
+        "all_items_in_cart": "Visi %{count} %{name} ir jūsu grozā.",
+        "empty_update": "nevar atjaunināt tukšu grozu",
+        "missing_parameters": "nav derīga ID vai rindas parametra",
+        "generic_error": "Kļūda grozā",
+        "invalid_input": "%{parameter} parametrs nav derīgs.",
+        "product_not_available": "Produkts nav pieejams",
+        "too_many_line_items_error": "Jūsu grozā nevar būt vairāk par %{max} precēm.",
+        "link_expired": "Saite vairs nav derīga",
+        "link_no_longer_exists": "Saite vairs nepastāv.",
+        "stock_problems_html": "Viens vai vairāki vienumi vairs nav pieejami. Mēs esam sagatavojuši <a href=\"%{link}\">atjauninātu grozu</a>.",
+        "changed": "Grozs mainīts",
+        "items_changed": "Viens vai vairāki vienumi ir mainīti.",
+        "product_sold_out": "Prece '%{name}' jau ir izpārdota.",
+        "variant_not_found": "Neizdevās atrast variantu",
+        "variant_requires_selling_plan": "Variantu var iegādāties tikai ar pārdošanas plānu.",
+        "selling_plan_not_available_for_company_locations": "B2B pasūtījumiem ir pieejams tikai vienreizējs pirkums.",
+        "digital_product_not_available_for_company_locations": "Šo preci nevar pievienot B2B pasūtījumam",
+        "buyer_cannot_purchase_for_company_locations": "Šajā atrašanās vietā iegādāties nevar",
+        "selling_plan_not_applicable": "Pārdošanas plānu nevar piemērot variantam",
+        "shipping_address_not_required": "Šim grozam piegāde nav nepieciešama",
+        "shipping_address_invalid": "Radās problēma, aprēķinot jūsu piegādes izmaksas. Turpiniet noformēt pasūtījumu, lai izvēlētos piegādes veidu pirms pasūtījuma pabeigšanas.",
+        "bundle_requires_components": "Komplektpreci \"%{name}\" nevar pievienot grozam.",
+        "gift_card_with_components_not_supported": "Komplektpreci \"%{name}\" nevar pievienot grozam.",
+        "gift_card_price_must_be_greater_than_zero": "Komplektpreci \"%{name}\" nevar pievienot grozam.",
+        "gift_card_recipient_validation_error": "Norādītais dāvanu kartes saņēmējs nav derīgs",
+        "view_lines_limit_reached": "Rindiņu skaits nedrīkst pārsniegt %{limit}",
+        "cart_too_large": "Grozs ir pārāk liels.",
+        "cart_attributes_error": "Groza atribūti satur nederīgus datus.",
+        "merchandise_line_transformers": {
+          "run_error": "Radās kļūda jūsu grozā."
+        },
+        "merchandise_not_applicable": "Preci nav iespējams iegādāties šādā komplektācijā."
+      },
+      "storefront": {
+        "invalid_password": "Nepareiza parole, lūdzu, mēģiniet vēlreiz."
+      },
+      "tags": {
+        "add_articles": "Sašaurināt meklēšanu līdz rakstiem, kuriem ir arī tags %{tag}",
+        "add_products": "Sašaurināt atlasi līdz produktiem, kas atbilst tagam %{tag}"
+      }
+    }
+  },
+  "customer_accounts": {
+    "order_details": {
+      "tip": "Dzeramnauda",
+      "title": "Pasūtīt {{name}}",
+      "total": "Kopā",
+      "unit_price": "{{price}}/gab.",
+      "pagination": {
+        "load_more": "Rādīt vairāk",
+        "load_more_accessibility_label": "Parādīt vairāk vienumu",
+        "loading_accessibility_label": "Notiek vienumu ielāde"
+      },
+      "login_to_view_all_order_details": "Pierakstieties, lai skatītu visu pasūtījuma informāciju.",
+      "log_in": "Pierakstīties",
+      "logged_in_account_no_permission_to_order": "Jūs esat pierakstījies kā {{email}}. Šim kontam nav atļaujas pārvaldīt šo pasūtījumu.",
+      "log_in_to_a_different_account": "Pierakstīties citā kontā",
+      "fees": {
+        "restocking_fee": "Preces atgriešanas maksa",
+        "return_shipping_fee": "Atpakaļnosūtīšana"
+      },
+      "vat_invoices": {
+        "label": "PVN"
+      },
+      "link_sent": "Saite nosūtīta",
+      "cash_rounding": "Skaidras naudas noapaļošana",
+      "adjusted_payment": "Koriģēts maksājums",
+      "adjusted_total": "Koriģētā kopsumma",
+      "due_on_date": "Līdz {{date}}",
+      "due_on_fulfillment": "Apmaksājams izpildes brīdī",
+      "due_on_receipt": "Apmaksājams pēc saņemšanas"
+    },
+    "addresses": {
+      "add_button": "Pievienot adresi",
+      "add_button_text": "Pievienot",
+      "add_button_accessibility_label": "Pievienot adresi",
+      "back_button": "Atpakaļ",
+      "back_button_accessibility_label": "Atpakaļ uz adreses {{address}} rediģēšanu",
+      "add_address_banner": "Pievienojiet adreses, ko izmantot norēķinoties",
+      "no_addresses_banner": "Adreses nav pievienotas",
+      "address_deleted_notification": "Adrese izdzēsta",
+      "cancel_adding_address_accessibility_label": "Atcelt adreses pievienošanu",
+      "cancel_deletion_button": "Atcelt",
+      "cancel_deletion_button_accessibility_label": "Atcelt {{address}} dzēšanu",
+      "default_address": {
+        "badge_label": "Noklusējuma",
+        "title": "Noklusējuma adrese",
+        "title_accessibility_label": "Noklusējuma adrese: {{address}}"
+      },
+      "delete_button": "Dzēst",
+      "delete_button_accessibility_label": "Dzēst {{address}}",
+      "delete_confirmation_button": "Dzēst adresi",
+      "delete_confirmation_button_accessibility_label": "Dzēst {{address}}",
+      "delete_confirmation_message": "Dzēst adresi? Esošie pasūtījumi netiks ietekmēti.",
+      "delete_confirmation_title": "Dzēst adresi?",
+      "delete_confirmation_description": "Esošie pasūtījumi netiek ietekmēti.",
+      "edit_button": "Rediģēt",
+      "edit_button_accessibility_label": "Rediģēt {{address}}",
+      "edit_section_accessibility_label": "Rediģēt {{address}}",
+      "edit_modal_title": {
+        "default": "Rediģēt adresi",
+        "billing": "Rediģēt rēķina adresi",
+        "shipping": "Rediģēt piegādes adresi"
+      },
+      "loading_accessibility_message": "Adreses ielāde",
+      "loading_addresses_accessibility_message": "Adrešu ielāde",
+      "loading_billing_accessibility_message": "Notiek norēķinu adreses ielāde",
+      "loading_finished_accessibility_message": "Ielādēta jauna adrešu lapa",
+      "loading_shipping_accessibility_message": "Notiek piegādes adreses ielāde",
+      "pagination": {
+        "load_more": "Rādīt vairāk",
+        "load_more_accessibility_label": "Rādīt citas adreses"
+      },
+      "save_new_address_accessibility_label": "Saglabāt adresi",
+      "title": "Adreses",
+      "billing_address_dropdown_placeholder": "Norēķinu adrese"
+    },
+    "address_form": {
+      "attention": "Uzmanību",
+      "attention_company": "Uzņēmums/uzmanībai",
+      "attention_help_text": "Personas vai nodaļas nosaukums",
+      "auto_complete_close_accessibility_label": "Aizvērt ieteikumus",
+      "auto_complete_title": "Ieteikumi",
+      "billing_address": "Izmantot kā norēķinu adresi",
+      "cancel": "Atcelt",
+      "cancel_accessibility_label": "Atcelt adreses {{address}} rediģēšanu",
+      "creation_success_notification": "Adrese pievienota",
+      "default_address": "Šī ir mana noklusējuma adrese",
+      "default_address_creation_success_notification": "Noklusējuma adrese pievienota",
+      "default_address_update_success_notification": "Noklusējuma adrese ir atjaunināta",
+      "loading_add_form_accessibility_message": "Notiek jaunas adreses veidlapas ielāde",
+      "loading_edit_form_accessibility_message": "Notiek adreses rediģēšanas formas ielāde",
+      "loading_form_accessibility_message": "Adreses veidlapas ielāde",
+      "loading_finished_accessibility_message": "Adreses forma ir ielādēta",
+      "save": "Saglabāt",
+      "save_accessibility_label": "Saglabāt adresi {{address}}",
+      "section_title_accessibility_label": "Pievienot adresi",
+      "update_success_notification": "Adrese atjaunināta"
+    },
+    "account_menu": {
+      "signed_out_state": {
+        "sheet_title": "Pierakstīties vai izveidot kontu",
+        "section_divider": "Vairāk veidu, kā pierakstīties",
+        "alternate_divider": "VAI",
+        "use_email_button": "Lūdzu, izmantojiet e-pastu",
+        "email_field_label": "E-pasts",
+        "orders_button": "Pasūtījumi",
+        "profile_button": "Profils",
+        "shop_login_button": "Pierakstīties ar Shop",
+        "continue_with_google": "Turpināt ar Google",
+        "continue_with_facebook": "Turpināt ar Facebook"
+      },
+      "signed_in_state": {
+        "greeting_with_name": "Sveiki, {{first_name}}",
+        "greeting_without_name": "Konts",
+        "orders_button": "Pasūtījumi",
+        "profile_button": "Profils"
+      },
+      "location_picker": {
+        "sheet_title": "Vietas",
+        "search_field_placeholder": "Meklēt"
+      },
+      "aria_labels": {
+        "close_menu": "Aizvērt izvēlni",
+        "back_to_main_menu": "Atpakaļ uz galveno izvēlni no {{title}}",
+        "open_submenu": "{{title}}, atver apakšizvēlni",
+        "loading_menu": "Ielādē izvēlni",
+        "account": "Konts",
+        "sign_in_with_email": "Pierakstīties ar e-pastu"
+      }
     }
   }
 }
