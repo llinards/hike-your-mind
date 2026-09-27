@@ -2094,7 +2094,12 @@
             "permission_not_allowed": "Atļaut kopīgot jūsu atrašanās vietu.",
             "permission_denied": "Neizdevās noteikt jūsu atrašanās vietu. Mēģiniet vēlreiz."
           }
-        }
+        },
+        "location_is_currently_closed": "Slēgts",
+        "business_hours": "Darba laiks",
+        "no_business_hours": "Darba laiks nav pieejams",
+        "open_twenty_four_hours": "Atvērts 24/7",
+        "title": "Savākšanas punkts"
       },
       "error_page": {
         "terminal": {
@@ -2475,6 +2480,175 @@
             }
           }
         }
+      },
+      "tips": {
+        "title": "Pievienot dzeramnaudu",
+        "description": "Izrādi savu atbalstu %{shop_name} komandai",
+        "presets_description": "Izvēlieties dzeramnaudas procentuālo likmi",
+        "custom_label": "Pielāgota dzeramnauda",
+        "add_tip": "Pievienot dzeramnaudu",
+        "update_tip": "Atjauninājuma padoms",
+        "message": "Paldies, mēs to novērtējam.",
+        "preset_label": "%{tip_percent}%",
+        "no_tip_label": "Neviens",
+        "not_available_with_spi": "Nav pieejams ar Shop Pay Installments."
+      },
+      "open_graph_meta_tag": {
+        "title_with_products": {
+          "zero": "Iegādāties %{product_name}",
+          "one": "Iegādājieties %{product_name} un vēl %{count} preci",
+          "other": "Iegādājieties %{product_name} un vēl %{count} preces"
+        }
+      },
+      "subscriptions": {
+        "recurring_total_intervals": {
+          "day": {
+            "one": "diena",
+            "other": "%{count} dienas"
+          },
+          "week": {
+            "one": "nedēļa",
+            "other": "%{count} nedēļas"
+          },
+          "month": {
+            "one": "mēnesis",
+            "other": "%{count} mēneši"
+          },
+          "year": {
+            "one": "gads",
+            "other": "%{count} gadi"
+          }
+        },
+        "recurring_totals": "%{total_price} ik pēc %{interval}",
+        "recurring_totals_with_initial_order_shipping_discount": "Pirmais maksājums %{total_price_with_discount}, pēc tam %{recurring_total}",
+        "recurring_totals_with_policies": {
+          "first_cycles": {
+            "one": "Pirmais maksājums %{total_price}",
+            "other": "Pirmie %{count} maksājumi pa %{total_price} katrs"
+          },
+          "following_cycles": ", tad %{total_price} ik pēc %{interval}"
+        },
+        "recurring_totals_with_initial_order_shipping_discount_with_policies": {
+          "first_cycles": {
+            "one": ", tad %{count} maksājums par %{total_price}",
+            "other": ", pēc tam %{count} maksājumi pa %{total_price} katrs"
+          }
+        }
+      },
+      "customer_payment_methods": {
+        "page_title": "Maksājuma veidi",
+        "title": "Maksājuma veidi",
+        "update_card_button_label": "Atjaunināt karti",
+        "delete_customer_mandate": {
+          "generic_error": "Radās problēma, apstrādājot jūsu pieprasījumu.",
+          "success_message": "Jūsu maksājuma veids ir veiksmīgi izdzēsts"
+        }
+      },
+      "throttle": {
+        "too_many_attempts": {
+          "message": "Pārāk daudz mēģinājumu",
+          "description": "Mēģiniet vēlreiz pēc dažām minūtēm"
+        },
+        "line_to_check_out": "Jūs stāvat rindā, lai norēķinātos",
+        "cart_summary_heading": "Jūsu grozs",
+        "merchandise": {
+          "available": "Pieejams",
+          "sold_out": "Izpārdots"
+        },
+        "inventory": {
+          "partial_inventory_banner": "Daļa no jūsu groza precēm ir izpārdotas, un tās nebūs iespējams iegādāties norēķināšanās brīdī.",
+          "sold_out": {
+            "heading": "Jūsu grozā esošās preces ir izpārdotas",
+            "storefront_body": "Atgriezieties veikalā, lai turpinātu iepirkties",
+            "no_storefront_body": "Diemžēl prece, kuru vēlaties iegādāties, vairs nav pieejama.",
+            "link": "Atpakaļ uz veikalu"
+          }
+        },
+        "title": "Rinda",
+        "time_to_checkout_title": "Laiks izrakstīties — {{shopName}}",
+        "estimated_wait_time": {
+          "calculating": "Tiek aprēķināts paredzamais gaidīšanas laiks",
+          "less_than_one": "Paredzamais gaidīšanas laiks: mazāk nekā minūte",
+          "one": "Paredzamais gaidīšanas laiks: {{count}} minūtes",
+          "other": "Paredzamais gaidīšanas laiks: {{count}} minūtes"
+        },
+        "last_checked": "(Pēdējoreiz pārbaudīts: {{time}})",
+        "footer": {
+          "heading": "Neatjauniniet šo lapu, tā atjaunināsies automātiski.",
+          "body": "Preces grozā netiek rezervētas, līdz pabeidzat pirkuma noformēšanu."
+        }
+      },
+      "cart_checkout_validation": {
+        "runtime_error": "Radās problēma, apstrādājot jūsu pieprasījumu. Sazinieties ar veikala īpašnieku."
+      },
+      "no_address_location": {
+        "title": "Atrašanās vieta bez adreses",
+        "header": "Šai vietai nav norādītas piegādes adreses.",
+        "alt_header": "Trūkst piegādes adreses",
+        "message": "Sazinieties ar mums, lai pievienotu adresi šai atrašanās vietai un pabeigtu pasūtījumu.",
+        "email_us_button_label": "Nosūtiet mums e-pastu"
+      },
+      "shop_wallet": {
+        "title": "Shop Pay maks",
+        "description": "Izvēlies, ko vēlies izmantot šim pirkumam.",
+        "loading": "Notiek jūsu Shop Pay maka ielāde…",
+        "ready_status": "Jūsu Shop Pay maks ir gatavs. Izvēlieties maksājuma veidu.",
+        "cancel": "Atcelt",
+        "retry": "Mēģini vēlreiz",
+        "return_to_hatch": "Atgriezties pie Hatcha",
+        "choose_again": "Izvēlieties vēlreiz",
+        "payment_method": {
+          "heading": "Maksājuma veids",
+          "expiry": "Derīguma termiņš beidzas {{expiry}}"
+        },
+        "shipping_address": {
+          "heading": "Piegādes adrese"
+        },
+        "confirm": {
+          "label": "Apstiprināt izvēli",
+          "success_title": "Izvēle apstiprināta",
+          "success_message": "Atlasītie maka dati ir gatavi. Šis prototips tos vēl neatgriež partneru lietotnei.",
+          "retryable_error_title": "Atlase netiek kopīgota",
+          "retryable_error_message": "Mēģiniet vēlreiz apstiprināt savu maka izvēli.",
+          "terminal_error_title": "Maka savienojums tika pārtraukts",
+          "terminal_error_message": "Atgriezieties un vēlreiz atveriet Shop Pay."
+        },
+        "cancelled": {
+          "title": "Atlase atcelta",
+          "message": "Maksājumu informācija netika kopīgota un pirkums netika veikts."
+        },
+        "empty": {
+          "title": "Nav saglabātu karšu",
+          "message": "Šajā Shop Pay makā nav saglabātu karšu."
+        },
+        "ineligible": {
+          "title": "Nav piemērotu karšu",
+          "message": "Neviena no saglabātajām kartēm nevar tikt izmantota šim pirkumam."
+        },
+        "expired": {
+          "title": "Šī maka sesija ir beigusies.",
+          "message": "Atgriezieties partneru lietotnē un sāciet pirkumu vēlreiz."
+        },
+        "revoked": {
+          "title": "Shop Pay vairs nav pievienots.",
+          "message": "Pirms turpināšanas atkārtoti izveidojiet savienojumu ar Shop Pay partneru lietotnē."
+        },
+        "error": {
+          "title": "Jūsu Shop Pay maks netika ielādēts.",
+          "message": "Atgriezieties vietnē Hatch un mēģiniet vēlreiz atvērt Shop Pay."
+        }
+      },
+      "order_errors": {
+        "creation_failure": "Radās problēma, izveidojot jūsu pasūtījumu. Mēģiniet vēlreiz vai sazinieties ar mums, lai uzzinātu sīkāku informāciju.",
+        "network_failure": "Jūsu pasūtījumu neizdevās iesniegt tīkla kļūdas dēļ. Pārbaudiet savienojumu un mēģiniet vēlreiz.",
+        "inventory_reservation_failure": "Dažas preces vairs nav pieejamas."
+      },
+      "session_errors": {
+        "session_not_unique": "Radās problēma, apstrādājot jūsu pasūtījumu. Atsvaidziniet šo lapu, lai atgrieztos veikalā.",
+        "session_already_finished": "Šis pasūtījums jau ir iesniegts. Varat atgriezties veikalā, lai sāktu jaunu pasūtījumu."
+      },
+      "artifact_errors": {
+        "artifact_dissatisfaction_without_violation": "Radās problēma, apstrādājot jūsu pasūtījumu. Mēģiniet vēlreiz pēc dažām minūtēm."
       }
     },
     "errors": {
