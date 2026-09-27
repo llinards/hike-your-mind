@@ -2223,7 +2223,137 @@
       "adjusted_total": "Koriģētā kopsumma",
       "due_on_date": "Līdz {{date}}",
       "due_on_fulfillment": "Apmaksājams izpildes brīdī",
-      "due_on_receipt": "Apmaksājams pēc saņemšanas"
+      "due_on_receipt": "Apmaksājams pēc saņemšanas",
+      "payment": {
+        "status_in_review": "Maksājums jāveic pēc pārskatīšanas",
+        "status_unpaid": "Maksājuma termiņš: {{date}}",
+        "title": "Maksājums",
+        "payment_type": {
+          "gift_card": "Dāvanu karte",
+          "store_credit": "Veikala kredīts",
+          "money_order": "Naudas pārvedums",
+          "cash_on_delivery": "Pēcapmaksa (skaidrā naudā piegādes brīdī)",
+          "bank_deposit": "Bankas depozīts",
+          "manual": "Rokasgrāmata"
+        },
+        "shop_pay_installments": {
+          "summary": "Veikala nomaksa",
+          "view_schedule": "Skatīt grafiku"
+        },
+        "transactions": {
+          "show_all": "Rādīt visu",
+          "show_less": "Rādīt mazāk",
+          "details": "Sīkāka informācija",
+          "payment_details": "Maksājuma informācija"
+        },
+        "emv_details": {
+          "auth": "AUT.:",
+          "aid": "PALĪDZĪBA:",
+          "source": "AVOTS:"
+        }
+      },
+      "paid_with_shop_pay_installments_card": {
+        "title": "Maksājumu atgādinājumi par Shop Pay Installments",
+        "paid_with_shop_pay_installments": "Apmaksāts ar Shop Pay pa daļām",
+        "description": "Pārvaldi savu maksājumu grafiku, izmantojot atgādinājumus lietotnē Shop.",
+        "payment_reminders_button": "Saņemt atgādinājumus par maksājumiem",
+        "desktop_qr_code_content": {
+          "title": "Meklēt atgādinājumus",
+          "description": "Saņem atgādinājumus par saviem maksājumiem ar Shop."
+        }
+      },
+      "refunded_amount": "Atmaksāts",
+      "request_return_failed": "Radās problēma, apstrādājot jūsu pieprasījumu. Lūdzu, mēģiniet vēlreiz.",
+      "login_card": {
+        "title": "Piekļūt pasūtījuma detaļām",
+        "resend_link_and_login": "Lai skatītu pasūtījuma informāciju, pierakstieties vai nosūtiet jaunu saiti uz e-pasta adresi vai tālruņa numuru, kas tika izmantots pirkuma veikšanai.",
+        "resend_link_only": "Lai skatītu pasūtījuma informāciju, nosūtiet jaunu saiti uz e-pasta adresi vai tālruņa numuru, kas tika izmantots pirkuma noformēšanas brīdī.",
+        "log_in": "Pierakstīties",
+        "resend_link": "Nosūtīt jaunu saiti",
+        "link_expired": "Saite vairs nav derīga"
+      },
+      "remaining_amount": "Atlikušais",
+      "marketing_section_title": "Jaunumi un piedāvājumi",
+      "marketing_checkbox_label": "Sūtiet man jaunumus un piedāvājumus pa e-pastu",
+      "marketing_checkmark_label": "Jūs esat abonējis jaunumu un piedāvājumu saņemšanu e-pastā",
+      "marketing_pending_confirmation": "Noklikšķiniet uz saites savā e-pastā, lai apstiprinātu.",
+      "marketing_resend_email": "Nosūtīt e-pastu atkārtoti",
+      "marketing_resend_email_success": "Saite nosūtīta",
+      "returns": {
+        "expand_events_label": "Rādīt informāciju",
+        "hide_events_label": "Paslēpt informāciju",
+        "ineligible_return_message": "Nevienu no šī pasūtījuma precēm nevar atgriezt.",
+        "ineligible_return_message_when_returned": "Nevienu citu šā pasūtījuma preci nav iespējams atgriezt.",
+        "print_shipping_label": "Izdrukāt piegādes etiķeti",
+        "return_and_refund_modal_header": "Atmakšas politika",
+        "tracking_number": "Izsekošanas numurs:",
+        "exchange_header": "Apmainīt preces",
+        "exchange_subheader": "Maiņas preces tiks pievienotas pasūtījumam pēc atgriešanas procesa pabeigšanas."
+      },
+      "shipping": {
+        "address": "Piegādes adrese",
+        "address_map_marker": "Piegādes adrese",
+        "method": "Piegādes veids",
+        "method_short": "Metode",
+        "ship_to": "Nosūtīt uz",
+        "summary": "Piegāde",
+        "free": "Bezmaksas",
+        "free_shipping_discount": "Bezmaksas piegāde",
+        "one_time": "Vienreizēja piegāde",
+        "subscription": "Abonēta piegāde"
+      },
+      "pickup": {
+        "pickup": "Saņemšana",
+        "pickup_location": "Saņemšanas vieta",
+        "pickup_point": "Savākšanas punkts"
+      },
+      "show_items": "Rādīt vienumus",
+      "total_savings": "Kopējie uzkrājumi",
+      "show_order_summary": "Rādīt pasūtījuma kopsavilkumu",
+      "hide_order_summary": "Paslēpt pasūtījuma kopsavilkumu",
+      "subtitle": "Apstiprināts {{date}}",
+      "subtotal": "Starpsumma",
+      "subtotal_label_with_quantity": {
+        "one": "Starpsumma",
+        "other": "Starpsumma · {{count}} preces"
+      },
+      "summary_list_title_accessibility_label": "Pasūtījuma preces",
+      "summary_title": "Pasūtījuma kopsavilkums",
+      "summary_totals_title_accessibility_label": "Pasūtījuma kopsummas",
+      "shop_order_tracking": {
+        "download_shop_to_track": "Lejupielādējiet \"Shop\", lai izsekotu sūtījumu",
+        "open_in_shop": "Atvērt veikalu",
+        "track_order_with_shop": "Izsekot pasūtījumu ar Shop",
+        "title_header": "Skenējiet ar savu tālruni",
+        "real_time_delivery_updates": "Veikals nosūtīs jums piegādes atjauninājumus reāllaikā, tiklīdz jūsu pasūtījums būs izsūtīts.",
+        "real_time_delivery_updates_with_gift": "Saņemiet piegādes jaunāko informāciju reāllaikā un {{promoAmount}} dāvanu, ko iztērēt lietotnē Shop.",
+        "shop_app_promo_amount_off": "Saņem {{promoAmount}} dāvanu",
+        "shop_app_promo_text": "{{amountOff}}, ko tērēt lietotnē Shop"
+      },
+      "edit_summary": {
+        "added": "Pievienots",
+        "added_with_quantity": "Pievienots {{quantity}}",
+        "removed": "Izņemts",
+        "removed_with_quantity": "Noņemts {{quantity}}",
+        "updated_at": "Jūsu pasūtījums tika atjaunināts {{date}}",
+        "returned": "Atgriezts",
+        "returned_with_quantities": "Atgriezti {{delta}} no {{total}}",
+        "removed_with_quantities": "Noņemts {{delta}} no {{total}}",
+        "return_line_item_removed": "Izņemts no atgriešanas",
+        "return_line_item_removed_with_quantities": "No atgriešanas atskaitīts {{delta}}"
+      },
+      "shop_pay": {
+        "order_completed_with": "Pasūtījums izpildīts ar",
+        "learn_more": "Uzzināt vairāk",
+        "usdc_rewards_terms": "Skatīt USDC atlīdzību noteikumus"
+      },
+      "taxes": "Nodokļi",
+      "taxes_included": "Ieskaitot {{amount}} nodokļos",
+      "duties_and_taxes_included": "Kopsumma ietver muitas nodokļus un nodevas. Piegādes brīdī papildu maksa netiks piemērota.",
+      "duties": "Pienākumi",
+      "ok_duties_tooltip": "Šis pasūtījums tiek sūtīts no citas valsts, tāpēc jūsu pasūtījuma kopsummā ir iekļauti muitas nodokļi.",
+      "error_duties_tooltip": "Šis pasūtījums tiek sūtīts no citas valsts, tāpēc piegādes brīdī var tikt piemēroti muitas nodokļi un nodevas.",
+      "zero_duties_tooltip": "Šis pasūtījums tiek sūtīts no citas valsts. Šādas vērtības pasūtījumiem muitas nodokļi netiek piemēroti."
     },
     "addresses": {
       "add_button": "Pievienot adresi",
