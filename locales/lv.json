@@ -1,0 +1,473 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "shopify": {
+    "sentence": {
+      "words_connector": ",",
+      "two_words_connector": " un",
+      "last_word_connector": ", un"
+    },
+    "checkout": {
+      "ucp": {
+        "standard_errors": {
+          "item_unavailable": "Vienumu nevar iegādāties"
+        },
+        "totals": {
+          "subtotal": "Starpsumma",
+          "items_discount": "Preču atlaides",
+          "discount": "Pasūtījumu atlaides",
+          "fulfillment": "Piegāde",
+          "tax": "Nodoklis",
+          "duty": "Pienākums",
+          "fee": "Maksa",
+          "total": "Kopā"
+        }
+      },
+      "general": {
+        "page_title": "Apmaksa",
+        "error_page_title": "Kļūda",
+        "skip_to_content": "Pāriet uz saturu",
+        "breadcrumb": "Navigācijas ceļš",
+        "continue_button_label": "Turpināt",
+        "complete_purchase_button_label": "Pabeigt pasūtījumu",
+        "pay_now_button_label": "Maksāt tagad",
+        "finalize_order_accessibility_label": "Pabeigt pasūtījumu",
+        "authenticate_purchase_button_label": "Autentificēt maksājumu",
+        "edit_link_label": "Rediģēt",
+        "all_rights_reserved": "Visas tiesības aizsargātas %{shop_name}",
+        "print_policies_link_label": "Izdrukāt",
+        "cart": "Grozs",
+        "close_modal_label": "Aizvērt",
+        "close_notice_label": "Aizvērt",
+        "expand_notice_label": "Skatīt vairāk",
+        "continue_to_shipping_method": "Turpināt uz piegādi",
+        "continue_to_payment_method": "Turpināt maksājumu",
+        "continue_to_review": "Pārskatīt pasūtījumu",
+        "back_to_cart": "Atgriezties grozā",
+        "back_to_contact_information": "Atgriezties pie informācijas",
+        "back_to_shipping_method": "Atgriezties pie piegādes",
+        "back_to_payment_method": "Atgriezties pie maksājuma",
+        "choose_shipping_method": "Izvēlieties piegādes veidu",
+        "choose_payment_method": "Izvēlieties maksājuma veidu",
+        "choose_billing_address": "Izvēlieties rēķina saņemšanas adresi",
+        "contact_us_html": "Sazinieties ar mums, lai iegūtu vairāk informācijas",
+        "autocomplete_title": "Ieteikumi",
+        "autocomplete_single_item": "Pieejama 1 vienība",
+        "autocomplete_multi_item": "{{number}} pieejamo vienumu",
+        "autocomplete_close": "Aizvērt ieteikumus",
+        "forwarding_indicator": {
+          "new_window": "Atveras jaunā logā.",
+          "external": "Atver ārējo vietni.",
+          "external_and_new_window": "Atver ārēju vietni jaunā logā."
+        },
+        "checkout_context": {
+          "step_one": "%{shop_name} - Norēķini"
+        },
+        "tooltip_accessibility_label": "Vairāk informācijas",
+        "qr_code": "QR kods",
+        "errors": {
+          "only_empty_terms_accepted": "Šī politika pieņem tikai tukšus terminus.",
+          "session_identifier_not_unique_error": "Radās kļūda jūsu pasūtījuma noformēšanā, lūdzu, mēģiniet veikt pirkumu vēlreiz.",
+          "line_item_limit_reached": "Sasniegts maksimālais rindu vienumu skaits.",
+          "session_is_already_finished": "Šī norēķinu sesija jau ir pabeigta.",
+          "merchandise": {
+            "only_value_constraint": "Preču ievadē ir atļautas tikai precīzas vērtības.",
+            "merchandise_not_found": "Produkts nav atrasts.",
+            "merchandise_variant_not_found": "Produkta variants nav atrasts.",
+            "merchandise_not_applicable": "Produkta variantu nav iespējams iegādāties.",
+            "mixed_currencies": "Apmaksas procesā ir preces ar dažādām valūtām.",
+            "bundle_products_not_supported_for_b2b": "Komplektpreces nevar pievienot B2B pasūtījumiem šajā atrašanās vietā.",
+            "gift_card_quantity_mismatch": "Norādot dāvanu karšu kodus, rindas pozīcijas daudzumam un dāvanu karšu kodu skaitam ir jāsakrīt.",
+            "gift_card_not_supported": "Dāvanu kartes šajā norēķinu procesā netiek atbalstītas.",
+            "gift_card_not_unique": "Dāvanu karte ar kodu {{code}} šajā pasūtījumā ir vairākkārt. Kods tiek formatēts pirms salīdzināšanas.",
+            "gift_card_used": "Dāvanu kartes kods {{code}} jau ir piešķirts citai dāvanu kartei. Kodu formatē pirms salīdzināšanas.",
+            "gift_card_invalid": "Dāvanu kartes kods {{code}} nav derīgs.",
+            "gift_card_code_changed": "Dāvanu kartes kods {{proposed_code}} tika mainīts uz {{formatted_code}}, lai atbilstu formatēšanas noteikumiem.",
+            "gift_card_with_attributes_not_supported": "Dāvanu kartes ar pielāgotiem atribūtiem šajā norēķinā netiek atbalstītas.",
+            "gift_card_with_components_not_supported": "Dāvanu kartes ar komponentiem šajā norēķinu procesā netiek atbalstītas.",
+            "selling_plan_mismatch": "Abonements ir atjaunināts.",
+            "selling_plan_not_supported_b2b": "Abonementi netiek atbalstīti B2B norēķiniem.",
+            "fixed_selling_plans_not_supported_for_draft_orders": "Šī pirkuma opcija nav atbalstīta melnrakstu pasūtījumiem.",
+            "price_mismatch": "Iepriekš piedāvātā cena par šo preci bija nederīga, un tā ir atjaunināta.",
+            "inventory_not_found": "Šai precei krājumi nav atrasti.",
+            "product_not_published": "Produkts nav publicēts.",
+            "product_not_published_in_buyer_location": "Produkts nav pieejams pircēja pašreizējā atrašanās vietā.",
+            "duplicated_stable_id": "Šai preču līnijai ir tāds pats unikālais identifikators kā citai līnijai.",
+            "minimum_quantity_not_met": "Dažu preču daudzums neatbilst noteiktajam minimumam.",
+            "maximum_quantity_exceeded": "Dažu preču daudzums pārsniedz maksimāli pieļaujamo.",
+            "quantity_increment_not_met": "Dažu preču daudzums neatbilst pasūtījuma ierobežojumiem.",
+            "quantity_rules_not_met": "Dažu preču daudzums neatbilst pasūtījuma ierobežojumiem.",
+            "bundle_requires_components": "Šajā preču komplektā nav nevienas sastāvdaļas.",
+            "combined_listing_parent_not_purchasable": "Apvienotā saraksta galvenos produktus nevar iegādāties tieši.",
+            "title_too_long": "Preces nosaukums ir pārāk garš.",
+            "title_empty": "Preces nosaukums ir tukšs."
+          },
+          "buyer_identity": {
+            "business_customer_does_not_match_company": "Uzņēmuma kontaktpersonai nav piekļuves uzņēmumam.",
+            "customer_account_required": "Lai turpinātu, jums ir jāpiesakās.",
+            "company_location_required": "Lai turpinātu, klientam ir jāizvēlas uzņēmuma atrašanās vieta.",
+            "company_purchase_permission_required": "Klientam nav atļaujas veikt uzņēmuma pasūtījumus.",
+            "personal_order_not_allowed": "Šajā veikalā privātie pasūtījumi nav atļauti.",
+            "lost_access_to_company": "Klients ir zaudējis piekļuvi visiem uzņēmumiem.",
+            "contact_info_does_not_match_customer_account": "Kontaktinformācijai ir jāsakrīt ar kontu, kurā esat pierakstījies.",
+            "phone_number_does_not_match_expected_pattern": "Norādītais tālruņa numurs neatbilst paredzētajam formātam.",
+            "email_required": "Ja prece tiek iegādāta, izmantojot abonementu, ir nepieciešama e-pasta adrese.",
+            "email_domain_is_invalid": "Šo norādīto domēnu nevar atrisināt.",
+            "missing_contact_method": "Trūkst derīgas saziņas metodes.",
+            "checkout_completion_target_is_missing": "Nav norādīts norēķinu pabeigšanas mērķis.",
+            "invalid_customer_profile": "Tika sniegts nederīgs klienta profils.",
+            "customer_profile_access_restricted": "Norēķinu sistēmai nav atļaujas piekļūt klienta profilam.",
+            "checkout_completion_target_is_invalid_proc": "Nederīgs norēķinu pabeigšanas mērķis.",
+            "buyer_identity_presentment_currency_does_not_match": "Radās problēma, apstrādājot jūsu pasūtījumu. Mēģiniet vēlreiz pēc dažām minūtēm."
+          },
+          "delivery": {
+            "only_one_delivery_line_allowed": "Grozā drīkst būt tikai viena piegādes rinda."
+          }
+        }
+      },
+      "payment": {
+        "change_currency_section_description": "Izvēlieties valūtas opciju",
+        "no_real_orders_dev_store": "Šajā veikalā nav iespējams veikt īstus pasūtījumus vai īstus maksājumus.",
+        "loading": "Notiek maksājuma ielāde...",
+        "waiting_on_payment_methods": "Notiek pieejamo maksājuma veidu iegūšana...",
+        "apple_pay_payment_error": "Maksājumu neizdevās apstrādāt. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "taxes_not_included": "Nodokļi nav iekļauti",
+        "no_taxes_banner_content": "Šim pasūtījumam nodokļi netiks piemēroti. Kad būsiet iekasējis maksājumu, nodokļus vairs nevarēs pievienot.",
+        "paypal": {
+          "connect": "Noklikšķiniet, lai savienotu savu PayPal kontu"
+        },
+        "apple": {
+          "connect": "Noklikšķiniet, lai pievienotu savu Apple Pay kontu",
+          "not_available": "Apple Pay nav pieejams šajā pārlūkprogrammā. Lai pievienotu savu Apple Pay kontu, jums būs jāizmanto Safari pārlūkprogramma Apple ierīcē."
+        },
+        "google": {
+          "connect": "Noklikšķiniet, lai savienotu savu Google Pay kontu",
+          "error_authorizing": "Kļūda, autorizējot maksājumu"
+        },
+        "account_connected": "Konts ir pievienots.",
+        "mor_disclaimer_html": "Noklikšķinot zemāk un pabeidzot pasūtījumu, jūs piekrītat iegādāties savu(-s) preci(-s) no Global-e kā šī darījuma reģistrētā tirgotāja saskaņā ar Global-e <a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{mor_terms}\" href=\"%{terms_href}\">Noteikumiem un nosacījumiem</a> un <a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{privacy_policy}\" href=\"%{policy_href}\">Privātuma politiku</a>. Global-e ir starptautisks piegādes pakalpojumu sniedzējs uz %{shop_name}",
+        "lpm": {
+          "multibanco": {
+            "voucher": {
+              "label": "Multibanco",
+              "codes": {
+                "entity": "Vienība",
+                "reference_number": "Atsauce"
+              },
+              "steps": {
+                "pay_at_atm_or_online": "Apmaksājiet Multibanco bankomātā vai ar internetbankas starpniecību, izmantojot tālāk norādītos datus."
+              }
+            }
+          },
+          "konbini": {
+            "voucher": {
+              "label": "Konbini",
+              "outlets": {
+                "familymart": "FamilyMart",
+                "lawson": "Losons",
+                "ministop": "Ministop",
+                "seicomart": "Seicomart"
+              },
+              "codes": {
+                "reference_number": "Maksājuma kods",
+                "confirmation_number": "Apstiprinājuma kods"
+              },
+              "steps": {
+                "familymart": {
+                  "1": "Daudzfunkcionālajā kopēšanas iekārtā izvēlieties 代金支払い／チャージ (\"Payment / Charge\").",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet OK",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet OK",
+                  "4": "Pārbaudiet informāciju un nospiediet 確認 (\"Confirm\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā vai ar FamiPay."
+                },
+                "lawson": {
+                  "1": "Loppi terminālī atlasiet 各種番号をお持ちの方 (\"Man ir numurs\")",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet 次へ (\"Next\")",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet 次へ",
+                  "4": "Pārbaudiet datus un nospiediet \"Jā\" (\"はい\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā."
+                },
+                "ministop": {
+                  "1": "Loppi terminālī atlasiet 各種番号をお持ちの方 (\"Man ir numurs\")",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet 次へ (\"Next\")",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet 次へ",
+                  "4": "Pārbaudiet datus un nospiediet \"Jā\" (\"はい\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā."
+                },
+                "seicomart": {
+                  "1": "Pie kases pasakiet kasierim \"interneta maksājums\" (\"internet payment\").",
+                  "2": "Ievadiet savu maksājuma kodu klienta ekrānā un atlasiet 登録 (\"Enter\").",
+                  "3": "Ievadiet apstiprinājuma kodu un atlasiet 登録",
+                  "4": "Pārbaudiet informāciju un atlasiet OK",
+                  "5": "Maksāt skaidrā naudā"
+                },
+                "1": "Dodieties ar maksājuma kodu un apstiprinājuma kodu uz veikala termināli vai kasi un veiciet samaksu skaidrā naudā, pirms beidzas kupona derīguma termiņš."
+              },
+              "pay": "Apmaksāt %{amount}",
+              "choose_outlet": "Izvēlieties veikalu (Konbini), lai skatītu savus kodus un apmaksas kārtību",
+              "expires_at": "Beidz darboties: %{date}",
+              "expiry_date_time": "%{date} plkst. %{time} JST",
+              "expired_title": "Maksājuma kodam beidzies derīguma termiņš",
+              "expired": "Derīguma termiņš beidzies %{date}",
+              "copy_code": "Kopēt %{label}",
+              "code_copied": "Kopēts",
+              "keep_receipt": "Saglabājiet čeku kā maksājumu apliecinošu dokumentu",
+              "view_instructions": "Skatīt maksājuma instrukcijas",
+              "view_instructions_accessibility_label": "Skatīt maksājumu norādījumus (tiek atvērts jaunā cilnē)"
+            }
+          },
+          "oxxo": {
+            "voucher": {
+              "label": "OXXO",
+              "number": "Atsauces numurs",
+              "steps": {
+                "scan_barcode_at_oxxo": "Skenējiet svītrkodu tuvākajā OXXO veikalā."
+              },
+              "barcode_alt": "OXXO kupona svītrkods atsauces numuram %{reference_number}"
+            }
+          }
+        },
+        "pending_payment": {
+          "apple_wallet": {
+            "badge_alt": "Pievienot Apple Wallet",
+            "pass": {
+              "description": "%{shop_name} maksājuma talons",
+              "logo_text": "Maksājuma kvīts",
+              "store_label": "Veikals",
+              "expiry_date_label": "Derīguma termiņš",
+              "payment_due_label": "Maksājuma termiņš",
+              "reference_number_label": "Atsauces numurs",
+              "ordered_on_label": "Pasūtīts"
+            }
+          },
+          "due_notice": "Jūsu maksājums %{amount_due} apmērā ir jāveic līdz %{due_date}.",
+          "multibanco": {
+            "buyer_action_info": "Jūsu maksājums %{amount_due} apmērā ir jāveic.",
+            "instruction_html": "Veiciet maksājumu, izmantojot Multibanco vai tiešsaistē, izmantojot tālāk norādīto informāciju. Ja jums ir jautājumi vai vēlaties atjaunināt maksājuma datus, %{contact_us}.",
+            "entity": "Vienība",
+            "reference": "Atsauce",
+            "amount": "Summa",
+            "find_nearest_atm": "Atrast tuvāko bankomātu",
+            "label": "Multibanco",
+            "pay": "Apmaksāt %{amount}",
+            "expiry_date_time": "%{date} plkst. %{time}",
+            "expires_at": "Beidz darboties: %{date}",
+            "expired": "Derīguma termiņš beidzies %{date}",
+            "expired_title": "Maksājuma atsauce ir zaudējusi spēku",
+            "labelled_code": "%{label}: %{code}"
+          },
+          "oxxo": {
+            "label": "OXXO",
+            "number": "Atsauces numurs",
+            "reference_number": "Atsauces numurs:",
+            "steps": {
+              "1": "Skenējiet svītrkodu tuvākajā OXXO veikalā.",
+              "2": "Maksājiet precīzu summu skaidrā naudā kasē."
+            },
+            "pay": "Apmaksāt %{amount}",
+            "expiry_date_time": "%{date} plkst. %{time}",
+            "expires_at": "Beidz darboties: %{date}",
+            "expires_when_unknown": "Izlietot, pirms beidzas kupona derīguma termiņš",
+            "days_left": {
+              "one": "%{count} diena",
+              "other": "%{count} dienas"
+            },
+            "print_voucher": "Drukāt kuponu",
+            "print": {
+              "instructions_title": "Instrukcijas OXXO apmaksai:",
+              "important_details_title": "Svarīga informācija:"
+            },
+            "important_details": {
+              "canceled_by_expiry": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts līdz %{date}.",
+              "canceled_when_expired": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts pirms kupona derīguma termiņa beigām.",
+              "non_refundable": "OXXO pasūtījumi netiek atgriezti."
+            }
+          }
+        }
+      },
+      "tips": {
+        "title": "Pievienot dzeramnaudu",
+        "description": "Izrādi savu atbalstu %{shop_name} komandai",
+        "presets_description": "Izvēlieties dzeramnaudas procentuālo likmi",
+        "custom_label": "Pielāgota dzeramnauda",
+        "add_tip": "Pievienot dzeramnaudu",
+        "update_tip": "Atjauninājuma padoms",
+        "message": "Paldies, mēs to novērtējam.",
+        "preset_label": "%{tip_percent}%",
+        "no_tip_label": "Neviens",
+        "not_available_with_spi": "Nav pieejams ar Shop Pay Installments."
+      },
+      "open_graph_meta_tag": {
+        "title_with_products": {
+          "zero": "Iegādāties %{product_name}",
+          "one": "Iegādājieties %{product_name} un vēl %{count} preci",
+          "other": "Iegādājieties %{product_name} un vēl %{count} preces"
+        }
+      },
+      "subscriptions": {
+        "recurring_total_intervals": {
+          "day": {
+            "one": "diena",
+            "other": "%{count} dienas"
+          },
+          "week": {
+            "one": "nedēļa",
+            "other": "%{count} nedēļas"
+          },
+          "month": {
+            "one": "mēnesis",
+            "other": "%{count} mēneši"
+          },
+          "year": {
+            "one": "gads",
+            "other": "%{count} gadi"
+          }
+        },
+        "recurring_totals": "%{total_price} ik pēc %{interval}",
+        "recurring_totals_with_initial_order_shipping_discount": "Pirmais maksājums %{total_price_with_discount}, pēc tam %{recurring_total}",
+        "recurring_totals_with_policies": {
+          "first_cycles": {
+            "one": "Pirmais maksājums %{total_price}",
+            "other": "Pirmie %{count} maksājumi pa %{total_price} katrs"
+          },
+          "following_cycles": ", tad %{total_price} ik pēc %{interval}"
+        },
+        "recurring_totals_with_initial_order_shipping_discount_with_policies": {
+          "first_cycles": {
+            "one": ", tad %{count} maksājums par %{total_price}",
+            "other": ", pēc tam %{count} maksājumi pa %{total_price} katrs"
+          }
+        }
+      },
+      "customer_payment_methods": {
+        "page_title": "Maksājuma veidi",
+        "title": "Maksājuma veidi",
+        "update_card_button_label": "Atjaunināt karti",
+        "delete_customer_mandate": {
+          "generic_error": "Radās problēma, apstrādājot jūsu pieprasījumu.",
+          "success_message": "Jūsu maksājuma veids ir veiksmīgi izdzēsts"
+        }
+      },
+      "throttle": {
+        "too_many_attempts": {
+          "message": "Pārāk daudz mēģinājumu",
+          "description": "Mēģiniet vēlreiz pēc dažām minūtēm"
+        },
+        "line_to_check_out": "Jūs stāvat rindā, lai norēķinātos",
+        "cart_summary_heading": "Jūsu grozs",
+        "merchandise": {
+          "available": "Pieejams",
+          "sold_out": "Izpārdots"
+        },
+        "inventory": {
+          "partial_inventory_banner": "Daļa no jūsu groza precēm ir izpārdotas, un tās nebūs iespējams iegādāties norēķināšanās brīdī.",
+          "sold_out": {
+            "heading": "Jūsu grozā esošās preces ir izpārdotas",
+            "storefront_body": "Atgriezieties veikalā, lai turpinātu iepirkties",
+            "no_storefront_body": "Diemžēl prece, kuru vēlaties iegādāties, vairs nav pieejama.",
+            "link": "Atpakaļ uz veikalu"
+          }
+        },
+        "title": "Rinda",
+        "time_to_checkout_title": "Laiks izrakstīties — {{shopName}}",
+        "estimated_wait_time": {
+          "calculating": "Tiek aprēķināts paredzamais gaidīšanas laiks",
+          "less_than_one": "Paredzamais gaidīšanas laiks: mazāk nekā minūte",
+          "one": "Paredzamais gaidīšanas laiks: {{count}} minūtes",
+          "other": "Paredzamais gaidīšanas laiks: {{count}} minūtes"
+        },
+        "last_checked": "(Pēdējoreiz pārbaudīts: {{time}})",
+        "footer": {
+          "heading": "Neatjauniniet šo lapu, tā atjaunināsies automātiski.",
+          "body": "Preces grozā netiek rezervētas, līdz pabeidzat pirkuma noformēšanu."
+        }
+      },
+      "cart_checkout_validation": {
+        "runtime_error": "Radās problēma, apstrādājot jūsu pieprasījumu. Sazinieties ar veikala īpašnieku."
+      },
+      "no_address_location": {
+        "title": "Atrašanās vieta bez adreses",
+        "header": "Šai vietai nav norādītas piegādes adreses.",
+        "alt_header": "Trūkst piegādes adreses",
+        "message": "Sazinieties ar mums, lai pievienotu adresi šai atrašanās vietai un pabeigtu pasūtījumu.",
+        "email_us_button_label": "Nosūtiet mums e-pastu"
+      },
+      "shop_wallet": {
+        "title": "Shop Pay maks",
+        "description": "Izvēlies, ko vēlies izmantot šim pirkumam.",
+        "loading": "Notiek jūsu Shop Pay maka ielāde…",
+        "ready_status": "Jūsu Shop Pay maks ir gatavs. Izvēlieties maksājuma veidu.",
+        "cancel": "Atcelt",
+        "retry": "Mēģini vēlreiz",
+        "return_to_hatch": "Atgriezties pie Hatcha",
+        "choose_again": "Izvēlieties vēlreiz",
+        "payment_method": {
+          "heading": "Maksājuma veids",
+          "expiry": "Derīguma termiņš beidzas {{expiry}}"
+        },
+        "shipping_address": {
+          "heading": "Piegādes adrese"
+        },
+        "confirm": {
+          "label": "Apstiprināt izvēli",
+          "success_title": "Izvēle apstiprināta",
+          "success_message": "Atlasītie maka dati ir gatavi. Šis prototips tos vēl neatgriež partneru lietotnei.",
+          "retryable_error_title": "Atlase netiek kopīgota",
+          "retryable_error_message": "Mēģiniet vēlreiz apstiprināt savu maka izvēli.",
+          "terminal_error_title": "Maka savienojums tika pārtraukts",
+          "terminal_error_message": "Atgriezieties un vēlreiz atveriet Shop Pay."
+        },
+        "cancelled": {
+          "title": "Atlase atcelta",
+          "message": "Maksājumu informācija netika kopīgota un pirkums netika veikts."
+        },
+        "empty": {
+          "title": "Nav saglabātu karšu",
+          "message": "Šajā Shop Pay makā nav saglabātu karšu."
+        },
+        "ineligible": {
+          "title": "Nav piemērotu karšu",
+          "message": "Neviena no saglabātajām kartēm nevar tikt izmantota šim pirkumam."
+        },
+        "expired": {
+          "title": "Šī maka sesija ir beigusies.",
+          "message": "Atgriezieties partneru lietotnē un sāciet pirkumu vēlreiz."
+        },
+        "revoked": {
+          "title": "Shop Pay vairs nav pievienots.",
+          "message": "Pirms turpināšanas atkārtoti izveidojiet savienojumu ar Shop Pay partneru lietotnē."
+        },
+        "error": {
+          "title": "Jūsu Shop Pay maks netika ielādēts.",
+          "message": "Atgriezieties vietnē Hatch un mēģiniet vēlreiz atvērt Shop Pay."
+        }
+      },
+      "order_errors": {
+        "creation_failure": "Radās problēma, izveidojot jūsu pasūtījumu. Mēģiniet vēlreiz vai sazinieties ar mums, lai uzzinātu sīkāku informāciju.",
+        "network_failure": "Jūsu pasūtījumu neizdevās iesniegt tīkla kļūdas dēļ. Pārbaudiet savienojumu un mēģiniet vēlreiz.",
+        "inventory_reservation_failure": "Dažas preces vairs nav pieejamas."
+      },
+      "session_errors": {
+        "session_not_unique": "Radās problēma, apstrādājot jūsu pasūtījumu. Atsvaidziniet šo lapu, lai atgrieztos veikalā.",
+        "session_already_finished": "Šis pasūtījums jau ir iesniegts. Varat atgriezties veikalā, lai sāktu jaunu pasūtījumu."
+      },
+      "artifact_errors": {
+        "artifact_dissatisfaction_without_violation": "Radās problēma, apstrādājot jūsu pasūtījumu. Mēģiniet vēlreiz pēc dažām minūtēm."
+      },
+      "pickup_point": {
+        "location_is_currently_closed": "Slēgts",
+        "business_hours": "Darba laiks",
+        "no_business_hours": "Darba laiks nav pieejams",
+        "open_twenty_four_hours": "Atvērts 24/7",
+        "title": "Savākšanas punkts"
+      }
+    }
+  }
+}
