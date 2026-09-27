@@ -14,7 +14,15 @@
         "lpm": {
           "alipay": {
             "checkout_disclosure_charged_in_cny": "Veikals %{shop_name} apstrādās šo maksājumu kā %{amount_due} %{processing_currency}",
-            "post_purchase_disclosure": "Skatīt kopējo CNY summu Alipay makā"
+            "post_purchase_disclosure": "Skatīt kopējo CNY summu Alipay makā",
+            "checkout_disclosure": "Apstipriniet galīgo CNY kopsummu Alipay lietotnē",
+            "checkout_disclosure_with_alternative_payment_currency": "%{shop_name} apstrādās šo maksājumu kā %{amount_due} %{processing_currency}, ko Alipay pārvērš uz CNY"
+          },
+          "wechat_pay": {
+            "checkout_disclosure": "Apstipriniet galīgo CNY summu lietotnē WeChat",
+            "checkout_disclosure_with_alternative_payment_currency": "Veikals %{shop_name} apstrādās šo maksājumu kā %{amount_due} %{processing_currency}, ko WeChat konvertēs uz CNY.",
+            "checkout_disclosure_charged_in_cny": "Veikals %{shop_name} apstrādās šo maksājumu kā %{amount_due} %{processing_currency}",
+            "post_purchase_disclosure": "Skatiet kopējo CNY summu pakalpojumā WeChat"
           }
         },
         "pay_merchant_label": "Maksāt %{merchant_name}",
@@ -136,7 +144,123 @@
         "total_paid_label": "Kopā samaksāts",
         "total_price_label": "Kopējā cena",
         "total_outstanding_label": "Maksājamā summa",
-        "deposit_label": "Noguldījums"
+        "deposit_label": "Noguldījums",
+        "total_due_today_label": "Kopā maksājams šodien",
+        "total_due_later_label": "Kopējā summa, kas jāsamaksā vēlāk",
+        "partial_total_label": "Kopā",
+        "free_total_label": "Bezmaksas",
+        "free_shipping_total_label": "Bezmaksas",
+        "paid_label": "Apmaksāts",
+        "payment_due_label": "Maksājuma termiņš",
+        "vat_label_html": "Ieskaitot %{amount} nodokļos",
+        "duties_included_label": "Kopsummā ir iekļauti nodokļi un nodevas. Piegādes brīdī papildu maksa netiek piemērota.",
+        "discount_and_gift_card_savings_notice": "Pēc %{discount_amount} atlaidēm un %{gift_card_amount} dāvanu kartēm",
+        "discount_savings_notice": "Pēc %{discount_amount} atlaidēm",
+        "gift_card_savings_notice": "Pēc %{gift_card_amount} dāvanu kartēs",
+        "cost_table_title": "Izmaksu kopsavilkums",
+        "cost_table_item_column_header": "Vienība",
+        "cost_table_value_column_header": "Vērtība",
+        "description_label": "Apraksts",
+        "price_label": "Cena",
+        "price_per_item": {
+          "accessibility_label": "%{price} par vienību",
+          "label": "%{price}/gab."
+        },
+        "quantity_label": "Daudzums",
+        "product_change_label": "Mainīt",
+        "product_image_label": "Produkta attēls",
+        "product_image_quantity_label": "Daudzums",
+        "scroll_order_summary": "Ritiniet, lai skatītu vairāk vienumu",
+        "expand_order_summary_short": "Rādīt",
+        "collapse_order_summary_short": "Paslēpt",
+        "original_price": "Sākotnējā cena",
+        "sale_price": "Pārdošanas cena",
+        "compare_at_sale": "Izpārdošana (%{sale_amount})",
+        "total_updated_label": "Atjauninātā kopējā cena:",
+        "order_total_updated_label": "Atjauninātā kopsumma",
+        "total_already_paid_label": "Apmaksāts",
+        "unit_price": {
+          "accessible_separator": "par",
+          "content_html": "%{price}%{accessible_separator}%{per_unit}",
+          "per_item": {
+            "single": "%{price} gab.",
+            "one": "%{price} par %{count} vienību",
+            "other": "%{price} par %{count} vienībām"
+          },
+          "per_unit": {
+            "single": "%{price}/%{unit}",
+            "plural": "%{price}/%{count}%{unit}"
+          }
+        },
+        "gift_card_ending": "Dāvanu karte, kas beidzas ar %{last_characters}",
+        "estimated_tax_label": "Paredzamais nodoklis",
+        "multiple_shipping_lines_label": "Piegādes kopsumma",
+        "recurring_subtotal_label": "Atkārtotā starpsumma",
+        "recurring_total_label": "Atkārtota kopsumma",
+        "recurring_total_tooltip": "Neietver piegādi, nodokļus, muitas nodokļus vai piemērojamās atlaides.",
+        "confirmation_number_label": "Apstiprinājums Nr. %{confirmation_number}",
+        "higher_value_discount_applied": "<strong style=\"text-transform:uppercase\">%{code}</strong> nevarēja izmantot kopā ar jūsu esošajām atlaidēm.",
+        "percent_off_shipping": "%{percent}% atlaide piegādei",
+        "amount_off_shipping": "%{amount} atlaide piegādei",
+        "deferred_payment_info": {
+          "title": "Maksājums %{amount_due} apmērā ir jāveic līdz %{due_at}",
+          "description_html": "Ja jums ir jautājumi par pasūtījumu, %{contact_us}.",
+          "paid_today": "Šodien samaksāts kopā",
+          "paid_today_next": "Samaksāts šodien",
+          "due_on_fulfillment_title": "%{amount_due} maksājums jāveic izpildes brīdī",
+          "due_on_receipt_title": "%{amount_due} ir jāsamaksā pēc saņemšanas"
+        },
+        "deferred_balance_info": {
+          "title": "Atlikusī summa {{amount_due}} ir jāapmaksā līdz {{due_at}}",
+          "due_on_fulfillment_title": "{{amount_due}} atlikums jāapmaksā pēc izpildes"
+        },
+        "payment_terms_totals": {
+          "due_today": "Kopā maksājams šodien",
+          "due_today_next": "Jāiesniedz šodien",
+          "due_later": "Kopā apmaksai %{due_at}",
+          "due_on_fulfillment": "Kopējā summa apmaksai izpildes brīdī",
+          "due_on_fulfillment_next": "Apmaksājams izpildes brīdī",
+          "due_on_receipt": "Jāapmaksā saņemot",
+          "due_later_checkout_to_draft": "Kopējā summa, kas jāsamaksā vēlāk",
+          "total_paid": "Kopā samaksāts"
+        },
+        "maximum_discount_code_limit_reached": "Esat sasniedzis maksimālo atlaižu kodu skaitu. Noņemiet esošu kodu, lai izmantotu <strong style=\"text-transform:uppercase\">%{code}</strong>.",
+        "discount_code_application_failed": "<strong style=\"text-transform:uppercase\">%{code}</strong> pašlaik nedarbojas. Sazinieties ar mums, lai saņemtu palīdzību.",
+        "due_on_fulfillment": "Apmaksājams izpildes brīdī",
+        "gift_card_masked": "•••• %{last_characters}",
+        "subscriptions": "Abonementi",
+        "duties_label": "Pienākumi",
+        "duty_label": "Pienākums",
+        "duties_and_taxes_label": "Muitas nodevas un nodokļi",
+        "error_duties_tooltip": "Šis pasūtījums tiek sūtīts no citas valsts, tāpēc piegādes brīdī var tikt piemēroti muitas nodokļi un nodevas.",
+        "may_be_charged_on_delivery": "Var tikt iekasēts piegādes brīdī",
+        "total_updated_label_with_price": "Atjauninātā kopējā cena: %{totalPrice}",
+        "updated_shipping_method": "Atjauninātā piegādes metode: %{shipping_method}",
+        "recurring_payments": "Regulārie maksājumi",
+        "recurring_total_multiple_label": "Šim pasūtījumam ir periodiska maksa par vairākām precēm.",
+        "deferred_total_due_date_label": "Maksājamā summa līdz {{date}}",
+        "deferred_total_due_date_label_next": "Līdz %{date}",
+        "full_price": "Pilna cena: %{price}",
+        "custom_discount": "Pielāgota atlaide",
+        "expand_component_information": {
+          "one": "Rādīt %{count} vienumu",
+          "other": "Rādīt %{count} vienumus"
+        },
+        "collapse_component_information": {
+          "one": "Paslēpt %{count} vienumu",
+          "other": "Paslēpt %{count} vienumus"
+        },
+        "component_quantity_title": "%{quantity} × %{product_title}",
+        "discount_discovery": {
+          "add_code": "Pievienot atlaidi",
+          "back_to_finalize_order": "Atpakaļ, lai pabeigtu pasūtījumu",
+          "merchandise_quantity_label": {
+            "one": "%{count} vienība",
+            "other": "%{count} vienumi"
+          }
+        },
+        "alternative_payment_currency_total": "Iekasēta summa: %{amount_due}",
+        "alternative_payment_currency_chinese_yuan": "Apstipriniet galīgo ĶTR summu lietotnē %{wallet}."
       },
       "shipping": {
         "title": "Piegāde",
@@ -3475,7 +3599,59 @@
     "details": {
       "full_price": "Pilna cena",
       "deposit": "Noguldījums",
-      "remaining_balance": "Atlikusī summa"
+      "remaining_balance": "Atlikusī summa",
+      "trip_details": "Ceļojuma informācija",
+      "what_to_expect": "Ko sagaidīt",
+      "itinerary": "Maršruts",
+      "included": "Iekļauts",
+      "cancellation_policy": "Atcelšanas politika",
+      "to": "uz",
+      "dates": "Datumi",
+      "location": "Atrašanās vieta",
+      "duration": "Ilgums",
+      "duration_days": "{{ count }} dienas",
+      "walking_distance": "Gājiena attālumā",
+      "walking_distance_value": "apm. {{ distance }} km dienā",
+      "group_size": "Grupas lielums",
+      "group_size_value": "maks. {{ size }} cilvēki"
+    },
+    "gallery": {
+      "show_image": "Rādīt attēlu {{ number }}",
+      "view_full_size": "Skatīt pilnā izmērā"
+    },
+    "standard": {
+      "purchase_summary": "Pirkuma kopsavilkums",
+      "rent_summary": "Īres kopsavilkums",
+      "tax_note": "Nodoklis iekļauts. Piegāde tiks aprēķināta norēķinu brīdī.",
+      "quantity": "Daudzums",
+      "decrease": "Samazināt daudzumu",
+      "increase": "Palielināt daudzumu",
+      "unit_price": "Cena",
+      "rental_length": "Iznomāšanas ilgums",
+      "days": {
+        "one": "{{ count }} diena",
+        "other": "{{ count }} dienas"
+      },
+      "day_rate": "Cena par dienu",
+      "total": "Kopā",
+      "add_to_cart": "Pievienot grozam",
+      "sold_out": "Izpārdots",
+      "related": "Saistītie produkti",
+      "related_subtext": "Atrodi sev piemērotāko."
+    },
+    "hike": {
+      "pay_today": "Maksājiet šodien",
+      "deposit_amount_html": "{{ price }} depozīts",
+      "quantity": "Daudzums",
+      "decrease": "Samazināt daudzumu",
+      "increase": "Palielināt daudzumu",
+      "summary": "Rezervācijas kopsavilkums",
+      "full_price": "Pilna brauciena cena",
+      "reserve": "Apmaksājiet šodien, lai rezervētu savu vietu",
+      "balance": "Atlikusī summa ({{ days }} dienas pirms ceļojuma)",
+      "total": "Kopā",
+      "add_to_cart": "Pievienot grozam",
+      "sold_out": "Izpārdots"
     }
   },
   "contact": {
@@ -3510,6 +3686,92 @@
     "remove": "Noņemt",
     "remove_item": "Noņemt {{ title }}",
     "product": "Produkts",
-    "quantity": "Daudzums"
+    "quantity": "Daudzums",
+    "quantity_for": "Daudzums {{ title }}",
+    "total": "Kopā",
+    "subtotal": "Starpsumma",
+    "dates": "Datumi",
+    "empty": "Jūsu grozs ir tukšs."
+  },
+  "general": {
+    "accessibility": {
+      "account": "Konts",
+      "cart": "Grozs",
+      "menu": "Izvēlne",
+      "primary_navigation": "Primārais",
+      "previous": "Iepriekšējais",
+      "next": "Nākamais",
+      "image_gallery": "Attēlu galerija",
+      "back_to_top": "Atpakaļ uz augšu",
+      "close": "Aizvērt"
+    },
+    "language": {
+      "label": "Valoda"
+    },
+    "social": {
+      "follow_instagram": "Sekojiet mums Instagram"
+    },
+    "footer": {
+      "contacts": "Kontaktpersonas",
+      "menu": "Izvēlne",
+      "company_details": "Uzņēmuma informācija",
+      "registration_number": "Reģ. numurs {{ number }}",
+      "license_number": "Licences numurs {{ number }}",
+      "copyright": "© {{ year }} {{ shop_name }}. Visas tiesības aizsargātas."
+    }
+  },
+  "testimonials": {
+    "read_more": "Lasīt vairāk",
+    "read_less": "Lasiet mazāk",
+    "empty": "Pagaidām nav publicēta neviena atsauksme."
+  },
+  "reviews": {
+    "read_more": "Lasīt vairāk",
+    "full_review": "Pilns apskats"
+  },
+  "customers": {
+    "login": {
+      "email": "E-pasts",
+      "password": "Parole",
+      "submit": "Pierakstīties",
+      "title": "Pieteikties"
+    }
+  },
+  "collections": {
+    "title": "Kolekcijas",
+    "hikes": {
+      "filters": "Filtri",
+      "price_from": "No {{ price }}",
+      "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
+    },
+    "gear": {
+      "add": "Pievienot {{ title }} grozam",
+      "added": "Pievienots grozam",
+      "choose": "Izvēlieties opcijas priekš {{ title }}",
+      "view_images": "Skatīt {{ title }} attēlus",
+      "sold_out": "Izpārdots",
+      "sale": "Izpārdošana",
+      "price_from": "No {{ price }}",
+      "per_day": "/ dienā",
+      "no_results": "Šajā kolekcijā vēl nav pievienots nekāds aprīkojums."
+    }
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Pievienot Apple Wallet",
+    "card": "Dāvanu karte",
+    "expired": "Šī dāvanu karte ir zaudējusi derīguma termiņu",
+    "expires_on": "Beidzas: {{ expires_on }}",
+    "use_at_checkout": "Izmantojiet šo dāvanu karti norēķinoties"
+  },
+  "password": {
+    "title": "Šis veikals ir privāts.",
+    "password": "Parole",
+    "enter": "Ienākt"
+  },
+  "search": {
+    "title": "Meklēt",
+    "placeholder": "Meklēt rakstus, lapas vai produktus",
+    "submit": "Meklēt",
+    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}"
   }
 }
