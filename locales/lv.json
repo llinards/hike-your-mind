@@ -1349,10 +1349,148 @@
             "important_details": {
               "canceled_by_expiry": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts līdz %{date}.",
               "canceled_when_expired": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts pirms kupona derīguma termiņa beigām.",
-              "non_refundable": "OXXO pasūtījumi netiek atgriezti."
+              "non_refundable": "OXXO pasūtījumi netiek atgriezti.",
+              "tracking_after_payment": "Sūtījuma izsekošanas informāciju saņemsiet vienas darbdienas laikā pēc maksājuma veikšanas."
+            },
+            "barcode_alt": "OXXO kupona svītrkods atsauces numuram %{reference_number}"
+          }
+        },
+        "update_payment_method": "Atjaunināt maksājuma veidu",
+        "order_covered_by_store_credit_notice": "Jūsu pasūtījums ir segts ar veikala kredītu.",
+        "order_covered_by_redeemables_notice": "Jūsu pasūtījums ir apdrošināts.",
+        "store_credit": {
+          "label": "Veikala kredīts",
+          "apply_label": "Izmantot veikala kredītu",
+          "add_label": "Pievienot veikala kredītu",
+          "manage_label": "Pārvaldīt veikala kredītu",
+          "buying_gift_card": "Veikala kredītu nevar izmantot dāvanu kartes iegādei.",
+          "no_fixed_selling_plans": "Veikala kredītu nevar izmantot, izvēloties atliktā maksājuma iespējas."
+        },
+        "clear": "Skaidrs",
+        "billing_must_match_shipping_notice": "Maksājuma veida rēķina saņemšanas adresei ir jāsakrīt ar piegādes adresi.",
+        "same_billing_address_checkbox_label": "Izmantot piegādes adresi kā rēķina adresi",
+        "location_billing_address_label": "Norēķinu adrese",
+        "fact_billing_address_label": "Norēķinu adrese",
+        "location_shipping_address_label": "Piegādes adrese",
+        "use_order_billing_address_label": "Izmantot pasūtījuma rēķina adresi",
+        "use_location_billing_address_label": "Izmantot atrašanās vietas norēķinu adresi",
+        "use_location_shipping_address_label": "Izmantot atrašanās vietas piegādes adresi",
+        "no_working_method_error": "Šis veikals pašlaik nevar pieņemt maksājumus. Atsvaidziniet šo lapu vai atgriezieties vēlāk.",
+        "brand_not_available": "Šis veikals nepieņem {{brand}}. Lūdzu, izmantojiet citu karti maksājuma veikšanai.",
+        "shipping_rate_updated": "Pieejamās piegādes metodes ir atjauninātas. Apstipriniet savu izvēli pirms pasūtījuma noformēšanas.",
+        "billing_address_invalid_phone": "Atjauniniet tālruņa numuru savā norēķinu adresē kontam {{label}} {{last_digits}}, lai turpinātu.",
+        "billing_address_invalid_phone_no_card": "Lai turpinātu, atjauniniet tālruņa numuru savā norēķinu adresē.",
+        "preview_not_available": {
+          "title": "Priekšskatījums nav pieejams",
+          "content": "Neuztraucieties, šī ātrā norēķināšanās sistēma darbojas jūsu klientiem.",
+          "button": "Labi"
+        },
+        "card_fields": {
+          "errors": {
+            "required": {
+              "issue_date": "Ievadiet derīgu izdošanas datumu",
+              "issue_number": "Ievadiet derīgu problēmas numuru"
+            },
+            "invalid": {
+              "verification_value": "Ievadiet derīgu CVV vai drošības kodu"
             }
           }
-        }
+        },
+        "simulated_checkout": "Priekšskatījums drīzumā",
+        "simulated_express_checkout": "Maki redaktora priekšskatījumā nav pieejami jūsu reģiona vai pārlūkprogrammas dēļ",
+        "vaulting_agreement_label": "Saglabāt manu maksājumu informāciju uzņēmumā %{company}, lai norēķinātos ātrāk",
+        "business_customer_vaulting_payment_label": "Saglabājiet šo maksājuma veidu norēķinu procesā un pilnvarojiet %{company} veikt maksājumus par turpmākajiem pirkumiem šajā atrašanās vietā. Visas šai atrašanās vietai piesaistītās kontaktpersonas var izmantot šo maksājuma veidu.",
+        "business_customer_with_bank_account_vaulting_payment_label": "Saglabājiet šo maksājuma veidu norēķinu brīdī un pilnvarojiet %{company} norakstīt līdzekļus no jūsu konta turpmākiem pirkumiem, kurus apstiprināsiet šajā atrašanās vietā, līdz brīdim, kad atcelsiet šo atļauju. Visas šai atrašanās vietai piesaistītās kontaktpersonas var izmantot šo maksājuma veidu.",
+        "purchase_options_and_vaulting_agreement_label": "Viena vai vairākas preces jūsu grozā ir atliktā maksājuma vai abonēšanas preces. Turpinot maksājumu, jūs piekrītat, ka no jūsu maksājuma metodes tiks automātiski ieturēta maksa par šajā lapā norādīto cenu un biežumu, līdz termiņa beigām vai līdz brīdim, kad atcelsiet abonementu. Uz visām atteikšanās reizēm attiecas %{cancellation_policy_label}.",
+        "purchase_options_cancellation_policy_label": "atteikuma politika",
+        "use_different_credit_card_label": "Izmantojiet citu karti",
+        "saved_credit_card": "Jūsu saglabātā kredītkarte",
+        "saved_credit_card_info": "Pēdējie četri cipari",
+        "saved_credit_card_cvv_verification": "Verifikācijas nolūkos ievadiet savas kartes drošības kodu.",
+        "saved_credit_card_actions": {
+          "edit": "Rediģēt",
+          "delete": "Dzēst"
+        },
+        "saved_credit_cards_modal": {
+          "view_all_label": "Skatīt visas saglabātās kartes",
+          "done": "Izpildīts",
+          "cancel": "Atcelt"
+        },
+        "add_credit_card_modal": {
+          "title": "Pievienot karti",
+          "save": "Saglabāt",
+          "cancel": "Atcelt"
+        },
+        "delete_credit_card_modal": {
+          "title": "Dzēst karti",
+          "confirmation": "Vai tiešām vēlaties dzēst {{brandName}}, kas beidzas ar {{lastDigits}}?",
+          "cancel": "Atcelt",
+          "delete": "Dzēst"
+        },
+        "edit_credit_card_modal": {
+          "title": "Rediģēt karti",
+          "done": "Izpildīts",
+          "cancel": "Atcelt",
+          "description": "Jūs varat mainīt tikai savas kartes norēķinu adresi.",
+          "fields": {
+            "default": "Iestatīt kā noklusējuma",
+            "card_number": "Kartes numurs",
+            "expiry": "Derīguma termiņš",
+            "security_code": "Drošības kods",
+            "name": "Vārds uz kartes",
+            "billing": "Rēķinu izrakstīt"
+          }
+        },
+        "expired_cards_info": {
+          "one": "Ir %{count} derīguma termiņu beigusī karte, kuru varat apskatīt un rediģēt savā kontā.",
+          "other": "Ir %{count} beigušās kartes, kuras varat skatīt un rediģēt savā kontā."
+        },
+        "local_payment_method_receiver_notice": "Pēc pasūtījuma veikšanas, Jums tiks nosūtīta informācija par apmaksu. Lūdzam veikt apmaksu bankomātā vai internetbankā {{dueDays}} dienu laikā.",
+        "order_edit_banner_title": "{{amount_owed}} apmaksa ir nepieciešama",
+        "order_edit_banner_subtitle": "Jūsu pasūtījums {{order_number}} tika atjaunināts. Pārskatiet šīs izmaiņas, pēc tam samaksājiet, lai apstiprinātu savu pasūtījumu.",
+        "order_edit_banner_items_added": {
+          "one": "Pievienots",
+          "other": "Pievienots %{count}"
+        },
+        "order_edit_banner_items_removed": {
+          "in_full": "Izņemts",
+          "with_quantities": "Noņemts {{delta}} no {{quantity}}"
+        },
+        "order_edit_banner_items_returned": {
+          "in_full": "Atgrieza {{quantity}}",
+          "with_quantities": "Atgriezts {{delta}} no {{quantity}}"
+        },
+        "order_edit_banner_items_return_line_item_removed": {
+          "in_full": "Izņemts no atgriešanas",
+          "with_quantities": "No atgriešanas atskaitīts {{delta}}"
+        },
+        "order_edit_banner_single_item_added": "Pievienots",
+        "order_edit_banner_multiple_items_added": "Pievienots {{amount}}",
+        "order_edit_banner_single_item_removed": "Izņemts",
+        "order_edit_banner_multiple_items_removed": "Noņemts {{amount}}",
+        "order_edit_banner_single_item_returned": "Atgriezts",
+        "order_edit_banner_multiple_items_returned": "Atgriezta {{amount}}",
+        "order_edit_banner_single_item_return_line_item_removed": "Izņemts no atgriešanas",
+        "order_edit_banner_multiple_items_return_line_item_removed": "No atgriešanas summas izņemti {{amount}}",
+        "order_edit_banner_single_item_updated": "Atjaunināts",
+        "order_edit_banner_updated_order_label": "Atjaunināts pasūtījums",
+        "order_edit_banner_previous_taxes_label": "Iepriekšējie nodokļi:",
+        "order_edit_banner_new_taxes_label": "Jauni nodokļi:",
+        "order_edit_banner_no_taxes_label": "Neviens",
+        "gift_card_wrapper": {
+          "heading": "Dāvanu karte",
+          "apply_gift_card_label": "Izmantot dāvanu karti",
+          "apply_another_gift_card_label": "Izmantot citu dāvanu karti",
+          "gift_card_label": "Dāvanu karte %{identifier}",
+          "payment_tag": "Dāvanu karte",
+          "add_label": "Pievienot dāvanu karti",
+          "manage_label": "Pārvaldīt dāvanu kartes"
+        },
+        "gift_card_store_credit": {
+          "add_label": "Pievienojiet dāvanu karti vai veikala kredītu",
+          "manage_label": "Pārvaldīt dāvanu kartes vai veikala kredītu"
+        },
+        "gift_card_checkbox_label": "Pielietot dāvanu karti"
       },
       "local_pickup": {
         "location_information_far_away_one_item": {
