@@ -283,8 +283,104 @@
           "prepaid_initial_order_discounted_with_per_delivery_price": "Pirmās piegādes izmaksas %{discounted_shipping_price} %{prepaid_delivery_frequency} (%{discounted_cost_per_delivery})",
           "prepaid_initial_order_discounted_with_renewal": "Pirmā piegādes maksa %{discounted_shipping_price} %{prepaid_delivery_frequency}, pēc tam %{shipping_price} %{billing_cycle}",
           "prepaid_initial_order_discounted_with_per_delivery_price_and_renewal": "Pirmās piegādes izmaksas %{discounted_shipping_price} %{prepaid_delivery_frequency} (%{discounted_cost_per_delivery}), pēc tam %{shipping_price} %{billing_cycle}",
-          "shipping_price_included": "Iekļauts"
-        }
+          "shipping_price_included": "Iekļauts",
+          "recurring_order_shipping_price": "kam seko %{recurring_order_shipping_price}",
+          "first_order_shipping_price_included": "Pirmais pasūtījums iekļauts, kam seko %{recurring_order_shipping_price}",
+          "first_order_different_shipping_price": "%{first_order_shipping_price} (%{per_delivery_price} par piegādi), kam seko %{recurring_order_shipping_price}",
+          "first_n_order_free": {
+            "one": "Pirmais pasūtījums bez maksas",
+            "other": "Pirmie %{count} pasūtījumi bez maksas"
+          },
+          "free_for_first_n_order": {
+            "one": "Pirmajam pasūtījumam",
+            "other": "Pirmo %{count} pasūtījumu gadījumā"
+          }
+        },
+        "one_time_purchase_shipping": "Vienreizēja piegāde",
+        "duties_and_taxes_title": "Muitas nodevas un nodokļi",
+        "shipping_information_required_notice": "Nepieciešama nosūtīšanas informācija. {{link}}.",
+        "shipping_information_redirect_link": "Ievadiet savu informāciju šeit",
+        "loading_progressive_rates": "Meklējam vēl cenas…",
+        "no_other_methods_available": "Nav pieejamas citas metodes",
+        "duties_and_taxes_options": {
+          "ddu_title": "Apmaksa piegādes brīdī",
+          "ddu_caption": "Var tikt piemērota papildu maksa",
+          "ddp_title": "Maksāt tagad",
+          "ddp_caption": "Bez papildu maksas par piegādi"
+        },
+        "shipping_method_combinations": {
+          "without_separator": "%{firstMethod}, %{secondMethod}",
+          "with_separator": "%{rest}, %{current},",
+          "combination": "%{rest} un %{current}"
+        },
+        "shipping_used_as_billing_notice": "Šī tiks izmantota arī kā jūsu rēķina saņemšanas adrese šim pasūtījumam.",
+        "address_update": "Atjaunināt adresi",
+        "shipping_address_title": "Nosūtīt uz",
+        "shipping_address_rollup_accessibility_label": "Piegādes adreses opcijas",
+        "third_party_address_timeout": "Neizdevās ielādēt adreses. Mēģiniet vēlreiz vai izmantojiet citu adresi.",
+        "third_party_address_error": "Ielādējot adrešu atlasi, radās kļūda. Ievadiet savu adresi manuāli zemāk.",
+        "third_party_payment_timeout": "Neizdevās ielādēt maksājuma veidus. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "third_party_payment_error": "Radās kļūda, ielādējot maksājuma veida izvēli. Lūdzu, izmantojiet citu maksājuma veidu.",
+        "add_address": "Izmantojiet citu adresi",
+        "add_delivery_instructions": "Pievienot piegādes norādes",
+        "edit": "Rediģēt",
+        "delete": "Dzēst",
+        "back": "Atpakaļ",
+        "address_more": "Citas darbības šai adresei",
+        "address_edit": "Rediģēt adresi",
+        "address_delete": "Dzēst adresi",
+        "address_confirm": "Vai tiešām vēlaties izdzēst šo adresi no sava konta?",
+        "address_default": "Iestatīt kā noklusējuma",
+        "address_form": {
+          "add_address": "Pievienot adresi",
+          "save": "Saglabāt",
+          "cancel": "Atcelt",
+          "edit": "Rediģēt adresi",
+          "update": "Saglabāt izmaiņas",
+          "generic_error": "Radās problēma, saglabājot jūsu adresi. Mēģiniet vēlreiz.",
+          "one_time_address_subtitle": "Izmantojiet vienreizēju adresi šim pasūtījumam"
+        },
+        "different_shipping_method_summary": "Ievadiet citu piegādes adresi, lai skatītu pieejamās piegādes metodes",
+        "invalid_shipping_method_summary": "Ievadiet derīgu piegādes adresi, lai skatītu pieejamās piegādes metodes",
+        "invalid_shipping_method_summary_selected": "Izvēlieties citu piegādes adresi, lai skatītu pieejamās piegādes metodes",
+        "method_summary": {
+          "incomplete_address_entered": "Ievadiet pilnu piegādes adresi, lai skatītu pieejamās piegādes metodes",
+          "incomplete_address_selected": "Izvēlieties pilnu piegādes adresi, lai skatītu pieejamās piegādes metodes"
+        },
+        "local_pickup": {
+          "search_address": "Meklēt adresi",
+          "rollup_title": "Saņemšanas vieta",
+          "rollup_accessibility_label": "Saņemšanas vietas opcijas"
+        },
+        "missing_shipping_address": "Piegādes adrese nav norādīta",
+        "split_shipping_merchandise_quantity_label_standard": "%{quantity} vienumi",
+        "split_shipping_merchandise_quantity_label_additional": "+vēl %{quantity}",
+        "split_shipping_merchandise_shipment_number": "Sūtījums %{number} no %{total}",
+        "pre_order_ships_now": "Nosūtīt tagad",
+        "pre_order_ships_later": "Izsūta vēlāk",
+        "pre_order_ships_date": "Izsūtīšanas datums: %{date}",
+        "split_shipping_shipped_by_shop": "Nosūtījis %{shop_name}",
+        "split_shipping_multiple_shipment_label": "Vairāki sūtījumi",
+        "split_shipping_shipping_label": "Metode",
+        "split_shipping_shipment_notice": "Jūsu pasūtījums tiks piegādāts %{quantity_shipments}",
+        "split_shipping_first_shipment_notice": "Jūsu pirmais pasūtījums pienāks %{quantity_shipments}",
+        "split_shipping_multiple_shipment_quantity_label": "%{quantity} sūtījumi",
+        "split_shipping_multiple_shipment_notice": "Jūsu pasūtījums tiks piegādāts vairākos sūtījumos",
+        "split_shipping_multiple_shipment_notice_one_time_purchase": "Jūsu pasūtījums tiks piegādāts %{quantity} sūtījumos",
+        "split_shipping_shipment_count_notice_one_time_purchase": {
+          "one": "Jūsu pasūtījums tiks piegādāts %{count} sūtījumā",
+          "other": "Jūsu pasūtījums tiks piegādāts %{count} sūtījumos"
+        },
+        "split_shipping_more_shipping_options": "Vairāk piegādes iespēju",
+        "split_shipping_shipment_number": "Sūtījums %{number}",
+        "split_shipping_option_free": "Bezmaksas piegāde",
+        "split_shipping_option_lowest_price": "Zemākā cena",
+        "split_shipping_option_fastest": "Ātrākais",
+        "split_shipping_option_recommended": "Ieteicams",
+        "split_shipping_option_custom": "Pielāgots",
+        "add_shipping_address": "Pievienot piegādes adresi",
+        "add_new_delivery_address": "Pievienot jaunu piegādes adresi",
+        "choose_new_address": "Izvēlieties jaunu adresi"
       },
       "payment_errors": {
         "processing_error_checkout_as_guest": "Maksājuma apstrādes laikā radās problēma. Mēģiniet vēlreiz, izmantojot citu maksājuma veidu, vai {{checkout_as_guest_link}}.",
@@ -1704,6 +1800,30 @@
         "saved_address_option_description": {
           "one": "Jums ir {{count}} saglabāta adrese.",
           "other": "Jums ir saglabātas {{count}} adreses."
+        }
+      },
+      "localized_fields": {
+        "additional_information": {
+          "title": "Papildu informācija",
+          "tax_credential_br": "CPF/CNPJ",
+          "shipping_credential_br": "CPF/CNPJ",
+          "shipping_credential_kr": "Personas muitas kods",
+          "shipping_credential_cn": "Iedzīvotāja personas kods",
+          "tax_credential_it": "Nodokļu maksātāja kods (pēc izvēles)",
+          "tax_email_it": "PEC (pēc izvēles)",
+          "tax_credential_cl": "RUT",
+          "shipping_credential_cl": "RUT",
+          "tax_credential_co": "Nodokļu maksātāja reģistrācijas numurs / PVN",
+          "tax_credential_type_co": "Dokumenta veids",
+          "shipping_credential_co": "Nodokļu maksātāja reģistrācijas numurs / PVN",
+          "shipping_credential_type_co": "Dokumenta veids",
+          "tax_credential_cr": "Identifikācijas numurs/RUT",
+          "shipping_credential_cr": "Identifikācijas numurs/RUT",
+          "tax_credential_ec": "CI/RUC/PVN",
+          "shipping_credential_ec": "CI/RUC/PVN",
+          "tax_credential_gt": "NIF/PVN",
+          "shipping_credential_gt": "NIF/PVN",
+          "tax_credential_id": "NPWP"
         }
       }
     },
