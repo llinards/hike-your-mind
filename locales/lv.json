@@ -808,6 +808,87 @@
           "checkout_source": {
             "revoked": "Šī pasūtījuma noformēšana vairs nav pieejama."
           }
+        },
+        "full_price": "Pilna cena:",
+        "title": "Izrakstīšanās - {{shopName}}",
+        "full_title": "{{pageTitle}} — {{shopName}} — Kase",
+        "loading": "Notiek ielāde…",
+        "loading_title": "Izrakstīšanās - {{shopName}}",
+        "google_map_title": "Google kartes",
+        "confirm_order_button_label": "Apstiprināt pasūtījumu",
+        "submit_order_button_label": "Iesniegt pasūtījumu",
+        "submit_for_review_button_label": "Iesniegt izskatīšanai",
+        "submit_for_review_notice_label": "Maksājums nebūs jāveic, kamēr jūsu pasūtījums netiks izskatīts",
+        "continue_to_payment_plans_button_label": "Turpināt uz maksājumu plāniem",
+        "back_button_label": "Atgriezt",
+        "choose_delivery_strategy": "Izvēlieties piegādes veidu",
+        "autocomplete_zero_item": "Preču nav pieejams",
+        "autocomplete_powered_by_google": "Darbojas, izmantojot {{brandName}}",
+        "submit": "Iesniegt",
+        "processing": "Apstrādā…",
+        "stepper": {
+          "increase": "Palielināt {{type}}",
+          "decrease": "Samazināt {{type}}",
+          "minimum_reached": "Sasniedzis minimumu: {{value}}",
+          "maximum_reached": "Maksimālais skaits: {{value}} ir sasniegts"
+        },
+        "remove_chip": "Noņemt vienumu",
+        "remove_item": "Noņemt %{label}",
+        "remove_tag": "Noņemt tagu",
+        "dates": {
+          "weekdays": {
+            "monday": "Pirmdiena",
+            "tuesday": "Otrdiena",
+            "wednesday": "Trešdiena",
+            "thursday": "Ceturtdiena",
+            "friday": "Piektdiena",
+            "saturday": "Sestdiena",
+            "sunday": "Svētdiena"
+          },
+          "weekdays_abbreviation": {
+            "monday": "Mo",
+            "tuesday": "Tu",
+            "wednesday": "Mēs",
+            "thursday": "Tas",
+            "friday": "Tiešām",
+            "saturday": "Sa",
+            "sunday": "Su"
+          },
+          "months": {
+            "january": "Janvāris",
+            "february": "Februāris",
+            "march": "Marts",
+            "april": "Aprīlis",
+            "may": "Maijs",
+            "june": "Jūnijs",
+            "july": "Jūlijs",
+            "august": "Augusts",
+            "september": "Septembris",
+            "october": "Oktobris",
+            "november": "Novembris",
+            "december": "Decembris"
+          }
+        },
+        "datepicker": {
+          "show_previous_month": "Rādīt iepriekšējo mēnesi, {{month}} {{year}}",
+          "show_next_month": "Rādīt nākamo mēnesi, {{month}} {{year}}",
+          "range_start": "Diapazona sākums",
+          "in_range": "Sasniedzamības robežās",
+          "range_end": "Diapazona beigas"
+        },
+        "map": {
+          "cluster_title": {
+            "one": "{{number}} atzīmju kopa",
+            "other": "Klasteris ar {{number}} marķieriem"
+          }
+        },
+        "sheet": {
+          "expand": "Izvērst"
+        },
+        "dropzone": {
+          "add_file": "Pievienot failu",
+          "invalid_file_type": "Faila tips netiek atbalstīts",
+          "dragged_over": "Lai augšupielādētu, nometiet failu šeit"
         }
       },
       "field_errors": {
@@ -2409,7 +2490,41 @@
         "different_shipping_address_text": "Izmantojiet vienreizēju adresi šim pasūtījumam",
         "change_company_location_link_label": "Mainīt uzņēmuma atrašanās vietu",
         "change_location_link_label": "Mainīt atrašanās vietu",
-        "ship_to_company": "Piegādāt uz {{companyName}}"
+        "ship_to_company": "Piegādāt uz {{companyName}}",
+        "title": "Informācija",
+        "address_title": "Adrese",
+        "shipping_used_as_billing_notice": "Šī tiks izmantota arī kā jūsu rēķina saņemšanas adrese šim pasūtījumam.",
+        "delivery_option_title": "Piegādes veids",
+        "contact_method_title": "Kontakti",
+        "email_label": "E-pasts",
+        "email_rollup_accessibility_label": "E-pasta opcijas",
+        "email_placeholder": "E-pasts",
+        "email_or_phone_label": "E-pasts vai mobilā tālruņa numurs",
+        "email_or_phone_placeholder": "E-pasts vai mobilā tālruņa numurs",
+        "field_saved_label": "Saglabāts",
+        "field_tooltip_helper_text": "Tiek izmantots pasūtījuma apstiprināšanai un atgādinājumiem par atstātu iepirkumu grozu.",
+        "field_tooltip_accessibility_label": "Plašāka informācija par to, kā tiek izmantota jūsu kontaktinformācija",
+        "stored_addresses_label": "Saglabātās adreses",
+        "available_addresses_label": "Pieejamās adreses",
+        "new_address_label": "Izmantojiet jaunu adresi",
+        "first_name_label": "Vārds",
+        "optional_first_name_label": "Vārds (neobligāts)",
+        "last_name_label": "Uzvārds",
+        "company_label": "Uzņēmums",
+        "storefront_link": "tirgotāja vietne",
+        "company_attention_label": "Uzņēmums/Uzmanībai",
+        "optional_company_attention_label": "Uzņēmums/Kontaktpersona (neobligāti)",
+        "optional_company_label": "Uzņēmums (nav obligāti)",
+        "address1_label": "Adrese",
+        "street_name_label": "Iela",
+        "optional_street_name_label": "Iela (neobligāti)",
+        "street_number_label": "Ēkas numurs",
+        "optional_street_number_label": "Ēkas numurs (neobligāti)",
+        "address2_label": "Dzīvoklis, apartamenti u. c.",
+        "optional_address2_label": "Dzīvoklis, numurs utt. (pēc izvēles)",
+        "neighborhood_label": "Apkaime",
+        "optional_neighborhood_label": "Apkaime (neobligāti)",
+        "barangay_label": "Barangaja"
       },
       "delivery_options": {
         "free_total_label": "Bezmaksas",
@@ -3109,6 +3224,21 @@
             "signature_mismatch": "Preces paraksta neatbilstība rindai %{stable_id}."
           }
         }
+      },
+      "embed": {
+        "header": {
+          "review_order": "Pārskatiet savu pasūtījumu"
+        },
+        "shipping": {
+          "shipping_options": "Skatīt visas piegādes iespējas"
+        },
+        "payment": {
+          "payment_options": "Skatīt visas maksājumu iespējas"
+        }
+      },
+      "payment_collection": {
+        "cancelled": "Šis maksājums vairs nav nepieciešams. Sīkāku informāciju skatiet pasūtījuma lapā.",
+        "paid": "Šis maksājums jau ir iesniegts. Lai iegūtu sīkāku informāciju, apmeklējiet pasūtījuma lapu."
       }
     },
     "errors": {
