@@ -707,6 +707,342 @@
       },
       "payment_gateway": {
         "credit_card_label": "Kredītkarte"
+      },
+      "order_summary": {
+        "lpm": {
+          "alipay": {
+            "checkout_disclosure_charged_in_cny": "Veikals %{shop_name} apstrādās šo maksājumu kā %{amount_due} %{processing_currency}",
+            "post_purchase_disclosure": "Skatīt kopējo CNY summu Alipay makā"
+          }
+        },
+        "pay_merchant_label": "Maksāt %{merchant_name}",
+        "discount_applies_to_subscription_items_only": "Šī atlaide attiecas tikai uz abonēšanas precēm"
+      },
+      "shipping": {
+        "title": "Piegāde",
+        "delivery_title": "Piegāde",
+        "shipping_method_title": "Piegādes veids",
+        "shipping_method_rollup_accessibility_label": "Piegādes veidu opcijas",
+        "shipping_method_one_time_purchase_group_title": "Vienreizējs pirkums",
+        "shipping_method_first_shipment_group_title": {
+          "one": "Pirmā krava",
+          "other": "Pirmās kravas"
+        },
+        "shipping_method_subscription_group_title": "Abonements",
+        "shipping_method_recurring_shipments_group_title": {
+          "one": "Regulāra piegāde",
+          "other": "Regulārie sūtījumi"
+        },
+        "subscription_shipping": "Abonēta piegāde",
+        "subscription_local_delivery": "Abonementa vietējā piegāde",
+        "subscription_pickup": "Abonementa saņemšana",
+        "waiting_on_rate_notice": "Notiek pieejamo piegādes tarifu iegūšana...",
+        "waiting_on_pickup_location_notice": "Notiek pieejamo saņemšanas vietu iegūšana…",
+        "no_rates_for_cart_or_destination_notice": "Jūsu grozam vai adresei nav pieejami piegādes veidi",
+        "no_pickup_location_notice": "Vismaz viens no jūsu produktiem nav pieejams saņemšanai uz vietas",
+        "no_rates_for_country_notice": "Šai adresei netika atrasti piegādes tarifi.",
+        "no_rates_contact_notice": "Sazinieties ar mums, lai iegūtu vairāk informācijas",
+        "free_rate_label": "Bezmaksas",
+        "cheapest_rate_label": "Lētākais",
+        "estimated_delivery_date": {
+          "one": "%{count} darbdiena",
+          "other": "%{count} darba dienas"
+        },
+        "estimated_delivery_date_range": "no %{minimum} līdz %{maximum} darbdienām",
+        "delivery_date_range": "%{min_time}–%{max_time}",
+        "estimated_delivery_time": "Paredzamais piegādes laiks %{time}",
+        "estimated_delivery_time_range": "Paredzamais piegādes laiks: %{min_time}–%{max_time}",
+        "delivery_today": "Piegāde tajā pašā dienā %{time}",
+        "delivery_tomorrow": "Piegāde nākamajā dienā %{time}",
+        "two_day_delivery": "Piegāde 2 dienās %{time}",
+        "delivery": "Piegāde %{time}",
+        "delivery_to": "Piegāde uz",
+        "arrives_time": "Pienāk %{time}",
+        "arrives_time_range": "Pienāk %{min_time}–%{max_time}",
+        "estimated_time": "Paredzamais %{time}",
+        "estimated_time_range": "Paredzamais laiks: %{min_time}–%{max_time}",
+        "default_description": "Izsūtām 1 darba dienas laikā",
+        "unbranded_default_description": "Gatavs nosūtīšanai",
+        "unbranded_description_same_day": "Nosūtām tajā pašā darba dienā",
+        "unbranded_description_with_fulfillment_days": {
+          "one": "Izsūta nākamajā darba dienā",
+          "other": "Izsūta %{count} darba dienās"
+        },
+        "unbranded_description_with_fulfillment_weeks": {
+          "one": "Izsūtīšana %{count} nedēļas laikā",
+          "other": "Izsūta %{count} nedēļās"
+        },
+        "shipping_line_phone_label": "Mobilā tālruņa numurs (obligāts)",
+        "shipping_line_phone": "Kurjers var izmantot šo numuru, lai ar jums sazinātos.",
+        "shipping_line_delivery_phone_label": "Mobilā tālruņa numurs",
+        "shipping_line_delivery_phone": "Jūs varat tikt informēts par piegādes statusa izmaiņām.",
+        "optional_shipping_line_delivery_instructions_label": "Piegādes norādījumi (neobligāti)",
+        "shipping_line_delivery_instructions": "Ievadiet nepieciešamo informāciju, piemēram, durvju kodus vai norādījumus par preces atstāšanu.",
+        "other_method": {
+          "zero": "Nav pieejamas citas metodes",
+          "one": "%{count} cita pieejamā metode vietnē",
+          "other": "Pieejamas vēl %{count} metodes, sākot no"
+        },
+        "shipping_rate_discounted_amount": "Bija: %{original_amount}. Tagad: %{amount}",
+        "local_delivery": "Vietējā piegāde",
+        "prime_not_available": {
+          "default": "Jūsu pasūtījumam nav pieejama \"Prime\" piegāde. Jūsu piegādes iespējas ir atjauninātas."
+        },
+        "subscription_delivery_description": {
+          "free_shipping_cycles": {
+            "one": "Bezmaksas piegāde vēl %{count} pasūtījumam",
+            "other": "Bezmaksas piegāde vēl %{count} pasūtījumiem"
+          },
+          "free_shipping_cycles_delivery_not_included": {
+            "one": "Bezmaksas piegāde %{count} pasūtījumam",
+            "other": "Bezmaksas piegāde %{count} sūtījumiem"
+          },
+          "first_n_order_free_with_cycle": {
+            "one": "Bezmaksas piegāde vēl %{count} sūtījumam, pēc tam %{recurring_order_shipping_price}",
+            "other": "Bezmaksas piegāde vēl %{count} pasūtījumiem, pēc tam %{recurring_order_shipping_price}"
+          },
+          "first_n_order_free_with_cycle_delivery_not_included": {
+            "one": "Bezmaksas piegāde %{count} pasūtījumam, pēc tam %{recurring_order_shipping_price}",
+            "other": "Bezmaksas piegāde %{count} sūtījumiem, pēc tam %{recurring_order_shipping_price}"
+          },
+          "max_cycles_base_shipping": {
+            "one": "Vēl %{count} piegāde par %{shipping_price}",
+            "other": "Vēl %{count} piegādes par %{shipping_price} katra"
+          },
+          "max_cycles_base_shipping_delivery_not_included": {
+            "one": "%{count} piegāde par %{shipping_price}",
+            "other": "Vēl %{count} piegādes par %{shipping_price} katra"
+          },
+          "prepaid_free_shipping_with_cycles": {
+            "one": "Bezmaksas piegāde pirmajam %{cycle}, turpmāk %{recurring_order_shipping_price}",
+            "other": "Bezmaksas piegāde pirmajam %{cycle}, turpmāk %{recurring_order_shipping_price}"
+          },
+          "prepaid_order_one_cycle": {
+            "one": "%{shipping_price} par vēl %{count} piegādi",
+            "other": "%{shipping_price} par vēl %{count} piegādēm (%{per_delivery_cost})"
+          },
+          "prepaid_order_one_cycle_delivery_not_included": {
+            "one": "%{shipping_price} par %{count} piegādi",
+            "other": "%{shipping_price} par %{count} piegādēm (%{per_delivery_cost})"
+          },
+          "prepaid_order_no_cycle": {
+            "one": "%{shipping_price} par %{count} nākamo piegādi, kam sekos %{recurring_order_shipping_price}",
+            "other": "%{shipping_price} par %{count} turpmākajām piegādēm (%{per_delivery_cost}), kam seko %{recurring_order_shipping_price}"
+          },
+          "prepaid_order_no_cycle_delivery_not_included": {
+            "one": "%{shipping_price} par %{count} piegādi, kam seko %{recurring_order_shipping_price}",
+            "other": "%{shipping_price} par %{count} piegādēm (%{per_delivery_cost}), kam seko %{recurring_order_shipping_price}"
+          },
+          "subscription_free_with_frequency_label": "Bezmaksas piegāde %{delivery_frequency}",
+          "prepaid_delivery_frequency": {
+            "one": "par %{count} piegādi",
+            "other": "par %{count} piegādēm"
+          },
+          "subscription_delivery_frequency": {
+            "day": {
+              "one": "katru dienu",
+              "other": "ik pēc %{count} dienām"
+            },
+            "week": {
+              "one": "katru nedēļu",
+              "other": "ik pēc %{count} nedēļām"
+            },
+            "month": {
+              "one": "katru mēnesi",
+              "other": "ik pēc %{count} mēnešiem"
+            },
+            "year": {
+              "one": "katru gadu",
+              "other": "ik pēc %{count} gadiem"
+            }
+          },
+          "multiple_subscriptions_shipping_price_label": "%{shipping_price} par piegādi",
+          "prepaid_shipping_price_label": "%{shipping_price} par piegādi x %{delivery_interval_count}",
+          "initial_order_discounted": "Pirmās piegādes izmaksas %{discounted_shipping_cost}, pēc tam %{frequency_description}",
+          "prepaid_initial_order_discounted": "Pirmās piegādes izmaksas %{discounted_shipping_price} %{prepaid_delivery_frequency}",
+          "prepaid_initial_order_discounted_with_per_delivery_price": "Pirmās piegādes izmaksas %{discounted_shipping_price} %{prepaid_delivery_frequency} (%{discounted_cost_per_delivery})",
+          "prepaid_initial_order_discounted_with_renewal": "Pirmā piegādes maksa %{discounted_shipping_price} %{prepaid_delivery_frequency}, pēc tam %{shipping_price} %{billing_cycle}",
+          "prepaid_initial_order_discounted_with_per_delivery_price_and_renewal": "Pirmās piegādes izmaksas %{discounted_shipping_price} %{prepaid_delivery_frequency} (%{discounted_cost_per_delivery}), pēc tam %{shipping_price} %{billing_cycle}",
+          "shipping_price_included": "Iekļauts"
+        }
+      },
+      "local_pickup": {
+        "location_information_far_away_one_item": {
+          "other": "Jūsu prece atrodas %{count} vietās"
+        },
+        "location_information_far_away_other_items": {
+          "one": "Ir %{count} atrašanās vieta ar jūsu priekšmetiem",
+          "other": "Šajā vietā ir %{count} jūsu priekšmeti"
+        },
+        "location_nearby": {
+          "one": "Jūsu prece atrodas %{count} tuvumā esošajā vietā",
+          "other": "Jūsu vienums ir pieejams %{count} tuvumā esošās vietās"
+        },
+        "location_nearby_one_item": {
+          "one": "Jūsu prece atrodas %{count} tuvumā esošajā vietā",
+          "other": "Jūsu vienums ir pieejams %{count} tuvumā esošās vietās"
+        },
+        "location_nearby_other_items": {
+          "one": "Tuvumā atrodas %{count} atrašanās vieta ar jūsu precēm",
+          "other": "Tuvumā ir %{count} atrašanās vietas, kurās ir jūsu preces"
+        },
+        "location_nearby_short": {
+          "one": "%{count} tuvumā esoša vieta ar jūsu preci",
+          "other": "%{count} tuvumā esošas vietas ar jūsu preci"
+        },
+        "location_nearby_short_one_item": {
+          "one": "%{count} tuvumā esoša vieta ar jūsu preci",
+          "other": "%{count} tuvumā esošas vietas ar jūsu preci"
+        },
+        "location_nearby_short_other_items": {
+          "one": "%{count} tuvumā esoša atrašanās vieta ar jūsu precēm",
+          "other": "%{count} tuvumā esošās atrašanās vietas ar jūsu precēm"
+        },
+        "location_far_away": {
+          "one": "%{count} vieta ar jūsu vienumu",
+          "other": "%{count} vietas ar jūsu preci"
+        },
+        "location_far_away_one_item": {
+          "one": "%{count} vieta ar jūsu vienumu",
+          "other": "%{count} vietas ar jūsu preci"
+        },
+        "location_far_away_other_items": {
+          "one": "%{count} atrašanās vieta ar jūsu precēm",
+          "other": "%{count} atrašanās vietas ar jūsu precēm"
+        },
+        "toggle_location": "Mainīt atrašanās vietu",
+        "toggle_more_locations": {
+          "one": "Vēl %{count} atrašanās vieta",
+          "other": "vēl %{count} atrašanās vietas"
+        },
+        "toggle_multiple_locations": "vēl %{count} vietas",
+        "pick_up_location": "Saņemšanas vieta",
+        "or": "VAI",
+        "cancel": "Atcelt",
+        "your_location": "jūsu atrašanās vieta",
+        "search_button": "Atrast veikalus",
+        "no_stores_found": "Veikali nav atrasti",
+        "all_stores_far_away": {
+          "title": "Tuvākās atrašanās vietas ir vairāk nekā %{distance} attālumā",
+          "title_with_item": {
+            "one": "Tuvākā vieta, kurā ir jūsu prece, atrodas vairāk nekā %{distance} attālumā no %{location}",
+            "other": "Tuvākā vieta ar jūsu precēm atrodas vairāk nekā %{distance} attālumā no %{location}"
+          },
+          "title_with_location": "Tuvākā atrašanās vieta atrodas vairāk nekā %{distance} attālumā no %{location}",
+          "title_with_specific_location": "Tuvākā vieta, kur pieejama jūsu prece, atrodas vairāk nekā %{distance} attālumā no %{location}",
+          "description": "Izvēlieties atrašanās vietu vai %{ship_to_address_link}",
+          "description_with_location": "%{change_location_link} vai %{ship_to_address_link}",
+          "ship_to_address_link": "piegādes adrese",
+          "change_location_link": "Mainīt atrašanās vietu"
+        },
+        "selected_pickup_option_no_longer_available": {
+          "title": "Jūsu iepriekš izvēlētā atrašanās vieta vairs nav pieejama",
+          "description": "Esam izvēlējušies tuvāko atrašanās vietu, kurā jūsu preces ir noliktavā"
+        },
+        "could_not_resolve_address": "Jūsu adresi neizdevās atrast. Mēģiniet vēlreiz vai izmantojiet citu adresi.",
+        "paginator": {
+          "accessibility_label": "Vietējās saņemšanas lappušu pāršķiršana",
+          "previous": "Iepriekšējā lapa",
+          "next": "Nākamā lapa",
+          "label": {
+            "one": "%{first} — %{last} no %{count} veikala",
+            "other": "%{first} - %{last} no %{count} veikaliem"
+          }
+        },
+        "reveal_more_label": {
+          "one": "Rādīt vēl %{count} atrašanās vietu",
+          "other": "Rādīt vēl %{count} atrašanās vietas"
+        },
+        "no_pickup_locations_found": "Nav atrasta neviena saņemšanas vieta",
+        "pickup_unavailable_banner_title": {
+          "one": "Nav vietu ar jūsu vienumu",
+          "other": "Nav atrasta neviena vieta ar jūsu vienumiem"
+        },
+        "pickup_unavailable_banner_title_with_country": {
+          "one": "%{country} nav atrašanās vietu ar jūsu preci",
+          "other": "%{country} nav nevienas atrašanās vietas ar jūsu vienumiem"
+        },
+        "pickup_unavailable_banner_body": {
+          "try_different_location": "Mēģiniet citu atrašanās vietu",
+          "ship_to_address": "piegādes adrese",
+          "there_are_no_stores": "Jūsu adreses tuvumā nav veikalu vai jūsu preces nav pieejamas saņemšanai veikalā.",
+          "ship_items": "Nosūtiet savas preces",
+          "search_elsewhere": "meklēt citur",
+          "search_elsewhere_standalone": "Meklējiet citur.",
+          "ship_items_or_search_elsewhere": "%{ship_items} vai %{search_elsewhere}"
+        },
+        "geolocation": {
+          "permission_not_allowed": "Atļaut atrašanās vietas kopīgošanu vai meklēt citādi."
+        }
+      },
+      "split_delivery": {
+        "accessibility": {
+          "status": {
+            "ship_separately": "%{items} tiks nosūtīti atsevišķi.",
+            "pickup_in_store": "%{items} tiks saņemti veikalā.",
+            "remove_items": "%{items} izņemts no groza."
+          }
+        },
+        "all_items": "Visas preces",
+        "pickup_all_items": "Savāc visus priekšmetus",
+        "pickup_and_ship": "Saņemt un nosūtīt",
+        "ship_all_items": "Nosūtīt visas preces",
+        "separate_pickup_email_notice": "Jūs saņemsiet atsevišķu e-pasta ziņojumu, kad jūsu pasūtījums būs gatavs saņemšanai.",
+        "items_for_pickup": "Preces saņemšanai",
+        "items_for_shipping": "Sūtīšanai paredzētās preces",
+        "items_moved_to_shipping_toast": "Preces, kuras nevarēja paņemt, tika pārvietotas uz nosūtīšanu.",
+        "items_count": {
+          "one": "%{count} vienība",
+          "other": "%{count} vienumi"
+        },
+        "pickup_items_count": {
+          "one": "Paņemiet %{count} priekšmetu",
+          "other": "Saņemiet %{count} priekšmetus"
+        },
+        "ship_items_count": {
+          "one": "Nosūtīt %{count} preci",
+          "other": "Nosūtīt %{count} preces"
+        },
+        "delivery_method": "Sadalītās piegādes metode",
+        "delivery_method_menu": "Sadalītās piegādes metodes izvēlne",
+        "inventory_issue_banner": {
+          "heading": {
+            "cannot_be_picked_up": {
+              "one": "%{count} vienumu nevar paņemt",
+              "other": "%{count} vienumus nevar paņemt"
+            },
+            "cannot_be_shipped": {
+              "one": "%{count} prece nevar tikt piegādāta",
+              "other": "%{count} preces nevar tikt nosūtītas"
+            }
+          },
+          "remove_item": {
+            "one": "noņemt vienumu",
+            "other": "noņemt vienumus"
+          },
+          "remove_item_only": {
+            "one": "Noņemt vienumu",
+            "other": "Noņemt vienumus"
+          },
+          "ship_separately": {
+            "one": "Nosūtiet to atsevišķi",
+            "other": "Sūtiet tos atsevišķi"
+          },
+          "pick_them_up_in_store": {
+            "one": "Saņemt veikalā",
+            "other": "Saņemt veikalā"
+          },
+          "remove_items_or_ship": "%{ship_separately_link} vai %{remove_items_link}",
+          "remove_items_or_pickup": "%{pickup_in_store_link} vai %{remove_items_link}",
+          "merchandise_line_with_quantity": "%{title} (×%{quantity})"
+        },
+        "cross_border": {
+          "modal": {
+            "heading": "Mainīt valsti?",
+            "content": "Jūsu saņemšanas un piegādes vietām jāatrodas vienā valstī. Mainot valsti, visas preces tiks iestatītas piegādei.",
+            "country_changed_heading": "Valsts mainīta"
+          }
+        }
       }
     }
   }
