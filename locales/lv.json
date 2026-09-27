@@ -1015,7 +1015,51 @@
         "business_hours": "Darba laiks",
         "no_business_hours": "Darba laiks nav pieejams",
         "open_twenty_four_hours": "Atvērts 24/7",
-        "title": "Savākšanas punkts"
+        "title": "Savākšanas punkts",
+        "or": "vai",
+        "search_button": "Meklēt",
+        "address_label": "Adrese",
+        "selector_tabs": "Saņemšanas punkta izvēle",
+        "selector_tab_map": "Karte",
+        "selector_tab_list": "Saraksts",
+        "could_not_resolve_address": "Jūsu adresi neizdevās atrast. Mēģiniet vēlreiz vai izmantojiet citu adresi.",
+        "no_pickup_points_near_you": "Norādītajā adresē nav atrasti saņemšanas punkti",
+        "no_pickup_points_near_location": "Tuvumā nav atrasti saņemšanas punkti",
+        "pickup_unavailable_banner_title": {
+          "one": "Jūsu precei nav pieejami saņemšanas punkti",
+          "other": "Jūsu precēm nav pieejami saņemšanas punkti"
+        },
+        "no_pickup_points_found": "Saņemšanas punkti nav atrasti",
+        "paginator": {
+          "next_accessibility_label": "Nākamā lapa",
+          "previous_accessibility_label": "Iepriekšējā lapa",
+          "header": {
+            "one": "Rādīt %{first} - %{last} no %{count} punkta",
+            "other": "Rāda %{first} - %{last} no %{count} punktiem"
+          },
+          "selected_pickup_point_label": {
+            "one": "%{pickup_point_index}. no %{count} punkta",
+            "other": "%{pickup_point_index}. no %{count} punktiem"
+          },
+          "selected_page": {
+            "one": "%{first} - %{last} no %{count} punkta",
+            "other": "%{first} – %{last} no %{count} punktiem"
+          }
+        },
+        "number_of_pickup_points_near_location": {
+          "one": "%{count} saņemšanas punkts jūsu atrašanās vietas tuvumā",
+          "other": "%{count} saņemšanas punkti netālu no jūsu atrašanās vietas"
+        },
+        "change": "Mainīt atrašanās vietu",
+        "waiting_on_pickup_point_location_notice": "Meklējam saņemšanas punktus...",
+        "geolocation": {
+          "shared_location_button": "Izmantot manu atrašanās vietu",
+          "errors": {
+            "unsuported_by_browser": "Ģeolokācijas iegūšana jūsu pārlūkprogrammā netiek atbalstīta. Mēģiniet vēlreiz vai izmantojiet citu pārlūkprogrammu.",
+            "permission_not_allowed": "Atļaut kopīgot jūsu atrašanās vietu.",
+            "permission_denied": "Neizdevās noteikt jūsu atrašanās vietu. Mēģiniet vēlreiz."
+          }
+        }
       },
       "payment_errors": {
         "processing_error_checkout_as_guest": "Maksājuma apstrādes laikā radās problēma. Mēģiniet vēlreiz, izmantojot citu maksājuma veidu, vai {{checkout_as_guest_link}}.",
@@ -1733,7 +1777,8 @@
       },
       "local_pickup": {
         "location_information_far_away_one_item": {
-          "other": "Jūsu prece atrodas %{count} vietās"
+          "other": "Jūsu prece atrodas %{count} vietās",
+          "one": "Jūsu prece atrodas %{count} vietā"
         },
         "location_information_far_away_other_items": {
           "one": "Ir %{count} atrašanās vieta ar jūsu priekšmetiem",
@@ -1838,6 +1883,21 @@
         },
         "geolocation": {
           "permission_not_allowed": "Atļaut atrašanās vietas kopīgošanu vai meklēt citādi."
+        },
+        "title": "Atrašanās vieta",
+        "location_address_search_label": "Adrese",
+        "location_address_search_placeholder": "%{postal_code_label} vai adrese",
+        "location_closest": "Tuvākā vieta, kur pieejama jūsu prece",
+        "location_closest_one_item": "Tuvākā vieta, kur pieejama jūsu prece",
+        "location_closest_other_items": "Tuvākā atrašanās vieta ar jūsu precēm",
+        "location_selected": "Jūsu atlasītā atrašanās vieta",
+        "location_information": {
+          "one": "Netālu no jums ir %{count} vieta ar pieejamiem krājumiem",
+          "other": "Netālu no jums ir %{count} vietas ar pieejamiem krājumiem"
+        },
+        "location_information_far_away": {
+          "one": "Jūsu prece atrodas %{count} vietā",
+          "other": "Jūsu prece atrodas %{count} vietās"
         }
       },
       "split_delivery": {
@@ -2903,6 +2963,100 @@
         "ineligible": "Šis pasūtījums nav apmaksājams ar HSA/FSA līdzekļiem.",
         "processing_error": "Radās problēma, apstrādājot jūsu HSA/FSA pieprasījumu. Mēģiniet vēlreiz vai turpiniet pirkumu bez HSA/FSA.",
         "unsupported_checkout": "Šim pasūtījumam HSA/FSA nav pieejams."
+      },
+      "error_page": {
+        "terminal": {
+          "title": "Radās problēma ar mūsu norēķinu sistēmu",
+          "message": "Atsvaidziniet šo lapu vai mēģiniet vēlreiz pēc dažām minūtēm",
+          "action": {
+            "cta": "Atsvaidzināt lapu"
+          },
+          "request_id": "Pieprasījuma ID: {{requestId}}"
+        },
+        "embed_errors": {
+          "storefront_password_required": "Šis veikals ir aizsargāts ar paroli",
+          "customer_account_required": "Lai pabeigtu pirkumu, ir nepieciešams klienta konts",
+          "cart_completed": "Šis pasūtījums jau ir apmaksāts",
+          "invalid_cart": "Grozs vairs nav derīgs",
+          "not_authorized": "Norēķinu autentifikācija neizdevās. Pārbaudiet savus lietojumprogrammas akreditācijas datus.",
+          "killswitch_enabled": "Norēķināšanās uz laiku nav pieejama",
+          "policy_violation": "Nav iespējams pabeigt pasūtījumu politikas konfigurācijas ierobežojumu dēļ.",
+          "unrecoverable_failure": "Neizdevās ielādēt norēķinus. Mēģiniet vēlreiz"
+        }
+      },
+      "notice_banner": {
+        "return_to_cart_link_text": "Atgriezties grozā",
+        "return_to_cart_to_update_quantities": "%{return_to_cart_link_text}, lai atjauninātu daudzumus",
+        "subscription_changed": "Viena no jūsu abonēšanām ir mainījusies.",
+        "company_location_changed": "Jūsu grozs ir atjaunināts. Pārskatiet savu pasūtījumu pirms tā iesniegšanas.",
+        "company_location_changed_product_removed": "Jūsu grozs ir atjaunināts, jo daži produkti šajā atrašanās vietā nav pieejami. Pirms pasūtījuma iesniegšanas pārskatiet to.",
+        "violations_title": "{{violation}} trūkst vai ir nederīgs",
+        "individual_violations_title": {
+          "DeliveryViolations": "Piegādes adrese",
+          "PaymentViolations": "Norēķinu adrese",
+          "OtherViolations": "Pasūtījuma informācija",
+          "UnhandledViolations": "Pasūtījuma informācija"
+        },
+        "all_violations_content": "Zvaniet vai {{emailLink}}, lai atjauninātu šo informāciju un pabeigtu pasūtījumu.",
+        "all_violations_email_link": "e-pasts",
+        "editable_shipping_address_violations_message_title": "Lai pabeigtu pasūtījumu, pievienojiet šo informāciju:",
+        "editable_shipping_address_violations_message_footer": "Lai neatgriezeniski atjauninātu šīs atrašanās vietas adresi, {{emailLink}}.",
+        "editable_shipping_address_violations_email_link": "sazinieties ar mums",
+        "delivery_address_validation_errors_banner": {
+          "title": "Piegādes adrese nav derīga",
+          "text_html": "%{contact_us}, lai rediģētu adresi",
+          "contact_us": "Sazinieties ar mums",
+          "use_different_address": "Izmantot citu piegādes adresi"
+        },
+        "shipping_address_incomplete_title": "Piegādes adrese ir nepilnīga",
+        "calculating_shipping": "Piegādes maksa vēl tiek aprēķināta. Mēģiniet vēlreiz pēc dažām sekundēm. Maksa no jums nav iekasēta.",
+        "calculating_taxes": "Nodokļi vēl tiek aprēķināti. Mēģiniet vēlreiz pēc dažām sekundēm. Maksa no jums nav iekasēta.",
+        "generic_processing_error": {
+          "title": "Radās problēma, apstrādājot jūsu pasūtījumu",
+          "body": "Maksājums netika iekasēts. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu."
+        },
+        "payment_method_not_available_with_payment_terms": "Jūsu izvēlētais maksājuma veids vairs nav pieejams, jo šī pasūtījuma apmaksa tagad tiek veikta saskaņā ar {{paymentTerms}} noteikumiem.",
+        "payment_method_not_available_with_fulfillment_terms": "Jūsu izvēlētā maksājuma metode vairs nav pieejama, jo par šo pasūtījumu tagad jānorēķinās tā izpildes brīdī",
+        "payment_method_not_available_with_fixed_terms": "Jūsu izvēlētā maksājuma metode vairs nav pieejama, jo par šo pasūtījumu ir jānorēķinās vēlāk",
+        "payment_method_not_available_with_review_requirement": "Jūsu izvēlētā maksājuma metode vairs nav pieejama, jo par pasūtījumu būs jānorēķinās pēc tā apstiprināšanas.",
+        "contact_information": {
+          "title": "Kontaktinformācija ir nederīga",
+          "header": "Lai atjauninātu savu informāciju, {{emailLink}}.",
+          "email_link": "sazinieties ar mums"
+        },
+        "validation_errors_banner": {
+          "heading": {
+            "one": "Ir {{count}} kļūda:",
+            "other": "Ir {{count}} kļūdas:"
+          },
+          "section_label": {
+            "delivery": "Piegāde",
+            "contact": "Kontakti",
+            "payment": "Maksājums",
+            "billing": "Norēķini"
+          }
+        }
+      },
+      "review_address_modal": {
+        "title": "Pārskatīt adresi",
+        "subtitle": {
+          "one": "Šis pasūtījums tiks nosūtīts uz adresi, ko norādījis {{merchant}}.",
+          "other": "Šis pasūtījums tiks nosūtīts uz adresi, kuru norādījis {{merchant}}. Atlasiet piegādes adresi."
+        },
+        "subtitle_no_match": "Šī adrese nesakrīt ne ar vienu no jūsu saglabātajām adresēm.",
+        "subtitle_must_use": "Jūsu pasūtījums tiks nosūtīts uz šo adresi.",
+        "continue": "Turpināt ar šo adresi",
+        "use_saved_address": "Izmantojiet citu adresi",
+        "return_to_cart": "Atgriezties grozā"
+      },
+      "marketplaces": {
+        "legal_notice": {
+          "legal_text": "Atsauksme",
+          "link_label": "{{partnerDisplayName}} Noteikumi un Nosacījumi"
+        }
+      },
+      "online_store_chat": {
+        "title": "Jautājumi? Sazinieties ar mums čatā"
       }
     },
     "errors": {
