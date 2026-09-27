@@ -1886,6 +1886,130 @@
         "iframe_title_accessibility_label": "Bankas konta izveide",
         "display_name": "Bankas konts",
         "generic_error": "Neizdevās pievienot bankas kontu. Mēģiniet vēlreiz vēlāk."
+      },
+      "add_payment_method_banner": "Pievienojiet maksājuma veidu ātrākai norēķināšanās procesam vai iepriekš autorizētiem pakalpojumiem",
+      "no_payment_methods_banner": "Nav pievienots neviens maksājuma veids",
+      "edit_payment_method_button_accessibility_label": "Rediģēt maksājuma veidu {{paymentMethodName}}, kas beidzas ar {{lastDigits}}",
+      "edit_payment_method_brand_button_accessibility_label": "Rediģēt {{paymentMethodName}}",
+      "delete_payment_method_button": "Dzēst",
+      "delete_payment_method_button_accessibility_label": "Dzēst {{paymentMethodName}}",
+      "back_button": "Atpakaļ",
+      "back_button_accessibility_label": "Atpakaļ uz {{paymentMethodStepTitle}}",
+      "default": "Noklusējuma",
+      "generic_card": "Karte",
+      "expiration_warning_button_accessibility_label": "Rādīt brīdinājumu par derīguma termiņa beigām maksājuma veidam {{paymentMethodName}}, kas beidzas ar {{lastDigits}}",
+      "expires_soon": "Šīs kartes derīguma termiņš drīz beigsies",
+      "expired": "Šī karte ir derīguma termiņu beigusies",
+      "expired_badge_label": "Beidzies derīguma termiņš",
+      "expiring_badge_label": "Beigsies termiņš",
+      "card_update_consent": "Šī maksājuma metode tiks saglabāta turpmākiem pirkumiem.",
+      "card_update_consent_subscriptions": "Šis maksājuma veids tiks saglabāts turpmākiem pirkumiem, un to varēs izmantot jebkuriem regulāriem vai atliktiem maksājumiem.",
+      "digital_wallet_title": "Digitālais maks",
+      "credit_or_debit_card_title": "Kredītkarte vai debetkarte",
+      "credit_card_title": "Kredītkarte",
+      "additional_payment_methods": "Papildu maksājumu metodes",
+      "or": "VAI",
+      "google_pay": {
+        "iframe_title_accessibility_label": "Pievienot Google Pay maksājuma veidu",
+        "loading_accessibility_message": "Notiek Google Pay ielāde",
+        "loading": "Notiek Google Pay ielāde",
+        "errors": {
+          "generic": "Radās problēma ar Google Pay. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+          "missing_billing_address": "Pakalpojumam Google Pay ir nepieciešama norēķinu adrese. Lūdzu, pievienojiet to savam kontam."
+        }
+      },
+      "pay_pal": {
+        "iframe_title_accessibility_label": "Pievienot PayPal maksājuma veidu",
+        "loading_accessibility_message": "Notiek PayPal ielāde",
+        "errors": {
+          "generic": "Radās problēma ar PayPal. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu."
+        }
+      },
+      "apple_pay": {
+        "loading": "Notiek Apple Pay ielāde",
+        "errors": {
+          "generic": "Radās problēma ar Apple Pay. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+          "not_available": "Apple Pay šajā ierīcē nav pieejams.",
+          "missing_billing_address": "Apple Pay nepieciešama norēķinu adrese. Lūdzu, pievienojiet to savam kontam."
+        }
+      },
+      "store_credit": {
+        "label": "Veikala kredīts",
+        "accessibility_label": "Veikala kredīts — {{formattedBalance}}",
+        "expirable_amounts_button": "Skatīt summas ar termiņu",
+        "expirable_amounts_label": "Termiņētas summas",
+        "details_modal": {
+          "load_error": "Neizdevās ielādēt veikala kredītu.",
+          "title": "Termiņa ierobežots veikala kredīts",
+          "balance_label": "Līdzsvars",
+          "expiration_date_label": "Derīguma termiņš",
+          "amount_label": "Summa",
+          "date_label": "Datums",
+          "event_label": "Pasākums",
+          "events": {
+            "adjustment": "Pielāgojums",
+            "order_payment": "Pasūtījuma apmaksa",
+            "order_refund": "Pasūtījuma atmaksa",
+            "payment_failure": "Maksājuma kļūda",
+            "payment_returned": "Maksājums atgriezts",
+            "order_cancellation": "Pasūtījuma atcelšana",
+            "tax_finalization": "Nodokļu galīgais aprēķins"
+          },
+          "expirable_balance_info": "Daļa no jūsu atlikuma beigsies kādā turpmākā datumā",
+          "expirable_amount_label": "Kopējā summas daļa, kurai beidzas termiņš",
+          "expirable_amounts_info": "Summas, kuru derīguma termiņš beidzas ātrāk, tiek piemērotas pirmās, veicot norēķinus.",
+          "expirable_amounts_button": "Skatīt",
+          "expired_amounts_button": "Skatīt nokavētās summas",
+          "pagination": {
+            "expirable_transactions_loading": "Ielādējam vairāk drīzumā derīguma termiņu zaudējošo summu",
+            "transactions_loading": "Ielādē vairāk darījumu",
+            "load_more_label": "Rādīt vairāk",
+            "load_more_accessibility_label": "Rādīt vairāk drīzumā beidzamā derīguma termiņa daudzumu",
+            "load_more_transactions_accessibility_label": "Rādīt vairāk darījumu",
+            "expirable_transactions_loaded": "Ielādēti vairāk beigušos daudzumu",
+            "transactions_loaded": "Vairāk transakciju ielādētas"
+          },
+          "expirable_indicator": "{{formattedAmount}} beigsies",
+          "expirable_indicator_accessibility_label": "{{formattedAmount}} beigsies. Skatīt summas, kuru termiņš beidzas.",
+          "expirable_indicator_with_date_accessibility_label": "{{formattedAmount}} beidzas {{date}}. Skatīt derīguma termiņa beigu summas.",
+          "expires_at": "Derīguma termiņš beidzas: {{date}}",
+          "expirable_transactions_list_accessibility_label": "Bezmaksas kredīta darījumi ar derīguma termiņu",
+          "loading_accessibility_message": "Ielāde veikala kredīta informāciju",
+          "transactions_list_accessibility_label": "Veikala kredīta darījumi",
+          "transaction_types": {
+            "credit": "Pievienots",
+            "debit": "Izlietots",
+            "debit_revert": "Atmaksāts",
+            "expiration": "Beidzies derīguma termiņš"
+          }
+        }
+      },
+      "payment_details": {
+        "title": "Maksājuma veida informācija",
+        "credit_card_details_accessibility_label": "beidzas ar {{lastDigits}}",
+        "billing_title": "Norēķinu adrese",
+        "card_info_title": "Kartes informācija",
+        "payment_method_expiring_on": "Derīguma termiņš beidzas {{expiryDate}}",
+        "payment_method_expired_on": "Termiņš beidzies {{expiryDate}}",
+        "preauthorized_payments": "Iepriekš apstiprināti maksājumi",
+        "close_payment_modal": "Aizvērt",
+        "close_payment_modal_accessibility_label": "Aizvērt maksājuma veida detaļu logu",
+        "payment_method_not_found_error": "Maksājuma veidu neizdevās atrast",
+        "payment_details_loading": "Notiek maksājuma metodes informācijas ielāde",
+        "pre_authorized_payments": "Iepriekš apstiprināti maksājumi",
+        "total_amount_of_subscription_line_items_left": "un vēl {{total}}",
+        "total_amount_of_subscription_line_items_left_accessibility_label": "{{totalItems}} vienības kopā, tiek rādītas {{totalItemsToDisplay}} vienības.",
+        "next_payment_due": "Nākamais maksājums jāveic līdz {{dueDateInMonthDayYear}}",
+        "edit_payment_method_button": "Rediģēt",
+        "edit_payment_method_button_accessibility_label": "Rediģēt maksājuma veidu, kas beidzas ar {{lastDigits}}",
+        "loading_shop_pay": "Notiek Shop Pay ielāde",
+        "invalid_payment_method": "Nederīga maksājuma metode",
+        "invalid_payment_method_message": "Izmantojiet jaunu kredītkarti, lai turpinātu saņemt gaidāmos pasūtījumus.",
+        "replace_payment_method": "Mainīt maksājuma veidu",
+        "checkout_card_banner": "Šo maksājuma veidu var izmantot tikai iepriekš autorizētiem maksājumiem. Tas netiks parādīts norēķinu lapā, ja esat pierakstījies šajā veikalā.",
+        "default_checkbox": "Iestatīt kā noklusējuma",
+        "default_checkbox_accessibility_label": "Iestatīt šo maksājuma metodi kā noklusējuma",
+        "replace_payment_method_button": "Aizstāt"
       }
     },
     "callback": {
