@@ -4629,7 +4629,8 @@
     "comment_form_email": "E-pasts",
     "comment_form_name": "Vārds",
     "comment_form_submit": "Publicēt",
-    "comment_form_title": "Pievienot komentāru"
+    "comment_form_title": "Pievienot komentāru",
+    "article_metadata_html": "{{ date }} {{ author }}"
   },
   "cart": {
     "checkout": "Apmaksa",
