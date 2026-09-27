@@ -4072,11 +4072,66 @@
         "full_payment_received": "Paldies! Jūsu {{amount}} maksājums ir saņemts un šis pasūtījums ir pilnībā apmaksāts.",
         "payment_authorized": "Paldies! Atlikums tiks atjaunināts pēc maksājuma saņemšanas.",
         "dismiss_label": "Noraidīt maksājuma apstiprinājumu"
-      }
+      },
+      "tip": "Dzeramnauda",
+      "title": "Pasūtīt {{name}}",
+      "total": "Kopā",
+      "unit_price": "{{price}}/gab.",
+      "pagination": {
+        "load_more": "Rādīt vairāk",
+        "load_more_accessibility_label": "Parādīt vairāk vienumu",
+        "loading_accessibility_label": "Notiek vienumu ielāde"
+      },
+      "login_to_view_all_order_details": "Pierakstieties, lai skatītu visu pasūtījuma informāciju.",
+      "log_in": "Pierakstīties",
+      "logged_in_account_no_permission_to_order": "Jūs esat pierakstījies kā {{email}}. Šim kontam nav atļaujas pārvaldīt šo pasūtījumu.",
+      "log_in_to_a_different_account": "Pierakstīties citā kontā",
+      "fees": {
+        "restocking_fee": "Preces atgriešanas maksa",
+        "return_shipping_fee": "Atpakaļnosūtīšana"
+      },
+      "vat_invoices": {
+        "label": "PVN"
+      },
+      "link_sent": "Saite nosūtīta",
+      "cash_rounding": "Skaidras naudas noapaļošana",
+      "adjusted_payment": "Koriģēts maksājums",
+      "adjusted_total": "Koriģētā kopsumma",
+      "due_on_date": "Līdz {{date}}",
+      "due_on_fulfillment": "Apmaksājams izpildes brīdī",
+      "due_on_receipt": "Apmaksājams pēc saņemšanas"
     },
     "account_menu": {
       "aria_labels": {
-        "sign_in": "Pierakstīties"
+        "sign_in": "Pierakstīties",
+        "close_menu": "Aizvērt izvēlni",
+        "back_to_main_menu": "Atpakaļ uz galveno izvēlni no {{title}}",
+        "open_submenu": "{{title}}, atver apakšizvēlni",
+        "loading_menu": "Ielādē izvēlni",
+        "account": "Konts",
+        "sign_in_with_email": "Pierakstīties ar e-pastu"
+      },
+      "signed_out_state": {
+        "sheet_title": "Pierakstīties vai izveidot kontu",
+        "section_divider": "Vairāk veidu, kā pierakstīties",
+        "alternate_divider": "VAI",
+        "use_email_button": "Lūdzu, izmantojiet e-pastu",
+        "email_field_label": "E-pasts",
+        "orders_button": "Pasūtījumi",
+        "profile_button": "Profils",
+        "shop_login_button": "Pierakstīties ar Shop",
+        "continue_with_google": "Turpināt ar Google",
+        "continue_with_facebook": "Turpināt ar Facebook"
+      },
+      "signed_in_state": {
+        "greeting_with_name": "Sveiki, {{first_name}}",
+        "greeting_without_name": "Konts",
+        "orders_button": "Pasūtījumi",
+        "profile_button": "Profils"
+      },
+      "location_picker": {
+        "sheet_title": "Vietas",
+        "search_field_placeholder": "Meklēt"
       }
     },
     "payment_method_brands": {
@@ -4115,6 +4170,73 @@
     },
     "privacy_banner": {
       "cookie_preferences_link": "Sīkfailu iestatījumi"
+    },
+    "addresses": {
+      "add_button": "Pievienot adresi",
+      "add_button_text": "Pievienot",
+      "add_button_accessibility_label": "Pievienot adresi",
+      "back_button": "Atpakaļ",
+      "back_button_accessibility_label": "Atpakaļ uz adreses {{address}} rediģēšanu",
+      "add_address_banner": "Pievienojiet adreses, ko izmantot norēķinoties",
+      "no_addresses_banner": "Adreses nav pievienotas",
+      "address_deleted_notification": "Adrese izdzēsta",
+      "cancel_adding_address_accessibility_label": "Atcelt adreses pievienošanu",
+      "cancel_deletion_button": "Atcelt",
+      "cancel_deletion_button_accessibility_label": "Atcelt {{address}} dzēšanu",
+      "default_address": {
+        "badge_label": "Noklusējuma",
+        "title": "Noklusējuma adrese",
+        "title_accessibility_label": "Noklusējuma adrese: {{address}}"
+      },
+      "delete_button": "Dzēst",
+      "delete_button_accessibility_label": "Dzēst {{address}}",
+      "delete_confirmation_button": "Dzēst adresi",
+      "delete_confirmation_button_accessibility_label": "Dzēst {{address}}",
+      "delete_confirmation_message": "Dzēst adresi? Esošie pasūtījumi netiks ietekmēti.",
+      "delete_confirmation_title": "Dzēst adresi?",
+      "delete_confirmation_description": "Esošie pasūtījumi netiek ietekmēti.",
+      "edit_button": "Rediģēt",
+      "edit_button_accessibility_label": "Rediģēt {{address}}",
+      "edit_section_accessibility_label": "Rediģēt {{address}}",
+      "edit_modal_title": {
+        "default": "Rediģēt adresi",
+        "billing": "Rediģēt rēķina adresi",
+        "shipping": "Rediģēt piegādes adresi"
+      },
+      "loading_accessibility_message": "Adreses ielāde",
+      "loading_addresses_accessibility_message": "Adrešu ielāde",
+      "loading_billing_accessibility_message": "Notiek norēķinu adreses ielāde",
+      "loading_finished_accessibility_message": "Ielādēta jauna adrešu lapa",
+      "loading_shipping_accessibility_message": "Notiek piegādes adreses ielāde",
+      "pagination": {
+        "load_more": "Rādīt vairāk",
+        "load_more_accessibility_label": "Rādīt citas adreses"
+      },
+      "save_new_address_accessibility_label": "Saglabāt adresi",
+      "title": "Adreses",
+      "billing_address_dropdown_placeholder": "Norēķinu adrese"
+    },
+    "address_form": {
+      "attention": "Uzmanību",
+      "attention_company": "Uzņēmums/uzmanībai",
+      "attention_help_text": "Personas vai nodaļas nosaukums",
+      "auto_complete_close_accessibility_label": "Aizvērt ieteikumus",
+      "auto_complete_title": "Ieteikumi",
+      "billing_address": "Izmantot kā norēķinu adresi",
+      "cancel": "Atcelt",
+      "cancel_accessibility_label": "Atcelt adreses {{address}} rediģēšanu",
+      "creation_success_notification": "Adrese pievienota",
+      "default_address": "Šī ir mana noklusējuma adrese",
+      "default_address_creation_success_notification": "Noklusējuma adrese pievienota",
+      "default_address_update_success_notification": "Noklusējuma adrese ir atjaunināta",
+      "loading_add_form_accessibility_message": "Notiek jaunas adreses veidlapas ielāde",
+      "loading_edit_form_accessibility_message": "Notiek adreses rediģēšanas formas ielāde",
+      "loading_form_accessibility_message": "Adreses veidlapas ielāde",
+      "loading_finished_accessibility_message": "Adreses forma ir ielādēta",
+      "save": "Saglabāt",
+      "save_accessibility_label": "Saglabāt adresi {{address}}",
+      "section_title_accessibility_label": "Pievienot adresi",
+      "update_success_notification": "Adrese atjaunināta"
     }
   },
   "product": {
