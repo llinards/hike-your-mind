@@ -963,7 +963,125 @@
         "number_items": {
           "one": "%{count} vienība",
           "other": "%{count} vienumi"
-        }
+        },
+        "view_all_items": {
+          "one": "Skatīt %{count} vienumu",
+          "other": "Skatīt visus %{count} vienumus"
+        },
+        "more_items_modal": {
+          "search_item": "Meklēt",
+          "clear_search": "Notīrīt meklēšanu",
+          "empty_results": "Pēc pieprasījuma \"%{searchText}\" nekas netika atrasts. Pārbaudiet pareizrakstību vai izmantojiet citu vārdu vai frāzi.",
+          "number_items_shown": "%{shownNumber} no %{totalNumber} vienumiem"
+        },
+        "order_name_label": "Pasūtījums %{name}",
+        "shopping_cart_label": "Iepirkumu grozs",
+        "discount_title": "Atlaide",
+        "item_discounts_label": "Preču atlaides",
+        "discount_title_with_position": "Atlaide %{position}",
+        "discount_title_stacking": {
+          "one": "Atlaide",
+          "other": "Atlaides"
+        },
+        "discount_order_stacking": {
+          "one": "Pasūtījuma atlaide",
+          "other": "Pasūtījumu atlaides"
+        },
+        "discount_label": "Atlaides kods",
+        "discount_not_found": "Ievadītajam kodam atbilstošu derīgu atlaidi neizdevās atrast",
+        "discount_placeholder": "Atlaides kods",
+        "discount_code_applied": "Atlaižu kods ir piemērots",
+        "discount_code_applied_with_code": "Atlaides kods %{code} ir piemērots",
+        "discount_code_removed": "Atlaides kods %{code} ir noņemts",
+        "discount_code_replaced": "Atlaides kods %{old_code} ir noņemts, un ir lietots %{code}",
+        "discount_code_replaced_multiple": "Vairāki atlaižu kodi ir noņemti, un ir piemērots %{code}",
+        "discount_code_allocations_mismatch": "Jūsu <strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kods ir mainījies. Pārskatiet savu grozu un mēģiniet vēlreiz.",
+        "order_discounts_apply_to_local_shop": "Pasūtījuma atlaides attiecas tikai uz precēm no %{shop_name}",
+        "gift_card_applied": "Dāvanu karte piemērota",
+        "enter_shipping_address": "Ievadiet piegādes adresi",
+        "gift_card_title": "Dāvanu karte",
+        "gift_card_label": "Dāvanu karte",
+        "gift_card_placeholder": "Dāvanu karte",
+        "gift_card_and_discount_title": "Atlaižu kods vai dāvanu karte",
+        "gift_card_and_discount_label": "Atlaižu kods vai dāvanu karte",
+        "gift_card_and_discount_placeholder": "Atlaižu kods vai dāvanu karte",
+        "gift_cards_apply_to_local_shop": "Dāvanu kartes attiecas tikai uz %{shop_name} precēm",
+        "add_discount_or_gift_card": "Pievienojiet atlaižu kodu vai dāvanu karti",
+        "remove_gift_card_label": "Dāvanu karte \"Clear\"",
+        "remove_discount_label": "Noņemt atlaidi",
+        "return_restocking_fee_label": "Preces atgriešanas maksa",
+        "return_shipping_fee_label": "Atpakaļnosūtīšana",
+        "free_shipping_discount_label": "Bezmaksas piegāde",
+        "applied_free_shipping_discount_label": "Pieteikts",
+        "apply_discount_button_label": "Pieteikties",
+        "applied_discount_message": "%{amount} atlaide kopējai pasūtījuma summai",
+        "discount_has_been_applied": "Atlaide ir piemērota",
+        "discount_has_been_removed": "Atlaide ir noņemta",
+        "automatic_discount_tooltip": "Automātiski piemērotās atlaides nevar noņemt",
+        "gift_card_has_been_applied": "Dāvanu karte ir piemērota",
+        "gift_card_has_been_removed": "Dāvanu karte ir noņemta",
+        "gift_card_subscriptions_notice": "Dāvanu kartes tiks piemērotas tikai jūsu pirmajam maksājumam",
+        "discount_already_applied": "Šim pasūtījumam jau ir piemērota atlaide. Jūs nevarat pievienot vēl vienu atlaidi.",
+        "cart_does_not_meet_discount_requirements_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kods nav derīgs precēm jūsu grozā",
+        "discount_requires_customer_notice": "Ievadiet savu piegādes informāciju, lai izmantotu <strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kodu",
+        "customer_does_not_meet_discount_requirements_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kods jums šobrīd nav pieejams",
+        "eligible_customer_missing_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kodam ir nepieciešams atbilstošs klients",
+        "shipping_information_does_not_meet_discount_requirements_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kods nav pieejams jūsu piegādes adresei",
+        "customer_already_used_once_per_customer_discount_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> atlaižu kods jau ir izmantots",
+        "subtotal_label": "Starpsumma",
+        "subtotal_label_with_quantity": {
+          "one": "Starpsumma · %{count} prece",
+          "other": "Starpsumma · %{count} vienības"
+        },
+        "shipping_label": "Piegāde",
+        "pickup_label": "Saņemšana veikalā",
+        "no_pickup_location": "Nav pieejamu saņemšanas punktu.",
+        "pickup_unavailable_banner_title": {
+          "one": "Neviens veikals nepiedāvā šo preci",
+          "other": "Nav veikalu, kuros būtu pieejamas jūsu preces"
+        },
+        "pickup_unavailable_banner_title_with_country": {
+          "one": "Veikalos valstī %{country} jūsu prece nav pieejama",
+          "other": "%{country} nav pieejami veikali ar jūsu precēm"
+        },
+        "pickup_unavailable_banner_body": {
+          "ship_to_address": "Piegādes adrese",
+          "ship_to_address_instead_html": "tā vietā %{link}"
+        },
+        "tip_label": "Dzeramnauda",
+        "unconfirmed_label": "Nepieapstiprināts",
+        "calculating_shipping": "Notiek aprēķins…",
+        "calculating": "Notiek aprēķins…",
+        "shipping_default_value": "Aprēķināts nākamajā solī",
+        "shipping_discount_title": "Piegādes atlaide",
+        "shipping_pending_message": "Vēl nav pieejams",
+        "shipping_policy_link": "Piegādes izmaksas",
+        "taxes_label": "Nodokļi",
+        "tax_label": "Nodoklis",
+        "tax_line": {
+          "hst": "HVĪ",
+          "gst": "PVN",
+          "pst": "KST",
+          "rst": "RST",
+          "qst": "QST",
+          "vpt": "VPT"
+        },
+        "estimated_taxes_label": "Paredzamie nodokļi",
+        "estimated_taxes_label_short": "Paredzamais",
+        "information_estimated_taxes_label": "Nodokļi (aplēstie)",
+        "estimated_taxes_finalization_tooltip_content": "Galīgais nodoklis un kopsumma tiks apstiprināti pa e-pastu vai īsziņā pēc pasūtījuma veikšanas.",
+        "estimated_taxes_finalization_tooltip_content_short": "Nodoklis apstiprināts pēc samaksas",
+        "order_total_label": "Pasūtījuma kopsumma",
+        "price_before_discount_aria_text": "Sākotnējā cena",
+        "price_after_discount_aria_text": "Atlaides cena",
+        "discount_code_aria_text": "Atlaides kods",
+        "total_savings": "Kopējie uzkrājumi",
+        "total_label": "Kopā",
+        "total_due_label": "Kopā apmaksai",
+        "total_paid_label": "Kopā samaksāts",
+        "total_price_label": "Kopējā cena",
+        "total_outstanding_label": "Maksājamā summa",
+        "deposit_label": "Noguldījums"
       },
       "shipping": {
         "title": "Piegāde",
@@ -2897,6 +3015,18 @@
         "default_checkbox": "Iestatīt kā noklusējuma",
         "default_checkbox_accessibility_label": "Iestatīt šo maksājuma metodi kā noklusējuma",
         "replace_payment_method_button": "Aizstāt"
+      },
+      "replacement_payment_method_title": "Aizstājošā maksājuma metode",
+      "title": "Maksājuma veidi",
+      "add_payment_method_button": "Pievienot maksājuma veidu",
+      "add_payment_method_dropdown": {
+        "bank_account_consent": "Pievienojot maksājuma metodi, jūs pilnvarojat veikt maksājumus no savas kartes vai bankas konta par turpmākajiem pirkumiem, kurus apstiprināsiet, līdz brīdim, kad atcelsiet šo atļauju."
+      },
+      "bank_account": {
+        "loading_accessibility_message": "Bankas konta poga ielādējas",
+        "iframe_title_accessibility_label": "Bankas konta izveide",
+        "display_name": "Bankas konts",
+        "generic_error": "Neizdevās pievienot bankas kontu. Mēģiniet vēlreiz vēlāk."
       }
     },
     "callback": {
@@ -3130,6 +3260,170 @@
         }
       },
       "add_button": "Pievienot"
+    },
+    "B2B": {
+      "draft_order_details": {
+        "payment_status": {
+          "pending": {
+            "description_due_on_receipt": "Jūs saņemsiet rēķinu, kad pienāks maksājuma termiņš.",
+            "description_due_on_receipt_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Rēķinu saņemsiet, kad pienāks maksājuma termiņš.",
+            "description_due_on_fulfillment": "Maksājums ir jāveic, tiklīdz visi šajā pasūtījumā iekļautie vienumi ir izpildīti.",
+            "description_due_on_fulfillment_partially_paid": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums. Samaksa jāveic, tiklīdz visas preces šajā pasūtījumā ir izpildītas.",
+            "description_due_on_fulfillment_partially_paid_next": "Šis pasūtījums ir daļēji apmaksāts. Jums ir atlikušais maksājums."
+          },
+          "draft": {
+            "description": "Maksājuma informācija tiek noteikta pēc pasūtījuma apstiprināšanas.",
+            "title": "Maksājuma termiņš vēl nav pienācis",
+            "in_review": {
+              "description": "Maksājuma informācija tiek noteikta pēc pasūtījuma apstiprināšanas.",
+              "title": "Maksājuma termiņš vēl nav pienācis"
+            },
+            "submitted": {
+              "description": "Veiciet maksājumu, lai apstiprinātu šo pasūtījumu.",
+              "title": "Veiciet maksājumu, lai apstiprinātu",
+              "deposit": {
+                "title": "Maksājuma termiņš ir pienācis",
+                "due_later": "Atlikušais atlikums ir saskaņā ar {{translatedName}} noteikumiem, un tā apmaksas termiņš ir {{dueDate}}.",
+                "due_on_fulfillment": "Atlikusī summa ir jāsamaksā, tiklīdz visas šajā pasūtījumā iekļautās preces ir izpildītas.",
+                "due_on_receipt": "Jūs saņemsiet rēķinu par atlikušo summu.",
+                "due_on_date": "Atlikusī summa jāiemaksā līdz {{dueDate}}."
+              }
+            },
+            "deposit": {
+              "due_later": "{{depositAmount}} būs jāmaksā pēc pasūtījuma apstiprināšanas. Atlikusī summa tiks maksāta saskaņā ar {{translatedName}} noteikumiem.",
+              "due_on_fulfillment": "{{depositAmount}} būs jāmaksā pēc pasūtījuma apstiprināšanas. Atlikusī summa būs jāmaksā pēc pasūtījuma izpildes.",
+              "due_on_receipt": "{{depositAmount}} būs jāmaksā, tiklīdz jūsu pasūtījums tiks apstiprināts. Atlikusī summa būs jāmaksā vēlāk.",
+              "due_on_date": "{{depositAmount}} būs jāmaksā, kad pasūtījums tiks apstiprināts. Atlikusī summa būs jāmaksā līdz {{dueDate}}."
+            }
+          },
+          "paid": {
+            "title": "Apmaksāts",
+            "title_with_date": "Apmaksāts {{date}}",
+            "description": "Jūsu pasūtījums ir pilnībā apmaksāts."
+          },
+          "refund": {
+            "title": "Atmaksāts",
+            "title_with_date": "Atmaksāts {{date}}",
+            "description_full_refund": "Jūs saņēmāt pilnu atmaksu par šo pasūtījumu.",
+            "description_single_refund": "Jūs saņēmāt daļēju atmaksu par šo pasūtījumu.",
+            "description_multiple_refunds": "Jūs saņēmāt daļēju atmaksu par šo pasūtījumu."
+          },
+          "canceled": {
+            "title": "Maksājums atcelts",
+            "description": "Jums maksa netika iekasēta."
+          },
+          "due_date": "Līdz {{date}}",
+          "total_balance": "Kopējais atlikums",
+          "pay_now": "Maksāt tagad",
+          "pay_now_accessibility_label": "Apmaksāt pasūtījumu {{orderName}} tagad",
+          "title": "Maksājuma statuss"
+        },
+        "order_timeline": {
+          "expand_events_label": "Rādīt informāciju",
+          "expand_events_accessibility_label": "Rādīt uzmetuma pasūtījuma informāciju",
+          "hide_events_label": "Paslēpt informāciju",
+          "hide_events_accessibility_label": "Paslēpt melnraksta pasūtījuma informāciju"
+        },
+        "subtitle": "Iesniegts {{date}}",
+        "title": "Pasūtīt {{name}}"
+      },
+      "payment_methods": {
+        "payment_delete": {
+          "description_without_replacement": "Šis maksājuma veids turpmākajiem pirkumiem no šīs atrašanās vietas vairs nebūs pieejams.",
+          "description_with_replacement": "Dzēšot šo maksājuma veidu, tiks ietekmēti iepriekš autorizētie maksājumi šai atrašanās vietai. Aizstājiet to ar alternatīvu maksājuma veidu, lai turpinātu saņemt gaidāmos pasūtījumus."
+        },
+        "payment_details": {
+          "order_label": "Pasūtīt {{name}}",
+          "draft_label": "Pasūtījuma uzmetums {{name}}"
+        }
+      },
+      "purchase_order_number": {
+        "add_accessibility_label": "Pievienojiet pasūtījuma numuru",
+        "add_modal_title": "Pievienojiet pasūtījuma numuru",
+        "cancel": "Atcelt",
+        "close_modal_accessibility_label": "Aizvērt PO numura modālo logu",
+        "discard": "Izmest",
+        "discard_changes_modal_title": "Vai atmest izmaiņas?",
+        "edit_accessibility_label": "Rediģēt pasūtījuma numuru",
+        "edit_modal_title": "Rediģēt pasūtījuma numuru",
+        "empty_state": "Nav pasūtījuma numura",
+        "modal_po_number_input_label": "Pasūtījuma numurs",
+        "modal_po_number_input_max_length_error": "PO numuru garums nedrīkst pārsniegt {{maxLength}} rakstzīmes.",
+        "save": "Saglabāt",
+        "title": "PO #{{poNumber}}"
+      }
+    },
+    "errors": {
+      "address_deletion_error": {
+        "description": "Radās problēma, dzēšot šo adresi. Mēģiniet vēlreiz vai atsvaidziniet lapu."
+      },
+      "addresses_loading_issue": {
+        "description": "Savienojuma kļūda. Pārbaudiet interneta savienojumu un mēģiniet vēlreiz."
+      },
+      "banner_title": {
+        "one": "Ir {{count}} kļūda",
+        "other": "Ir {{count}} kļūdas"
+      },
+      "failed_address_creation": {
+        "description": "Radās problēma, izveidojot jūsu adresi. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "failed_address_update": {
+        "description": "Radās problēma, atjauninot jūsu adresi. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "load_address_form_error": {
+        "title": "Neizdevās ielādēt adreses veidlapu",
+        "description": "Neizdevās ielādēt adreses formu.",
+        "refresh_button": "Atsvaidzināt lapu"
+      },
+      "load_orders_error": {
+        "title": "Neizdevās ielādēt pasūtījumus",
+        "description": "Mēģiniet vēlreiz vai atgriezieties vēlāk.",
+        "retry_button": "Mēģināt vēlreiz"
+      },
+      "load_paypal_error": {
+        "description": "Radās problēma, ielādējot PayPal. Lūdzu, mēģiniet vēlreiz."
+      },
+      "logout_everywhere": {
+        "description": "Izrakstīšanās laikā radās kļūda. Lūdzu, mēģiniet vēlreiz."
+      },
+      "no_access_to_locations": {
+        "description": "Jums nav piekļuves nevienai atrašanās vietai"
+      },
+      "not_found": {
+        "description": "Pārbaudiet URL vai mēģiniet vēlreiz pēc dažām minūtēm.",
+        "title": "Šīs lapas ielādēšanā radās problēma"
+      },
+      "order_not_found": {
+        "description": "Šis pasūtījums neeksistē vai jums nav atļaujas to skatīt.",
+        "title": "Pasūtījums nav atrasts"
+      },
+      "profile_update_error": {
+        "description": "Radās problēma, atjauninot jūsu profilu. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "profile_name_update_error": {
+        "description": "Radās problēma, atjauninot jūsu vārdu. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet interneta savienojumu."
+      },
+      "retry_action_label": "Mēģini vēlreiz",
+      "resend_link": {
+        "too_many_requests": "Pārāk daudz pieprasījumu. Mēģiniet vēlreiz vēlāk.",
+        "generic": "Neveiksmīgs pieprasījums"
+      },
+      "load_extension_error": {
+        "title": "Kļūda",
+        "description": "Atjauniniet šo lapu vai mēģiniet vēlreiz pēc dažām minūtēm.",
+        "refresh_button": "Atsvaidzināt lapu"
+      },
+      "already_upgraded": "Klientu konti jau ir atjaunināti.",
+      "failed_to_upgrade": "Neizdevās atjaunināt klienta konta iestatījumus.",
+      "not_upgraded": "Klientu konti netiek atjaunināti.",
+      "failed_to_revert": "Neizdevās atjaunot klienta konta iestatījumus.",
+      "revert_window_expired": "Atgriešanas periods ir beidzies."
+    },
+    "throttle": {
+      "too_many_attempts": {
+        "message": "Pārāk daudz mēģinājumu",
+        "description": "Lūdzu, mēģiniet vēlreiz pēc dažām minūtēm"
+      }
     }
   }
 }
