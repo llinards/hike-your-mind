@@ -2339,6 +2339,142 @@
           "tax_credential_tr": "Turcijas Republikas identifikācijas numurs/PVN",
           "shipping_credential_tr": "Turcijas Republikas identifikācijas numurs/PVN"
         }
+      },
+      "remote": {
+        "errors": {
+          "only_remote_merchandise_lines": "Grozā ir tikai attālināti pieejamas preces. Lai pabeigtu pasūtījumu, ir nepieciešams tikt novirzītam uz attālo veikalu.",
+          "currency_mismatch": "Šo preci nevar pievienot grozam, jo tā ir no veikala, kurā tiek izmantota cita valūta.",
+          "currency_mismatch_removal": "Prece tika izņemta no jūsu groza, jo tā ir no veikala, kurā tiek izmantota cita valūta.",
+          "max_remote_shops_exceeded": "Šo produktu nevar pievienot, jo jūsu grozā jau ir maksimālais atļautais daudzums no citiem veikaliem."
+        }
+      },
+      "units": {
+        "milligram": "mg",
+        "kilogram": "kg",
+        "milliliter": "ml",
+        "centiliter": "cl",
+        "cubic_meter": "m³",
+        "millimeter": "mm",
+        "centimeter": "cm",
+        "square_meter": "m²",
+        "ounce": "oz",
+        "pound": "lb",
+        "fluid_ounce": "šķidruma unces",
+        "pint": "pt",
+        "quart": "qt",
+        "gallon": "gal",
+        "inch": "iekšā",
+        "foot": "pēdas",
+        "yard": "jā",
+        "square_foot": "kv. pēdas",
+        "item": "prece"
+      },
+      "memberships": {
+        "delivery_promise_unfulfillable": "Šī adrese nav atbalstīta pašreizējai dalībai.",
+        "items_split_across_locations_unsupported": "Jūsu pasūtījumam nav pieejama \"Prime\" piegāde. Jūsu piegādes iespējas ir atjauninātas."
+      },
+      "editor": {
+        "navigation": {
+          "store_logo_accessibility_label": "Doties uz interneta veikalu"
+        }
+      },
+      "tooltip": {
+        "accessibility_label_context": "Vairāk informācijas par %{context}",
+        "additional_payment_methods": "Papildu maksājumu metodes"
+      },
+      "too_many_requests": {
+        "title": "Pārāk daudz mēģinājumu veikt norēķinu",
+        "body": "Lūdzu, uzgaidiet dažas minūtes un mēģiniet vēlreiz no sava groza.",
+        "body_no_cart": "Lūdzu, uzgaidiet dažas minūtes un mēģiniet vēlreiz.",
+        "return_to_cart": "Atgriezties grozā"
+      },
+      "required_extensions": {
+        "errors": {
+          "interaction_required": "Lai pabeigtu norēķināšanos, ir nepieciešama paplašinājuma mijiedarbība."
+        }
+      },
+      "taxes": {
+        "tax_details": "Papildu informācija par nodokļiem",
+        "vat_number": {
+          "field": {
+            "label": "PVN numurs (nav obligāts)",
+            "tooltip": "Apstiprina PVN numuru un automātiski piemēro apgriezto PVN maksāšanas kārtību pasūtījumiem, ja tas ir attiecināms."
+          },
+          "add": "Pievienot PVN numuru",
+          "vaulted": "PVN numurs: %{number}",
+          "badge": "PVN numurs: %{number}",
+          "domestic_order": "Apgrieztās maksāšanas kārtības atbrīvojums attiecas tikai uz pārrobežu pasūtījumiem ES ietvaros. Vietējiem pasūtījumiem tiek piemērots standarta PVN.",
+          "status": {
+            "invalid_format": {
+              "at": "Austrijas PVN numuri sastāv no AT un 9 rakstzīmēm",
+              "be": "Beļģijas PVN numuri sastāv no BE un 10 rakstzīmēm",
+              "bg": "Bulgārijas PVN numuri sastāv no BG un 9-10 rakstzīmēm",
+              "hr": "Horvātijas PVN numuri sastāv no HR un 11 rakstzīmēm",
+              "cy": "Kipras PVN numuri sastāv no CY un 9 rakstzīmēm",
+              "cz": "Čehijas PVN maksātāja numuri sastāv no CZ un 8–10 zīmēm.",
+              "dk": "Dānijas PVN numuri sastāv no DK un 8 rakstzīmēm",
+              "ee": "Igaunijas PVN numuri sastāv no EE un 9 rakstzīmēm",
+              "fi": "Somijas PVN numuri sastāv no FI un 8 rakstzīmēm",
+              "fr": "Francijas PVN numuri sastāv no FR un 11 rakstzīmēm",
+              "de": "Vācijas PVN numuri sastāv no DE un 9 rakstzīmēm",
+              "gr": "Grieķijas PVN numuri sastāv no EL un 9 rakstzīmēm",
+              "hu": "Ungārijas PVN numuri sastāv no HU un 8 rakstzīmēm",
+              "ie": "Īrijas PVN numuri sastāv no IE un 8–9 rakstzīmēm",
+              "it": "Itālijas PVN numuri sastāv no IT un 11 rakstzīmēm",
+              "lv": "Latvijas PVN numuri sastāv no LV un 11 rakstzīmēm",
+              "lt": "Lietuvas PVN numuri sastāv no LT un 9-12 rakstzīmēm",
+              "lu": "Luksemburgas PVN numuri sastāv no LU un 8 rakstzīmēm",
+              "mt": "Maltas PVN numuri sastāv no MT un 8 rakstzīmēm",
+              "nl": "Nīderlandes PVN numuri sastāv no NL un 12 rakstzīmēm",
+              "pl": "Polijas PVN numuri sastāv no PL un 10 rakstzīmēm",
+              "pt": "Portugāles PVN numuri sastāv no PT un 9 rakstzīmēm",
+              "ro": "Rumānijas PVN numuri sastāv no RO un 10 rakstzīmēm",
+              "sk": "Slovākijas PVN numuri sastāv no SK un 10 rakstzīmēm",
+              "si": "Slovēnijas PVN numuri sastāv no SI un 8 rakstzīmēm",
+              "es": "Spānijas PVN numuri sastāv no ES un 9 rakstzīmēm",
+              "se": "Zviedrijas PVN numuri sastāv no SE un 12 rakstzīmēm",
+              "gb": "Apvienotās Karalistes PVN numuri satur GB vai XI un 5–12 rakstzīmes"
+            },
+            "invalid_number": {
+              "at": "Ievadiet derīgu Austrijas PVN numuru",
+              "be": "Ievadiet derīgu Beļģijas PVN numuru",
+              "bg": "Ievadiet derīgu Bulgārijas PVN numuru",
+              "hr": "Ievadiet derīgu Horvātijas PVN numuru",
+              "cy": "Ievadiet derīgu Kipras PVN numuru",
+              "cz": "Ievadiet derīgu Čehijas PVN numuru",
+              "dk": "Ievadiet derīgu Dānijas PVN numuru",
+              "ee": "Ievadiet derīgu Igaunijas PVN numuru",
+              "fi": "Ievadiet derīgu Somijas PVN numuru",
+              "fr": "Ievadiet derīgu Francijas PVN numuru",
+              "de": "Ievadiet derīgu Vācijas PVN numuru",
+              "gr": "Ievadiet derīgu Grieķijas PVN numuru",
+              "hu": "Ievadiet derīgu Ungārijas PVN maksātāja numuru",
+              "ie": "Ievadiet derīgu Īrijas PVN numuru",
+              "it": "Ievadiet derīgu Itālijas PVN numuru",
+              "lv": "Ievadiet derīgu Latvijas PVN numuru",
+              "lt": "Ievadiet derīgu Lietuvas PVN numuru",
+              "lu": "Ievadiet derīgu Luksemburgas PVN numuru",
+              "mt": "Ievadiet derīgu Maltas PVN maksātāja numuru",
+              "nl": "Ievadiet derīgu Nīderlandes PVN numuru",
+              "pl": "Ievadiet derīgu Polijas PVN numuru",
+              "pt": "Ievadiet derīgu Portugāles PVN numuru",
+              "ro": "Ievadiet derīgu Rumānijas PVN numuru",
+              "sk": "Ievadiet derīgu Slovākijas PVN numuru",
+              "si": "Ievadiet derīgu Slovēnijas PVN numuru",
+              "es": "Ievadiet derīgu Spānijas PVN numuru",
+              "se": "Ievadiet derīgu Zviedrijas PVN numuru",
+              "gb": "Ievadiet derīgu Apvienotās Karalistes PVN numuru"
+            },
+            "service_unavailable": "Validācijas pakalpojums nav pieejams",
+            "service_error": "Validācijas pakalpojums nav pieejams"
+          },
+          "accessibility": {
+            "status": {
+              "validating": "PVN numura validācija norit šobrīd",
+              "valid": "PVN numurs ir derīgs"
+            }
+          }
+        }
       }
     },
     "errors": {
