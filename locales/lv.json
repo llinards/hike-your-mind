@@ -467,6 +467,136 @@
         "no_business_hours": "Darba laiks nav pieejams",
         "open_twenty_four_hours": "Atvērts 24/7",
         "title": "Savākšanas punkts"
+      },
+      "payment_errors": {
+        "processing_error_checkout_as_guest": "Maksājuma apstrādes laikā radās problēma. Mēģiniet vēlreiz, izmantojot citu maksājuma veidu, vai {{checkout_as_guest_link}}.",
+        "selected_payment_method": "Radās problēma ar jūsu izvēlēto maksājuma veidu, un maksa netika iekasēta. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "payment_method_billing_address": "Radās problēma ar jūsu izvēlētā maksājuma veida norēķinu adresi. Pārbaudiet adresi un mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "duplicate_autopay_card": "Šī karte ir piesaistīta gaidāmajiem maksājumiem. Maksājiet citā veidā vai {{update_payment_details_link}}",
+        "duplicate_autopay_card_link": "atjaunināt maksājuma datus",
+        "duplicate_autopay_card_without_link": "Šī karte ir piesaistīta gaidāmajiem maksājumiem. Maksājiet citā veidā.",
+        "call_issuer": "Jūsu karte tika noraidīta. Izmantojiet citu maksājuma veidu vai sazinieties ar savu banku, lai iegūtu papildinformāciju.",
+        "test_mode_live_card": "Šis veikals nevar pieņemt reālus pasūtījumus vai reālus maksājumus.",
+        "test_mode_enabled_only_test_cards": "Testa režīms ir iespējots, var pievienot tikai testa kredītkartes.",
+        "transient_error": "Radās problēma, apstrādājot jūsu maksājumu. Mēģiniet atsvaidzināt šo lapu vai pārbaudiet savu interneta savienojumu.",
+        "missing_shipping_address": "Maksājumu neizdevās apstrādāt, jo trūkst jūsu piegādes adreses. Pievienojiet piegādes adresi un mēģiniet vēlreiz.",
+        "invalid_shipping_address": "Maksājumu neizdevās apstrādāt, jo nevarējām atrast jūsu piegādes adresi. Pārbaudiet savu piegādes adresi un mēģiniet vēlreiz.",
+        "successful_offsite_with_gift_card_error": "Radās problēma, apstrādājot jūsu dāvanu kartes maksājumu. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "development_store_order_limit_reached": "Esat sasniedzis izstrādes veikala pasūtījumu limitu šim maksājumu apstrādātājam. Lai veiktu vēl vienu pasūtījumu, jums būs jāizmanto testa maksājumu vārteja. Uzziniet vairāk šeit: %{development_store_order_testing_docs_link}.",
+        "development_store_with_order_limit": "Lai veiktu testa pasūtījumu, jums būs jāizmanto testa maksājumu vārteja. Uzziniet vairāk šeit: %{development_store_order_testing_docs_link}.",
+        "development_store_order_testing_docs_link": "testa pasūtījumi izstrādes veikalos",
+        "payment_above_threshold": "Maksājuma summa pārsniedz šim reģionam noteikto naudas limitu. Samaziniet kopējo summu un mēģiniet vēlreiz.",
+        "risky": "Radās problēma, apstrādājot jūsu maksājumu. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "expired_buyer_action": "Maksājuma veida sesijas laiks ir beidzies. Mēģiniet vēlreiz.",
+        "name_mismatch": "Pārbaudiet savas kartes datus. Vārds uz kartes un norēķinu adrese nesakrīt.",
+        "shop_pay_wallet_not_available": "Shop Pay nav pieejams šim pirkumam.",
+        "market_manager_blocks_wallet_payments": "Maksājuma veids jūsu valstī netiek atbalstīts.",
+        "paypal_over_capture": "Jūsu pasūtījuma kopsumma tika atjaunināta. Apmaksājiet ar {{walletName}}, lai pabeigtu pasūtījumu.",
+        "captcha_required": "Ievadiet maksājuma informāciju un atrisiniet atpazīšanas kodu, lai pabeigtu pirkumu.",
+        "captcha_required_without_payment_information": "Lai pabeigtu pirkumu, atrisiniet kapču.",
+        "payment_credential_delegation_error": "Radās problēma ar maksājuma apstrādi. Izvēlieties jaunu maksājuma veidu."
+      },
+      "shipping_errors": {
+        "shipping_method": "Piegādes iespējas jūsu pasūtījumam ir mainījušās. Pārskatiet savu izvēli.",
+        "shipping_method_not_available": "Jūsu grozs ir atjaunināts, un pievienotās preces nevar nosūtīt uz jūsu adresi. Lai pabeigtu pasūtījumu, izņemiet šīs preces.",
+        "shipping_method_not_available_generic": {
+          "one": "Jūsu pasūtījumu nav iespējams nosūtīt uz norādīto adresi. Pārbaudiet, vai adrese ir pareiza, un mēģiniet vēlreiz, vai arī izvēlieties citu adresi.",
+          "other": "Dažas preces jūsu grozā nevar tikt nosūtītas uz jūsu norādīto adresi. Pārbaudiet savu adresi, lai pārliecinātos, ka tā ir pareiza, un mēģiniet vēlreiz, vai arī izvēlieties citu adresi."
+        },
+        "shipping_method_not_available_due_to_unsatisfied_conditions": "Groza saturs neatbilst cenas vai svara prasībām, lai saņemtu piegādi. Atjauniniet grozu un mēģiniet vēlreiz.",
+        "shipping_method_not_available_updated": {
+          "one": "Prece, kuru pievienojāt, netiek piegādāta uz jūsu atrašanās vietu. Izņemiet to, lai veiktu pasūtījumu, vai sazinieties ar veikalu.",
+          "other": "Viena vai vairākas jūsu pievienotās preces netiek piegādātas uz jūsu atrašanās vietu. Lai veiktu pasūtījumu, izņemiet tās no groza vai sazinieties ar veikalu."
+        },
+        "payment_method_not_supported": "Jūs nevarat izmantot šo maksājuma veidu valstij %{country}. Izmantojiet citu maksājuma veidu, lai veiktu piegādi uz šo valsti.",
+        "empty_state": "Ievadiet savu piegādes adresi, lai skatītu pieejamos piegādes veidus.",
+        "title": "Piegāde nav pieejama",
+        "invalid_selected_address": "Izvēlētā piegādes adrese nav derīga",
+        "invalid_selected_address_with_update_link": "Izvēlētā piegādes adrese nav derīga. %{update_address_link} vai atlasiet citu adresi",
+        "unavailable_addresses_only_countries": "Jūsu pasūtījumu var nosūtīt tikai uz {{countriesList}}. Lai turpinātu, pievienojiet jaunu adresi.",
+        "unavailable_address_country": "Uz jūsu izvēlēto valsti piegāde netiek veikta. Lai turpinātu, lūdzu, norādiet citu adresi.",
+        "unavailable_selected_address": "Izvēlētajai adresei piegāde nav pieejama",
+        "unavailable_selected_address_for_region": "Piegāde uz {{region}} nav pieejama. Lai turpinātu, atlasiet citu adresi."
+      },
+      "alternative_payment_method_banner": {
+        "express_checkout": "Ātrā norēķināšanās",
+        "or": "VAI",
+        "or_pay_another_way": "Vai arī maksājiet citā veidā",
+        "or_check_out_another_way": "Vai arī apskati citu veidu",
+        "or_pay_with_credit_card": "Vai maksājiet ar kredītkarti",
+        "show_more_options": "Rādīt vairāk iespēju",
+        "hide_more_options": "Paslēpt vairāk opciju"
+      },
+      "post_purchase": {
+        "page_title": "Pēc pirkuma veikšanas",
+        "title": "Pēc pirkuma veikšanas",
+        "escape_confirmation": "Jūs esat samaksājis par savu pasūtījumu.",
+        "escape_action": "Skatīt pasūtījuma apstiprinājumu ›",
+        "components": {
+          "close": "Aizvērt",
+          "expand": "Skatīt vairāk",
+          "processing": "Apstrādā…",
+          "submit": "Iesniegt"
+        }
+      },
+      "processing": {
+        "redirecting_page_title": "Notiek pāradresācija…",
+        "redirecting_title": "Notiek pāradresācija…",
+        "redirecting_notice": "Lūdzu, uzgaidiet, kamēr mēs jūs novirzām.",
+        "redirecting_to_bank": "Novirza uz {{bank}}",
+        "complete_your_purchase_title": "Pabeidziet pirkumu",
+        "continue_to_payment_gateway_notice": "Turpiniet uz maksājumu, lai ievadītu savu maksājuma informāciju.",
+        "continue_to_payment_gateway_button_label": "Turpināt maksājumu",
+        "complete_your_purchase_title_error": "Labojiet savu maksājuma informāciju",
+        "continue_to_payment_gateway_notice_error": "Jūsu maksājuma informāciju neizdevās verificēt.",
+        "continue_to_payment_gateway_button_label_error": "Atjaunināt maksājuma informāciju",
+        "page_title": "Pasūtījuma apstrāde",
+        "title": "Pasūtījuma apstrāde",
+        "your_order_has_been_received_title": "Paldies par jūsu pasūtījumu",
+        "you_will_receive_confirmation": "Šobrīd saņemam ļoti daudz pasūtījumu. Drīzumā saņemsiet apstiprinājumu pa e-pastu vai īsziņā. Ja nesaņemsiet to nākamās stundas laikā, lūdzu, informējiet mūs.",
+        "you_will_not_be_charged": "Maksa vēl netiks iekasēta",
+        "wait": {
+          "short": "Jūsu pasūtījums tiek apstrādāts.",
+          "medium": {
+            "one": "Jūsu pasūtījums tiek apstrādāts. Paredzamais gaidīšanas laiks ir %{count} minūte.",
+            "other": "Jūsu pasūtījums tiek apstrādāts. Paredzamais gaidīšanas laiks ir %{count} minūtes."
+          },
+          "long": "Jūs saņemsiet e-pastu, tiklīdz jūsu pasūtījums tiks apstrādāts. Šobrīd ir liels pasūtījumu apjoms.",
+          "no_auto_refresh_html": "Ja jūs netiekat automātiski novirzīts, %{link}.",
+          "refresh_this_page": "atsvaidziniet šo lapu"
+        },
+        "remote_shops_payments_processing": "Maksājumu apstrāde",
+        "action_required": "Nepieciešama rīcība",
+        "modal_notice": "Sazināmies ar {{paymentMethod}}",
+        "remote_checkout_count": "%{current} no %{total}"
+      },
+      "payment_challenge_modal": {
+        "instructions": "Pabeidziet pirkumu, izmantojot savu {{paymentMethod}} kodu",
+        "timer_message": "Jums ir atlikušas {{timeLeft}}, lai apmaksātu",
+        "copy_text": "Kopēt {{paymentMethod}} kodu",
+        "open_app_text": "Atvērt lietotni {{paymentMethod}}",
+        "header": "Maksājiet ar {{paymentMethod}}",
+        "qr_code": {
+          "instructions": "Pabeidziet pirkumu, izmantojot savu {{paymentMethod}} kodu",
+          "wechat_instructions": "Skenējiet šo QR kodu, izmantojot tālrunī lietotni WeChat, lai pabeigtu pirkumu.",
+          "wechat_instructions_mobile": "Skenējiet šo QR kodu, izmantojot lietotni WeChat citā ierīcē, lai pabeigtu pirkumu",
+          "paynow_instructions": "Skenējiet šo QR kodu, izmantojot iesaistīto bankas vai maksājumu lietotni. Neapmaksājiet, manuāli ievadot UEN. Manuālos pārskaitījumus nevar saskaņot ar jūsu pasūtījumu un atmaksāt. Saņēmējs tiks parādīts kā Stripe.",
+          "paynow_instructions_mobile": "Saglabājiet vai uzņemiet šī QR koda ekrānuzņēmumu, pēc tam atveriet sadarbības bankas vai maksājumu lietotni un skenējiet to no savām fotogrāfijām. Neveiciet apmaksu, ievadot UEN manuāli. Manuālos pārskaitījumus nevar saskaņot ar jūsu pasūtījumu un nevar atmaksāt. Saņēmējs ir norādīts kā Stripe."
+        },
+        "external": {
+          "instructions": "Apstipriniet maksājumu savā lietotnē, lai pabeigtu šo pirkumu"
+        },
+        "close": "Noslēgt izaicinājumu"
+      },
+      "failed_payment": {
+        "page_title": "Maksājumu neizdevās apstrādāt",
+        "title": "Maksājumu neizdevās apstrādāt",
+        "payment_not_processed_title": "Jūsu maksājumu neizdevās apstrādāt",
+        "payment_not_processed_text": "Maksa nav iekasēta. Atgriezieties grozā, lai pabeigtu pirkumu.",
+        "return_to_cart_button_label": "Atgriezties grozā"
+      },
+      "payment_gateway": {
+        "credit_card_label": "Kredītkarte"
       }
     }
   }
