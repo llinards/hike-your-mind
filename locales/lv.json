@@ -1194,6 +1194,164 @@
             "one": "Naudu atgriezīsim pēc %{count} dienas",
             "other": "Jūs saņemsiet savu naudas atmaksu pēc %{count} dienām."
           }
+        },
+        "change_currency_section_description": "Izvēlieties valūtas opciju",
+        "no_real_orders_dev_store": "Šajā veikalā nav iespējams veikt īstus pasūtījumus vai īstus maksājumus.",
+        "loading": "Notiek maksājuma ielāde...",
+        "waiting_on_payment_methods": "Notiek pieejamo maksājuma veidu iegūšana...",
+        "apple_pay_payment_error": "Maksājumu neizdevās apstrādāt. Mēģiniet vēlreiz vai izmantojiet citu maksājuma veidu.",
+        "taxes_not_included": "Nodokļi nav iekļauti",
+        "no_taxes_banner_content": "Šim pasūtījumam nodokļi netiks piemēroti. Kad būsiet iekasējis maksājumu, nodokļus vairs nevarēs pievienot.",
+        "paypal": {
+          "connect": "Noklikšķiniet, lai savienotu savu PayPal kontu"
+        },
+        "apple": {
+          "connect": "Noklikšķiniet, lai pievienotu savu Apple Pay kontu",
+          "not_available": "Apple Pay nav pieejams šajā pārlūkprogrammā. Lai pievienotu savu Apple Pay kontu, jums būs jāizmanto Safari pārlūkprogramma Apple ierīcē."
+        },
+        "google": {
+          "connect": "Noklikšķiniet, lai savienotu savu Google Pay kontu",
+          "error_authorizing": "Kļūda, autorizējot maksājumu"
+        },
+        "account_connected": "Konts ir pievienots.",
+        "mor_disclaimer_html": "Noklikšķinot zemāk un pabeidzot pasūtījumu, jūs piekrītat iegādāties savu(-s) preci(-s) no Global-e kā šī darījuma reģistrētā tirgotāja saskaņā ar Global-e <a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{mor_terms}\" href=\"%{terms_href}\">Noteikumiem un nosacījumiem</a> un <a class=\"link--small\" data-modal=\"true\" data-title-text=\"%{privacy_policy}\" href=\"%{policy_href}\">Privātuma politiku</a>. Global-e ir starptautisks piegādes pakalpojumu sniedzējs uz %{shop_name}",
+        "lpm": {
+          "multibanco": {
+            "voucher": {
+              "label": "Multibanco",
+              "codes": {
+                "entity": "Vienība",
+                "reference_number": "Atsauce"
+              },
+              "steps": {
+                "pay_at_atm_or_online": "Apmaksājiet Multibanco bankomātā vai ar internetbankas starpniecību, izmantojot tālāk norādītos datus."
+              }
+            }
+          },
+          "konbini": {
+            "voucher": {
+              "label": "Konbini",
+              "outlets": {
+                "familymart": "FamilyMart",
+                "lawson": "Losons",
+                "ministop": "Ministop",
+                "seicomart": "Seicomart"
+              },
+              "codes": {
+                "reference_number": "Maksājuma kods",
+                "confirmation_number": "Apstiprinājuma kods"
+              },
+              "steps": {
+                "familymart": {
+                  "1": "Daudzfunkcionālajā kopēšanas iekārtā izvēlieties 代金支払い／チャージ (\"Payment / Charge\").",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet OK",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet OK",
+                  "4": "Pārbaudiet informāciju un nospiediet 確認 (\"Confirm\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā vai ar FamiPay."
+                },
+                "lawson": {
+                  "1": "Loppi terminālī atlasiet 各種番号をお持ちの方 (\"Man ir numurs\")",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet 次へ (\"Next\")",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet 次へ",
+                  "4": "Pārbaudiet datus un nospiediet \"Jā\" (\"はい\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā."
+                },
+                "ministop": {
+                  "1": "Loppi terminālī atlasiet 各種番号をお持ちの方 (\"Man ir numurs\")",
+                  "2": "Ievadiet savu maksājuma kodu un nospiediet 次へ (\"Next\")",
+                  "3": "Ievadiet savu apstiprinājuma kodu un nospiediet 次へ",
+                  "4": "Pārbaudiet datus un nospiediet \"Jā\" (\"はい\"), lai izdrukātu kvīti.",
+                  "5": "Nogādājiet kvīti uz kasi 30 minūšu laikā un samaksājiet skaidrā naudā."
+                },
+                "seicomart": {
+                  "1": "Pie kases pasakiet kasierim \"interneta maksājums\" (\"internet payment\").",
+                  "2": "Ievadiet savu maksājuma kodu klienta ekrānā un atlasiet 登録 (\"Enter\").",
+                  "3": "Ievadiet apstiprinājuma kodu un atlasiet 登録",
+                  "4": "Pārbaudiet informāciju un atlasiet OK",
+                  "5": "Maksāt skaidrā naudā"
+                },
+                "1": "Dodieties ar maksājuma kodu un apstiprinājuma kodu uz veikala termināli vai kasi un veiciet samaksu skaidrā naudā, pirms beidzas kupona derīguma termiņš."
+              },
+              "pay": "Apmaksāt %{amount}",
+              "choose_outlet": "Izvēlieties veikalu (Konbini), lai skatītu savus kodus un apmaksas kārtību",
+              "expires_at": "Beidz darboties: %{date}",
+              "expiry_date_time": "%{date} plkst. %{time} JST",
+              "expired_title": "Maksājuma kodam beidzies derīguma termiņš",
+              "expired": "Derīguma termiņš beidzies %{date}",
+              "copy_code": "Kopēt %{label}",
+              "code_copied": "Kopēts",
+              "keep_receipt": "Saglabājiet čeku kā maksājumu apliecinošu dokumentu",
+              "view_instructions": "Skatīt maksājuma instrukcijas",
+              "view_instructions_accessibility_label": "Skatīt maksājumu norādījumus (tiek atvērts jaunā cilnē)"
+            }
+          },
+          "oxxo": {
+            "voucher": {
+              "label": "OXXO",
+              "number": "Atsauces numurs",
+              "steps": {
+                "scan_barcode_at_oxxo": "Skenējiet svītrkodu tuvākajā OXXO veikalā."
+              },
+              "barcode_alt": "OXXO kupona svītrkods atsauces numuram %{reference_number}"
+            }
+          }
+        },
+        "pending_payment": {
+          "apple_wallet": {
+            "badge_alt": "Pievienot Apple Wallet",
+            "pass": {
+              "description": "%{shop_name} maksājuma talons",
+              "logo_text": "Maksājuma kvīts",
+              "store_label": "Veikals",
+              "expiry_date_label": "Derīguma termiņš",
+              "payment_due_label": "Maksājuma termiņš",
+              "reference_number_label": "Atsauces numurs",
+              "ordered_on_label": "Pasūtīts"
+            }
+          },
+          "due_notice": "Jūsu maksājums %{amount_due} apmērā ir jāveic līdz %{due_date}.",
+          "multibanco": {
+            "buyer_action_info": "Jūsu maksājums %{amount_due} apmērā ir jāveic.",
+            "instruction_html": "Veiciet maksājumu, izmantojot Multibanco vai tiešsaistē, izmantojot tālāk norādīto informāciju. Ja jums ir jautājumi vai vēlaties atjaunināt maksājuma datus, %{contact_us}.",
+            "entity": "Vienība",
+            "reference": "Atsauce",
+            "amount": "Summa",
+            "find_nearest_atm": "Atrast tuvāko bankomātu",
+            "label": "Multibanco",
+            "pay": "Apmaksāt %{amount}",
+            "expiry_date_time": "%{date} plkst. %{time}",
+            "expires_at": "Beidz darboties: %{date}",
+            "expired": "Derīguma termiņš beidzies %{date}",
+            "expired_title": "Maksājuma atsauce ir zaudējusi spēku",
+            "labelled_code": "%{label}: %{code}"
+          },
+          "oxxo": {
+            "label": "OXXO",
+            "number": "Atsauces numurs",
+            "reference_number": "Atsauces numurs:",
+            "steps": {
+              "1": "Skenējiet svītrkodu tuvākajā OXXO veikalā.",
+              "2": "Maksājiet precīzu summu skaidrā naudā kasē."
+            },
+            "pay": "Apmaksāt %{amount}",
+            "expiry_date_time": "%{date} plkst. %{time}",
+            "expires_at": "Beidz darboties: %{date}",
+            "expires_when_unknown": "Izlietot, pirms beidzas kupona derīguma termiņš",
+            "days_left": {
+              "one": "%{count} diena",
+              "other": "%{count} dienas"
+            },
+            "print_voucher": "Drukāt kuponu",
+            "print": {
+              "instructions_title": "Instrukcijas OXXO apmaksai:",
+              "important_details_title": "Svarīga informācija:"
+            },
+            "important_details": {
+              "canceled_by_expiry": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts līdz %{date}.",
+              "canceled_when_expired": "Jūsu pasūtījums tiks atcelts, ja maksājums netiks saņemts pirms kupona derīguma termiņa beigām.",
+              "non_refundable": "OXXO pasūtījumi netiek atgriezti."
+            }
+          }
         }
       },
       "local_pickup": {
