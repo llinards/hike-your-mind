@@ -4072,6 +4072,164 @@
     "remove": "Noņemt",
     "remove_item": "Noņemt {{ title }}",
     "product": "Produkts",
-    "quantity": "Daudzums"
+    "quantity": "Daudzums",
+    "quantity_for": "Daudzums {{ title }}",
+    "total": "Kopā",
+    "subtotal": "Starpsumma",
+    "dates": "Datumi",
+    "empty": "Jūsu grozs ir tukšs."
+  },
+  "general": {
+    "accessibility": {
+      "account": "Konts",
+      "cart": "Grozs",
+      "menu": "Izvēlne",
+      "primary_navigation": "Primārais",
+      "previous": "Iepriekšējais",
+      "next": "Nākamais",
+      "image_gallery": "Attēlu galerija",
+      "back_to_top": "Atpakaļ uz augšu",
+      "close": "Aizvērt"
+    },
+    "language": {
+      "label": "Valoda"
+    },
+    "social": {
+      "follow_instagram": "Sekojiet mums Instagram"
+    },
+    "footer": {
+      "contacts": "Kontaktpersonas",
+      "menu": "Izvēlne",
+      "company_details": "Uzņēmuma informācija",
+      "registration_number": "Reģ. numurs {{ number }}",
+      "license_number": "Licences numurs {{ number }}",
+      "copyright": "© {{ year }} {{ shop_name }}. Visas tiesības aizsargātas."
+    }
+  },
+  "testimonials": {
+    "read_more": "Lasīt vairāk",
+    "read_less": "Lasiet mazāk",
+    "empty": "Pagaidām nav publicēta neviena atsauksme."
+  },
+  "reviews": {
+    "read_more": "Lasīt vairāk",
+    "full_review": "Pilns apskats"
+  },
+  "customers": {
+    "login": {
+      "email": "E-pasts",
+      "password": "Parole",
+      "submit": "Pierakstīties",
+      "title": "Pieteikties"
+    }
+  },
+  "collections": {
+    "title": "Kolekcijas",
+    "hikes": {
+      "filters": "Filtri",
+      "price_from": "No {{ price }}",
+      "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
+    },
+    "gear": {
+      "add": "Pievienot {{ title }} grozam",
+      "added": "Pievienots grozam",
+      "choose": "Izvēlieties opcijas priekš {{ title }}",
+      "view_images": "Skatīt {{ title }} attēlus",
+      "sold_out": "Izpārdots",
+      "sale": "Izpārdošana",
+      "price_from": "No {{ price }}",
+      "per_day": "/ dienā",
+      "no_results": "Šajā kolekcijā vēl nav pievienots nekāds aprīkojums."
+    }
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Pievienot Apple Wallet",
+    "card": "Dāvanu karte",
+    "expired": "Šī dāvanu karte ir zaudējusi derīguma termiņu",
+    "expires_on": "Beidzas: {{ expires_on }}",
+    "use_at_checkout": "Izmantojiet šo dāvanu karti norēķinoties"
+  },
+  "password": {
+    "title": "Šis veikals ir privāts.",
+    "password": "Parole",
+    "enter": "Ienākt"
+  },
+  "search": {
+    "title": "Meklēt",
+    "placeholder": "Meklēt rakstus, lapas vai produktus",
+    "submit": "Meklēt",
+    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}"
+  },
+  "product": {
+    "gallery": {
+      "show_image": "Rādīt attēlu {{ number }}",
+      "view_full_size": "Skatīt pilnā izmērā"
+    },
+    "standard": {
+      "purchase_summary": "Pirkuma kopsavilkums",
+      "rent_summary": "Īres kopsavilkums",
+      "tax_note": "Nodoklis iekļauts. Piegāde tiks aprēķināta norēķinu brīdī.",
+      "quantity": "Daudzums",
+      "decrease": "Samazināt daudzumu",
+      "increase": "Palielināt daudzumu",
+      "unit_price": "Cena",
+      "rental_length": "Iznomāšanas ilgums",
+      "days": {
+        "one": "{{ count }} diena",
+        "other": "{{ count }} dienas"
+      },
+      "day_rate": "Cena par dienu",
+      "total": "Kopā",
+      "add_to_cart": "Pievienot grozam",
+      "sold_out": "Izpārdots",
+      "related": "Saistītās preces",
+      "related_subtext": "Atrodi savu ideālo variantu."
+    },
+    "hike": {
+      "pay_today": "Maksājiet šodien",
+      "deposit_amount_html": "{{ price }} depozīts",
+      "quantity": "Daudzums",
+      "decrease": "Samazināt daudzumu",
+      "increase": "Palielināt daudzumu",
+      "summary": "Rezervācijas kopsavilkums",
+      "full_price": "Pilna brauciena cena",
+      "reserve": "Apmaksājiet šodien, lai rezervētu savu vietu",
+      "balance": "Atlikusī summa ({{ days }} dienas pirms ceļojuma)",
+      "total": "Kopā",
+      "add_to_cart": "Pievienot grozam",
+      "sold_out": "Izpārdots"
+    },
+    "details": {
+      "trip_details": "Ceļojuma informācija",
+      "what_to_expect": "Ko sagaidīt",
+      "itinerary": "Maršruts",
+      "included": "Iekļauts",
+      "cancellation_policy": "Atcelšanas politika",
+      "to": "uz",
+      "dates": "Datumi",
+      "location": "Atrašanās vieta",
+      "duration": "Ilgums",
+      "duration_days": "{{ count }} dienas",
+      "walking_distance": "Gājiena attālumā",
+      "walking_distance_value": "apm. {{ distance }} km dienā",
+      "group_size": "Grupas lielums",
+      "group_size_value": "maks. {{ size }} cilvēki",
+      "full_price": "Pilna cena",
+      "deposit": "Noguldījums",
+      "remaining_balance": "Atlikusī summa"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Jūsu vārds *",
+      "phone": "Tālruņa numurs *",
+      "email": "E-pasta adrese *",
+      "message": "Pastāstiet par savu ideju",
+      "terms_html": "Es piekrītu {{ link }}",
+      "terms_link": "Lietošanas noteikumi un privātuma politika",
+      "terms_value": "Pieņemts",
+      "submit": "Iesniegt",
+      "success": "Paldies! Jūsu pārgājiena ieteikums ir ceļā. Drīz sazināsimies."
+    }
   }
 }
