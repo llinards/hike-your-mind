@@ -641,6 +641,184 @@
         "purchase_options_subscription_consent_text": "jūs skaidri un nepārprotami piekrītat, ka jums tiks automātiski iekasēta atkārtota summa (summas), kas norādīta jūsu grozā (plus piegāde un nodokļi), līdz abonements beigsies vai jūs to atcelsiet.",
         "purchase_options_subscription_cancellation_instructions": "%{cancel_text} Lūdzu, iepazīstieties ar %{cancellation_policy_label}.",
         "purchase_options_subscription_cancel_text": "Varat atcelt jebkurā laikā, dodoties uz savu kontu vai sazinoties ar veikalu."
+      },
+      "local_pickup": {
+        "location_information_far_away_one_item": {
+          "other": "Jūsu prece atrodas %{count} vietās"
+        },
+        "location_information_far_away_other_items": {
+          "one": "Ir %{count} atrašanās vieta ar jūsu priekšmetiem",
+          "other": "Šajā vietā ir %{count} jūsu priekšmeti"
+        },
+        "location_nearby": {
+          "one": "Jūsu prece atrodas %{count} tuvumā esošajā vietā",
+          "other": "Jūsu vienums ir pieejams %{count} tuvumā esošās vietās"
+        },
+        "location_nearby_one_item": {
+          "one": "Jūsu prece atrodas %{count} tuvumā esošajā vietā",
+          "other": "Jūsu vienums ir pieejams %{count} tuvumā esošās vietās"
+        },
+        "location_nearby_other_items": {
+          "one": "Tuvumā atrodas %{count} atrašanās vieta ar jūsu precēm",
+          "other": "Tuvumā ir %{count} atrašanās vietas, kurās ir jūsu preces"
+        },
+        "location_nearby_short": {
+          "one": "%{count} tuvumā esoša vieta ar jūsu preci",
+          "other": "%{count} tuvumā esošas vietas ar jūsu preci"
+        },
+        "location_nearby_short_one_item": {
+          "one": "%{count} tuvumā esoša vieta ar jūsu preci",
+          "other": "%{count} tuvumā esošas vietas ar jūsu preci"
+        },
+        "location_nearby_short_other_items": {
+          "one": "%{count} tuvumā esoša atrašanās vieta ar jūsu precēm",
+          "other": "%{count} tuvumā esošās atrašanās vietas ar jūsu precēm"
+        },
+        "location_far_away": {
+          "one": "%{count} vieta ar jūsu vienumu",
+          "other": "%{count} vietas ar jūsu preci"
+        },
+        "location_far_away_one_item": {
+          "one": "%{count} vieta ar jūsu vienumu",
+          "other": "%{count} vietas ar jūsu preci"
+        },
+        "location_far_away_other_items": {
+          "one": "%{count} atrašanās vieta ar jūsu precēm",
+          "other": "%{count} atrašanās vietas ar jūsu precēm"
+        },
+        "toggle_location": "Mainīt atrašanās vietu",
+        "toggle_more_locations": {
+          "one": "Vēl %{count} atrašanās vieta",
+          "other": "vēl %{count} atrašanās vietas"
+        },
+        "toggle_multiple_locations": "vēl %{count} vietas",
+        "pick_up_location": "Saņemšanas vieta",
+        "or": "VAI",
+        "cancel": "Atcelt",
+        "your_location": "jūsu atrašanās vieta",
+        "search_button": "Atrast veikalus",
+        "no_stores_found": "Veikali nav atrasti",
+        "all_stores_far_away": {
+          "title": "Tuvākās atrašanās vietas ir vairāk nekā %{distance} attālumā",
+          "title_with_item": {
+            "one": "Tuvākā vieta, kurā ir jūsu prece, atrodas vairāk nekā %{distance} attālumā no %{location}",
+            "other": "Tuvākā vieta ar jūsu precēm atrodas vairāk nekā %{distance} attālumā no %{location}"
+          },
+          "title_with_location": "Tuvākā atrašanās vieta atrodas vairāk nekā %{distance} attālumā no %{location}",
+          "title_with_specific_location": "Tuvākā vieta, kur pieejama jūsu prece, atrodas vairāk nekā %{distance} attālumā no %{location}",
+          "description": "Izvēlieties atrašanās vietu vai %{ship_to_address_link}",
+          "description_with_location": "%{change_location_link} vai %{ship_to_address_link}",
+          "ship_to_address_link": "piegādes adrese",
+          "change_location_link": "Mainīt atrašanās vietu"
+        },
+        "selected_pickup_option_no_longer_available": {
+          "title": "Jūsu iepriekš izvēlētā atrašanās vieta vairs nav pieejama",
+          "description": "Esam izvēlējušies tuvāko atrašanās vietu, kurā jūsu preces ir noliktavā"
+        },
+        "could_not_resolve_address": "Jūsu adresi neizdevās atrast. Mēģiniet vēlreiz vai izmantojiet citu adresi.",
+        "paginator": {
+          "accessibility_label": "Vietējās saņemšanas lappušu pāršķiršana",
+          "previous": "Iepriekšējā lapa",
+          "next": "Nākamā lapa",
+          "label": {
+            "one": "%{first} — %{last} no %{count} veikala",
+            "other": "%{first} - %{last} no %{count} veikaliem"
+          }
+        },
+        "reveal_more_label": {
+          "one": "Rādīt vēl %{count} atrašanās vietu",
+          "other": "Rādīt vēl %{count} atrašanās vietas"
+        },
+        "no_pickup_locations_found": "Nav atrasta neviena saņemšanas vieta",
+        "pickup_unavailable_banner_title": {
+          "one": "Nav vietu ar jūsu vienumu",
+          "other": "Nav atrasta neviena vieta ar jūsu vienumiem"
+        },
+        "pickup_unavailable_banner_title_with_country": {
+          "one": "%{country} nav atrašanās vietu ar jūsu preci",
+          "other": "%{country} nav nevienas atrašanās vietas ar jūsu vienumiem"
+        },
+        "pickup_unavailable_banner_body": {
+          "try_different_location": "Mēģiniet citu atrašanās vietu",
+          "ship_to_address": "piegādes adrese",
+          "there_are_no_stores": "Jūsu adreses tuvumā nav veikalu vai jūsu preces nav pieejamas saņemšanai veikalā.",
+          "ship_items": "Nosūtiet savas preces",
+          "search_elsewhere": "meklēt citur",
+          "search_elsewhere_standalone": "Meklējiet citur.",
+          "ship_items_or_search_elsewhere": "%{ship_items} vai %{search_elsewhere}"
+        },
+        "geolocation": {
+          "permission_not_allowed": "Atļaut atrašanās vietas kopīgošanu vai meklēt citādi."
+        }
+      },
+      "split_delivery": {
+        "accessibility": {
+          "status": {
+            "ship_separately": "%{items} tiks nosūtīti atsevišķi.",
+            "pickup_in_store": "%{items} tiks saņemti veikalā.",
+            "remove_items": "%{items} izņemts no groza."
+          }
+        },
+        "all_items": "Visas preces",
+        "pickup_all_items": "Savāc visus priekšmetus",
+        "pickup_and_ship": "Saņemt un nosūtīt",
+        "ship_all_items": "Nosūtīt visas preces",
+        "separate_pickup_email_notice": "Jūs saņemsiet atsevišķu e-pasta ziņojumu, kad jūsu pasūtījums būs gatavs saņemšanai.",
+        "items_for_pickup": "Preces saņemšanai",
+        "items_for_shipping": "Sūtīšanai paredzētās preces",
+        "items_moved_to_shipping_toast": "Preces, kuras nevarēja paņemt, tika pārvietotas uz nosūtīšanu.",
+        "items_count": {
+          "one": "%{count} vienība",
+          "other": "%{count} vienumi"
+        },
+        "pickup_items_count": {
+          "one": "Paņemiet %{count} priekšmetu",
+          "other": "Saņemiet %{count} priekšmetus"
+        },
+        "ship_items_count": {
+          "one": "Nosūtīt %{count} preci",
+          "other": "Nosūtīt %{count} preces"
+        },
+        "delivery_method": "Sadalītās piegādes metode",
+        "delivery_method_menu": "Sadalītās piegādes metodes izvēlne",
+        "inventory_issue_banner": {
+          "heading": {
+            "cannot_be_picked_up": {
+              "one": "%{count} vienumu nevar paņemt",
+              "other": "%{count} vienumus nevar paņemt"
+            },
+            "cannot_be_shipped": {
+              "one": "%{count} prece nevar tikt piegādāta",
+              "other": "%{count} preces nevar tikt nosūtītas"
+            }
+          },
+          "remove_item": {
+            "one": "noņemt vienumu",
+            "other": "noņemt vienumus"
+          },
+          "remove_item_only": {
+            "one": "Noņemt vienumu",
+            "other": "Noņemt vienumus"
+          },
+          "ship_separately": {
+            "one": "Nosūtiet to atsevišķi",
+            "other": "Sūtiet tos atsevišķi"
+          },
+          "pick_them_up_in_store": {
+            "one": "Saņemt veikalā",
+            "other": "Saņemt veikalā"
+          },
+          "remove_items_or_ship": "%{ship_separately_link} vai %{remove_items_link}",
+          "remove_items_or_pickup": "%{pickup_in_store_link} vai %{remove_items_link}",
+          "merchandise_line_with_quantity": "%{title} (×%{quantity})"
+        },
+        "cross_border": {
+          "modal": {
+            "heading": "Mainīt valsti?",
+            "content": "Jūsu saņemšanas un piegādes vietām jāatrodas vienā valstī. Mainot valsti, visas preces tiks iestatītas piegādei.",
+            "country_changed_heading": "Valsts mainīta"
+          }
+        }
       }
     },
     "errors": {
@@ -784,8 +962,129 @@
       },
       "tags": {
         "add_articles": "Sašaurināt meklēšanu līdz rakstiem, kuriem ir arī tags %{tag}",
-        "add_products": "Sašaurināt atlasi līdz produktiem, kas atbilst tagam %{tag}"
+        "add_products": "Sašaurināt atlasi līdz produktiem, kas atbilst tagam %{tag}",
+        "remove_articles": "Paplašināt meklēšanu uz rakstiem, kas nav atzīmēti ar %{tag}",
+        "remove_products": "Noņemt tagu %{tag}"
       }
+    },
+    "email_marketing": {
+      "subscribed": {
+        "confirmation": "Paldies, ka abonējāt mūsu adresātu sarakstu.",
+        "disclaimer": "Jūs varat anulēt abonementu jebkurā laikā.",
+        "unsubscribe": "Abonēt atcelt"
+      },
+      "unsubscribed": {
+        "confirmation": "Jūs esat atteicies no mūsu adresātu saraksta.",
+        "disclaimer": "Jūs vairs nesaņemsiet no mums mārketinga jaunumus. Jūs jebkurā laikā varat pieteikties to saņemšanai atkārtoti.",
+        "preview": "Jūs priekšskatāt to, ko klienti redzēs, kad atteiksies no abonementa."
+      },
+      "sms_unsubscribe_confirm": {
+        "message": "Vai esat pārliecināts, ka vēlaties atteikties no SMS mārketinga?",
+        "button": "Abonēt atcelt"
+      },
+      "open_tracking": {
+        "opt_in": {
+          "opted_in_html": "<b>Jūs esat piekritis e-pasta atvēršanas izsekošanai.</b>",
+          "visibility": "E-pasta atvēršanas rādītāji tiks atspoguļoti anonīmi. Mēs redzēsim tikai to, vai esat atvēris e-pastu kā daļu no kopējā e-pasta atvēršanas rādītāja.",
+          "opt_out_html": "Varat <a style=\"text-decoration:underline;\" href=\"%{link}\">atteikties</a> no e-pasta atvēršanas izsekošanas, ja nevēlaties kopīgot šo informāciju.",
+          "preview_bar": "Jūs skatāt priekšskatījumu tam, ko klienti redzēs, kad piekritīs e-pasta atvēršanas izsekošanai."
+        },
+        "opt_out": {
+          "opted_out_html": "<b>Jūs esat atteicies no e-pasta atvēršanas izsekošanas.</b>",
+          "visibility": "Mēs neredzēsim, vai esat atvēris mūsu e-pastus.",
+          "opt_in_html": "<a style=\"text-decoration:underline;\" href=\"%{link}\">Piekrītiet</a> e-pasta atvēršanas izsekošanai.",
+          "preview_bar": "Jūs skatāt priekšskatījumu tam, ko klienti redzēs, kad atteiksies no e-pasta atvēršanas izsekošanas."
+        },
+        "no_longer_track": {
+          "status_html": "<b>Mēs vairs neizsekojam e-pasta atvēršanas gadījumus.</b>",
+          "privacy_policy": "Pēc šī e-pasta nosūtīšanas mēs atjauninājām savu privātuma politiku un vairs neuzskaitām e-pasta atvēršanas reizes."
+        },
+        "track": {
+          "status_html": "<b>Tiek ziņots par e-pasta atvēršanas izsekošanu.</b>",
+          "visibility": "Mēs redzēsim tikai to, vai esat atvēris e-pastu, kā daļu no kopējā e-pasta atvēršanas rādītāja."
+        },
+        "updated_policy": {
+          "status_html": "<b>Tiek ziņots par e-pasta atvēršanas izsekošanu.</b>",
+          "visibility": "Mēs esam atjauninājuši savu politiku un tagad uzskaitām e-pasta atvēršanas gadījumus. E-pasta atvēršanas rādītāji tiks ziņoti anonīmi. Mēs redzēsim tikai to, vai esat atvēris e-pastu kā daļu no kopējā e-pasta atvēršanas rādītāja.",
+          "opt_out_html": "Ja nevēlaties kopīgot šo informāciju, varat <a style=\"text-decoration:underline;\" href=\"%{link}\">atteikties no abonēšanas.</a>"
+        }
+      }
+    },
+    "filters": {
+      "availability": {
+        "value": {
+          "in_stock": "Ir noliktavā",
+          "out_of_stock": "Nav noliktavā"
+        }
+      },
+      "boolean": {
+        "true_label": "Jā",
+        "false_label": "Nē"
+      }
+    },
+    "search": {
+      "error": "Radās problēma, ielādējot meklēšanas rezultātus. Lūdzu, atsvaidziniet lapu vai mēģiniet vēlreiz vēlāk.",
+      "sorting": {
+        "relevance": "Atbilstība",
+        "price_ascending": "Cena, no zemākās uz augstāko",
+        "price_descending": "Cena, no augstākās uz zemāko"
+      }
+    },
+    "page_titles": {
+      "blog_or_article_with_error": "Kļūda — %{title}",
+      "products": "Produkti",
+      "shopping_cart": "Jūsu iepirkumu grozs",
+      "account": "Konts",
+      "create_account": "Izveidot kontu",
+      "reset_account": "Atiestatīt kontu",
+      "addresses": "Adreses",
+      "order": "Pasūtījums %{name}",
+      "search": "Meklēt",
+      "search_results": {
+        "one": "Meklēšana: atrasts %{count} rezultāts pēc \"%{terms}\"",
+        "other": "Meklēšana: atrasti %{count} rezultāti pēc \"%{terms}\""
+      },
+      "collections": "Kolekcijas",
+      "not_found": "404 Nav atrasts",
+      "challenge": "Izaicinājums",
+      "checkpoint": "Kontrolpunkts"
+    },
+    "cart": {
+      "discounts_with_count": "Ir piemērotas %{count} atlaides"
+    },
+    "challenge": {
+      "message": "Lai turpinātu, lūdzu, apstipriniet, ka neesat robots.",
+      "error": "Jūsu atbilde nebija pareiza, lūdzu, mēģiniet vēlreiz.",
+      "submit_button_text": "Iesniegt"
+    },
+    "checkpoint": {
+      "message": "Atrisiniet CAPTCHA, lai turpinātu",
+      "error": "Neizdevās apstiprināt CAPTCHA",
+      "submit_button_text": "Iesniegt"
+    },
+    "store_availability": {
+      "pick_up_time": {
+        "one_hour": "Parasti gatavs 1 stundas laikā",
+        "two_hours": "Parasti gatavs 2 stundu laikā",
+        "four_hours": "Parasti gatavs 4 stundās",
+        "twenty_four_hours": "Parasti gatavs 24 stundās",
+        "two_to_four_days": "Parasti gatavs 2-4 dienās",
+        "five_or_more_days": "Parasti gatavs 5+ dienās",
+        "zero_to_two_hours": "Parasti gatavs 2 stundu laikā",
+        "two_to_four_hours": "Parasti gatavs 4 stundās",
+        "immediately": "Gatavs izņemšanai tagad",
+        "next_day": "Gatavs izņemšanai nākamajā dienā"
+      }
+    },
+    "subscriptions": {
+      "buyer_consent_product": "Šī prece ir atkārtots vai atlikts pirkums. Turpinot, es piekrītu %{cancellationPolicyLink} un pilnvaroju jūs iekasēt maksu no manas maksājumu metodes par šajā lapā norādītajām cenām, biežumu un datumiem, līdz mans pasūtījums ir izpildīts vai es to atceļu, ja tas ir atļauts.",
+      "buyer_consent_cart": "Viena vai vairākas preces jūsu grozā ir atkārtots vai atlikts pirkums. Turpinot, es piekrītu %{cancellationPolicyLink} un pilnvaroju jūs iekasēt maksu no mana maksājuma veida par šajā lapā norādītajām cenām, biežumu un datumiem, līdz mans pasūtījums ir izpildīts vai es to atceļu, ja tas ir atļauts.",
+      "cancellation_policy": "atteikuma politika"
+    },
+    "managed_markets": {
+      "buyer_consent": "Veicot pasūtījumu, jūs piekrītat iegādāties no Global-e kā reģistrētā tirgotāja saskaņā ar Global-e %{termsAndConditionsLink} un %{privacyPolicyLink} un kopīgot savu informāciju ar %{shopName}.",
+      "terms_and_conditions": "Noteikumi un nosacījumi",
+      "privacy_policy": "Privātuma politika"
     }
   },
   "customer_accounts": {
@@ -966,6 +1265,49 @@
         "display_name": "Bankas konts",
         "generic_error": "Neizdevās pievienot bankas kontu. Mēģiniet vēlreiz vēlāk."
       }
+    },
+    "callback": {
+      "try_again": "Mēģini vēlreiz"
+    },
+    "date": {
+      "humanize": {
+        "lessThanOneHourAgo": {
+          "one": "{{count}} minūtes pirms",
+          "other": "Pirms {{count}} minūtēm"
+        },
+        "lessThanOneMinuteAgo": "Tikko",
+        "yesterday": "Vakar plkst. {{time}}",
+        "today": "Šodien plkst. {{time}}",
+        "tomorrow": "Rīt plkst. {{time}}"
+      }
+    },
+    "enable_javascript": "Lai skatītu savu kontu, savas pārlūkprogrammas iestatījumos iespējojiet JavaScript vai pierakstieties ar citu pārlūkprogrammu.",
+    "navigation_and_structure": {
+      "account_menu": {
+        "hide_accessibility_label": "Paslēpt konta izvēlni",
+        "show_accessibility_label": "Rādīt konta izvēlni",
+        "nav_accessibility_label": "Konta navigācija",
+        "open_menu_accessibility_label": "Atvērt konta navigāciju",
+        "close_menu_accessibility_label": "Aizvērt konta navigāciju",
+        "label": "Konts",
+        "loading_message": "Notiek konta navigācijas ielāde"
+      },
+      "action_menu_accessibility_label": "Vairāk darbību",
+      "back_button_accessibility_label": "Atpakaļ",
+      "go_to_store_link": "Ej uz veikalu",
+      "orders_link_label": "Pasūtījumi",
+      "subscriptions_link_label": "Abonementi",
+      "close_menu_accessibility_label": "Aizvērt galveno navigāciju",
+      "contact_email_subject": "Kontakts no {{shopName}} tiešsaistes veikala",
+      "contact_link": "Kontaktinformācija",
+      "delete_confirmation": {
+        "cancel": "Atcelt",
+        "delete": "Dzēst"
+      },
+      "dismiss_toast": "Noraidīt",
+      "document_title": "{{sectionName}} — {{shopName}} — Konts",
+      "loading_message": "Notiek ielāde",
+      "loading_policy_content_accessibility_label": "Notiek politikas satura ielāde"
     }
   }
 }
