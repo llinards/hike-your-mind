@@ -3652,7 +3652,7 @@
     "date": {
       "humanize": {
         "lessThanOneHourAgo": {
-          "one": "{{count}} minūtes pirms",
+          "one": "Pirms {{count}} minūtes",
           "other": "Pirms {{count}} minūtēm"
         },
         "lessThanOneMinuteAgo": "Tikko",
