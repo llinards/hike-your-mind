@@ -5470,12 +5470,14 @@
     "title": "Meklēt",
     "placeholder": "Meklēt rakstus, lapas vai produktus",
     "submit": "Meklēt",
-    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}"
+    "no_results_html": "Nav atrasts neviens rezultāts: {{ terms }}",
+    "results_for_html": "{{ count }} atrasti no {{ terms }}"
   },
   "product": {
     "gallery": {
       "show_image": "Rādīt attēlu {{ number }}",
-      "view_full_size": "Skatīt pilnā izmērā"
+      "view_full_size": "Skatīt pilnā izmērā",
+      "image_counter_html": "{{ current }} / {{ total }}"
     },
     "standard": {
       "purchase_summary": "Pirkuma kopsavilkums",
@@ -5519,6 +5521,7 @@
       "cancellation_policy": "Atcelšanas politika",
       "to": "uz",
       "dates": "Datumi",
+      "date_range": "{{ start }} līdz {{ end }}",
       "location": "Atrašanās vieta",
       "duration": "Ilgums",
       "duration_days": "{{ count }} dienas",
