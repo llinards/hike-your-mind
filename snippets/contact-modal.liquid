@@ -7,7 +7,7 @@
 {% enddoc %}
 
 <contact-modal>
-  <dialog class="contact-modal" aria-label="{{ 'general.footer.contacts' | t }}" scroll-lock data-contact-modal>
+  <dialog class="contact-modal" aria-label="{{ 'general.footer.contacts' | t }}" scroll-lock tabindex="-1" data-contact-modal>
     <div class="contact-modal__inner">
       <div class="contact-modal__logo">
         {{ 'logo-wordmark.svg' | inline_asset_content }}
@@ -40,6 +40,10 @@
     border: 0.5px solid var(--color-hairline);
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+
+  .contact-modal:focus {
+    outline: none;
   }
 
   .contact-modal[open] {
@@ -172,6 +176,9 @@
 
         event.preventDefault();
         this.dialog.showModal();
+
+        /* Opening focuses the first link, which Safari highlights; the dialog itself takes focus instead. */
+        this.dialog.focus();
       });
 
       this.dialog.addEventListener('click', (event) => {
