@@ -5378,6 +5378,11 @@
     "comment_form_title": "Pievienot komentāru"
   },
   "cart": {
+    "terms": {
+      "label_html": "Es piekrītu {{ agreement }} un {{ contract }}",
+      "agreement": "pakalpojumu līgumam",
+      "contract": "ceļojuma līgumam ar aviobiļetēm"
+    },
     "checkout": "Apmaksa",
     "title": "Grozs",
     "update": "Atjaunināt",
@@ -5435,10 +5440,47 @@
       "title": "Pieteikties"
     }
   },
+  "filters": {
+    "title": "Filtri",
+    "reset": "Noņemt filtrus",
+    "labels": {
+      "category": "Kategorija",
+      "availability": "Pieejamība"
+    },
+    "values": {
+      "hiking_backpacks": "Pārgājienu mugursomas",
+      "journals": "Dienasgrāmatas",
+      "pinback_buttons": "Nozīmītes",
+      "in_stock": "Ir noliktavā",
+      "out_of_stock": "Nav noliktavā",
+      "camping_hiking": "Kempings un pārgājieni",
+      "hats": "Cepures",
+      "italy": "Itālija",
+      "latvia": "Latvija",
+      "portugal": "Portugāle"
+    }
+  },
+  "dates": {
+    "day_month": "{{ day }}. {{ month }}",
+    "months": {
+      "january": "janvāris",
+      "february": "februāris",
+      "march": "marts",
+      "april": "aprīlis",
+      "may": "maijs",
+      "june": "jūnijs",
+      "july": "jūlijs",
+      "august": "augusts",
+      "september": "septembris",
+      "october": "oktobris",
+      "november": "novembris",
+      "december": "decembris"
+    }
+  },
   "collections": {
     "title": "Kolekcijas",
     "hikes": {
-      "filters": "Filtri",
+      "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervējiet vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
       "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
     },

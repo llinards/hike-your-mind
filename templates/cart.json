@@ -11,7 +11,11 @@
   "sections": {
     "main": {
       "type": "cart",
-      "settings": {}
+      "settings": {
+        "max_quantity": 10,
+        "service_agreement_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/Standarta_informacijas_veidlapa_kompleksa_turisma_pakalpojumu_ligumiem.docx?v=1790783881",
+        "travel_contract_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/celojuma_ligums_Hike_ar_aviobiletem_majaslapa.docx?v=1790783881"
+      }
     }
   },
   "order": [

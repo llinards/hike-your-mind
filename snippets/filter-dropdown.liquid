@@ -1,0 +1,260 @@
+{% doc %}
+  Renders the "Filters" disclosure: a panel of links, one group per storefront
+  filter. Shopify leaves filter labels in English where it has no translation,
+  and Translate & Adapt cannot reach them, so every label is looked up in the
+  theme locales first (filters.labels.* and filters.values.*), keyed by its
+  English name, and falls back to Shopify's own. While any filter is applied, the
+  panel opens with a link back to the unfiltered collection.
+
+  @param {filter[]} filters - The list or boolean filters to show, in order
+  @param {string} [fallback_param] - URL parameter for the fallback values
+  @param {string[]} [fallback_values] - Values linked by hand while the filter is not set up in Search & Discovery
+
+  @example
+  {% render 'filter-dropdown', filters: collection.filters %}
+{% enddoc %}
+
+{%- liquid
+  assign shown_filters = filters | where: 'type', 'list'
+  assign boolean_filters = filters | where: 'type', 'boolean'
+  assign shown_filters = shown_filters | concat: boolean_filters
+
+  assign active_count = 0
+  for filter in shown_filters
+    assign active_count = active_count | plus: filter.active_values.size
+  endfor
+-%}
+
+{%- capture groups -%}
+  {%- for filter in filters -%}
+    {%- if filter.type == 'list' or filter.type == 'boolean' -%}
+      {%- liquid
+        assign filter_key = filter.label | handleize | replace: '-', '_' | prepend: 'filters.labels.'
+        assign filter_label = filter_key | t
+        assign missing = filter_label | downcase
+        if missing contains 'translation missing'
+          assign filter_label = filter.label
+        endif
+      -%}
+      <div class="filter-dropdown__group" role="group" aria-label="{{ filter_label | escape }}">
+        {%- if shown_filters.size > 1 -%}
+          <p class="filter-dropdown__group-label" aria-hidden="true">{{ filter_label }}</p>
+        {%- endif -%}
+
+        <ul class="filter-dropdown__list" role="list">
+          {%- for value in filter.values -%}
+            {%- if value.count > 0 or value.active -%}
+              {%- liquid
+                assign value_key = value.label | handleize | replace: '-', '_' | prepend: 'filters.values.'
+                assign value_label = value_key | t
+                assign missing = value_label | downcase
+                if missing contains 'translation missing'
+                  assign value_label = value.label
+                endif
+              -%}
+              <li>
+                {%- if value.active -%}
+                  <a class="filter-dropdown__option is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                    <span class="filter-dropdown__check" aria-hidden="true"></span>
+                    {{- value_label -}}
+                  </a>
+                {%- else -%}
+                  <a class="filter-dropdown__option" href="{{ value.url_to_add }}">
+                    <span class="filter-dropdown__check" aria-hidden="true"></span>
+                    {{- value_label -}}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if fallback_values.size > 0 -%}
+    <ul class="filter-dropdown__list" role="list">
+      {%- for value in fallback_values -%}
+        {%- liquid
+          assign value_key = value | handleize | replace: '-', '_' | prepend: 'filters.values.'
+          assign value_label = value_key | t
+          assign missing = value_label | downcase
+          if missing contains 'translation missing'
+            assign value_label = value
+          endif
+        -%}
+        <li>
+          <a class="filter-dropdown__option" href="{{ collection.url }}?{{ fallback_param }}={{ value | url_encode }}">
+            <span class="filter-dropdown__check" aria-hidden="true"></span>
+            {{- value_label -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if groups != blank -%}
+  <details class="filter-dropdown">
+    <summary class="filter-dropdown__toggle">
+      {{ 'filters.title' | t }}
+      <span class="filter-dropdown__caret" aria-hidden="true">
+        {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+      </span>
+    </summary>
+
+    <div class="filter-dropdown__panel">
+      {%- if active_count > 0 -%}
+        <a class="filter-dropdown__option filter-dropdown__reset" href="{{ collection.url }}">
+          {{- 'icon-close.svg' | inline_asset_content -}}
+          {{- 'filters.reset' | t -}}
+        </a>
+      {%- endif -%}
+
+      {{ groups }}
+    </div>
+  </details>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Lifted here, not on the panel: mid-fade the panel's own z-index is trapped in the fading layer. */
+  .filter-dropdown {
+    position: relative;
+    z-index: 3;
+  }
+
+  .filter-dropdown__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--font-size-body);
+    letter-spacing: var(--letter-spacing-ui);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .filter-dropdown__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .filter-dropdown__caret svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: rotate(90deg);
+    transition: transform var(--duration-base) var(--easing-base);
+  }
+
+  .filter-dropdown[open] .filter-dropdown__caret svg {
+    transform: rotate(-90deg);
+  }
+
+  /* Browsers that can animate details fade the panel both ways; the rest show and hide it at once. */
+  .filter-dropdown::details-content {
+    opacity: 0;
+    transition:
+      opacity var(--duration-base) var(--easing-base),
+      content-visibility var(--duration-base) allow-discrete;
+  }
+
+  .filter-dropdown[open]::details-content {
+    opacity: 1;
+  }
+
+  /* The panel floats over the page below, anchored to the side the toggle sits on. */
+  .filter-dropdown__panel {
+    position: absolute;
+    inset-block-start: calc(100% + 0.75rem);
+    inset-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: max-content;
+    min-width: 16rem;
+    max-width: calc(100vw - 2rem);
+    padding: 1rem;
+    border: 0.5px solid var(--color-hairline);
+    background-color: var(--color-background);
+  }
+
+  @media (width >= 750px) {
+    .filter-dropdown__panel {
+      inset-inline: auto 0;
+    }
+  }
+
+  .filter-dropdown__reset {
+    padding-block-end: 1rem;
+    border-block-end: 0.5px solid var(--color-hairline);
+  }
+
+  .filter-dropdown__reset svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .filter-dropdown__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-dropdown__group-label {
+    font-size: var(--font-size-small);
+    color: var(--color-foreground-muted);
+  }
+
+  .filter-dropdown__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .filter-dropdown__option {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--color-foreground-muted);
+    text-decoration: none;
+  }
+
+  .filter-dropdown__check {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid currentColor;
+  }
+
+  .filter-dropdown__option.is-active .filter-dropdown__check {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+  }
+
+  /* The tick is the box's own two borders, turned. */
+  .filter-dropdown__option.is-active .filter-dropdown__check::after {
+    content: '';
+    width: 0.3rem;
+    height: 0.55rem;
+    border: solid var(--color-background);
+    border-width: 0 1.5px 1.5px 0;
+    rotate: 45deg;
+    translate: 0 -1px;
+  }
+
+  .filter-dropdown__option.is-active,
+  .filter-dropdown__option:hover,
+  .filter-dropdown__option:focus-visible {
+    color: var(--color-foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter-dropdown__caret svg,
+    .filter-dropdown::details-content {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

@@ -23,6 +23,11 @@
     "comment_form_title": "Add a comment"
   },
   "cart": {
+    "terms": {
+      "label_html": "I accept the {{ agreement }} and {{ contract }}",
+      "agreement": "Service agreement",
+      "contract": "travel contract with airline tickets"
+    },
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",
@@ -80,10 +85,47 @@
       "title": "Login"
     }
   },
+  "filters": {
+    "title": "Filters",
+    "reset": "Remove filters",
+    "labels": {
+      "category": "Category",
+      "availability": "Availability"
+    },
+    "values": {
+      "hiking_backpacks": "Hiking backpacks",
+      "journals": "Journals",
+      "pinback_buttons": "Pinback buttons",
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "camping_hiking": "Camping & hiking",
+      "hats": "Hats",
+      "italy": "Italy",
+      "latvia": "Latvia",
+      "portugal": "Portugal"
+    }
+  },
+  "dates": {
+    "day_month": "{{ day }} {{ month }}",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
   "collections": {
     "title": "Collections",
     "hikes": {
-      "filters": "Filters",
+      "subheading": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit",
       "price_from": "From {{ price }}",
       "no_results": "No hikes match this filter yet. Try another country."
     },

@@ -1,0 +1,25 @@
+{% doc %}
+  Renders a hike's dates, such as "25 September - 7 October". Shopify's date
+  filter only writes English month names, so each month is looked up in the
+  theme locales (dates.months.*) and laid out by dates.day_month, which puts
+  the day and month in each language's order.
+
+  @param {string} start - The first day of the hike
+  @param {string} [end] - The last day of the hike
+
+  @example
+  {% render 'hike-dates', start: hike_start, end: hike_end %}
+{% enddoc %}
+
+{%- liquid
+  assign day = start | date: '%-d'
+  assign month = start | date: '%B' | downcase | prepend: 'dates.months.' | t
+  echo 'dates.day_month' | t: day: day, month: month
+
+  if end != blank
+    assign day = end | date: '%-d'
+    assign month = end | date: '%B' | downcase | prepend: 'dates.months.' | t
+    echo ' - '
+    echo 'dates.day_month' | t: day: day, month: month
+  endif
+-%}
