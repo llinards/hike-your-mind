@@ -23,6 +23,11 @@
     "comment_form_title": "Add a comment"
   },
   "cart": {
+    "terms": {
+      "label_html": "I accept the {{ agreement }} and {{ contract }}",
+      "agreement": "Service agreement",
+      "contract": "travel contract with airline tickets"
+    },
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",

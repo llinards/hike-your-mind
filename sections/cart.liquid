@@ -152,10 +152,15 @@
         </p>
 
         <noscript>
-          <input class="cart__update" type="submit" name="update" value="{{ 'cart.update' | t }}">
+          <input class="cart__update" type="submit" name="update" value="{{ 'cart.update' | t }}" formnovalidate>
         </noscript>
 
-        <input class="cart__checkout" type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+        {% render 'checkout-terms',
+          agreement_url: section.settings.service_agreement_url,
+          contract_url: section.settings.travel_contract_url
+        %}
+
+        <input class="cart__checkout" type="submit" name="checkout" value="{{ 'cart.checkout' | t }}" data-checkout>
       </div>
     </form>
   {%- endif -%}
@@ -472,11 +477,24 @@
       });
 
       this.addEventListener('change', (event) => {
+        if (event.target.closest('[data-terms]')) {
+          this.syncCheckout();
+          return;
+        }
+
         const input = event.target.closest('[data-quantity]');
         if (!input) return;
         this.change(input, this.line(input), this.quantity(input));
       });
 
+      this.syncCheckout();
+    }
+
+    /* Checkout waits for the terms; without the script the box's required attribute holds it back instead. */
+    syncCheckout() {
+      const terms = this.querySelector('[data-terms]');
+      const checkout = this.querySelector('[data-checkout]');
+      if (terms && checkout) checkout.disabled = !terms.checked;
     }
 
     line(element) {
@@ -547,7 +565,12 @@
         return;
       }
 
+      const accepted = Boolean(this.querySelector('[data-terms]')?.checked);
       this.innerHTML = fresh.innerHTML;
+
+      const terms = this.querySelector('[data-terms]');
+      if (terms) terms.checked = accepted;
+      this.syncCheckout();
 
       const restored = this.querySelector(focusKey);
       if (restored) restored.focus();
@@ -581,6 +604,22 @@
       "max": 20,
       "step": 1,
       "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:labels.checkout_terms"
+    },
+    {
+      "type": "url",
+      "id": "service_agreement_url",
+      "label": "t:labels.service_agreement_url",
+      "info": "t:info.checkout_terms_link"
+    },
+    {
+      "type": "url",
+      "id": "travel_contract_url",
+      "label": "t:labels.travel_contract_url",
+      "info": "t:info.checkout_terms_link"
     }
   ]
 }

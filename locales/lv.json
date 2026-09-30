@@ -5378,6 +5378,11 @@
     "comment_form_title": "Pievienot komentāru"
   },
   "cart": {
+    "terms": {
+      "label_html": "Es piekrītu {{ agreement }} un {{ contract }}",
+      "agreement": "pakalpojumu līgumam",
+      "contract": "ceļojuma līgumam ar aviobiļetēm"
+    },
     "checkout": "Apmaksa",
     "title": "Grozs",
     "update": "Atjaunināt",

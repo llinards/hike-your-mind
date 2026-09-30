@@ -117,7 +117,10 @@
     "deposit_percent": "Deposit percentage",
     "balance_due_days": "Balance due before departure",
     "deposit_note": "Deposit note",
-    "max_quantity": "Maximum quantity"
+    "max_quantity": "Maximum quantity",
+    "checkout_terms": "Checkout terms",
+    "service_agreement_url": "Service agreement link",
+    "travel_contract_url": "Travel contract link"
   },
   "options": {
     "alignment": {
@@ -164,6 +167,7 @@
     "deposit_percent": "The share of the full trip price a customer pays today. The product's own price in Shopify is the deposit, so this is what the full trip price and remaining balance are worked back from.",
     "balance_due_days": "How many days before departure the remaining balance falls due. Shown in the reservation summary — keep the deposit note in step with it.",
     "deposit_note": "Sits under the features, above the quantity picker.",
-    "max_quantity": "The most places one customer can reserve in a single booking."
+    "max_quantity": "The most places one customer can reserve in a single booking.",
+    "checkout_terms_link": "Opens in a new tab from the checkbox above checkout. Pick a page, or paste the link to a file uploaded under Content > Files. Left empty, the words show without a link."
   }
 }
