@@ -1,0 +1,27 @@
+{% doc %}
+  Renders one date with its month name taken from the theme locales
+  (dates.months.*), since Shopify's date filter only writes English months.
+  dates.day_month and dates.day_month_year set each language's order. A value
+  that cannot be read as a date is shown as it came.
+
+  @param {string} date - The date to show
+  @param {boolean} [with_year] - Adds the year
+
+  @example
+  {% render 'localized-date', date: hike_start %}
+  {% render 'localized-date', date: booked_day, with_year: true %}
+{% enddoc %}
+
+{%- liquid
+  assign year = date | date: '%Y'
+  assign day = date | date: '%-d'
+  assign month = date | date: '%B' | downcase | prepend: 'dates.months.' | t
+
+  if year == date
+    echo date
+  elsif with_year
+    echo 'dates.day_month_year' | t: day: day, month: month, year: year
+  else
+    echo 'dates.day_month' | t: day: day, month: month
+  endif
+-%}
