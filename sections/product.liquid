@@ -119,8 +119,11 @@
         {%- for option in product.options_with_values -%}
           {%- liquid
             assign option_name = option.name | downcase
+            assign first_value = option.values | first
             assign is_color = false
-            if option_name == 'color' or option_name == 'colour'
+            if first_value.swatch
+              assign is_color = true
+            elsif option_name == 'color' or option_name == 'colour' or option_name == 'krāsa'
               assign is_color = true
             endif
           -%}

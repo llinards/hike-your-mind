@@ -15,40 +15,30 @@
 
               comment
                 Colour is the option worth showing on a card; language is the fallback.
+                Option names arrive translated, so a colour is known by its swatch first.
               endcomment
-              assign option_kind = ''
-              assign option_label = ''
+              assign card_option = nil
+              assign language_option = nil
               for option in product.options_with_values
                 assign option_name = option.name | downcase
-                if option_kind == ''
-                  if option_name == 'color' or option_name == 'colour'
-                    assign option_kind = 'color'
-                    assign option_label = option.name
-                    assign option_values = option.values
-                  endif
+                assign first_value = option.values | first
+                if first_value.swatch or option_name == 'color' or option_name == 'colour' or option_name == 'krāsa'
+                  assign card_option = option
+                  break
+                elsif option_name == 'language' or option_name == 'valoda'
+                  assign language_option = option
                 endif
               endfor
-
-              if option_kind == ''
-                for option in product.options_with_values
-                  assign option_name = option.name | downcase
-                  if option_name == 'language'
-                    assign option_kind = 'language'
-                    assign option_label = option.name
-                    assign option_values = option.values
-                  endif
-                endfor
-              endif
+              assign card_option = card_option | default: language_option
 
               assign pick_variant = false
-              if option_kind != ''
-                if product.options.size == 1
-                  assign pick_variant = true
-                endif
+              if card_option and product.options.size == 1
+                assign pick_variant = true
               endif
 
               comment
                 BookX marks its bookable products with this tag; their price is a daily rate.
+                Bookable products need dates, so they are booked on their own page.
               endcomment
               assign product_tags = product.tags | join: ',' | downcase
               assign per_day = false
@@ -56,23 +46,24 @@
                 assign per_day = true
               endif
 
-              comment
-                Bookable products need dates, so they are booked on their own page.
-              endcomment
               assign quick_add = false
-              unless per_day
-                if product.available
-                  if product.variants.size == 1
-                    assign quick_add = true
-                  elsif pick_variant
-                    assign quick_add = true
-                  endif
+              if product.available and per_day == false
+                if product.variants.size == 1 or pick_variant
+                  assign quick_add = true
                 endif
-              endunless
+              endif
 
-              assign on_sale = false
-              if product.compare_at_price > product.price
-                assign on_sale = true
+              comment
+                A quick-add card shows its chosen variant's price; the rest show the product's lowest.
+              endcomment
+              assign priced = product
+              if quick_add
+                assign priced = variant
+              endif
+              assign price_amount = priced.price | money
+              assign compare_amount = ''
+              if priced.compare_at_price > priced.price
+                assign compare_amount = priced.compare_at_price | money
               endif
 
               assign img_loading = 'lazy'
@@ -80,34 +71,7 @@
                 assign img_loading = 'eager'
               endif
 
-              assign compare_amount = ''
-              if quick_add
-                assign price_amount = variant.price | money
-                if variant.compare_at_price > variant.price
-                  assign compare_amount = variant.compare_at_price | money
-                endif
-              elsif product.price_varies
-                assign price_amount = product.price_min | money
-                if on_sale
-                  assign compare_amount = product.compare_at_price | money
-                endif
-              else
-                assign price_amount = product.price | money
-                if on_sale
-                  assign compare_amount = product.compare_at_price | money
-                endif
-              endif
-
-              assign card_image = product.featured_image
-              if variant.featured_image != blank
-                assign card_image = variant.featured_image
-              endif
-
-              assign image_widths = '300,450,600,900,1200' | split: ','
-
-              assign add_label = 'collections.gear.add' | t: title: product.title
-              assign gallery_label = 'collections.gear.view_images' | t: title: product.title
-              assign choose_label = 'collections.gear.choose' | t: title: product.title
+              assign card_image = variant.featured_image | default: product.featured_image
               assign added_label = 'collections.gear.added' | t
             -%}
 
@@ -127,14 +91,14 @@
                   {{ 'image' | placeholder_svg_tag: 'gear-card__placeholder' }}
                 {%- endif -%}
 
-                {%- if on_sale -%}
+                {%- if product.compare_at_price > product.price -%}
                   <span class="gear-card__badge">{{ 'collections.gear.sale' | t }}</span>
                 {%- endif -%}
 
                 {%- if product.images.size > 0 -%}
                   <a class="gear-card__add gear-card__add--plus" href="{{ product.url }}" data-gallery>
                     {{- 'icon-plus.svg' | inline_asset_content -}}
-                    <span class="visually-hidden">{{ gallery_label }}</span>
+                    <span class="visually-hidden">{{ 'collections.gear.view_images' | t: title: product.title }}</span>
                   </a>
 
                   <template data-slides>
@@ -165,12 +129,12 @@
                   {%- if quick_add -%}
                     <button class="gear-card__add gear-card__add--cart" type="submit">
                       {{- 'icon-cart.svg' | inline_asset_content -}}
-                      <span class="visually-hidden">{{ add_label }}</span>
+                      <span class="visually-hidden">{{ 'collections.gear.add' | t: title: product.title }}</span>
                     </button>
                   {%- elsif product.available -%}
                     <a class="gear-card__add gear-card__add--cart" href="{{ product.url }}">
                       {{- 'icon-cart.svg' | inline_asset_content -}}
-                      <span class="visually-hidden">{{ choose_label }}</span>
+                      <span class="visually-hidden">{{ 'collections.gear.choose' | t: title: product.title }}</span>
                     </a>
                   {%- else -%}
                     <button class="gear-card__add gear-card__add--cart" type="button" disabled>
@@ -194,56 +158,29 @@
                   {%- endif -%}
                 </p>
 
-                {%- if option_kind != '' -%}
+                {%- if card_option -%}
                   <div class="gear-card__options"
-                    {% if pick_variant %}role="radiogroup" aria-label="{{ option_label }}"{% endif %}
+                    {% if pick_variant %}role="radiogroup" aria-label="{{ card_option.name }}"{% endif %}
                   >
-                    {%- for value in option_values -%}
+                    {%- for value in card_option.values -%}
                       {%- liquid
                         assign value_variant = value.variant
+                        assign value_image = value_variant.featured_image | default: product.featured_image
                         assign value_compare = ''
                         if value_variant.compare_at_price > value_variant.price
                           assign value_compare = value_variant.compare_at_price | money
                         endif
-
-                        assign value_image = value_variant.featured_image
-                        if value_image == blank
-                          assign value_image = product.featured_image
-                        endif
-
-                        assign value_selectable = false
-                        if pick_variant
-                          if value_variant != blank
-                            if value.available
-                              assign value_selectable = true
-                            endif
-                          endif
-                        endif
                       -%}
 
-                      {%- capture value_srcset -%}
-                        {%- liquid
-                          for width in image_widths
-                            assign width_number = width | times: 1
-                            echo value_image | image_url: width: width_number
-                            echo ' '
-                            echo width_number
-                            echo 'w'
-                            unless forloop.last
-                              echo ', '
-                            endunless
-                          endfor
-                        -%}
-                      {%- endcapture -%}
-
                       {%- capture value_mark -%}
-                        {%- if option_kind == 'color' and value.swatch.color -%}
-                          <span class="gear-card__dot" style="--dot: {{ value.swatch.color }}"></span>
-                          <span class="visually-hidden">{{ value.name }}</span>
-                        {%- elsif option_kind == 'color' and value.swatch.image -%}
+                        {%- if value.swatch -%}
                           <span
                             class="gear-card__dot"
-                            style="background-image: url({{ value.swatch.image | image_url: width: 40 }})"
+                            {% if value.swatch.color %}
+                              style="--dot: {{ value.swatch.color }}"
+                            {% else %}
+                              style="background-image: url({{ value.swatch.image | image_url: width: 40 }})"
+                            {% endif %}
                           ></span>
                           <span class="visually-hidden">{{ value.name }}</span>
                         {%- else -%}
@@ -251,7 +188,7 @@
                         {%- endif -%}
                       {%- endcapture -%}
 
-                      {%- if value_selectable -%}
+                      {%- if pick_variant and value.available -%}
                         <label class="gear-card__option">
                           <input
                             class="visually-hidden"
@@ -262,7 +199,6 @@
                             data-price="{{ value_variant.price | money }}"
                             data-compare="{{ value_compare }}"
                             data-image="{{ value_image | image_url: width: 1200 }}"
-                            data-image-srcset="{{ value_srcset | strip }}"
                             data-image-alt="{{ value_image.alt | escape }}"
                             {% if value_variant.id == variant.id %}checked{% endif %}
                           >
@@ -971,9 +907,21 @@
       if (!image || !input.dataset.image) return;
       if (image.getAttribute('src') === input.dataset.image) return;
 
+      /* The new image reuses the card's widths, which the CDN serves by its width parameter. */
+      const url = new URL(input.dataset.image, window.location.href);
+      const srcset = image.srcset
+        .split(',')
+        .map((entry) => entry.trim().split(' ')[1])
+        .filter(Boolean)
+        .map((width) => {
+          url.searchParams.set('width', parseInt(width, 10));
+          return `${url.href} ${width}`;
+        })
+        .join(', ');
+
       const next = new Image();
       next.sizes = image.sizes;
-      next.srcset = input.dataset.imageSrcset;
+      next.srcset = srcset;
       next.src = input.dataset.image;
 
       try {
