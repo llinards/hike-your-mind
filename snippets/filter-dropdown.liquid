@@ -3,8 +3,8 @@
   filter. Shopify leaves filter labels in English where it has no translation,
   and Translate & Adapt cannot reach them, so every label is looked up in the
   theme locales first (filters.labels.* and filters.values.*), keyed by its
-  English name, and falls back to Shopify's own. While any filter is applied, an
-  X beside the toggle links back to the unfiltered collection.
+  English name, and falls back to Shopify's own. While any filter is applied, the
+  panel opens with a link back to the unfiltered collection.
 
   @param {filter[]} filters - The list or boolean filters to show, in order
   @param {string} [fallback_param] - URL parameter for the fallback values
@@ -95,52 +95,32 @@
 {%- endcapture -%}
 
 {%- if groups != blank -%}
-  <div class="filter-dropdown">
-    <details class="filter-dropdown__details">
-      <summary class="filter-dropdown__toggle">
-        {{ 'filters.title' | t }}
-        <span class="filter-dropdown__caret" aria-hidden="true">
-          {{- 'icon-arrow-right.svg' | inline_asset_content -}}
-        </span>
-      </summary>
+  <details class="filter-dropdown">
+    <summary class="filter-dropdown__toggle">
+      {{ 'filters.title' | t }}
+      <span class="filter-dropdown__caret" aria-hidden="true">
+        {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+      </span>
+    </summary>
 
-      <div class="filter-dropdown__panel">{{ groups }}</div>
-    </details>
+    <div class="filter-dropdown__panel">
+      {%- if active_count > 0 -%}
+        <a class="filter-dropdown__option filter-dropdown__reset" href="{{ collection.url }}">
+          {{- 'icon-close.svg' | inline_asset_content -}}
+          {{- 'filters.reset' | t -}}
+        </a>
+      {%- endif -%}
 
-    {%- if active_count > 0 -%}
-      <a class="filter-dropdown__reset" href="{{ collection.url }}">
-        {{- 'icon-close.svg' | inline_asset_content -}}
-        <span class="visually-hidden">{{ 'filters.reset' | t }}</span>
-      </a>
-    {%- endif -%}
-  </div>
+      {{ groups }}
+    </div>
+  </details>
 {%- endif -%}
+
 {% stylesheet %}
+  /* Lifted here, not on the panel: mid-fade the panel's own z-index is trapped in the fading layer. */
   .filter-dropdown {
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    font-size: var(--font-size-body);
-  }
-
-  /* One line tall, so the X sits level with the toggle even while the panel is open below it. */
-  .filter-dropdown__reset {
-    display: flex;
-    align-items: center;
-    height: 1lh;
-    color: var(--color-foreground-muted);
-    transition: color var(--duration-base) var(--easing-base);
-  }
-
-  .filter-dropdown__reset:hover,
-  .filter-dropdown__reset:focus-visible {
-    color: var(--color-foreground);
-  }
-
-  .filter-dropdown__reset svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    z-index: 3;
   }
 
   .filter-dropdown__toggle {
@@ -164,27 +144,53 @@
     transition: transform var(--duration-base) var(--easing-base);
   }
 
-  .filter-dropdown__details[open] .filter-dropdown__caret svg {
+  .filter-dropdown[open] .filter-dropdown__caret svg {
     transform: rotate(-90deg);
   }
 
+  /* Browsers that can animate details fade the panel both ways; the rest show and hide it at once. */
+  .filter-dropdown::details-content {
+    opacity: 0;
+    transition:
+      opacity var(--duration-base) var(--easing-base),
+      content-visibility var(--duration-base) allow-discrete;
+  }
+
+  .filter-dropdown[open]::details-content {
+    opacity: 1;
+  }
+
+  /* The panel floats over the page below, anchored to the side the toggle sits on. */
   .filter-dropdown__panel {
+    position: absolute;
+    inset-block-start: calc(100% + 0.75rem);
+    inset-inline-start: 0;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    margin-block-start: 0.75rem;
+    width: max-content;
+    min-width: 16rem;
+    max-width: calc(100vw - 2rem);
     padding: 1rem;
     border: 0.5px solid var(--color-hairline);
+    background-color: var(--color-background);
   }
 
   @media (width >= 750px) {
     .filter-dropdown__panel {
-      position: absolute;
-      inset-inline-end: 0;
-      min-width: 18rem;
-      background-color: var(--color-background);
-      z-index: 3;
+      inset-inline: auto 0;
     }
+  }
+
+  .filter-dropdown__reset {
+    padding-block-end: 1rem;
+    border-block-end: 0.5px solid var(--color-hairline);
+  }
+
+  .filter-dropdown__reset svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
   }
 
   .filter-dropdown__group {
@@ -247,7 +253,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .filter-dropdown__caret svg,
-    .filter-dropdown__reset {
+    .filter-dropdown::details-content {
       transition: none;
     }
   }

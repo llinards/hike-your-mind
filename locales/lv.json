@@ -5437,7 +5437,7 @@
   },
   "filters": {
     "title": "Filtri",
-    "reset": "Notīrīt filtrus",
+    "reset": "Noņemt filtrus",
     "labels": {
       "category": "Kategorija",
       "availability": "Pieejamība"
