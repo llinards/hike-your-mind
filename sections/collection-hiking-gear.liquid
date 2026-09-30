@@ -819,6 +819,14 @@
         if (!link) return;
 
         event.preventDefault();
+
+        /* A chosen filter closes the dropdown at once; focus waits on the toggle for the new list. */
+        const dropdown = link.closest('[data-filters] details');
+        if (dropdown) {
+          dropdown.open = false;
+          dropdown.querySelector('summary')?.focus();
+        }
+
         this.load(link.href, true);
       });
 
@@ -978,7 +986,6 @@
       this.controller = new AbortController();
       this.setAttribute('aria-busy', 'true');
 
-      const wasOpen = Boolean(this.querySelector('[data-filters] details')?.open);
       const keepFocus = Boolean(this.querySelector('[data-filters]')?.contains(document.activeElement));
 
       try {
@@ -996,8 +1003,6 @@
           if (next && current) current.replaceWith(next);
         });
 
-        const details = this.querySelector('[data-filters] details');
-        if (details) details.open = wasOpen;
         if (keepFocus) this.querySelector('[data-filters] summary')?.focus();
 
         if (push) window.history.pushState({}, '', url);

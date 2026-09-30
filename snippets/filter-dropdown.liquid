@@ -3,7 +3,8 @@
   filter. Shopify leaves filter labels in English where it has no translation,
   and Translate & Adapt cannot reach them, so every label is looked up in the
   theme locales first (filters.labels.* and filters.values.*), keyed by its
-  English name, and falls back to Shopify's own.
+  English name, and falls back to Shopify's own. While any filter is applied, an
+  X beside the toggle links back to the unfiltered collection.
 
   @param {filter[]} filters - The list or boolean filters to show, in order
   @param {string} [fallback_param] - URL parameter for the fallback values
@@ -17,6 +18,11 @@
   assign shown_filters = filters | where: 'type', 'list'
   assign boolean_filters = filters | where: 'type', 'boolean'
   assign shown_filters = shown_filters | concat: boolean_filters
+
+  assign active_count = 0
+  for filter in shown_filters
+    assign active_count = active_count | plus: filter.active_values.size
+  endfor
 -%}
 
 {%- capture groups -%}
@@ -47,10 +53,14 @@
               <li>
                 {%- if value.active -%}
                   <a class="filter-dropdown__option is-active" href="{{ value.url_to_remove }}" aria-current="true">
+                    <span class="filter-dropdown__check" aria-hidden="true"></span>
                     {{- value_label -}}
                   </a>
                 {%- else -%}
-                  <a class="filter-dropdown__option" href="{{ value.url_to_add }}">{{ value_label }}</a>
+                  <a class="filter-dropdown__option" href="{{ value.url_to_add }}">
+                    <span class="filter-dropdown__check" aria-hidden="true"></span>
+                    {{- value_label -}}
+                  </a>
                 {%- endif -%}
               </li>
             {%- endif -%}
@@ -72,6 +82,7 @@
         -%}
         <li>
           <a class="filter-dropdown__option" href="{{ collection.url }}?{{ fallback_param }}={{ value | url_encode }}">
+            <span class="filter-dropdown__check" aria-hidden="true"></span>
             {{- value_label -}}
           </a>
         </li>
@@ -81,20 +92,52 @@
 {%- endcapture -%}
 
 {%- if groups != blank -%}
-  <details class="filter-dropdown">
-    <summary class="filter-dropdown__toggle">
-      {{ 'filters.title' | t }}
-      <span class="filter-dropdown__caret" aria-hidden="true">
-        {{- 'icon-arrow-right.svg' | inline_asset_content -}}
-      </span>
-    </summary>
+  <div class="filter-dropdown">
+    <details class="filter-dropdown__details">
+      <summary class="filter-dropdown__toggle">
+        {{ 'filters.title' | t }}
+        <span class="filter-dropdown__caret" aria-hidden="true">
+          {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+        </span>
+      </summary>
 
-    <div class="filter-dropdown__panel">{{ groups }}</div>
-  </details>
+      <div class="filter-dropdown__panel">{{ groups }}</div>
+    </details>
+
+    {%- if active_count > 0 -%}
+      <a class="filter-dropdown__reset" href="{{ collection.url }}">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+        <span class="visually-hidden">{{ 'filters.reset' | t }}</span>
+      </a>
+    {%- endif -%}
+  </div>
 {%- endif -%}
 {% stylesheet %}
   .filter-dropdown {
     position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: var(--font-size-body);
+  }
+
+  /* One line tall, so the X sits level with the toggle even while the panel is open below it. */
+  .filter-dropdown__reset {
+    display: flex;
+    align-items: center;
+    height: 1lh;
+    color: var(--color-foreground-muted);
+    transition: color var(--duration-base) var(--easing-base);
+  }
+
+  .filter-dropdown__reset:hover,
+  .filter-dropdown__reset:focus-visible {
+    color: var(--color-foreground);
+  }
+
+  .filter-dropdown__reset svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   .filter-dropdown__toggle {
@@ -118,7 +161,7 @@
     transition: transform var(--duration-base) var(--easing-base);
   }
 
-  .filter-dropdown[open] .filter-dropdown__caret svg {
+  .filter-dropdown__details[open] .filter-dropdown__caret svg {
     transform: rotate(-90deg);
   }
 
@@ -161,8 +204,36 @@
   }
 
   .filter-dropdown__option {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
     color: var(--color-foreground-muted);
     text-decoration: none;
+  }
+
+  .filter-dropdown__check {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid currentColor;
+  }
+
+  .filter-dropdown__option.is-active .filter-dropdown__check {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+  }
+
+  /* The tick is the box's own two borders, turned. */
+  .filter-dropdown__option.is-active .filter-dropdown__check::after {
+    content: '';
+    width: 0.3rem;
+    height: 0.55rem;
+    border: solid var(--color-background);
+    border-width: 0 1.5px 1.5px 0;
+    rotate: 45deg;
+    translate: 0 -1px;
   }
 
   .filter-dropdown__option.is-active,
@@ -172,7 +243,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .filter-dropdown__caret svg {
+    .filter-dropdown__caret svg,
+    .filter-dropdown__reset {
       transition: none;
     }
   }

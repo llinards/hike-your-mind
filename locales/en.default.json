@@ -82,6 +82,7 @@
   },
   "filters": {
     "title": "Filters",
+    "reset": "Clear filters",
     "labels": {
       "category": "Category",
       "availability": "Availability"
