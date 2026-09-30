@@ -64,6 +64,7 @@
         "price": {{ option.price | money | json }},
         "compare": {{ variant_compare | json }},
         "options": {{ option.options | json }},
+        "image": {{ option.featured_image.position | json }},
         "totals": {
           {%- for quantity in (1..steps) -%}
             "{{ quantity }}": {{ option.price | times: quantity | money | json }}
@@ -738,6 +739,7 @@
         const picked = this.options.find((option) => option.checked);
         if (picked) this.current = picked.value;
         this.render();
+        this.showImage();
         return;
       }
 
@@ -752,6 +754,14 @@
       }
 
       this.render();
+      this.showImage();
+    }
+
+    /* The variant's image sits somewhere in the gallery, so the gallery is turned to it. */
+    showImage() {
+      const position = this.variants[this.current]?.image;
+      const gallery = this.closest('.product-page')?.querySelector('product-gallery');
+      if (position && gallery?.track) gallery.goTo(position - 1);
     }
 
     render() {
