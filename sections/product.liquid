@@ -479,6 +479,31 @@
     margin-top: 0px !important;
   }
 
+  /* The app's reservation timer, restyled as a card like the reviews. */
+  .bookeasy-reservation-timer-container {
+    border: 0.5px solid var(--color-ink-soft) !important;
+    border-radius: 0 !important;
+    background: var(--color-background) !important;
+    box-shadow: none !important;
+    color: var(--color-foreground) !important;
+    font-family: var(--font-body--family) !important;
+  }
+
+  .bookeasy-reservation-timer-container * {
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-family: inherit !important;
+  }
+
+  .bookeasy-reservation-timer-minutes,
+  .bookeasy-reservation-timer-semi-colon,
+  .bookeasy-reservation-timer-seconds {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
   .product-page__quantity-label {
     font-size: var(--font-size-small);
     color: var(--summary-ink);
