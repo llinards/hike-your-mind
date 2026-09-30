@@ -5443,13 +5443,13 @@
       "availability": "Pieejamība"
     },
     "values": {
+      "hiking_backpacks": "Pārgājienu mugursomas",
+      "journals": "Dienasgrāmatas",
+      "pinback_buttons": "Nozīmītes",
       "in_stock": "Ir noliktavā",
       "out_of_stock": "Nav noliktavā",
-      "backpacks": "Mugursomas",
       "camping_hiking": "Kempings un pārgājieni",
       "hats": "Cepures",
-      "notebooks_notepads": "Piezīmju grāmatiņas",
-      "brooches_lapel_pins": "Nozīmītes",
       "italy": "Itālija",
       "latvia": "Latvija",
       "portugal": "Portugāle"

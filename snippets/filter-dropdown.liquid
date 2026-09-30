@@ -31,7 +31,8 @@
       {%- liquid
         assign filter_key = filter.label | handleize | replace: '-', '_' | prepend: 'filters.labels.'
         assign filter_label = filter_key | t
-        if filter_label contains 'translation missing'
+        assign missing = filter_label | downcase
+        if missing contains 'translation missing'
           assign filter_label = filter.label
         endif
       -%}
@@ -46,7 +47,8 @@
               {%- liquid
                 assign value_key = value.label | handleize | replace: '-', '_' | prepend: 'filters.values.'
                 assign value_label = value_key | t
-                if value_label contains 'translation missing'
+                assign missing = value_label | downcase
+                if missing contains 'translation missing'
                   assign value_label = value.label
                 endif
               -%}
@@ -76,7 +78,8 @@
         {%- liquid
           assign value_key = value | handleize | replace: '-', '_' | prepend: 'filters.values.'
           assign value_label = value_key | t
-          if value_label contains 'translation missing'
+          assign missing = value_label | downcase
+          if missing contains 'translation missing'
             assign value_label = value
           endif
         -%}

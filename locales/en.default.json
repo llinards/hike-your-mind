@@ -88,13 +88,13 @@
       "availability": "Availability"
     },
     "values": {
+      "hiking_backpacks": "Hiking backpacks",
+      "journals": "Journals",
+      "pinback_buttons": "Pinback buttons",
       "in_stock": "In stock",
       "out_of_stock": "Out of stock",
-      "backpacks": "Backpacks",
       "camping_hiking": "Camping & hiking",
       "hats": "Hats",
-      "notebooks_notepads": "Notebooks & notepads",
-      "brooches_lapel_pins": "Brooches & lapel pins",
       "italy": "Italy",
       "latvia": "Latvia",
       "portugal": "Portugal"
