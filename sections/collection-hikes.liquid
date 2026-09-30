@@ -23,9 +23,16 @@
     <div class="hikes__text">
       <h1 class="hikes__heading">{{ collection.title }}</h1>
 
-      {%- if section.settings.subheading != blank -%}
-        <p class="hikes__subheading">{{ section.settings.subheading }}</p>
-      {%- endif -%}
+      {%- comment -%}
+        Left empty, the line comes from the theme locales so each language has its own.
+      {%- endcomment -%}
+      <p class="hikes__subheading">
+        {%- if section.settings.subheading != blank -%}
+          {{ section.settings.subheading }}
+        {%- else -%}
+          {{ 'collections.hikes.subheading' | t }}
+        {%- endif -%}
+      </p>
     </div>
 
     <div class="hikes__filters" data-filters>
@@ -88,11 +95,7 @@
                       {{- product.title -}}
                       {%- if hike_start != blank %}
                         <span class="hike-row__dates">
-                          {%- if hike_end != blank -%}
-                            {{ hike_start | date: '%-d %B' }} - {{ hike_end | date: '%-d %B' }}
-                          {%- else -%}
-                            {{ hike_start | date: '%-d %B' }}
-                          {%- endif -%}
+                          {%- render 'hike-dates', start: hike_start, end: hike_end -%}
                         </span>
                       {%- endif -%}
                     </h2>
@@ -406,7 +409,7 @@
       "type": "text",
       "id": "subheading",
       "label": "t:labels.subheading",
-      "default": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit"
+      "info": "t:info.hikes_subheading"
     }
   ]
 }

@@ -5460,9 +5460,27 @@
       "portugal": "Portugāle"
     }
   },
+  "dates": {
+    "day_month": "{{ day }}. {{ month }}",
+    "months": {
+      "january": "janvāris",
+      "february": "februāris",
+      "march": "marts",
+      "april": "aprīlis",
+      "may": "maijs",
+      "june": "jūnijs",
+      "july": "jūlijs",
+      "august": "augusts",
+      "september": "septembris",
+      "october": "oktobris",
+      "november": "novembris",
+      "december": "decembris"
+    }
+  },
   "collections": {
     "title": "Kolekcijas",
     "hikes": {
+      "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervējiet vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
       "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
     },

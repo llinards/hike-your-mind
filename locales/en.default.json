@@ -105,9 +105,27 @@
       "portugal": "Portugal"
     }
   },
+  "dates": {
+    "day_month": "{{ day }} {{ month }}",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
   "collections": {
     "title": "Collections",
     "hikes": {
+      "subheading": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit",
       "price_from": "From {{ price }}",
       "no_results": "No hikes match this filter yet. Try another country."
     },

@@ -168,6 +168,7 @@
     "balance_due_days": "How many days before departure the remaining balance falls due. Shown in the reservation summary — keep the deposit note in step with it.",
     "deposit_note": "Sits under the features, above the quantity picker.",
     "max_quantity": "The most places one customer can reserve in a single booking.",
+    "hikes_subheading": "Leave empty to show the standard line, which is translated per language in the theme content. Anything typed here replaces it.",
     "checkout_terms_link": "Opens in a new tab from the checkbox above checkout. Pick a page, or paste the link to a file uploaded under Content > Files. Left empty, the words show without a link."
   }
 }

@@ -56,11 +56,7 @@
     {{- product.title -}}
     {%- if hike_start != blank %}
       <span class="hike-product__dates">
-        {%- if hike_end != blank -%}
-          {{ hike_start | date: '%-d %B' }} - {{ hike_end | date: '%-d %B' }}
-        {%- else -%}
-          {{ hike_start | date: '%-d %B' }}
-        {%- endif -%}
+        {%- render 'hike-dates', start: hike_start, end: hike_end -%}
       </span>
     {%- endif -%}
   </h1>
