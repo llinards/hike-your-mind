@@ -5435,10 +5435,28 @@
       "title": "Pieteikties"
     }
   },
+  "filters": {
+    "title": "Filtri",
+    "labels": {
+      "category": "Kategorija",
+      "availability": "Pieejamība"
+    },
+    "values": {
+      "in_stock": "Ir noliktavā",
+      "out_of_stock": "Nav noliktavā",
+      "backpacks": "Mugursomas",
+      "camping_hiking": "Kempings un pārgājieni",
+      "hats": "Cepures",
+      "notebooks_notepads": "Piezīmju grāmatiņas",
+      "brooches_lapel_pins": "Nozīmītes",
+      "italy": "Itālija",
+      "latvia": "Latvija",
+      "portugal": "Portugāle"
+    }
+  },
   "collections": {
     "title": "Kolekcijas",
     "hikes": {
-      "filters": "Filtri",
       "price_from": "No {{ price }}",
       "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
     },

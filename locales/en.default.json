@@ -80,10 +80,28 @@
       "title": "Login"
     }
   },
+  "filters": {
+    "title": "Filters",
+    "labels": {
+      "category": "Category",
+      "availability": "Availability"
+    },
+    "values": {
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock",
+      "backpacks": "Backpacks",
+      "camping_hiking": "Camping & hiking",
+      "hats": "Hats",
+      "notebooks_notepads": "Notebooks & notepads",
+      "brooches_lapel_pins": "Brooches & lapel pins",
+      "italy": "Italy",
+      "latvia": "Latvia",
+      "portugal": "Portugal"
+    }
+  },
   "collections": {
     "title": "Collections",
     "hikes": {
-      "filters": "Filters",
       "price_from": "From {{ price }}",
       "no_results": "No hikes match this filter yet. Try another country."
     },

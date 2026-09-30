@@ -1,7 +1,19 @@
-{% comment %}Hiking gear as a product grid with quick add, paged without a reload.{% endcomment %}
+{% comment %}Hiking gear as a product grid with quick add, filtered and paged without a reload.{% endcomment %}
+
+{%- liquid
+  assign category_filters = collection.filters | where: 'param_name', 'filter.p.t.category'
+  assign other_filters = collection.filters | reject: 'param_name', 'filter.p.t.category'
+  assign gear_filters = category_filters | concat: other_filters
+-%}
 
 <gear-grid class="gear" data-section-id="{{ section.id }}">
-  <h1 class="gear__heading">{{ collection.title }}</h1>
+  <div class="gear__intro">
+    <h1 class="gear__heading">{{ collection.title }}</h1>
+
+    <div class="gear__filters" data-filters>
+      {% render 'filter-dropdown', filters: gear_filters %}
+    </div>
+  </div>
 
   <div class="gear__results" data-results>
     <div class="gear__loader" aria-hidden="true"><span class="gear__spinner"></span></div>
@@ -286,6 +298,25 @@
       --gear-column-gap: 1.75rem;
       --gear-row-gap: 2.5rem;
     }
+  }
+
+  .gear__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (width >= 750px) {
+    .gear__intro {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .gear__filters {
+    position: relative;
+    flex: 0 0 auto;
   }
 
   .gear__results {
@@ -768,7 +799,7 @@
 {% endstylesheet %}
 
 {% javascript %}
-  /* Pages the grid in place and adds single-variant products to the cart without leaving the page. */
+  /* Filters and pages the grid in place and adds single-variant products to the cart without leaving the page. */
   class GearGrid extends HTMLElement {
     connectedCallback() {
       this.sectionId = this.dataset.sectionId;
@@ -784,7 +815,7 @@
           return;
         }
 
-        const link = event.target.closest('[data-pagination] a');
+        const link = event.target.closest('[data-filters] a, [data-pagination] a');
         if (!link) return;
 
         event.preventDefault();
@@ -947,6 +978,9 @@
       this.controller = new AbortController();
       this.setAttribute('aria-busy', 'true');
 
+      const wasOpen = Boolean(this.querySelector('[data-filters] details')?.open);
+      const keepFocus = Boolean(this.querySelector('[data-filters]')?.contains(document.activeElement));
+
       try {
         const target = new URL(url, window.location.origin);
         target.searchParams.set('section_id', this.sectionId);
@@ -955,9 +989,16 @@
         if (!response.ok) throw new Error(response.statusText);
 
         const markup = new DOMParser().parseFromString(await response.text(), 'text/html');
-        const next = markup.querySelector('[data-results]');
-        const current = this.querySelector('[data-results]');
-        if (next && current) current.replaceWith(next);
+
+        ['[data-filters]', '[data-results]'].forEach((selector) => {
+          const next = markup.querySelector(selector);
+          const current = this.querySelector(selector);
+          if (next && current) current.replaceWith(next);
+        });
+
+        const details = this.querySelector('[data-filters] details');
+        if (details) details.open = wasOpen;
+        if (keepFocus) this.querySelector('[data-filters] summary')?.focus();
 
         if (push) window.history.pushState({}, '', url);
 

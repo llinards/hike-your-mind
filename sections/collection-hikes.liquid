@@ -1,7 +1,8 @@
 {% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
 
 {%- liquid
-  assign country_filter = collection.filters | where: 'param_name', 'filter.p.m.custom.country' | first
+  assign country_filters = collection.filters | where: 'param_name', 'filter.p.m.custom.country'
+  assign country_filter = country_filters | first
 
   assign fallback_countries = ''
   if country_filter.values.size == 0
@@ -28,43 +29,11 @@
     </div>
 
     <div class="hikes__filters" data-filters>
-      {%- if country_filter.values.size > 0 or fallback_countries.size > 0 -%}
-        <details class="hikes__filter">
-          <summary class="hikes__filter-toggle">
-            {{ 'collections.hikes.filters' | t }}
-            <span class="hikes__filter-caret" aria-hidden="true">
-              {{- 'icon-arrow-right.svg' | inline_asset_content -}}
-            </span>
-          </summary>
-
-          <div class="hikes__filter-panel">
-            <ul class="hikes__filter-list" role="list">
-              {%- for value in country_filter.values -%}
-                <li>
-                  {%- if value.active -%}
-                    <a class="hikes__filter-option is-active" href="{{ value.url_to_remove }}" aria-current="true">
-                      {{- value.label -}}
-                    </a>
-                  {%- else -%}
-                    <a class="hikes__filter-option" href="{{ value.url_to_add }}">{{ value.label }}</a>
-                  {%- endif -%}
-                </li>
-              {%- endfor -%}
-
-              {%- for country in fallback_countries -%}
-                <li>
-                  <a
-                    class="hikes__filter-option"
-                    href="{{ collection.url }}?filter.p.m.custom.country={{ country | url_encode }}"
-                  >
-                    {{- country -}}
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        </details>
-      {%- endif -%}
+      {% render 'filter-dropdown',
+        filters: country_filters,
+        fallback_param: 'filter.p.m.custom.country',
+        fallback_values: fallback_countries
+      %}
     </div>
   </div>
 
@@ -212,67 +181,6 @@
     }
   }
 
-  .hikes__filter-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: var(--font-size-body);
-    letter-spacing: var(--letter-spacing-ui);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .hikes__filter-toggle::-webkit-details-marker {
-    display: none;
-  }
-
-  .hikes__filter-caret svg {
-    width: 1.25rem;
-    height: 1.25rem;
-    transform: rotate(90deg);
-    transition: transform var(--duration-base) var(--easing-base);
-  }
-
-  .hikes__filter[open] .hikes__filter-caret svg {
-    transform: rotate(-90deg);
-  }
-
-  .hikes__filter-panel {
-    margin-block-start: 0.75rem;
-    padding: 1rem;
-    border: 0.5px solid var(--color-hairline);
-  }
-
-  @media (width >= 750px) {
-    .hikes__filter-panel {
-      position: absolute;
-      inset-inline-end: 0;
-      min-width: 18rem;
-      background-color: var(--color-background);
-      z-index: 1;
-    }
-  }
-
-
-  .hikes__filter-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0;
-    list-style: none;
-  }
-
-  .hikes__filter-option {
-    color: var(--color-foreground-muted);
-    text-decoration: none;
-  }
-
-  .hikes__filter-option.is-active,
-  .hikes__filter-option:hover,
-  .hikes__filter-option:focus-visible {
-    color: var(--color-foreground);
-  }
-
   .hikes__rows {
     grid-column: 1 / -1;
   }
@@ -407,7 +315,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hikes__filter-caret svg,
     .hike-row__media img,
     .hike-row__media svg,
     .hike-row__media::after,
