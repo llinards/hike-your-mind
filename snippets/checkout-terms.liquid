@@ -61,15 +61,16 @@
   .checkout-terms__link {
     color: inherit;
     font-weight: 700;
-    text-decoration: none;
-    transition: all;
-    transition-duration: 300ms;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 300ms ease-in-out;
   }
 
   .checkout-terms__link:hover,
   .checkout-terms__link:focus-visible {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
+    text-decoration-color: currentcolor;
   }
 
   @media (prefers-reduced-motion: reduce) {
