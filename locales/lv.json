@@ -5579,10 +5579,10 @@
   },
   "contact": {
     "form": {
-      "name": "Jūsu vārds *",
+      "name": "Vārds *",
       "phone": "Tālruņa numurs *",
       "email": "E-pasta adrese *",
-      "message": "Pastāstiet par savu ideju",
+      "message": "Pastāsti par savu ideju",
       "terms_html": "Es piekrītu {{ link }}",
       "terms_link": "lietošanas noteikumiem un privātuma politikai",
       "terms_value": "Pieņemts",
