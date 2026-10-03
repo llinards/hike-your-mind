@@ -94,8 +94,10 @@
     gap: var(--nav-menu-gap);
   }
 
+  /* Lifted here, not on the submenu: mid-fade the submenu's own z-index is trapped in the fading layer. */
   .nav-menu__item {
     position: relative;
+    z-index: 4;
   }
 
   /* The underline is drawn up front so the hover can fade its colour in. */
@@ -137,10 +139,21 @@
     rotate: -90deg;
   }
 
+  /* Browsers that can animate details fade the submenu both ways; the rest show and hide it at once. */
+  .nav-menu__details::details-content {
+    opacity: 0;
+    transition:
+      opacity var(--duration-base) var(--easing-base),
+      content-visibility var(--duration-base) allow-discrete;
+  }
+
+  .nav-menu__details[open]::details-content {
+    opacity: 1;
+  }
+
   .nav-menu__submenu {
     position: absolute;
     inset-inline-start: 0;
-    z-index: 4;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -163,7 +176,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .nav-menu__link,
-    .nav-menu__caret svg {
+    .nav-menu__caret svg,
+    .nav-menu__details::details-content {
       transition: none;
     }
   }

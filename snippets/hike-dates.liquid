@@ -1,5 +1,5 @@
 {% doc %}
-  Renders a hike's dates, such as "25 September - 7 October", with the month
+  Renders a hike's dates, such as "25 September 2026 - 7 October 2026", with the month
   names in the storefront language.
 
   @param {string} start - The first day of the hike
@@ -9,5 +9,5 @@
   {% render 'hike-dates', start: hike_start, end: hike_end %}
 {% enddoc %}
 
-{%- render 'localized-date', date: start -%}
-{%- if end != blank %} - {% render 'localized-date', date: end %}{%- endif -%}
+{%- render 'localized-date', date: start, with_year: true -%}
+{%- if end != blank %} - {% render 'localized-date', date: end, with_year: true %}{%- endif -%}

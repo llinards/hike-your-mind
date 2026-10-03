@@ -123,14 +123,24 @@
     z-index: 3;
   }
 
+  /* The underline is drawn up front, as in the menu, so the hover can fade its colour in. */
   .filter-dropdown__toggle {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     font-size: var(--font-size-body);
     letter-spacing: var(--letter-spacing-ui);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
     cursor: pointer;
     list-style: none;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .filter-dropdown__toggle:hover,
+  .filter-dropdown__toggle:focus-visible {
+    text-decoration-color: currentcolor;
   }
 
   .filter-dropdown__toggle::-webkit-details-marker {
@@ -252,6 +262,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .filter-dropdown__toggle,
     .filter-dropdown__caret svg,
     .filter-dropdown::details-content {
       transition: none;
