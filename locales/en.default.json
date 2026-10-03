@@ -107,7 +107,7 @@
   },
   "dates": {
     "day_month": "{{ day }} {{ month }}",
-    "day_month_year": "{{ month }} {{ day }}, {{ year }}",
+    "day_month_year": "{{ day }} {{ month }} {{ year }}",
     "months": {
       "january": "January",
       "february": "February",
