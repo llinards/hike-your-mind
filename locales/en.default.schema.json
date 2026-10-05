@@ -57,7 +57,8 @@
     "theme": "Theme",
     "typography": "Typography",
     "contact": "Contact form",
-    "feature": "Feature"
+    "feature": "Feature",
+    "favicon": "Favicon"
   },
   "labels": {
     "products_to_show": "Products to show",
@@ -169,6 +170,7 @@
     "deposit_note": "Sits under the features, above the quantity picker.",
     "max_quantity": "The most places one customer can reserve in a single booking.",
     "hikes_subheading": "Leave empty to show the standard line, which is translated per language in the theme content. Anything typed here replaces it.",
-    "checkout_terms_link": "Opens in a new tab from the checkbox above checkout. Pick a page, or paste the link to a file uploaded under Content > Files. Left empty, the words show without a link."
+    "checkout_terms_link": "Opens in a new tab from the checkbox above checkout. Pick a page, or paste the link to a file uploaded under Content > Files. Left empty, the words show without a link.",
+    "favicon": "Shown in browser tabs and bookmarks. Use a square image, at least 180 × 180 px."
   }
 }

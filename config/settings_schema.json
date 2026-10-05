@@ -80,5 +80,16 @@
         "default": 0
       }
     ]
+  },
+  {
+    "name": "t:general.favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:labels.image",
+        "info": "t:info.favicon"
+      }
+    ]
   }
 ]
