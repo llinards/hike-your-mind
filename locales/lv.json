@@ -5481,7 +5481,7 @@
   "collections": {
     "title": "Kolekcijas",
     "hikes": {
-      "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervējiet vietu ar 20% depozītu",
+      "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervē vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
       "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
     },
@@ -5550,7 +5550,7 @@
       "increase": "Palielināt daudzumu",
       "summary": "Rezervācijas kopsavilkums",
       "full_price": "Pilna brauciena cena",
-      "reserve": "Apmaksājiet šodien, lai rezervētu savu vietu",
+      "reserve": "Apmaksā šodien, lai rezervētu savu vietu",
       "balance": "Atlikusī summa ({{ days }} dienas pirms ceļojuma)",
       "total": "Kopā",
       "add_to_cart": "Pievienot grozam",
@@ -5579,12 +5579,12 @@
   },
   "contact": {
     "form": {
-      "name": "Jūsu vārds *",
+      "name": "Vārds *",
       "phone": "Tālruņa numurs *",
       "email": "E-pasta adrese *",
-      "message": "Pastāstiet par savu ideju",
+      "message": "Pastāsti par savu ideju",
       "terms_html": "Es piekrītu {{ link }}",
-      "terms_link": "Lietošanas noteikumi un privātuma politika",
+      "terms_link": "lietošanas noteikumiem un privātuma politikai",
       "terms_value": "Pieņemts",
       "submit": "Iesniegt",
       "success": "Paldies! Jūsu pārgājiena ieteikums ir ceļā. Drīz sazināsimies."
