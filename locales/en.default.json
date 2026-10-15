@@ -108,9 +108,9 @@
   "dates": {
     "day_month": "{{ day }} {{ month }}",
     "day_month_year": "{{ day }} {{ month }} {{ year }}",
-    "month_day": "{{ month }} {{ day }}",
-    "month_day_year": "{{ month }} {{ day }}, {{ year }}",
-    "month_range": "{{ month }} {{ start }} - {{ end }}, {{ year }}",
+    "month_day": "{{ month }}\u00a0{{ day }}",
+    "month_day_year": "{{ month }}\u00a0{{ day }}, {{ year }}",
+    "month_range": "{{ month }}\u00a0{{ start }} - {{ end }}, {{ year }}",
     "months": {
       "january": "January",
       "february": "February",
@@ -131,6 +131,7 @@
     "hikes": {
       "subheading": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit",
       "price_from": "From {{ price }}",
+      "reservation": "Reservation",
       "no_results": "No hikes match this filter yet. Try another country."
     },
     "gear": {
