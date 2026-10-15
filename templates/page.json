@@ -39,21 +39,11 @@
             "date": "05.06.2026.",
             "link": "shopify://pages/reviews"
           }
-        },
-        "review_YDAXYX": {
-          "type": "review",
-          "settings": {
-            "name": "Natālija",
-            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>",
-            "date": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "review_Tr4zJE",
-        "review_nVAWpa",
-        "review_YDAXYX"
+        "review_nVAWpa"
       ],
       "name": "t:general.reviews",
       "settings": {
@@ -61,11 +51,7 @@
         "show_heading": false,
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
         "show_subheading": false,
-        "show_divider": false,
-        "card_max_width": 1024,
-        "card_height": 360,
-        "card_height_mobile": 750,
-        "inactive_opacity": 40
+        "show_divider": false
       }
     }
   },
