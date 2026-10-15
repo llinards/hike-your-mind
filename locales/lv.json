@@ -5463,9 +5463,9 @@
   "dates": {
     "day_month": "{{ day }}. {{ month }}",
     "day_month_year": "{{ year }}. gada {{ day }}. {{ month }}",
-    "month_day": "{{ day }}. {{ month }}",
-    "month_day_year": "{{ year }}. gada {{ day }}. {{ month }}",
-    "month_range": "{{ year }}. gada {{ start }}. - {{ end }}. {{ month }}",
+    "month_day": "{{ day }}.\u00a0{{ month }}",
+    "month_day_year": "{{ year }}. gada {{ day }}.\u00a0{{ month }}",
+    "month_range": "{{ year }}. gada {{ start }}. - {{ end }}.\u00a0{{ month }}",
     "months": {
       "january": "janvāris",
       "february": "februāris",
@@ -5486,6 +5486,7 @@
     "hikes": {
       "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervē vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
+      "reservation": "Rezervācija",
       "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
     },
     "gear": {
