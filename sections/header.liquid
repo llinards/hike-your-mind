@@ -1,21 +1,3 @@
-{% comment %}
-  Site header.
-
-  Desktop is two rows, as in the design: the wordmark, language switcher and
-  utility icons on top, the main navigation underneath. Both the language
-  switcher and the navigation start at the same inline offset from the content
-  edge (`--header-inset`, 340px - 79px in the 1440px design).
-
-  Mobile collapses to a single row with a hamburger that opens a <details>
-  drawer holding the navigation and language switcher. `scroll-lock` is picked
-  up by critical.css to stop the page scrolling behind the open drawer.
-
-  Opening and the hamburger's fold into an X are CSS off the `[open]`
-  attribute; `header-drawer` handles the rest of the closing — delaying it so
-  the panel can animate out, and dismissing the drawer on a link or an outside
-  click. Without it the drawer still opens and shuts from the hamburger alone.
-{% endcomment %}
-
 <header class="header full-width">
   <div class="header__row">
     <a
@@ -76,8 +58,6 @@
 
 {% stylesheet %}
   .header {
-    --header-inset: 0px;
-
     display: grid;
     grid-template-columns: var(--content-grid);
     row-gap: 3.5rem;
@@ -142,6 +122,11 @@
   .header__icon svg {
     width: 100%;
     height: 100%;
+  }
+
+  /* Shopify injects this empty config element beside the account icon; it must not take a flex gap. */
+  shopify-store {
+    display: contents;
   }
 
   shopify-account {
@@ -277,21 +262,24 @@
   }
 
   @media (width >= 1180px) {
+    /* Gaps shrink from 30px at 1320px to 16px at 1180px so the nav stays on one line. */
     .header {
-      /* 340px - 79px in the 1440px design: language and nav share this offset. */
-      --header-inset: 16.3125rem;
+      --header-gap: clamp(1rem, 10vw - 6.375rem, 1.875rem);
     }
 
-    /**
-     * The inset is measured from the content edge, not from the logo, so the
-     * language switcher lines up with the navigation row beneath it. A grid
-     * column of exactly `--header-inset` does that; a flex gap would measure
-     * from the end of the logo instead.
-     */
+    /* Logo, nav and utilities spread evenly; the gap is the least room between them. */
     .header__row {
-      display: grid;
-      grid-template-columns: var(--header-inset) auto 1fr;
-      align-items: center;
+      justify-content: space-between;
+      gap: calc(var(--header-gap) * 1.6);
+    }
+
+    .header__utils {
+      gap: var(--header-gap);
+      margin-inline-start: 0;
+    }
+
+    .header__nav .nav-menu {
+      gap: var(--header-gap);
     }
 
     .header__nav,
