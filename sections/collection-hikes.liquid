@@ -1,4 +1,4 @@
-{% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
+{% comment %} Hike departures as image bands, filtered by country without a page reload. {% endcomment %}
 
 {%- liquid
   assign country_filters = collection.filters | where: 'param_name', 'filter.p.m.custom.country'
@@ -207,10 +207,6 @@
     }
   }
 
-  .hikes__rows {
-    grid-column: 1 / -1;
-  }
-
   .hikes__list {
     display: flex;
     flex-direction: column;
@@ -220,8 +216,6 @@
   }
 
   .hikes__empty {
-    width: var(--content-width);
-    margin-inline: auto;
     padding-block: var(--spacing-section);
   }
 
@@ -270,7 +264,7 @@
 
   .hike-row__caption {
     position: absolute;
-    inset-inline: calc((100% - var(--content-width)) / 2);
+    inset-inline: var(--caption-inset);
     bottom: var(--caption-inset);
     display: flex;
     gap: 1.5rem;
@@ -278,6 +272,12 @@
 
   .hike-row__title {
     font-size: var(--font-size-display-compact);
+  }
+
+  .hike-row__dates::before {
+    /* The trailing space mirrors the markup space before the span. */
+    content: '| ' / '';
+    margin-inline: 0.25em;
   }
 
   @media (width >= 750px) {

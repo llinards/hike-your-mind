@@ -1,6 +1,8 @@
 {% doc %}
-  Renders a hike's dates, such as "25 September 2026 - 7 October 2026", with the month
-  names in the storefront language.
+  Renders a hike's dates month first, such as "October 25 - November 2, 2026",
+  with the month names in the storefront language. The year is shown once when
+  both dates fall in the same year, and the month too when they share it:
+  "November 17-23, 2026".
 
   @param {string} start - The first day of the hike
   @param {string} [end] - The last day of the hike
@@ -9,5 +11,28 @@
   {% render 'hike-dates', start: hike_start, end: hike_end %}
 {% enddoc %}
 
-{%- render 'localized-date', date: start, with_year: true -%}
-{%- if end != blank %} - {% render 'localized-date', date: end, with_year: true %}{%- endif -%}
+{%- liquid
+  assign start_year = start | date: '%Y'
+  assign end_year = end | date: '%Y'
+  assign start_month = start | date: '%Y%m'
+  assign end_month = end | date: '%Y%m'
+  assign start_day = start | date: '%Y%m%d'
+  assign end_day = end | date: '%Y%m%d'
+
+  if end == blank or start_day == end_day
+    render 'localized-date', date: start, format: 'month_day_year'
+  elsif start_month == end_month and start_month != start
+    assign month = start | date: '%B' | downcase | prepend: 'dates.months.' | t
+    assign first_day = start | date: '%-d'
+    assign last_day = end | date: '%-d'
+    echo 'dates.month_range' | t: month: month, start: first_day, end: last_day, year: start_year
+  elsif start_year == end_year
+    render 'localized-date', date: start, format: 'month_day'
+    echo ' - '
+    render 'localized-date', date: end, format: 'month_day_year'
+  else
+    render 'localized-date', date: start, format: 'month_day_year'
+    echo ' - '
+    render 'localized-date', date: end, format: 'month_day_year'
+  endif
+-%}

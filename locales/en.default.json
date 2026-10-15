@@ -108,6 +108,9 @@
   "dates": {
     "day_month": "{{ day }} {{ month }}",
     "day_month_year": "{{ day }} {{ month }} {{ year }}",
+    "month_day": "{{ month }} {{ day }}",
+    "month_day_year": "{{ month }} {{ day }}, {{ year }}",
+    "month_range": "{{ month }} {{ start }} - {{ end }}, {{ year }}",
     "months": {
       "january": "January",
       "february": "February",

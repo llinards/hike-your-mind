@@ -6,10 +6,12 @@
 
   @param {string} date - The date to show
   @param {boolean} [with_year] - Adds the year
+  @param {string} [format] - A dates.* key, such as 'month_day_year'; overrides with_year
 
   @example
   {% render 'localized-date', date: hike_start %}
   {% render 'localized-date', date: booked_day, with_year: true %}
+  {% render 'localized-date', date: hike_start, format: 'month_day' %}
 {% enddoc %}
 
 {%- liquid
@@ -19,6 +21,9 @@
 
   if year == date
     echo date
+  elsif format != blank
+    assign format_key = 'dates.' | append: format
+    echo format_key | t: day: day, month: month, year: year
   elsif with_year
     echo 'dates.day_month_year' | t: day: day, month: month, year: year
   else
