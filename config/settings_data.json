@@ -10,6 +10,7 @@
 {
   "current": {
     "background_color": "#FFFFFF",
+    "favicon": "shopify://shop_images/favicon_HYM.jpg",
     "content_for_index": [],
     "blocks": {
       "15659862187755629035": {
