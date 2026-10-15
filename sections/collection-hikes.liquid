@@ -1,4 +1,4 @@
-{% comment %} Hike departures as full-bleed bands, filtered by country without a page reload. {% endcomment %}
+{% comment %} Hike departures as image bands, filtered by country without a page reload. {% endcomment %}
 
 {%- liquid
   assign country_filters = collection.filters | where: 'param_name', 'filter.p.m.custom.country'
@@ -45,88 +45,111 @@
   </div>
 
   <div class="hikes__rows" data-rows>
-    {%- paginate collection.products by 12 -%}
-      {%- if collection.products.size > 0 -%}
-        <ul class="hikes__list" role="list">
-          {%- for product in collection.products -%}
-            {%- liquid
-              assign img_loading = 'lazy'
-              assign img_priority = 'auto'
-              if forloop.first
-                assign img_loading = 'eager'
-                assign img_priority = 'high'
-              endif
+    {%- comment -%}
+      Shopify can't sort by a metafield, so the filtered hikes (first 50) are ordered
+      here: upcoming by soonest start, then undated. Hikes that have started are left out.
+    {%- endcomment -%}
+    {%- liquid
+      assign today = 'now' | date: '%Y%m%d' | plus: 0
+      assign sort_keys = ''
 
-              assign hike_start = product.metafields.custom.hike_start_date.value
-              assign hike_end = product.metafields.custom.hike_end_date.value
+      for product in collection.products
+        assign start_day = product.metafields.custom.hike_start_date.value | date: '%Y%m%d'
+        assign position = forloop.index0 | prepend: '00' | slice: -3, 3
 
-              if product.price_varies
-                assign deposit_cents = product.price_min
-              else
-                assign deposit_cents = product.price
-              endif
-              assign percent_ratio = settings.deposit_percent | divided_by: 100.0
-              assign full_cents = deposit_cents | divided_by: percent_ratio | round
-              assign price_amount = full_cents | money_without_trailing_zeros | remove: '.'
-            -%}
+        if start_day == blank
+          assign sort_key = '100000000'
+        else
+          assign start_number = start_day | plus: 0
+          if start_number < today
+            continue
+          endif
+          assign sort_key = start_day | prepend: '0'
+        endif
 
-            <li>
-              <a class="hike-row" href="{{ product.url }}">
-                <div class="hike-row__media">
-                  {%- if product.featured_image != blank -%}
-                    {{
-                      product.featured_image
-                      | image_url: width: 3000
-                      | image_tag:
-                          widths: '750,1100,1500,2000,2600,3000',
-                          sizes: '100vw',
-                          loading: img_loading,
-                          fetchpriority: img_priority,
-                          alt: product.featured_image.alt
-                    }}
-                  {%- else -%}
-                    {{ 'image' | placeholder_svg_tag: 'hike-row__placeholder' }}
-                  {%- endif -%}
+        assign sort_keys = sort_keys | append: sort_key | append: '-' | append: position | append: ','
+      endfor
+
+      assign sort_keys = sort_keys | split: ',' | sort
+    -%}
+
+    {%- if sort_keys.size > 0 -%}
+      <ul class="hikes__list" role="list">
+        {%- for sort_key in sort_keys -%}
+          {%- liquid
+            assign product_index = sort_key | split: '-' | last | plus: 0
+            assign product = collection.products[product_index]
+
+            assign img_loading = 'lazy'
+            assign img_priority = 'auto'
+            if forloop.first
+              assign img_loading = 'eager'
+              assign img_priority = 'high'
+            endif
+
+            assign hike_start = product.metafields.custom.hike_start_date.value
+            assign hike_end = product.metafields.custom.hike_end_date.value
+
+            if product.price_varies
+              assign deposit_cents = product.price_min
+            else
+              assign deposit_cents = product.price
+            endif
+            assign percent_ratio = settings.deposit_percent | divided_by: 100.0
+            assign full_cents = deposit_cents | divided_by: percent_ratio | round
+            assign price_amount = full_cents | money_without_trailing_zeros | remove: '.'
+          -%}
+
+          <li>
+            <a class="hike-row" href="{{ product.url }}">
+              <div class="hike-row__media">
+                {%- if product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 3000
+                    | image_tag:
+                        widths: '750,1100,1500,2000,2600,3000',
+                        sizes: '100vw',
+                        loading: img_loading,
+                        fetchpriority: img_priority,
+                        alt: product.featured_image.alt
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'hike-row__placeholder' }}
+                {%- endif -%}
+              </div>
+
+              <div class="hike-row__caption">
+                <div class="hike-row__text">
+                  <h2 class="hike-row__title">
+                    {{- product.title -}}
+                    {%- if hike_start != blank %}
+                      <span class="hike-row__dates">
+                        {%- render 'hike-dates', start: hike_start, end: hike_end -%}
+                      </span>
+                    {%- endif -%}
+                  </h2>
+
+                  <p class="hike-row__price">
+                    {%- if product.price_varies -%}
+                      {{ 'collections.hikes.price_from' | t: price: price_amount }}
+                    {%- else -%}
+                      {{ price_amount }}
+                    {%- endif -%}
+                  </p>
                 </div>
 
-                <div class="hike-row__caption">
-                  <div class="hike-row__text">
-                    <h2 class="hike-row__title">
-                      {{- product.title -}}
-                      {%- if hike_start != blank %}
-                        <span class="hike-row__dates">
-                          {%- render 'hike-dates', start: hike_start, end: hike_end -%}
-                        </span>
-                      {%- endif -%}
-                    </h2>
-
-                    <p class="hike-row__price">
-                      {%- if product.price_varies -%}
-                        {{ 'collections.hikes.price_from' | t: price: price_amount }}
-                      {%- else -%}
-                        {{ price_amount }}
-                      {%- endif -%}
-                    </p>
-                  </div>
-
-                  <span class="hike-row__arrow" aria-hidden="true">
-                    {{- 'icon-arrow-right.svg' | inline_asset_content -}}
-                  </span>
-                </div>
-              </a>
-            </li>
-          {%- endfor -%}
-        </ul>
-
-        {%- if paginate.pages > 1 -%}
-          <nav class="hikes__pagination" data-pagination>
-            {{ paginate | default_pagination }}
-          </nav>
-        {%- endif -%}
-      {%- else -%}
-        <p class="hikes__empty">{{ 'collections.hikes.no_results' | t }}</p>
-      {%- endif -%}
-    {%- endpaginate -%}
+                <span class="hike-row__arrow" aria-hidden="true">
+                  {{- 'icon-arrow-right.svg' | inline_asset_content -}}
+                </span>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="hikes__empty">{{ 'collections.hikes.no_results' | t }}</p>
+    {%- endif -%}
   </div>
 </hike-list>
 
@@ -184,10 +207,6 @@
     }
   }
 
-  .hikes__rows {
-    grid-column: 1 / -1;
-  }
-
   .hikes__list {
     display: flex;
     flex-direction: column;
@@ -196,10 +215,7 @@
     list-style: none;
   }
 
-  .hikes__pagination,
   .hikes__empty {
-    width: var(--content-width);
-    margin-inline: auto;
     padding-block: var(--spacing-section);
   }
 
@@ -248,7 +264,7 @@
 
   .hike-row__caption {
     position: absolute;
-    inset-inline: calc((100% - var(--content-width)) / 2);
+    inset-inline: var(--caption-inset);
     bottom: var(--caption-inset);
     display: flex;
     gap: 1.5rem;
@@ -256,6 +272,12 @@
 
   .hike-row__title {
     font-size: var(--font-size-display-compact);
+  }
+
+  .hike-row__dates::before {
+    /* The trailing space mirrors the markup space before the span. */
+    content: '| ' / '';
+    margin-inline: 0.25em;
   }
 
   @media (width >= 750px) {
@@ -344,7 +366,7 @@
       this.addEventListener('click', (event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
 
-        const link = event.target.closest('[data-filters] a, [data-pagination] a');
+        const link = event.target.closest('[data-filters] a');
         if (!link) return;
 
         event.preventDefault();

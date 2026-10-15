@@ -152,10 +152,24 @@
           <input class="cart__update" type="submit" name="update" value="{{ 'cart.update' | t }}" formnovalidate>
         </noscript>
 
-        {% render 'checkout-terms',
-          agreement_url: section.settings.service_agreement_url,
-          contract_url: section.settings.travel_contract_url
-        %}
+        {%- liquid
+          # A hike is any product in a collection that uses the hikes template.
+          assign has_hike = false
+          for item in cart.items
+            assign item_templates = item.product.collections | map: 'template_suffix'
+            if item_templates contains 'hikes'
+              assign has_hike = true
+              break
+            endif
+          endfor
+        -%}
+
+        {%- if has_hike -%}
+          {% render 'checkout-terms',
+            agreement_url: section.settings.service_agreement_url,
+            contract_url: section.settings.travel_contract_url
+          %}
+        {%- endif -%}
 
         <input class="cart__checkout" type="submit" name="checkout" value="{{ 'cart.checkout' | t }}" data-checkout>
       </div>
