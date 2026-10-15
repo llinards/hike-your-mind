@@ -25,6 +25,12 @@
   endif
 
   assign columns = packed | split: ','
+
+  assign mosaic_link = section.settings.mosaic_link
+  assign mosaic_tag = 'div'
+  if mosaic_link != blank
+    assign mosaic_tag = 'a'
+  endif
 -%}
 
 {%- capture image_sizes %}(min-width: 750px) {{ section.settings.column_width }}px, 60vw{% endcapture -%}
@@ -48,8 +54,9 @@
     decorative clone, which is why it carries no alt text and no
     `shopify_attributes`.
   {% endcomment %}
-  <div
+  <{{ mosaic_tag }}
     class="mosaic full-width"
+    {% if mosaic_link != blank %}href="{{ mosaic_link }}"{% endif %}
     style="--mosaic-band-desktop: {{ section.settings.band_height }}px; --mosaic-column-desktop: {{ section.settings.column_width }}px;"
   >
     <mosaic-marquee
@@ -121,7 +128,7 @@
         {%- endfor -%}
       </div>
     </mosaic-marquee>
-  </div>
+  </{{ mosaic_tag }}>
 {%- endif -%}
 
 {% stylesheet %}
@@ -168,6 +175,12 @@
     --mosaic-gap: 1.25rem;
     --mosaic-band: min(78vh, 700px);
     --mosaic-column: 46vw;
+
+    display: block;
+  }
+
+  .mosaic:focus-visible {
+    outline-offset: -6px;
   }
 
   @media (width >= 750px) {
@@ -343,6 +356,12 @@
       "type": "url",
       "id": "cta_link",
       "label": "t:labels.cta_link"
+    },
+    {
+      "type": "url",
+      "id": "mosaic_link",
+      "label": "t:labels.mosaic_link",
+      "info": "t:info.mosaic_link"
     },
     {
       "type": "range",
