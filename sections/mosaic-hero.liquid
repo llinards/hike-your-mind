@@ -1,14 +1,3 @@
-{% comment %}
-  Mosaic hero — a heading and call to action above a full-bleed band of image
-  columns that drifts sideways and loops seamlessly.
-{% endcomment %}
-
-{% comment %}
-  Pack the flat block list into balanced columns by adding up each image's
-  `height_ratio` until it would overshoot `column_fill`, producing a
-  comma-separated count of images per column ("2,3,3") for the render loop.
-{% endcomment %}
-
 {%- liquid
   assign fill = section.settings.column_fill
   assign running = 0
