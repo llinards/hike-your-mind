@@ -83,7 +83,7 @@
         "heading": "Experience More Than the Destination",
         "cta_label": "Explore Hikes",
         "cta_link": "shopify://collections/hikes",
-        "mosaic_link": "",
+        "mosaic_link": "shopify://pages/hikes",
         "band_height": 1080,
         "column_width": 410,
         "column_fill": 12,
