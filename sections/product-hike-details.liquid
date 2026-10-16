@@ -9,10 +9,6 @@
   assign hike_start = product.metafields.custom.hike_start_date.value
   assign hike_end = product.metafields.custom.hike_end_date.value
 
-  comment
-    Inclusive day count — 11 to 18 May reads as 8 days. Rounded rather than
-    floored so an hour of daylight saving can't shave a day off.
-  endcomment
   assign duration_days = 0
   if hike_start != blank
     if hike_end != blank
@@ -22,10 +18,7 @@
     endif
   endif
 
-  comment
-    Either a city or a region stands in for each end of the route, so a merchant
-    only ever fills one of the pair.
-  endcomment
+
   assign from_place = product.metafields.custom.from_city.value | default: product.metafields.custom.from_region.value
   assign to_place = product.metafields.custom.to_city.value | default: product.metafields.custom.to_region.value
   assign country = product.metafields.custom.country.value

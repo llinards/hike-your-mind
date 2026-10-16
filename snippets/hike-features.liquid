@@ -1,0 +1,159 @@
+{% doc %}
+  Renders a section's feature blocks: an icon beside a heading and a grey line
+  of text, side by side behind hairline dividers once there is room.
+
+  `natural` keeps each feature at its own width and switches to a row at the
+  750px breakpoint. `fill` shares the available width equally and switches on
+  the width of its own container, for narrow columns such as the product info.
+  With three or more features, `fill` always stacks them.
+
+  @param {block[]} blocks - The section's feature blocks (icon, heading, text)
+  @param {string} [layout] - 'natural' (default) or 'fill'
+
+  @example
+  {% render 'hike-features', blocks: section.blocks %}
+  {% render 'hike-features', blocks: section.blocks, layout: 'fill' %}
+{% enddoc %}
+
+{%- if blocks.size > 0 -%}
+  <div class="hike-features hike-features--{{ layout | default: 'natural' }}{% if blocks.size > 2 %} hike-features--stacked{% endif %}">
+    <ul class="hike-features__list" role="list">
+      {%- for block in blocks -%}
+        <li class="hike-feature" {{ block.shopify_attributes }}>
+          <span class="hike-feature__icon" aria-hidden="true">
+            {{- block.settings.icon | inline_asset_content -}}
+          </span>
+
+          <div class="hike-feature__text">
+            {%- if block.settings.heading != blank -%}
+              <h3 class="hike-feature__heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.text != blank -%}
+              <p class="hike-feature__body">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .hike-features__list {
+    --feature-ink: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Icon in its own column, heading and line of text beside it. */
+  .hike-feature {
+    --feature-icon: 2.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    align-items: start;
+  }
+
+  .hike-feature__icon svg {
+    width: var(--feature-icon);
+    height: var(--feature-icon);
+    fill: currentcolor;
+  }
+
+  .hike-feature__heading {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-lead);
+    font-weight: 500;
+    line-height: var(--line-height-ui);
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .hike-feature__body {
+    color: var(--feature-ink);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  /* Natural: one row from tablet up. Features keep their own width but shrink and wrap
+     their text instead of the row, and padding and icon scale down towards 750px. */
+  @media (750px <= width < 992px) {
+    .hike-features--natural .hike-feature__heading {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  @media (width >= 750px) {
+    .hike-features--natural .hike-features__list {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .hike-features--natural .hike-feature {
+      --feature-icon: clamp(2rem, 2.5vw, 2.5rem);
+
+      flex: 0 1 auto;
+      min-width: 0;
+      column-gap: clamp(0.625rem, 1.25vw, 1rem);
+      padding-inline: clamp(1rem, 2.5vw, 2rem);
+    }
+
+    .hike-features--natural .hike-feature:first-child {
+      padding-inline-start: 0;
+    }
+
+    .hike-features--natural .hike-feature:last-child {
+      padding-inline-end: 0;
+    }
+
+    .hike-features--natural .hike-feature + .hike-feature {
+      border-inline-start: 0.5px solid var(--color-hairline);
+    }
+  }
+
+  /* Fill: sized to the column it sits in. Two features split it in half once it is wide
+     enough; three always stack, as they would on a phone. */
+  .hike-features--fill {
+    container-type: inline-size;
+  }
+
+  .hike-features--fill .hike-feature {
+    --feature-icon: 2rem;
+
+    column-gap: 0.75rem;
+  }
+
+  .hike-features--fill .hike-feature__heading {
+    font-size: var(--font-size-body);
+  }
+
+  @container (width >= 28rem) {
+    .hike-features--fill:not(.hike-features--stacked) .hike-features__list {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .hike-features--fill:not(.hike-features--stacked) .hike-feature {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: 1rem;
+    }
+
+    .hike-features--fill:not(.hike-features--stacked) .hike-feature:first-child {
+      padding-inline-start: 0;
+    }
+
+    .hike-features--fill:not(.hike-features--stacked) .hike-feature:last-child {
+      padding-inline-end: 0;
+    }
+
+    .hike-features--fill:not(.hike-features--stacked) .hike-feature + .hike-feature {
+      border-inline-start: 0.5px solid var(--color-hairline);
+    }
+  }
+{% endstylesheet %}
