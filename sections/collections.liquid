@@ -3,7 +3,15 @@
 <h1 class="collections__heading">{{ 'collections.title' | t }}</h1>
 
 <div class="collections" style="--grid-gap: {{ section.settings.grid_gap }}px">
-  {%- for collection in collections -%}
+  {%- liquid
+    # Picked collections, in the order picked; with none picked, every collection.
+    assign shown_collections = section.settings.collections
+    if shown_collections == blank
+      assign shown_collections = collections
+    endif
+  -%}
+
+  {%- for collection in shown_collections -%}
     {%- comment -%} Shopify's built-in Home page collection is not a category. {%- endcomment -%}
     {%- if collection.handle == 'frontpage' -%}
       {%- continue -%}
@@ -168,6 +176,13 @@
 {
   "name": "t:general.collections_grid",
   "settings": [
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "t:labels.collections",
+      "info": "t:info.collections_selection",
+      "limit": 50
+    },
     {
       "type": "range",
       "id": "grid_gap",

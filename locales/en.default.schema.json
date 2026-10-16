@@ -60,6 +60,7 @@
     "favicon": "Favicon"
   },
   "labels": {
+    "collections": "Collections",
     "mosaic_link": "Image band link",
     "products_to_show": "Products to show",
     "alignment": "Alignment",
@@ -159,6 +160,7 @@
     }
   },
   "info": {
+    "collections_selection": "Pick the collections to show, in order. Leave empty to show every collection.",
     "mosaic_link": "Makes the image band clickable. Leave empty to keep it as plain images.",
     "image_position_y": "0% holds the top of the photo in view, 100% the bottom.",
     "image_position_x": "0% holds the left of the photo in view, 100% the right.",
