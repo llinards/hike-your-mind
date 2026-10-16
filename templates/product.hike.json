@@ -15,7 +15,29 @@
         "balance_due_days": 60,
         "deposit_note": "<p>Your deposit secures your place. The remaining balance is due 60 days before the trip.</p>",
         "max_quantity": 10
-      }
+      },
+      "blocks": {
+        "feature_travel": {
+          "type": "feature",
+          "settings": {
+            "icon": "airplane-tilt-light.svg",
+            "heading": "Carefree Travel",
+            "text": "Flights & Accommodation Included"
+          }
+        },
+        "feature_curated": {
+          "type": "feature",
+          "settings": {
+            "icon": "mountains-light.svg",
+            "heading": "Curated Experiences",
+            "text": "Handpicked by Us"
+          }
+        }
+      },
+      "block_order": [
+        "feature_travel",
+        "feature_curated"
+      ]
     },
     "details": {
       "type": "product-hike-details",
