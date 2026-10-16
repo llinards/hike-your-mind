@@ -5487,7 +5487,7 @@
       "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervē vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
       "reservation": "Rezervācija",
-      "no_results": "Neviens pārgājiens vēl neatbilst šim filtram. Izmēģiniet citu valsti."
+      "no_results": "Pagaidām nav gaidāmu pārgājienu. Ieskatieties vēlāk."
     },
     "gear": {
       "add": "Pievienot {{ title }} grozam",
