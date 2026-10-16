@@ -17,7 +17,7 @@
     "collection": "Collection",
     "collection_card": "Collection card",
     "collection_hikes": "Hikes collection",
-    "collection_rows": "Collection rows",
+    "collection_all_hikes": "All hikes collection",
     "collection_hiking_gear": "Hiking gear collection",
     "collections": "Collections",
     "collections_grid": "Collections grid",
@@ -161,8 +161,6 @@
     }
   },
   "info": {
-    "collection_rows_heading": "Leave empty to use the page title.",
-    "collection_rows_selection": "Pick the collections to show, in order. Each one links to its collection page.",
     "collections_selection": "Pick the collections to show, in order. Leave empty to show every collection.",
     "mosaic_link": "Makes the image band clickable. Leave empty to keep it as plain images.",
     "image_position_y": "0% holds the top of the photo in view, 100% the bottom.",
