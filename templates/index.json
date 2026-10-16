@@ -104,6 +104,17 @@
             "image_zoom": 100
           }
         },
+        "row_EKH8xR": {
+          "type": "row",
+          "settings": {
+            "title": "Hiking in Portugal",
+            "link": "shopify://collections/portugal",
+            "image": "shopify://shop_images/portugal-3.webp",
+            "image_position_y": 50,
+            "image_position_x": 50,
+            "image_zoom": 100
+          }
+        },
         "row-2": {
           "type": "row",
           "settings": {
@@ -129,6 +140,7 @@
       },
       "block_order": [
         "row-1",
+        "row_EKH8xR",
         "row-2",
         "row-3"
       ],
