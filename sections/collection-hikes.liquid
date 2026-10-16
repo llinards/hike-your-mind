@@ -62,6 +62,9 @@
             assign hike_start = product.metafields.custom.hike_start_date.value
             assign hike_end = product.metafields.custom.hike_end_date.value
 
+            # The collection image metafield wins; the product's own photo is the fallback.
+            assign row_image = product.metafields.custom.hike_collection_image.value | default: product.featured_image
+
             if product.price_varies
               assign deposit_cents = product.price_min
             else
@@ -75,16 +78,16 @@
           <li>
             <a class="hike-row" href="{{ product.url }}">
               <div class="hike-row__media">
-                {%- if product.featured_image != blank -%}
+                {%- if row_image != blank -%}
                   {{
-                    product.featured_image
+                    row_image
                     | image_url: width: 3000
                     | image_tag:
                         widths: '750,1100,1500,2000,2600,3000',
                         sizes: '100vw',
                         loading: img_loading,
                         fetchpriority: img_priority,
-                        alt: product.featured_image.alt
+                        alt: row_image.alt | default: product.title
                   }}
                 {%- else -%}
                   {{ 'image' | placeholder_svg_tag: 'hike-row__placeholder' }}
