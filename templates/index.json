@@ -90,8 +90,8 @@
         "speed": 30
       }
     },
-    "journey_rows": {
-      "type": "journey-rows",
+    "content_rows": {
+      "type": "content-rows",
       "blocks": {
         "row-1": {
           "type": "row",
@@ -194,7 +194,7 @@
   },
   "order": [
     "main",
-    "journey_rows",
+    "content_rows",
     "my_story_NdPc7m",
     "reviews_tTGrWK"
   ]
