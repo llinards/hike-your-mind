@@ -39,6 +39,8 @@
           assign wrapper = 'a'
         endif
 
+        assign zoom_factor = block.settings.image_zoom | divided_by: 100.0
+
         assign img_loading = 'lazy'
         assign img_priority = 'auto'
         if forloop.first
@@ -50,7 +52,7 @@
       <{{ wrapper }}
         class="content-row"
         {% if wrapper == 'a' %}href="{{ block.settings.link }}"{% endif %}
-        style="--image-position-x: {{ block.settings.image_position_x }}%; --image-position-y: {{ block.settings.image_position_y }}%;"
+        style="--image-position-x: {{ block.settings.image_position_x }}%; --image-position-y: {{ block.settings.image_position_y }}%; --image-zoom: {{ zoom_factor }};"
         {{ block.shopify_attributes }}
       >
         <div class="content-row__media">
@@ -145,6 +147,9 @@
     height: 100%;
     object-fit: cover;
     object-position: var(--image-position-x, 50%) var(--image-position-y, 50%);
+    /* Zoom grows from the chosen X/Y point, which is what lets X move a full-width photo. */
+    scale: var(--image-zoom, 1);
+    transform-origin: var(--image-position-x, 50%) var(--image-position-y, 50%);
     transition: transform var(--duration-base) var(--easing-base);
   }
 
@@ -322,6 +327,17 @@
           "step": 5,
           "unit": "%",
           "default": 50
+        },
+        {
+          "type": "range",
+          "id": "image_zoom",
+          "label": "t:labels.image_zoom",
+          "info": "t:info.image_zoom",
+          "min": 100,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 100
         }
       ]
     }
