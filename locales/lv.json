@@ -5483,6 +5483,9 @@
   },
   "collections": {
     "title": "Izvēlies kategoriju",
+    "rows": {
+      "empty": "Izvēlieties kolekcijas sadaļas iestatījumos, lai tās šeit parādītu."
+    },
     "hikes": {
       "price_from": "No {{ price }}",
       "no_results": "Pagaidām nav gaidāmu pārgājienu. Ieskatieties vēlāk."

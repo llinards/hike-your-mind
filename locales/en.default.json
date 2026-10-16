@@ -128,6 +128,9 @@
   },
   "collections": {
     "title": "Choose your category",
+    "rows": {
+      "empty": "Pick collections in the section settings to show them here."
+    },
     "hikes": {
       "price_from": "From {{ price }}",
       "no_results": "No upcoming hikes yet. Check back soon."
