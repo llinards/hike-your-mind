@@ -99,7 +99,7 @@
             "title": "Hiking in Italy",
             "link": "shopify://collections/hikes",
             "image": "shopify://shop_images/hike-wheat-sunset.jpg",
-            "image_position": 50
+            "image_position_y": 50
           }
         },
         "row-2": {
@@ -108,7 +108,7 @@
             "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
             "image": "shopify://shop_images/create-a-hike-row.jpg",
-            "image_position": 30
+            "image_position_y": 30
           }
         },
         "row-3": {
@@ -117,7 +117,7 @@
             "title": "Shop Hiking Essentials",
             "link": "shopify://collections/hiking-essentials-rentals",
             "image": "shopify://shop_images/shop-hiking-essentials.jpg",
-            "image_position": 85
+            "image_position_y": 85
           }
         }
       },
@@ -154,41 +154,14 @@
     },
     "reviews_tTGrWK": {
       "type": "reviews",
-      "blocks": {
-        "review_Vdgbzr": {
-          "type": "review",
-          "name": "Natālija",
-          "settings": {
-            "image": "shopify://shop_images/hike-review-1.jpg",
-            "name": "Natālija",
-            "body": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can’t even begin to describe how much our Tuscany hike meant to me. It was&nbsp;theEvent of My Year 2025, and you became My Person of the Year 2025. 💜</p><p>After this journey, I didn’t make any radical life decisions. The only thing I knew was that I wanted my world back, all of its colours and I wanted myself back....</p>",
-            "date": "05.06.2026.",
-            "link": "shopify://pages/reviews"
-          }
-        },
-        "review_cJdHDc": {
-          "type": "review",
-          "name": "Laura Š.",
-          "settings": {
-            "image": "shopify://shop_images/hike-review-2.jpg",
-            "name": "Laura Š.",
-            "body": "<p>You were right about the GoreTex, and about how difficult it would be to come back to everyday life after this hike. After Tuscany, the feeling wasn’t nearly as profound.</p><p>The walk to Rome gave me so much more than a physical challenge. The real adventure happened within me.</p><p>The long journey allowed me to see my life from a completely different perspective....</p>",
-            "date": "05.06.2026.",
-            "link": "shopify://pages/reviews"
-          }
-        }
-      },
-      "block_order": [
-        "review_Vdgbzr",
-        "review_cJdHDc"
-      ],
       "name": "t:general.reviews",
       "settings": {
         "heading": "What Our Clients Say About Us",
         "show_heading": true,
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
         "show_subheading": true,
-        "show_divider": true
+        "show_divider": true,
+        "more_link": "shopify://pages/reviews"
       }
     }
   },

@@ -137,7 +137,9 @@
     border-block-start: 0.5px solid var(--color-ink-soft);
   }
 
-  .review-modal__text > * + * {
+  /* Rich text arrives inside a .metafield-rich_text_field wrapper, so its paragraphs are spaced too. */
+  .review-modal__text > * + *,
+  .review-modal__text > .metafield-rich_text_field > * + * {
     margin-block-start: 1em;
   }
 

@@ -20,6 +20,34 @@
     endif
   endif
 
+  # Picked entries win; with none picked, every review entry is shown.
+  assign reviews = section.settings.reviews
+  if reviews == blank
+    assign reviews = shop.metaobjects.review.values
+  endif
+
+  # Newest review_date first. Each key is "YYYYMMDD|handle", so a plain sort
+  # orders them; undated entries get 00000000 and land last once reversed.
+  assign review_keys = ''
+  for review in reviews limit: 50
+    assign review_day = review.review_date.value | date: '%Y%m%d'
+    assign day_number = review_day | plus: 0
+    if day_number < 10000000
+      assign review_day = '00000000'
+    endif
+    assign review_keys = review_keys | append: review_day | append: '|' | append: review.system.handle | append: ','
+  endfor
+  assign review_keys = review_keys | split: ',' | sort | reverse
+
+  # The modal's "Read more" is dropped once the link points at the page being
+  # read, which is what makes it absent on the reviews page itself.
+  assign more_link = section.settings.more_link
+  if more_link != blank
+    if request.path contains more_link
+      assign more_link = blank
+    endif
+  endif
+
   assign has_intro = false
   if render_heading
     assign has_intro = true
@@ -51,72 +79,80 @@
   </div>
 {%- endif -%}
 
-{%- if section.blocks.size > 0 -%}
+{%- if review_keys.size > 0 -%}
   <review-carousel class="reviews">
     <ul class="reviews__track" tabindex="0">
-      {%- for block in section.blocks -%}
+      {%- for review_key in review_keys -%}
         {%- liquid
-          # The modal's "Read more" is dropped once the link points at the page
-          # being read, which is what makes it absent on the reviews page itself.
-          assign modal_link = block.settings.link
-          if modal_link != blank
-            if request.path contains modal_link
-              assign modal_link = blank
-            endif
-          endif
+          assign review_handle = review_key | split: '|' | last
+          assign review = shop.metaobjects.review[review_handle]
+          assign reviewer = review.reviewer_name.value
+          assign photo = review.photo.value
         -%}
 
-        <li class="reviews__item" {{ block.shopify_attributes }}>
+        <li class="reviews__item">
           <article
             class="review"
             data-review
-            {% if modal_link != blank %}
-              data-review-more="{{ modal_link }}"
+            {% if more_link != blank %}
+              data-review-more="{{ more_link }}"
             {% endif %}
           >
-            {%- if block.settings.image != blank -%}
+            {%- if photo != blank -%}
               <div class="review__media" data-review-image>
                 {{
-                  block.settings.image
+                  photo
                   | image_url: width: 1200
                   | image_tag:
                       widths: '300,400,500,600,750,900,1200',
                       sizes: image_sizes,
                       loading: 'lazy',
-                      alt: block.settings.image.alt | default: block.settings.name
+                      alt: photo.alt | default: reviewer
                 }}
               </div>
             {%- endif -%}
 
             <div class="review__content">
-              {%- if block.settings.name != blank -%}
-                <h3 class="review__name" data-review-name>{{ block.settings.name }}</h3>
+              {%- if reviewer != blank -%}
+                <h3 class="review__name" data-review-name>{{ reviewer }}</h3>
               {%- endif -%}
 
               <hr class="review__rule">
 
-              {%- if block.settings.body != blank -%}
-                <div class="review__text" data-review-text>{{ block.settings.body }}</div>
+              {%- if review.review_text != blank -%}
+                <div class="review__text" data-review-text>
+                  {%- if review.review_text.type == 'rich_text_field' -%}
+                    {{ review.review_text | metafield_tag }}
+                  {%- else -%}
+                    <p>{{ review.review_text.value | escape | newline_to_br }}</p>
+                  {%- endif -%}
+                </div>
               {%- endif -%}
 
               <footer class="review__footer">
-                <span class="review__date" data-review-date>{{ block.settings.date }}</span>
+                <span class="review__date" data-review-date>
+                  {%- if review.review_date.type == 'date' -%}
+                    {{ review.review_date.value | date: '%d.%m.%Y' }}
+                  {%- else -%}
+                    {{ review.review_date.value }}
+                  {%- endif -%}
+                </span>
 
                 {%- comment -%}
                   The control opens the modal. It keeps its href where there is
-                  one, so without JavaScript it still goes to the review's page;
-                  a review with no link falls back to a button so every card
-                  keeps a control the keyboard can reach.
+                  one, so without JavaScript it still goes to the reviews page;
+                  with no link it falls back to a button so every card keeps a
+                  control the keyboard can reach.
                 {%- endcomment -%}
                 {%- capture more_label -%}
                   {{- 'reviews.read_more' | t -}}
-                  {%- if block.settings.name != blank -%}
-                    <span class="visually-hidden"> — {{ block.settings.name }}</span>
+                  {%- if reviewer != blank -%}
+                    <span class="visually-hidden"> — {{ reviewer }}</span>
                   {%- endif -%}
                 {%- endcapture -%}
 
-                {%- if block.settings.link != blank -%}
-                  <a class="review__more" href="{{ block.settings.link }}" data-review-open>
+                {%- if section.settings.more_link != blank -%}
+                  <a class="review__more" href="{{ section.settings.more_link }}" data-review-open>
                     {{- more_label -}}
                   </a>
                 {%- else -%}
@@ -131,7 +167,7 @@
       {%- endfor -%}
     </ul>
 
-    {%- if section.blocks.size > 1 -%}
+    {%- if review_keys.size > 1 -%}
       <div class="reviews__controls">
         <button type="button" class="reviews__control" data-direction="previous">
           {{ 'icon-arrow-right.svg' | inline_asset_content }}
@@ -269,7 +305,9 @@
     mask-image: linear-gradient(to bottom, #000 calc(100% - 2.5em), transparent);
   }
 
-  .review__text > * + * {
+  /* Rich text arrives inside a .metafield-rich_text_field wrapper, so its paragraphs are spaced too. */
+  .review__text > * + *,
+  .review__text > .metafield-rich_text_field > * + * {
     margin-block-start: 1em;
   }
 
@@ -469,59 +507,25 @@
       "id": "show_divider",
       "label": "t:labels.show_divider",
       "default": true
-    }
-  ],
-  "blocks": [
+    },
     {
-      "type": "review",
-      "name": "t:general.review",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "t:labels.image"
-        },
-        {
-          "type": "text",
-          "id": "name",
-          "label": "t:labels.reviewer",
-          "default": "Natālija"
-        },
-        {
-          "type": "richtext",
-          "id": "body",
-          "label": "t:labels.review",
-          "default": "<p>Finally, I feel like I can put into words what I wanted to tell you…</p><p>I can't even begin to describe how much our Tuscany hike meant to me. It was the Event of My Year 2025, and you became My Person of the Year 2025.</p>"
-        },
-        {
-          "type": "text",
-          "id": "date",
-          "label": "t:labels.date",
-          "info": "t:info.date"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "t:labels.cta_link",
-          "info": "t:info.review_link"
-        }
-      ]
+      "type": "metaobject_list",
+      "id": "reviews",
+      "label": "t:labels.reviews",
+      "info": "t:info.reviews_selection",
+      "metaobject_type": "review",
+      "limit": 50
+    },
+    {
+      "type": "url",
+      "id": "more_link",
+      "label": "t:labels.more_link",
+      "info": "t:info.review_link"
     }
   ],
   "presets": [
     {
-      "name": "t:general.reviews",
-      "blocks": [
-        {
-          "type": "review"
-        },
-        {
-          "type": "review"
-        },
-        {
-          "type": "review"
-        }
-      ]
+      "name": "t:general.reviews"
     }
   ]
 }
