@@ -1,0 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "collection-hikes",
+      "settings": {
+        "show": "collections"
+      },
+      "blocks": {
+        "feature_travel": {
+          "type": "feature",
+          "settings": {
+            "icon": "mountains-light.svg",
+            "heading": "Carefree Travel",
+            "text": "Flights & Accommodation Included"
+          }
+        },
+        "feature_curated": {
+          "type": "feature",
+          "settings": {
+            "icon": "airplane-tilt-light.svg",
+            "heading": "Curated Experiences",
+            "text": "Handpicked by Us"
+          }
+        },
+        "feature_reserve": {
+          "type": "feature",
+          "settings": {
+            "icon": "calendar-check-light.svg",
+            "heading": "Reserve Your Place",
+            "text": "With a 20% Deposit fee"
+          }
+        }
+      },
+      "block_order": [
+        "feature_travel",
+        "feature_curated",
+        "feature_reserve"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
