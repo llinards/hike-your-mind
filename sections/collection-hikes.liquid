@@ -4,16 +4,27 @@
   <div class="hikes__intro">
     <h1 class="hikes__heading">{{ collection.title }}</h1>
 
-    {%- comment -%}
-      Left empty, the line comes from the theme locales so each language has its own.
-    {%- endcomment -%}
-    <p class="hikes__subheading">
-      {%- if section.settings.subheading != blank -%}
-        {{ section.settings.subheading }}
-      {%- else -%}
-        {{ 'collections.hikes.subheading' | t }}
-      {%- endif -%}
-    </p>
+    {%- if section.blocks.size > 0 -%}
+      <ul class="hikes__features" role="list">
+        {%- for block in section.blocks -%}
+          <li class="hike-feature" {{ block.shopify_attributes }}>
+            <span class="hike-feature__icon" aria-hidden="true">
+              {{- block.settings.icon | inline_asset_content -}}
+            </span>
+
+            <div class="hike-feature__text">
+              {%- if block.settings.heading != blank -%}
+                <h3 class="hike-feature__heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <p class="hike-feature__body">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
   </div>
 
   <div class="hikes__rows">
@@ -143,7 +154,7 @@
   .hikes__intro {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
     padding-block-start: var(--spacing-section);
   }
 
@@ -151,9 +162,81 @@
     padding-bottom: var(--spacing-section);
   }
 
-  /* The deck is the display serif here, as in content-rows and create-a-hike. */
-  .hikes__subheading {
-    font-family: var(--font-display--family);
+  .hikes__features {
+    --feature-ink: color-mix(in oklab, var(--color-foreground) 55%, var(--color-background));
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Icon in its own column, heading and line of text beside it. */
+  .hike-feature {
+    --feature-icon: 2.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    align-items: start;
+  }
+
+  .hike-feature__icon svg {
+    width: var(--feature-icon);
+    height: var(--feature-icon);
+    fill: currentcolor;
+  }
+
+  .hike-feature__heading {
+    font-family: var(--font-body--family);
+    font-size: var(--font-size-lead);
+    font-weight: 500;
+    line-height: var(--line-height-ui);
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  /* Tablets are where the row is tightest, so the heading drops a step to body size. */
+  @media (750px <= width < 992px) {
+    .hike-feature__heading {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  .hike-feature__body {
+    color: var(--feature-ink);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  /* One row from tablet up: features keep their natural width but shrink and wrap
+     their own text instead of the row, and padding and icon scale down towards 750px. */
+  @media (width >= 750px) {
+    .hikes__features {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .hike-feature {
+      --feature-icon: clamp(2rem, 2.5vw, 2.5rem);
+
+      flex: 0 1 auto;
+      min-width: 0;
+      column-gap: clamp(0.625rem, 1.25vw, 1rem);
+      padding-inline: clamp(1rem, 2.5vw, 2rem);
+    }
+
+    .hike-feature:first-child {
+      padding-inline-start: 0;
+    }
+
+    .hike-feature:last-child {
+      padding-inline-end: 0;
+    }
+
+    .hike-feature + .hike-feature {
+      border-inline-start: 0.5px solid var(--color-hairline);
+    }
   }
 
   .hikes__list {
@@ -303,13 +386,37 @@
 {% schema %}
 {
   "name": "t:general.collection_hikes",
-  "settings": [
+  "settings": [],
+  "blocks": [
     {
-      "type": "text",
-      "id": "subheading",
-      "label": "t:labels.subheading",
-      "info": "t:info.hikes_subheading"
+      "type": "feature",
+      "name": "t:general.feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:labels.icon",
+          "options": [
+            { "value": "mountains-light.svg", "label": "t:options.icon.mountains" },
+            { "value": "airplane-tilt-light.svg", "label": "t:options.icon.airplane" },
+            { "value": "calendar-check-light.svg", "label": "t:options.icon.calendar" }
+          ],
+          "default": "mountains-light.svg"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:labels.heading",
+          "default": "Feature"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:labels.text"
+        }
+      ]
     }
-  ]
+  ],
+  "max_blocks": 4
 }
 {% endschema %}
