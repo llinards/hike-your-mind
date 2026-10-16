@@ -50,7 +50,7 @@
       <{{ wrapper }}
         class="content-row"
         {% if wrapper == 'a' %}href="{{ block.settings.link }}"{% endif %}
-        style="--image-position: {{ block.settings.image_position }}%;"
+        style="--image-position-x: {{ block.settings.image_position_x }}%; --image-position-y: {{ block.settings.image_position_y }}%;"
         {{ block.shopify_attributes }}
       >
         <div class="content-row__media">
@@ -144,7 +144,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center var(--image-position, 50%);
+    object-position: var(--image-position-x, 50%) var(--image-position-y, 50%);
     transition: transform var(--duration-base) var(--easing-base);
   }
 
@@ -303,9 +303,20 @@
         },
         {
           "type": "range",
-          "id": "image_position",
-          "label": "t:labels.image_position",
-          "info": "t:info.image_position",
+          "id": "image_position_y",
+          "label": "t:labels.image_position_y",
+          "info": "t:info.image_position_y",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "image_position_x",
+          "label": "t:labels.image_position_x",
+          "info": "t:info.image_position_x",
           "min": 0,
           "max": 100,
           "step": 5,
