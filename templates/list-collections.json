@@ -23,8 +23,7 @@
           "settings": {
             "title": "Hiking in Italy",
             "link": "shopify://pages/create-a-hike",
-            "image": "shopify://shop_images/hike-vineyard-trail.jpg",
-            "image_position": 80
+            "image": "shopify://shop_images/hike-vineyard-trail.jpg"
           }
         }
       },
