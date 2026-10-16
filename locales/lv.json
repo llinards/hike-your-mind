@@ -5486,7 +5486,6 @@
     "hikes": {
       "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervē vietu ar 20% depozītu",
       "price_from": "No {{ price }}",
-      "reservation": "Rezervācija",
       "no_results": "Pagaidām nav gaidāmu pārgājienu. Ieskatieties vēlāk."
     },
     "gear": {
