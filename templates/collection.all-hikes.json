@@ -10,10 +10,8 @@
 {
   "sections": {
     "main": {
-      "type": "collection-hikes",
-      "settings": {
-        "show": "collections"
-      },
+      "type": "collection-all-hikes",
+      "settings": {},
       "blocks": {
         "feature_travel": {
           "type": "feature",

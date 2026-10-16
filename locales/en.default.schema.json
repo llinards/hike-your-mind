@@ -17,6 +17,7 @@
     "collection": "Collection",
     "collection_card": "Collection card",
     "collection_hikes": "Hikes collection",
+    "collection_all_hikes": "All hikes collection",
     "collection_hiking_gear": "Hiking gear collection",
     "collections": "Collections",
     "collections_grid": "Collections grid",
@@ -60,7 +61,6 @@
     "favicon": "Favicon"
   },
   "labels": {
-    "hikes_show": "Show",
     "collections": "Collections",
     "mosaic_link": "Image band link",
     "products_to_show": "Products to show",
@@ -154,10 +154,6 @@
       "h1": "Heading 1",
       "h2": "Heading 2"
     },
-    "hikes_show": {
-      "hikes": "Hikes in this collection",
-      "collections": "Hike collections"
-    },
     "icon": {
       "mountains": "Mountains",
       "airplane": "Airplane",
@@ -165,7 +161,6 @@
     }
   },
   "info": {
-    "hikes_show": "Collections lists every collection using the hikes template that has an upcoming hike in this one, ordered by its soonest hike.",
     "collections_selection": "Pick the collections to show, in order. Leave empty to show every collection.",
     "mosaic_link": "Makes the image band clickable. Leave empty to keep it as plain images.",
     "image_position_y": "0% holds the top of the photo in view, 100% the bottom.",
