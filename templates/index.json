@@ -99,7 +99,9 @@
             "title": "Hiking in Italy",
             "link": "shopify://collections/hikes",
             "image": "shopify://shop_images/hike-wheat-sunset.jpg",
-            "image_position_y": 50
+            "image_position_y": 50,
+            "image_position_x": 50,
+            "image_zoom": 100
           }
         },
         "row-2": {
@@ -108,7 +110,9 @@
             "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
             "image": "shopify://shop_images/create-a-hike-row.jpg",
-            "image_position_y": 30
+            "image_position_y": 30,
+            "image_position_x": 50,
+            "image_zoom": 100
           }
         },
         "row-3": {
@@ -117,7 +121,9 @@
             "title": "Shop Hiking Essentials",
             "link": "shopify://collections/hiking-essentials-rentals",
             "image": "shopify://shop_images/shop-hiking-essentials.jpg",
-            "image_position_y": 85
+            "image_position_y": 85,
+            "image_position_x": 0,
+            "image_zoom": 120
           }
         }
       },
@@ -130,6 +136,7 @@
         "heading": "Where Will Your Next Journey Begin?",
         "subheading": "From quiet trails in Latvia to sunlit paths in Italy and Portugal — find a route that feels close to you, and step into the journey at your own pace.",
         "show_divider": true,
+        "bottom_padding": false,
         "row_height": 270,
         "row_gap": 30
       }
@@ -161,6 +168,7 @@
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
         "show_subheading": true,
         "show_divider": true,
+        "reviews": [],
         "more_link": "shopify://pages/reviews"
       }
     }
