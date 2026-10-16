@@ -129,6 +129,11 @@ h6 {
   letter-spacing: var(--letter-spacing-display);
 }
 
+/* Pulls large headings back by the display font's left side bearing so the first stroke meets the column edge. */
+h1 {
+  margin-inline-start: -0.045em;
+}
+
 small {
   font-size: var(--font-size-small);
   line-height: var(--line-height-small);
