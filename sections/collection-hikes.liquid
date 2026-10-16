@@ -1,52 +1,24 @@
-{% comment %} Hike departures as image bands, filtered by country without a page reload. {% endcomment %}
+{% comment %} Upcoming hike departures as image bands, soonest first. {% endcomment %}
 
-{%- liquid
-  assign country_filters = collection.filters | where: 'param_name', 'filter.p.m.custom.country'
-  assign country_filter = country_filters | first
-
-  assign fallback_countries = ''
-  if country_filter.values.size == 0
-    for product in collection.products limit: 50
-      assign country = product.metafields.custom.country.value
-      if country != blank
-        unless fallback_countries contains country
-          assign fallback_countries = fallback_countries | append: country | append: '|'
-        endunless
-      endif
-    endfor
-  endif
-  assign fallback_countries = fallback_countries | split: '|' | sort
--%}
-
-<hike-list class="hikes full-width" data-section-id="{{ section.id }}">
+<div class="hikes full-width">
   <div class="hikes__intro">
-    <div class="hikes__text">
-      <h1 class="hikes__heading">{{ collection.title }}</h1>
+    <h1 class="hikes__heading">{{ collection.title }}</h1>
 
-      {%- comment -%}
-        Left empty, the line comes from the theme locales so each language has its own.
-      {%- endcomment -%}
-      <p class="hikes__subheading">
-        {%- if section.settings.subheading != blank -%}
-          {{ section.settings.subheading }}
-        {%- else -%}
-          {{ 'collections.hikes.subheading' | t }}
-        {%- endif -%}
-      </p>
-    </div>
-
-    <div class="hikes__filters" data-filters>
-      {% render 'filter-dropdown',
-        filters: country_filters,
-        fallback_param: 'filter.p.m.custom.country',
-        fallback_values: fallback_countries
-      %}
-    </div>
+    {%- comment -%}
+      Left empty, the line comes from the theme locales so each language has its own.
+    {%- endcomment -%}
+    <p class="hikes__subheading">
+      {%- if section.settings.subheading != blank -%}
+        {{ section.settings.subheading }}
+      {%- else -%}
+        {{ 'collections.hikes.subheading' | t }}
+      {%- endif -%}
+    </p>
   </div>
 
-  <div class="hikes__rows" data-rows>
+  <div class="hikes__rows">
     {%- comment -%}
-      Shopify can't sort by a metafield, so the filtered hikes (first 50) are ordered
+      Shopify can't sort by a metafield, so the hikes (first 50) are ordered
       here: upcoming by soonest start, then undated. Hikes that have started are left out.
     {%- endcomment -%}
     {%- liquid
@@ -150,7 +122,7 @@
       <p class="hikes__empty">{{ 'collections.hikes.no_results' | t }}</p>
     {%- endif -%}
   </div>
-</hike-list>
+</div>
 
 {% stylesheet %}
 
@@ -165,45 +137,19 @@
   }
 
   .hikes__intro {
-    --intro-gap: 1rem;
-
     display: flex;
     flex-direction: column;
-    gap: var(--intro-gap);
+    gap: 1rem;
     padding-block-start: var(--spacing-section);
-  }
-
-  .hikes__text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--intro-gap);
   }
 
   .hikes__rows {
     padding-bottom: var(--spacing-section);
   }
 
-  @media (width >= 750px) {
-    .hikes__intro {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-  }
-
   /* The deck is the display serif here, as in journey-rows and create-a-hike. */
   .hikes__subheading {
     font-family: var(--font-display--family);
-  }
-
-  .hikes__filters {
-    position: relative;
-  }
-
-  @media (width >= 750px) {
-    .hikes__filters {
-      flex: 0 0 auto;
-    }
   }
 
   .hikes__list {
@@ -338,17 +284,11 @@
     outline-offset: -6px;
   }
 
-  .hikes[aria-busy='true'] .hikes__rows {
-    opacity: 0.5;
-    transition: opacity var(--duration-fast) var(--easing-base);
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .hike-row__media img,
     .hike-row__media svg,
     .hike-row__media::after,
-    .hike-row__arrow svg,
-    .hikes[aria-busy='true'] .hikes__rows {
+    .hike-row__arrow svg {
       transition: none;
     }
 
@@ -360,72 +300,6 @@
     }
   }
 {% endstylesheet %}
-
-{% javascript %}
-  /* Swaps the filter list and rows in place so choosing a country never reloads the page. */
-  class HikeList extends HTMLElement {
-    connectedCallback() {
-      this.sectionId = this.dataset.sectionId;
-
-      this.addEventListener('click', (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
-
-        const link = event.target.closest('[data-filters] a');
-        if (!link) return;
-
-        event.preventDefault();
-
-        /* A chosen filter closes the dropdown at once; focus waits on the toggle for the new list. */
-        const dropdown = link.closest('[data-filters] details');
-        if (dropdown) {
-          dropdown.open = false;
-          dropdown.querySelector('summary')?.focus();
-        }
-
-        this.load(link.href, true);
-      });
-
-      window.addEventListener('popstate', () => this.load(window.location.href, false));
-    }
-
-    async load(url, push) {
-      if (this.controller) this.controller.abort();
-      this.controller = new AbortController();
-      this.setAttribute('aria-busy', 'true');
-
-      const filters = this.querySelector('[data-filters]');
-      const keepFocus = Boolean(filters?.contains(document.activeElement));
-
-      try {
-        const target = new URL(url, window.location.origin);
-        target.searchParams.set('section_id', this.sectionId);
-
-        const response = await fetch(target, { signal: this.controller.signal });
-        if (!response.ok) throw new Error(response.statusText);
-
-        const markup = new DOMParser().parseFromString(await response.text(), 'text/html');
-
-        ['[data-filters]', '[data-rows]'].forEach((selector) => {
-          const next = markup.querySelector(selector);
-          const current = this.querySelector(selector);
-          if (next && current) current.replaceWith(next);
-        });
-
-        if (keepFocus) this.querySelector('[data-filters] summary')?.focus();
-
-        if (push) window.history.pushState({}, '', url);
-      } catch (error) {
-        if (error.name !== 'AbortError') window.location.href = url;
-      } finally {
-        this.removeAttribute('aria-busy');
-      }
-    }
-  }
-
-  if (!customElements.get('hike-list')) {
-    customElements.define('hike-list', HikeList);
-  }
-{% endjavascript %}
 
 {% schema %}
 {

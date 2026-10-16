@@ -132,7 +132,7 @@
       "subheading": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit",
       "price_from": "From {{ price }}",
       "reservation": "Reservation",
-      "no_results": "No hikes match this filter yet. Try another country."
+      "no_results": "No upcoming hikes yet. Check back soon."
     },
     "gear": {
       "add": "Add {{ title }} to cart",
