@@ -97,6 +97,7 @@
     "row_height": "Row height",
     "row_gap": "Space between rows",
     "show_divider": "Show divider",
+    "bottom_padding": "Add bottom padding",
     "image_position": "Image position",
     "image_offset": "Image offset on mobile",
     "image_max_width": "Image max width",
