@@ -11,7 +11,38 @@
   "sections": {
     "main": {
       "type": "collection-hikes",
-      "settings": {}
+      "settings": {},
+      "blocks": {
+        "feature_travel": {
+          "type": "feature",
+          "settings": {
+            "icon": "mountains-light.svg",
+            "heading": "Carefree Travel",
+            "text": "Flights & Accommodation Included"
+          }
+        },
+        "feature_curated": {
+          "type": "feature",
+          "settings": {
+            "icon": "airplane-tilt-light.svg",
+            "heading": "Curated Experiences",
+            "text": "Handpicked by Us"
+          }
+        },
+        "feature_reserve": {
+          "type": "feature",
+          "settings": {
+            "icon": "calendar-check-light.svg",
+            "heading": "Reserve Your Place",
+            "text": "With a 20% Deposit fee"
+          }
+        }
+      },
+      "block_order": [
+        "feature_travel",
+        "feature_curated",
+        "feature_reserve"
+      ]
     }
   },
   "order": [
