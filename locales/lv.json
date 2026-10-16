@@ -5482,7 +5482,7 @@
     }
   },
   "collections": {
-    "title": "Kolekcijas",
+    "title": "Izvēlies kategoriju",
     "hikes": {
       "subheading": "Bezrūpīgs ceļojums | Lidojumi iekļauti | Rūpīgi izvēlēta pieredze | Rezervē vietu ar 20% depozītu",
       "price_from": "No {{ price }}",

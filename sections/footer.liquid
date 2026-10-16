@@ -259,6 +259,12 @@
       margin-block-start: 4.5rem;
     }
 
+    /* The tagline is larger than the column headings, so the row lines up on the text baseline, not the box tops. */
+    .footer__tagline,
+    .footer__inner > .footer__column {
+      align-self: baseline;
+    }
+
     /* Only here is the brand row wide enough to hold the call-out on one line. */
     .footer__instagram-label {
       font-size: var(--font-size-display-small);
