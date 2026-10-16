@@ -11,10 +11,38 @@
   "sections": {
     "main": {
       "type": "collections",
-      "settings": {}
+      "settings": {
+        "grid_gap": 16
+      }
+    },
+    "content_rows_e7aK9j": {
+      "type": "content-rows",
+      "blocks": {
+        "row_CJJ93N": {
+          "type": "row",
+          "settings": {
+            "title": "Hiking in Italy",
+            "link": "shopify://pages/create-a-hike",
+            "image": "shopify://shop_images/hike-vineyard-trail.jpg",
+            "image_position": 80
+          }
+        }
+      },
+      "block_order": [
+        "row_CJJ93N"
+      ],
+      "name": "t:general.content_rows",
+      "settings": {
+        "heading": "Create a Hike With Us",
+        "subheading": "Have an idea for a special hiking experience?",
+        "show_divider": true,
+        "row_height": 270,
+        "row_gap": 30
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "content_rows_e7aK9j"
   ]
 }
