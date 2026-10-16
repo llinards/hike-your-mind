@@ -67,7 +67,9 @@
             else
               assign deposit_cents = product.price
             endif
-            assign price_amount = deposit_cents | money_without_trailing_zeros | remove: '.'
+            assign percent_ratio = settings.deposit_percent | divided_by: 100.0
+            assign full_cents = deposit_cents | divided_by: percent_ratio | round
+            assign price_amount = full_cents | money_without_trailing_zeros | remove: '.'
           -%}
 
           <li>
@@ -97,8 +99,7 @@
                       <span class="hike-row__dates">
                         {%- render 'hike-dates', start: hike_start, end: hike_end -%}
                       </span>
-                    {%- endif %}
-                    <span class="hike-row__tag">{{ 'collections.hikes.reservation' | t }}</span>
+                    {%- endif -%}
                   </h2>
 
                   <p class="hike-row__price">
@@ -219,15 +220,10 @@
     font-size: var(--font-size-display-compact);
   }
 
-  .hike-row__dates::before,
-  .hike-row__tag::before {
+  .hike-row__dates::before {
     /* The trailing space mirrors the markup space before the span. */
     content: '| ' / '';
     margin-inline: 0.25em;
-  }
-
-  .hike-row__tag {
-    text-transform: uppercase;
   }
 
   @media (width >= 750px) {

@@ -127,11 +127,10 @@
     }
   },
   "collections": {
-    "title": "Collections",
+    "title": "Choose your category",
     "hikes": {
       "subheading": "Carefree Travel | Flights Included | Curated Experiences | Reserve Your Place With a 20% Deposit",
       "price_from": "From {{ price }}",
-      "reservation": "Reservation",
       "no_results": "No upcoming hikes yet. Check back soon."
     },
     "gear": {

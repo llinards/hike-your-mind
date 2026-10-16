@@ -15,7 +15,7 @@
 <footer class="footer full-width">
   <div class="footer__inner">
     <div class="footer__wordmark">
-      {{ 'logo-wordmark-large.svg' | inline_asset_content }}
+      {{ 'logo-wordmark.svg' | inline_asset_content }}
       <span class="visually-hidden">{{ shop.name }}</span>
     </div>
 
@@ -80,9 +80,10 @@
     order: 2;
   }
 
+  /* Same size and colour as the header logo. */
   .footer__wordmark {
-    width: min(31.0625rem, 100%);
-    color: var(--color-foreground-muted);
+    width: 8.6875rem;
+    color: var(--color-foreground);
   }
 
   .footer__wordmark svg {
@@ -110,7 +111,7 @@
   /* The two large lines in the footer are the body sans, not the display serif. */
   .footer__instagram-label,
   .footer__tagline {
-    font-size: var(--font-size-display-compact);
+    font-size: var(--font-size-display-small);
     line-height: var(--line-height-display);
     letter-spacing: var(--letter-spacing-display);
   }
@@ -121,8 +122,8 @@
 
   .footer__instagram-icon {
     flex-shrink: 0;
-    width: var(--size-icon);
-    height: var(--size-icon);
+    width: calc(var(--size-icon) * 0.75);
+    height: calc(var(--size-icon) * 0.75);
   }
 
   .footer__instagram-icon svg {
@@ -203,6 +204,7 @@
 
     .footer__wordmark {
       grid-area: brand;
+      align-self: center;
     }
 
     .footer__instagram {
@@ -211,11 +213,16 @@
       justify-self: end;
     }
 
+    /* Kept on one line at every width from tablet up. */
+    .footer__instagram-label {
+      white-space: nowrap;
+    }
+
     /* The design opens a wide band between the wordmark row and what follows. */
     .footer__tagline {
       grid-area: tagline;
       margin-block-start: 4.5rem;
-      font-size: var(--font-size-display);
+      font-size: var(--font-size-display-small);
     }
 
     .footer__column--contacts {
@@ -252,9 +259,15 @@
       margin-block-start: 4.5rem;
     }
 
+    /* The tagline is larger than the column headings, so the row lines up on the text baseline, not the box tops. */
+    .footer__tagline,
+    .footer__inner > .footer__column {
+      align-self: baseline;
+    }
+
     /* Only here is the brand row wide enough to hold the call-out on one line. */
     .footer__instagram-label {
-      font-size: var(--font-size-display);
+      font-size: var(--font-size-display-small);
     }
   }
 {% endstylesheet %}
