@@ -97,7 +97,7 @@
           "type": "row",
           "settings": {
             "title": "Hiking in Italy",
-            "link": "shopify://collections/hikes",
+            "link": "shopify://collections/italy",
             "image": "shopify://shop_images/hike-wheat-sunset.jpg",
             "image_position_y": 50,
             "image_position_x": 50,
@@ -130,7 +130,7 @@
           "type": "row",
           "settings": {
             "title": "Shop Hiking Essentials",
-            "link": "shopify://collections/hiking-essentials-rentals",
+            "link": "shopify://collections",
             "image": "shopify://shop_images/shop-hiking-essentials.jpg",
             "image_position_y": 85,
             "image_position_x": 0,

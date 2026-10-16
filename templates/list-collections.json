@@ -12,6 +12,11 @@
     "main": {
       "type": "collections",
       "settings": {
+        "collections": [
+          "hikes",
+          "hiking-essentials-rentals",
+          "hiking-rentals"
+        ],
         "grid_gap": 16
       }
     },
@@ -23,7 +28,10 @@
           "settings": {
             "title": "Hiking in Italy",
             "link": "shopify://pages/create-a-hike",
-            "image": "shopify://shop_images/hike-vineyard-trail.jpg"
+            "image": "shopify://shop_images/hike-vineyard-trail.jpg",
+            "image_position_y": 50,
+            "image_position_x": 50,
+            "image_zoom": 100
           }
         }
       },
