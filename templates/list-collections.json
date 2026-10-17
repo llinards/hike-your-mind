@@ -26,10 +26,10 @@
         "row_CJJ93N": {
           "type": "row",
           "settings": {
-            "title": "Hiking in Italy",
+            "title": "Create a Hike With Us",
             "link": "shopify://pages/create-a-hike",
-            "image": "shopify://shop_images/hike-vineyard-trail.jpg",
-            "image_position_y": 50,
+            "image": "shopify://shop_images/create-a-hike.jpg",
+            "image_position_y": 80,
             "image_position_x": 50,
             "image_zoom": 100
           }
