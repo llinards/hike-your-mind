@@ -11,14 +11,6 @@
   "sections": {
     "main": {
       "type": "cart",
-      "settings": {
-        "max_quantity": 10,
-        "service_agreement_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/Standarta_informacijas_veidlapa_kompleksa_turisma_pakalpojumu_ligumiem.docx?v=1790783881",
-        "travel_contract_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/celojuma_ligums_Hike_ar_aviobiletem_majaslapa.docx?v=1790783881"
-      }
-    },
-    "17943258739608ccda": {
-      "type": "apps",
       "blocks": {
         "parcely_app_parcely_list_widget_DbWVRf": {
           "type": "shopify://apps/parcely-app/blocks/parcely_list_widget/cbdd14b4-8c8a-445b-bf69-fadc23ab031d",
@@ -30,11 +22,14 @@
       "block_order": [
         "parcely_app_parcely_list_widget_DbWVRf"
       ],
-      "settings": {}
+      "settings": {
+        "max_quantity": 10,
+        "service_agreement_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/Standarta_informacijas_veidlapa_kompleksa_turisma_pakalpojumu_ligumiem.docx?v=1790783881",
+        "travel_contract_url": "https://cdn.shopify.com/s/files/1/1025/2894/2463/files/celojuma_ligums_Hike_ar_aviobiletem_majaslapa.docx?v=1790783881"
+      }
     }
   },
   "order": [
-    "main",
-    "17943258739608ccda"
+    "main"
   ]
 }

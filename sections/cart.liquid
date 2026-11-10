@@ -171,6 +171,24 @@
           %}
         {%- endif -%}
 
+        {%- comment -%}
+          The delivery app (Parcely) is rendered here instead of in its own section so
+          it is only output when something needs shipping: once its script runs, it
+          holds checkout back until a delivery is picked, which a hike-only cart can't do.
+        {%- endcomment -%}
+        {%- if cart.requires_shipping -%}
+          <div data-delivery>
+            <div id="parcelyWidgetCustomAnchor"></div>
+
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when '@app' -%}
+                  {% render block %}
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
         <input class="cart__checkout" type="submit" name="checkout" value="{{ 'cart.checkout' | t }}" data-checkout>
       </div>
     </form>
@@ -576,6 +594,13 @@
         return;
       }
 
+      /* The delivery app's script can't be taken back out of the page, so a cart that
+         stopped needing shipping is reloaded without it rather than left blocked. */
+      if (Boolean(this.querySelector('[data-delivery]')) !== Boolean(fresh.querySelector('[data-delivery]'))) {
+        window.location.reload();
+        return;
+      }
+
       const accepted = Boolean(this.querySelector('[data-terms]')?.checked);
       this.innerHTML = fresh.innerHTML;
 
@@ -632,6 +657,7 @@
       "label": "t:labels.travel_contract_url",
       "info": "t:info.checkout_terms_link"
     }
-  ]
+  ],
+  "blocks": [{ "type": "@app" }]
 }
 {% endschema %}
