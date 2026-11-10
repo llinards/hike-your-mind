@@ -177,7 +177,7 @@
           holds checkout back until a delivery is picked, which a hike-only cart can't do.
         {%- endcomment -%}
         {%- if cart.requires_shipping -%}
-          <div data-delivery>
+          <div class="cart__delivery" data-delivery>
             <div id="parcelyWidgetCustomAnchor"></div>
 
             {%- for block in section.blocks -%}
@@ -439,11 +439,167 @@
     cursor: default;
   }
 
+  /* Parcely's delivery picker arrives with its own look (grey panels, its own type,
+     colour forced with !important), so it is redressed in the cart's terms: one
+     hairline box, the body face, labels like the column headings. Its scoped rules
+     outrank Parcely's; only the properties it forces need !important here too.
+     The dropdown's class names are hashed, so it is reached through roles and the
+     stable "-control"-style suffixes. If Parcely changes its markup, the picker
+     falls back to its own look and keeps working. */
+  .cart__delivery {
+    --parcely-widget-background-color: transparent;
+    width: min(100%, 30rem);
+  }
+
+  /* Parcely resets the box with `all: initial`, which drops the theme's border-box. */
+  .cart__delivery .parcely_app {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: none;
+    margin: 0;
+    gap: 0;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+    line-height: var(--line-height-body);
+  }
+
+  .cart__delivery .parcely_app * {
+    font-family: var(--font-body--family) !important;
+    color: var(--color-foreground) !important;
+    font-size: var(--font-size-quote) !important;
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .cart__delivery .parcely_app > div {
+    padding: 1.25rem;
+    border-radius: 0;
+  }
+
+  .cart__delivery .parcely_app > div + div {
+    border-block-start: 0.5px solid var(--color-hairline);
+  }
+
+  .cart__delivery .parcely_app h4 {
+    margin: 0 0 0.5rem !important;
+    font-size: var(--font-size-small) !important;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-small);
+    text-transform: uppercase !important;
+  }
+
+  .cart__delivery .parcely_app .parcely_app_shipping_method,
+  .cart__delivery .parcely_app .parcely_shipping_provider {
+    grid-template-columns: 1.25rem 1.5rem 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .cart__delivery .parcely_app .parcely_shipping_provider {
+    grid-template-columns: 1.25rem 4.5rem 1fr;
+  }
+
+  /* The hover underline the theme's links use, in place of Parcely's white fill. */
+  .cart__delivery .parcely_app .parcely_app_shipping_method > span,
+  .cart__delivery .parcely_app .parcely_shipping_provider > span {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .cart__delivery .parcely_app .parcely_app_shipping_method:hover > span,
+  .cart__delivery .parcely_app .parcely_shipping_provider:hover > span {
+    text-decoration-color: currentcolor;
+  }
+
+  .cart__delivery .parcely_app .parcelyRadio {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    margin: 0;
+    accent-color: var(--color-foreground) !important;
+    cursor: pointer;
+  }
+
+  .cart__delivery .parcely_app .parcely_app_shipping_method svg [class] {
+    fill: currentcolor;
+  }
+
+  .cart__delivery .parcely_app div:has(> [class*='-container']) {
+    margin: 0.75rem 0 0 !important;
+  }
+
+  .cart__delivery .parcely_app [class*='-control'] {
+    min-height: 3rem;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: transparent;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .cart__delivery .parcely_app [class*='-control']:focus-within {
+    border-color: var(--color-foreground);
+  }
+
+  .cart__delivery .parcely_app [class*='-control'] > div:first-child {
+    padding: 0 1rem;
+  }
+
+  .cart__delivery .parcely_app [class*='-placeholder'] {
+    color: color-mix(in srgb, var(--color-foreground) 60%, transparent) !important;
+  }
+
+  .cart__delivery .parcely_app [class*='-singleValue'] {
+    background: none;
+  }
+
+  .cart__delivery .parcely_app [class*='-indicatorSeparator'] {
+    display: none;
+  }
+
+  .cart__delivery .parcely_app [class*='-indicatorContainer'] {
+    padding: 0 1rem;
+  }
+
+  .cart__delivery .parcely_app div:has(> [role='listbox']) {
+    margin-block-start: 0.5rem;
+    border: 0.5px solid var(--color-hairline);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-background);
+    box-shadow: none;
+  }
+
+  .cart__delivery .parcely_app [id$='-heading'] {
+    padding: 0.75rem 1rem 0.25rem;
+  }
+
+  .cart__delivery .parcely_app [id$='-heading'] h4 {
+    margin: 0 !important;
+  }
+
+  /* The highlighted and chosen rows are filled in the dropdown's own blues, which
+     can't be told apart by class; greyscale turns them into neutral greys. */
+  .cart__delivery .parcely_app [role='option'] {
+    padding: 0.625rem 1rem;
+    filter: grayscale(1);
+    cursor: pointer;
+  }
+
+  .cart__delivery .parcely_app [role='option'] p + p {
+    font-size: var(--font-size-small) !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .cart__product,
     .cart__remove,
     .cart__checkout,
-    .cart__update {
+    .cart__update,
+    .cart__delivery .parcely_app .parcely_app_shipping_method > span,
+    .cart__delivery .parcely_app .parcely_shipping_provider > span {
       transition: none;
     }
   }
