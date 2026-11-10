@@ -23,7 +23,7 @@
         "parcely_app_parcely_list_widget_DbWVRf": {
           "type": "shopify://apps/parcely-app/blocks/parcely_list_widget/cbdd14b4-8c8a-445b-bf69-fadc23ab031d",
           "settings": {
-            "use_custom_anchor": false
+            "use_custom_anchor": true
           }
         }
       },
