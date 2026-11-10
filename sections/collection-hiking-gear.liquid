@@ -977,14 +977,18 @@
 
       try {
         const root = window.Shopify?.routes?.root || '/';
+        const body = new FormData(form);
+        body.append('sections', 'cart-count');
+
         const response = await fetch(`${root}cart/add.js`, {
           method: 'POST',
           headers: { Accept: 'application/json' },
-          body: new FormData(form),
+          body,
         });
         if (!response.ok) throw new Error(response.statusText);
 
-        await this.refreshCount(root);
+        const added = await response.json();
+        this.refreshCount(added.sections?.['cart-count']);
 
         if (this.status) this.status.textContent = form.dataset.added;
 
@@ -998,26 +1002,15 @@
       }
     }
 
-    async refreshCount(root) {
-      const cart = await (await fetch(`${root}cart.js`)).json();
+    /* The badge comes back rendered by Liquid (snippets/cart-count.liquid), which
+       counts a day rental once however many days it holds. */
+    refreshCount(markup) {
       const link = document.querySelector('.header__cart');
-      if (!link) return;
+      if (!link || typeof markup !== 'string') return;
 
-      let count = link.querySelector('.header__cart-count');
-
-      if (!cart.item_count) {
-        if (count) count.remove();
-        return;
-      }
-
-      if (!count) {
-        count = document.createElement('span');
-        count.className = 'header__cart-count';
-        count.setAttribute('aria-hidden', 'true');
-        link.append(count);
-      }
-
-      count.textContent = cart.item_count;
+      const fresh = new DOMParser().parseFromString(markup, 'text/html').querySelector('.header__cart-count');
+      link.querySelector('.header__cart-count')?.remove();
+      if (fresh) link.append(fresh);
     }
   }
 

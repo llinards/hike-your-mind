@@ -1,0 +1,30 @@
+{% doc %}
+  Renders the header's cart badge: how many things are in the cart, or nothing
+  when it is empty.
+
+  A day rental (BookX, tagged `bookeasy`) keeps its booked days as the line's
+  quantity, so Shopify's `cart.item_count` would count an 8-day backpack as 8.
+  Each rental line counts once here; everything else counts by quantity.
+
+  Rendered in the header, and through `sections/cart-count.liquid` so the cart
+  scripts can ask for a fresh badge after a change.
+
+  @example
+  {% render 'cart-count' %}
+{% enddoc %}
+
+{%- liquid
+  assign count = 0
+  for item in cart.items
+    assign item_tags = item.product.tags | join: ',' | downcase
+    if item_tags contains 'bookeasy'
+      assign count = count | plus: 1
+    else
+      assign count = count | plus: item.quantity
+    endif
+  endfor
+-%}
+
+{%- if count > 0 -%}
+  <span class="header__cart-count" aria-hidden="true">{{ count }}</span>
+{%- endif -%}

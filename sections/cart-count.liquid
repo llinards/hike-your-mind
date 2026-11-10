@@ -1,0 +1,14 @@
+{% comment %}
+  The header's cart badge on its own. It isn't placed on any page: the cart and
+  quick-add scripts request it by name through the Section Rendering API, so a
+  changed cart is counted by the same Liquid rule as the header.
+{% endcomment %}
+
+{% render 'cart-count' %}
+
+{% schema %}
+{
+  "name": "t:general.cart_count",
+  "settings": []
+}
+{% endschema %}

@@ -32,9 +32,7 @@
       <a class="header__icon header__cart" href="{{ routes.cart_url }}">
         {{ 'icon-bag.svg' | inline_asset_content }}
         <span class="visually-hidden">{{ 'general.accessibility.cart' | t }}</span>
-        {% if cart.item_count > 0 %}
-          <span class="header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
-        {% endif %}
+        {% render 'cart-count' %}
       </a>
 
       {% render 'language-selector', class: 'header__language' %}

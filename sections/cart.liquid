@@ -707,14 +707,14 @@
         const response = await fetch(`${root}cart/change.js`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ line, quantity, sections: this.dataset.section }),
+          body: JSON.stringify({ line, quantity, sections: [this.dataset.section, 'cart-count'] }),
         });
 
         if (!response.ok) throw new Error(response.statusText);
 
         const cart = await response.json();
         this.render(cart, this.focusKey(origin, line));
-        this.count(cart.item_count);
+        this.count(cart.sections?.['cart-count']);
       } catch (error) {
         /* Fall back to the plain page: the link for a removal, the form for a
            quantity, whose field already holds the value that was asked for. */
@@ -768,15 +768,15 @@
       if (restored) restored.focus();
     }
 
-    count(total) {
-      const badge = document.querySelector('.header__cart-count');
-      if (!badge) return;
+    /* The badge comes back rendered by Liquid (snippets/cart-count.liquid), which
+       counts a day rental once however many days it holds. */
+    count(markup) {
+      const link = document.querySelector('.header__cart');
+      if (!link || typeof markup !== 'string') return;
 
-      if (total > 0) {
-        badge.textContent = total;
-      } else {
-        badge.remove();
-      }
+      const fresh = new DOMParser().parseFromString(markup, 'text/html').querySelector('.header__cart-count');
+      link.querySelector('.header__cart-count')?.remove();
+      if (fresh) link.append(fresh);
     }
   }
 
