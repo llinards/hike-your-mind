@@ -19,6 +19,58 @@
         "settings": {
           "enable_cart_validation": true
         }
+      },
+      "13856967578753540910": {
+        "type": "shopify://apps/easy-peasy-popup/blocks/announcement/019db5e4-2cb2-72de-970c-32a48c68f75f",
+        "disabled": false,
+        "settings": {
+          "image": "shopify://shop_images/tuscany-winery.jpg",
+          "image_height": 180,
+          "image_placement": "top",
+          "image_fit": "contain",
+          "image_padding_top": 0,
+          "image_padding_right": 0,
+          "image_padding_bottom": 0,
+          "image_padding_left": 0,
+          "title": "Testa popups",
+          "title_alignment": "left",
+          "title_font_size": 20,
+          "title_font": "system_ui_n4",
+          "title_font_weight": "400",
+          "title_font_style": "normal",
+          "title_color": "#1E1E1E",
+          "body": "<p>Check out our latest announcement.</p>",
+          "body_alignment": "left",
+          "body_font_size": 16,
+          "body_font": "system_ui_n4",
+          "body_font_weight": "400",
+          "body_font_style": "normal",
+          "body_color": "#1E1E1E",
+          "body_margin_top": 8,
+          "cta_label": "Lasīt vairāk",
+          "cta_url": "shopify://products/hike-your-mind-from-tuscany-to-rome-copy",
+          "cta_alignment": "left",
+          "cta_font_size": 14,
+          "cta_font": "system_ui_n4",
+          "cta_font_weight": "400",
+          "cta_font_style": "normal",
+          "cta_text_color": "#ffffff",
+          "cta_background_color": "#1E1E1E",
+          "cta_margin_top": 16,
+          "cta_border_radius": 0,
+          "cta_padding_vertical": 10,
+          "cta_padding_horizontal": 20,
+          "popup_width": 480,
+          "popup_side_margin": 16,
+          "popup_border_radius": 8,
+          "background_color": "#ffffff",
+          "close_button_color": "#1E1E1E",
+          "close_icon_size": 30,
+          "content_padding_top": 16,
+          "content_padding_right": 16,
+          "content_padding_bottom": 16,
+          "content_padding_left": 16
+        }
       }
     }
   }
