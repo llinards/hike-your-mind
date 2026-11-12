@@ -5381,7 +5381,7 @@
     "terms": {
       "label_html": "Es piekrītu {{ agreement }} un {{ contract }}",
       "agreement": "pakalpojumu līgumam",
-      "contract": "ceļojuma līgumam ar aviobiļetēm"
+      "contract": "ceļojuma līgumam"
     },
     "checkout": "Apmaksa",
     "title": "Grozs",
@@ -5463,9 +5463,9 @@
   "dates": {
     "day_month": "{{ day }}. {{ month }}",
     "day_month_year": "{{ year }}. gada {{ day }}. {{ month }}",
-    "month_day": "{{ day }}.\u00a0{{ month }}",
-    "month_day_year": "{{ year }}. gada {{ day }}.\u00a0{{ month }}",
-    "month_range": "{{ year }}. gada {{ start }}. - {{ end }}.\u00a0{{ month }}",
+    "month_day": "{{ day }}. {{ month }}",
+    "month_day_year": "{{ year }}. gada {{ day }}. {{ month }}",
+    "month_range": "{{ year }}. gada {{ start }}. - {{ end }}. {{ month }}",
     "months": {
       "january": "janvāris",
       "february": "februāris",
