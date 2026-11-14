@@ -26,7 +26,7 @@
         "row_CJJ93N": {
           "type": "row",
           "settings": {
-            "title": "Create a Hike With Us",
+            "title": "Create an Adventure With Us",
             "link": "shopify://pages/create-a-hike",
             "image": "shopify://shop_images/create-a-hike.jpg",
             "image_position_y": 80,
@@ -40,7 +40,7 @@
       ],
       "name": "t:general.content_rows",
       "settings": {
-        "heading": "Create a Hike With Us",
+        "heading": "Create an Adventure With Us",
         "subheading": "Have an idea for a special hiking experience?",
         "show_divider": true,
         "bottom_padding": true,
