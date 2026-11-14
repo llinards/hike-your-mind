@@ -118,7 +118,7 @@
         "row-2": {
           "type": "row",
           "settings": {
-            "title": "Create a Hike With Us",
+            "title": "Create an Adventure With Us",
             "link": "shopify://pages/create-a-hike",
             "image": "shopify://shop_images/create-a-hike-row.jpg",
             "image_position_y": 30,
