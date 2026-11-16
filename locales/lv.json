@@ -5541,6 +5541,7 @@
       "total": "Kopā",
       "add_to_cart": "Pievienot grozam",
       "sold_out": "Izpārdots",
+      "all_in_cart": "Viss pieejamais daudzums ir jūsu grozā",
       "related": "Saistītās preces",
       "related_subtext": "Atrodi savu ideālo variantu."
     },
@@ -5556,7 +5557,12 @@
       "balance": "Atlikusī summa ({{ days }} dienas pirms ceļojuma)",
       "total": "Kopā",
       "add_to_cart": "Pievienot grozam",
-      "sold_out": "Izpārdots"
+      "sold_out": "Izpārdots",
+      "all_in_cart": "Visas atlikušās vietas ir jūsu grozā",
+      "spots_left": {
+        "one": "Pēdējā vieta",
+        "other": "Pēdējās {{ count }} vietas"
+      }
     },
     "details": {
       "trip_details": "Ceļojuma informācija",

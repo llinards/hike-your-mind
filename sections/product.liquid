@@ -39,6 +39,8 @@
     assign steps = 120
   endif
 
+  assign current_max = max_quantity
+
   assign compare_amount = ''
   if variant.compare_at_price > variant.price
     assign compare_amount = variant.compare_at_price | money
@@ -58,9 +60,26 @@
         if option.compare_at_price > option.price
           assign variant_compare = option.compare_at_price | money
         endif
+
+        comment
+          Tracked stock that stops selling at zero caps the quantity, less what the
+          cart already holds. A rental's quantity counts days, so the app keeps it.
+        endcomment
+        assign variant_max = max_quantity
+        unless per_day
+          if option.inventory_management != blank and option.inventory_policy == 'deny'
+            assign in_cart = cart | item_count_for_variant: option.id
+            assign variant_max = option.inventory_quantity | minus: in_cart | at_most: max_quantity | at_least: 0
+          endif
+        endunless
+
+        if option.id == variant.id
+          assign current_max = variant_max
+        endif
       -%}
       "{{ option.id }}": {
         "available": {{ option.available | json }},
+        "max": {{ variant_max }},
         "price": {{ option.price | money | json }},
         "compare": {{ variant_compare | json }},
         "options": {{ option.options | json }},
@@ -92,7 +111,6 @@
 
   <product-purchase
     class="product-page__info"
-    data-max="{{ max_quantity }}"
     data-variant="{{ variant.id }}"
     {% if variant_radios %}data-variant-radios{% endif %}
   >
@@ -197,7 +215,7 @@
                 name="quantity"
                 value="1"
                 min="1"
-                max="{{ max_quantity }}"
+                max="{{ current_max | at_least: 1 }}"
                 step="1"
                 inputmode="numeric"
                 data-quantity
@@ -249,16 +267,26 @@
         </div>
       </div>
 
-      <button class="product-page__submit" type="submit" data-submit {% unless variant.available %}disabled{% endunless %}>
-        {%- if variant.available -%}
-          {{ 'product.standard.add_to_cart' | t }}
-        {%- else -%}
+      <button
+        class="product-page__submit"
+        type="submit"
+        data-submit
+        {% if variant.available == false or current_max < 1 %}
+          disabled
+        {% endif %}
+      >
+        {%- if variant.available == false -%}
           {{ 'product.standard.sold_out' | t }}
+        {%- elsif current_max < 1 -%}
+          {{ 'product.standard.all_in_cart' | t }}
+        {%- else -%}
+          {{ 'product.standard.add_to_cart' | t }}
         {%- endif -%}
       </button>
 
       <span class="visually-hidden" data-label-add>{{ 'product.standard.add_to_cart' | t }}</span>
       <span class="visually-hidden" data-label-sold-out>{{ 'product.standard.sold_out' | t }}</span>
+      <span class="visually-hidden" data-label-in-cart>{{ 'product.standard.all_in_cart' | t }}</span>
     {%- endform -%}
 
     <script type="application/json" data-variant-map>{{ variant_map }}</script>
@@ -633,7 +661,6 @@
 
       this.field = this.querySelector('[data-variant-id]');
       this.current = this.dataset.variant;
-      this.max = Number(this.dataset.max) || 10;
       this.steps = Array.from(this.querySelectorAll('[data-step]'));
       this.options = Array.from(this.querySelectorAll('[data-option]'));
       this.prices = Array.from(this.querySelectorAll('[data-price]'));
@@ -750,8 +777,14 @@
       return Math.round(Number(this.input.value)) || 1;
     }
 
+    /* How many of the chosen variant can still be added, worked out by Liquid. */
+    limit() {
+      const variant = this.variants[this.current];
+      return variant ? variant.max : Number(this.input.max);
+    }
+
     setQuantity(value) {
-      this.input.value = Math.min(Math.max(value, 1), this.max);
+      this.input.value = Math.max(Math.min(value, this.limit()), 1);
       this.render();
     }
 
@@ -763,22 +796,24 @@
       if (this.hasAttribute('data-variant-radios')) {
         const picked = this.options.find((option) => option.checked);
         if (picked) this.current = picked.value;
+      } else {
+        const chosen = this.chosen();
+        const match = Object.entries(this.variants).find(([, variant]) =>
+          chosen.every((value, index) => variant.options[index] === value)
+        );
+
+        if (match) {
+          this.current = match[0];
+          if (this.field) this.field.value = match[0];
+        }
+      }
+
+      /* The new variant may have less stock; a rental's day count is the app's, so it is left alone. */
+      if (this.steps.length) {
+        this.setQuantity(this.quantity());
+      } else {
         this.render();
-        this.showImage();
-        return;
       }
-
-      const chosen = this.chosen();
-      const match = Object.entries(this.variants).find(([, variant]) =>
-        chosen.every((value, index) => variant.options[index] === value)
-      );
-
-      if (match) {
-        this.current = match[0];
-        if (this.field) this.field.value = match[0];
-      }
-
-      this.render();
       this.showImage();
     }
 
@@ -792,10 +827,12 @@
     render() {
       const quantity = this.bookedDays() || this.quantity();
       const variant = this.variants[this.current];
+      const limit = this.limit();
 
       this.steps.forEach((step) => {
-        step.disabled = Number(step.dataset.step) < 0 ? quantity <= 1 : quantity >= this.max;
+        step.disabled = Number(step.dataset.step) < 0 ? quantity <= 1 : quantity >= limit;
       });
+      if (this.steps.length) this.input.max = Math.max(limit, 1);
 
       if (this.count) this.count.textContent = quantity;
       if (this.days) this.days.textContent = this.dayLabels[quantity] || this.days.textContent;
@@ -809,8 +846,15 @@
       if (this.compare) this.compare.textContent = variant.compare;
 
       if (this.submit) {
-        this.submit.disabled = !variant.available;
-        const label = variant.available ? '[data-label-add]' : '[data-label-sold-out]';
+        const full = variant.max < 1;
+        this.submit.disabled = !variant.available || full;
+
+        let label = '[data-label-add]';
+        if (!variant.available) {
+          label = '[data-label-sold-out]';
+        } else if (full) {
+          label = '[data-label-in-cart]';
+        }
         this.submit.textContent = this.querySelector(label)?.textContent.trim();
       }
     }

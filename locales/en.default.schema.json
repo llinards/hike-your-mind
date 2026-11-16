@@ -124,6 +124,7 @@
     "balance_due_days": "Balance due before departure",
     "deposit_note": "Deposit note",
     "max_quantity": "Maximum quantity",
+    "spots_left_threshold": "Show spots left from",
     "checkout_terms": "Checkout terms",
     "service_agreement_url": "Service agreement link",
     "travel_contract_url": "Travel contract link"
@@ -182,6 +183,7 @@
     "balance_due_days": "How many days before departure the remaining balance falls due. Shown in the reservation summary — keep the deposit note in step with it.",
     "deposit_note": "Sits under the features, above the quantity picker.",
     "max_quantity": "The most places one customer can reserve in a single booking.",
+    "spots_left_threshold": "Under the quantity, shows how many places are left once this few remain. Needs tracked inventory. 0 hides it.",
     "checkout_terms_link": "Opens in a new tab from the checkbox above checkout. Pick a page, or paste the link to a file uploaded under Content > Files. Left empty, the words show without a link.",
     "favicon": "Shown in browser tabs and bookmarks. Use a square image, at least 180 × 180 px."
   }

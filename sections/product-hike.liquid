@@ -5,8 +5,19 @@
   assign deposit_cents = variant.price
   assign full_cents = deposit_cents | divided_by: percent_ratio | round
   assign balance_cents = full_cents | minus: deposit_cents
-  assign max_quantity = section.settings.max_quantity
   assign due_days = section.settings.balance_due_days
+
+  comment
+    Tracked places that stop selling at zero cap the quantity, less what the
+    cart already holds.
+  endcomment
+  assign max_quantity = section.settings.max_quantity
+  assign spots_left = 0
+  if variant.inventory_management != blank and variant.inventory_policy == 'deny'
+    assign spots_left = variant.inventory_quantity
+    assign in_cart = cart | item_count_for_variant: variant.id
+    assign max_quantity = variant.inventory_quantity | minus: in_cart | at_most: max_quantity | at_least: 0
+  endif
 
   assign hike_start = product.metafields.custom.hike_start_date.value
   assign hike_end = product.metafields.custom.hike_end_date.value
@@ -51,7 +62,7 @@
 
   {% render 'product-gallery', product: product %}
 
-  <hike-reservation class="hike-product__info" data-max="{{ max_quantity }}">
+  <hike-reservation class="hike-product__info">
     <p class="hike-product__deposit">
       <span class="hike-product__deposit-lead">{{ 'product.hike.pay_today' | t }}</span>
       {{ 'product.hike.deposit_amount_html' | t: price: deposit_price_static }}
@@ -93,7 +104,7 @@
             name="quantity"
             value="1"
             min="1"
-            max="{{ max_quantity }}"
+            max="{{ max_quantity | at_least: 1 }}"
             step="1"
             inputmode="numeric"
             data-quantity
@@ -104,6 +115,12 @@
             <span class="visually-hidden">{{ 'product.hike.increase' | t }}</span>
           </button>
         </div>
+
+        {%- if spots_left > 0 -%}
+          {%- if spots_left <= section.settings.spots_left_threshold -%}
+            <p class="hike-product__spots">{{ 'product.hike.spots_left' | t: count: spots_left }}</p>
+          {%- endif -%}
+        {%- endif -%}
       </div>
 
       <div class="summary">
@@ -142,11 +159,19 @@
 
       {% render 'hike-features', blocks: section.blocks, layout: 'fill' %}
 
-      <button class="hike-product__checkout" type="submit" {% unless variant.available %}disabled{% endunless %}>
-        {%- if variant.available -%}
-          {{ 'product.hike.add_to_cart' | t }}
-        {%- else -%}
+      <button
+        class="hike-product__checkout"
+        type="submit"
+        {% if variant.available == false or max_quantity < 1 %}
+          disabled
+        {% endif %}
+      >
+        {%- if variant.available == false -%}
           {{ 'product.hike.sold_out' | t }}
+        {%- elsif max_quantity < 1 -%}
+          {{ 'product.hike.all_in_cart' | t }}
+        {%- else -%}
+          {{ 'product.hike.add_to_cart' | t }}
         {%- endif -%}
       </button>
     {%- endform -%}
@@ -364,7 +389,9 @@
     color: var(--summary-ink);
   }
 
-  .summary__title {
+  /* The places-left note is set like the summary heading. */
+  .summary__title,
+  .hike-product__spots {
     font-family: var(--font-body--family);
     font-size: var(--font-size-small);
     font-weight: 700;
@@ -440,7 +467,7 @@
       this.input = this.querySelector('[data-quantity]');
       if (!this.input) return;
 
-      this.max = Number(this.dataset.max) || 10;
+      this.max = Number(this.input.max);
       this.steps = Array.from(this.querySelectorAll('[data-step]'));
       this.amounts = Array.from(this.querySelectorAll('[data-summary]'));
 
@@ -521,6 +548,16 @@
       "max": 20,
       "step": 1,
       "default": 10
+    },
+    {
+      "type": "range",
+      "id": "spots_left_threshold",
+      "label": "t:labels.spots_left_threshold",
+      "info": "t:info.spots_left_threshold",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 3
     }
   ],
   "blocks": [

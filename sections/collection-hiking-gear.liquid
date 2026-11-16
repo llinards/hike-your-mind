@@ -212,6 +212,10 @@
                     {%- endfor -%}
                   </div>
                 {%- endif -%}
+
+                {%- if quick_add -%}
+                  <p class="gear-card__note" data-note hidden></p>
+                {%- endif -%}
               </div>
             {%- endcapture -%}
 
@@ -493,6 +497,12 @@
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+  }
+
+  .gear-card__note {
+    grid-column: 1 / -1;
+    font-size: var(--font-size-small);
+    color: var(--color-foreground-muted);
   }
 
   .gear-card__option.is-unavailable {
@@ -799,6 +809,7 @@
 
         this.showPrice(input);
         this.showImage(input);
+        this.showNote(input.closest('form'), '');
       });
 
       this.addEventListener('submit', (event) => {
@@ -985,11 +996,20 @@
           headers: { Accept: 'application/json' },
           body,
         });
+
+        /* The cart refused the item, most often because all its stock is already in it; Shopify's message says why. */
+        if (response.status === 422) {
+          const { description } = await response.json();
+          this.showNote(form, description);
+          if (this.status) this.status.textContent = description;
+          return;
+        }
         if (!response.ok) throw new Error(response.statusText);
 
         const added = await response.json();
         this.refreshCount(added.sections?.['cart-count']);
 
+        this.showNote(form, '');
         if (this.status) this.status.textContent = form.dataset.added;
 
         form.classList.add('is-added');
@@ -1000,6 +1020,14 @@
       } finally {
         form.classList.remove('is-busy');
       }
+    }
+
+    showNote(form, message) {
+      const note = form?.querySelector('[data-note]');
+      if (!note) return;
+
+      note.textContent = message || '';
+      note.hidden = !message;
     }
 
     /* The badge comes back rendered by Liquid (snippets/cart-count.liquid), which

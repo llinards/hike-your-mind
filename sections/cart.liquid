@@ -7,6 +7,8 @@
 <cart-items class="cart" data-section="{{ section.id }}">
   <h1 class="cart__title">{{ 'cart.title' | t }}</h1>
 
+  <p class="cart__notice" role="status" data-notice></p>
+
   {%- if cart.item_count == 0 -%}
     <p class="cart__empty">{{ 'cart.empty' | t }}</p>
   {%- else -%}
@@ -33,6 +35,17 @@
               if item_tags contains 'bookeasy'
                 assign per_day = true
               endif
+
+              # Tracked stock that stops selling at zero caps the line, less what
+              # other lines of the same variant already hold. A line already above
+              # the cap keeps its quantity valid, so checkout isn't blocked by the field.
+              assign line_max = max_quantity
+              if item.variant.inventory_management != blank and item.variant.inventory_policy == 'deny'
+                assign variant_in_cart = cart | item_count_for_variant: item.variant_id
+                assign other_lines = variant_in_cart | minus: item.quantity
+                assign line_max = item.variant.inventory_quantity | minus: other_lines | at_most: max_quantity | at_least: 0
+              endif
+              assign field_max = line_max | at_least: item.quantity
             -%}
 
             <tr class="cart__row" role="row" data-line="{{ forloop.index }}">
@@ -107,14 +120,21 @@
                         name="updates[]"
                         value="{{ item.quantity }}"
                         min="0"
-                        max="{{ max_quantity }}"
+                        max="{{ field_max }}"
                         step="1"
                         inputmode="numeric"
                         aria-label="{{ 'cart.quantity_for' | t: title: item.product.title }}"
                         data-quantity
                       >
 
-                      <button class="quantity__button" type="button" data-step="1">
+                      <button
+                        class="quantity__button"
+                        type="button"
+                        data-step="1"
+                        {% if item.quantity >= line_max %}
+                          disabled
+                        {% endif %}
+                      >
                         <span aria-hidden="true">+</span>
                         <span class="visually-hidden">{{ 'product.standard.increase' | t }}</span>
                       </button>
@@ -203,6 +223,16 @@
 
   .cart__title {
     margin-block-end: var(--spacing-section);
+  }
+
+  .cart__notice {
+    margin-block-end: 1.5rem;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  .cart__notice:empty {
+    display: none;
   }
 
   /* Each row lays itself out as a grid, so the table boxes are taken out of the
@@ -710,11 +740,21 @@
           body: JSON.stringify({ line, quantity, sections: [this.dataset.section, 'cart-count'] }),
         });
 
+        /* The cart turned the quantity down, most often for stock, and may have
+           settled on a lower one, so the section is fetched again and Shopify's
+           message says why. */
+        if (response.status === 422) {
+          const { description } = await response.json();
+          await this.refresh(this.focusKey(origin, line));
+          this.notify(description);
+          return;
+        }
         if (!response.ok) throw new Error(response.statusText);
 
         const cart = await response.json();
         this.render(cart, this.focusKey(origin, line));
         this.count(cart.sections?.['cart-count']);
+        this.notify('');
       } catch (error) {
         /* Fall back to the plain page: the link for a removal, the form for a
            quantity, whose field already holds the value that was asked for. */
@@ -728,6 +768,21 @@
         this.busy = false;
         delete this.dataset.busy;
       }
+    }
+
+    async refresh(focusKey) {
+      const root = window.Shopify?.routes?.root || '/';
+      const response = await fetch(`${root}cart?sections=${this.dataset.section},cart-count`);
+      if (!response.ok) throw new Error(response.statusText);
+
+      const sections = await response.json();
+      this.render({ sections }, focusKey);
+      this.count(sections['cart-count']);
+    }
+
+    notify(message) {
+      const notice = this.querySelector('[data-notice]');
+      if (notice) notice.textContent = message || '';
     }
 
     /* Replacing the markup drops focus, so the control that was used is found again. */
@@ -758,7 +813,11 @@
       }
 
       const accepted = Boolean(this.querySelector('[data-terms]')?.checked);
+
+      /* The notice is a live region, so the same node is kept for screen readers to keep hearing it. */
+      const notice = this.querySelector('[data-notice]');
       this.innerHTML = fresh.innerHTML;
+      if (notice) this.querySelector('[data-notice]')?.replaceWith(notice);
 
       const terms = this.querySelector('[data-terms]');
       if (terms) terms.checked = accepted;

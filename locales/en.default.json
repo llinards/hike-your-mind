@@ -186,6 +186,7 @@
       "total": "Total",
       "add_to_cart": "Add to cart",
       "sold_out": "Sold out",
+      "all_in_cart": "All available stock is in your cart",
       "related": "Related products",
       "related_subtext": "Find your perfect fit."
     },
@@ -201,7 +202,12 @@
       "balance": "Remaining balance ({{ days }} days before the trip)",
       "total": "Total",
       "add_to_cart": "Add to cart",
-      "sold_out": "Sold out"
+      "sold_out": "Sold out",
+      "all_in_cart": "All remaining places are in your cart",
+      "spots_left": {
+        "one": "Last spot",
+        "other": "Last {{ count }} spots"
+      }
     },
     "details": {
       "trip_details": "Trip Details",
