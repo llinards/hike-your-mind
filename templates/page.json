@@ -12,24 +12,11 @@
     "main": {
       "type": "page",
       "settings": {
-        "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions."
-      }
-    },
-    "reviews_cg8gLp": {
-      "type": "reviews",
-      "name": "t:general.reviews",
-      "settings": {
-        "heading": "What Our Clients Say About Us",
-        "show_heading": false,
-        "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
-        "show_subheading": false,
-        "show_divider": false,
-        "more_link": "shopify://pages/reviews"
+        "subheading": ""
       }
     }
   },
   "order": [
-    "main",
-    "reviews_cg8gLp"
+    "main"
   ]
 }
