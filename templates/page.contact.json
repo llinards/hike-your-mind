@@ -50,7 +50,7 @@
       "settings": {
         "heading": "Share Your Idea with Us",
         "heading_level": "h1",
-        "body": "<p>Do you have an idea for a special hiking experience? </p><p>Perhaps you are a photographer, yoga teacher, artist, guide, coach or simply someone with a meaningful idea to share.</p><p>Together with HIKE YOUR MIND, you can create a hike that brings people together through movement, nature and your chosen activity. You take care of the theme — what we will do, what kind of experience you want to offer and how many people you would like to invite.</p><p>HIKE YOUR MIND will take care of the route, hiking structure and practical planning, so the experience feels safe, thoughtful and close to nature.</p><p>Tell us about your idea, the preferred location, approximate time and how many people you imagine joining. </p><p>Please also leave your contacts so we can reach you.</p>",
+        "body": "<p>Do you have an idea for a special experience or event?<br/><br/>Are you a photographer, yoga teacher, artist, coach or someone with a passion you’d love to share with others?<br/><br/>Whether it’s a creative retreat, yoga weekend, photography experience, workshop, birthday celebration, corporate getaway or even a wedding, HIKE YOUR MIND can help bring your idea to life.<br/><br/>You have something you’d love to share with the world. Let’s turn it into an experience people can be part of.<br/><br/>Together, we’ll develop the concept and shape the experience. You bring your knowledge and lead your activity, while HIKE YOUR MIND takes care of the planning, organisation, logistics and promotion.<br/><br/>Let’s create something meaningful together!<br/><br/>Tell us about your idea, preferred location, dates and expected group size. Leave your contact details and we’ll get in touch.</p>",
         "image": "shopify://shop_images/create-a-hike_0c75a4a9-c5ae-4e13-a46d-ff0953dc00fc.jpg",
         "image_opacity": 40,
         "quote": "We can't wait\nto hear\nyour idea!",
@@ -68,6 +68,7 @@
         "subheading": "Explore reviews and stories from those who trusted us. Their satisfaction drives our innovation for better solutions.",
         "show_subheading": true,
         "show_divider": true,
+        "reviews": [],
         "more_link": "shopify://pages/reviews"
       }
     }
