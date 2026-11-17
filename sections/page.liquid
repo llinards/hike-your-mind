@@ -5,36 +5,56 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-<div class="page__intro">
-  <div class="page__text">
-    <h1 class="page__heading">{{ page.title }}</h1>
+<div class="page">
+  <div class="page__intro">
+    <div class="page__text">
+      <h1 class="page__heading">{{ page.title }}</h1>
 
-    {%- if section.settings.subheading != blank -%}
-      <p class="page__subheading">{{ section.settings.subheading }}</p>
-    {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="page__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
   </div>
-</div>
 
-{{ page.content }}
+  {%- if page.content != blank -%}
+    <div class="page__content">{{ page.content }}</div>
+  {%- endif -%}
+</div>
 
 {% stylesheet %}
 
-  .page__intro {
-    --intro-gap: 1rem;
+  /* One gap spaces the title, subheading and page content alike. */
+  .page {
+    --page-gap: 1rem;
 
     display: flex;
     flex-direction: column;
-    gap: var(--intro-gap);
+    gap: var(--page-gap);
     padding-block-start: var(--spacing-section);
+  }
+
+  .page__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-gap);
   }
 
   .page__text {
     display: flex;
     flex-direction: column;
-    gap: var(--intro-gap);
+    gap: var(--page-gap);
   }
   .page__subheading {
     font-family: var(--font-display--family);
+  }
+
+  /*
+   * 42px before the footer, so it doesn't butt against the text. Kept on the
+   * content rather than .page so the reviews template, where this intro sits
+   * directly above the reviews section, is unchanged.
+   */
+  .page__content {
+    padding-block-end: 2.625rem;
   }
 
   @media (width >= 750px) {
