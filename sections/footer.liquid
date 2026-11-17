@@ -46,13 +46,31 @@
 
     {% render 'shop-details', part: 'company', prefix: 'footer' %}
 
-    <p class="footer__copyright">
-      {%- if section.settings.copyright != blank -%}
-        {{ section.settings.copyright }}
-      {%- else -%}
-        {{ 'general.footer.copyright' | t: year: current_year, shop_name: shop.name }}
-      {%- endif -%}
-    </p>
+    <div class="footer__legal">
+      {% # Studio credits. The studio names are proper nouns, so only the labels are translated. %}
+      <p>
+        <a class="footer__credit" href="https://www.simpledesign.lv" target="_blank" rel="noopener">
+          {{- 'general.footer.design' | t }}
+          <span class="footer__credit-name">SIMPLE DESIGN</span>
+          <span class="visually-hidden">{{ 'general.accessibility.new_window' | t }}</span>
+        </a>
+      </p>
+      <p>
+        <a class="footer__credit" href="https://www.slmedia.lv" target="_blank" rel="noopener">
+          {{- 'general.footer.development' | t }}
+          <span class="footer__credit-name">S&amp;L MEDIA</span>
+          <span class="visually-hidden">{{ 'general.accessibility.new_window' | t }}</span>
+        </a>
+      </p>
+
+      <p class="footer__copyright">
+        {%- if section.settings.copyright != blank -%}
+          {{ section.settings.copyright }}
+        {%- else -%}
+          {{ 'general.footer.copyright' | t: year: current_year, shop_name: shop.name }}
+        {%- endif -%}
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -76,7 +94,7 @@
     order: 1;
   }
 
-  .footer__copyright {
+  .footer__legal {
     order: 2;
   }
 
@@ -177,11 +195,34 @@
     width: fit-content;
   }
 
-  .footer__copyright {
+  /* The studio credits with the copyright stacked under them, all at the small size. */
+  .footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     font-size: var(--font-size-small);
     line-height: var(--line-height-small);
     letter-spacing: var(--letter-spacing-small);
     text-align: center;
+  }
+
+  .footer__credit {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Only the studio name is set off and underlined on hover; the underline is
+     always drawn and only its colour changes, as on the footer links. */
+  .footer__credit-name {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--duration-base) var(--easing-base);
+  }
+
+  .footer__credit:hover .footer__credit-name {
+    text-decoration-color: currentcolor;
   }
 
   /* Tablets take the wordmark row and the three detail columns, but the tagline
@@ -237,7 +278,7 @@
       grid-area: company;
     }
 
-    .footer__copyright {
+    .footer__legal {
       grid-area: legal;
       text-align: left;
     }

@@ -5406,7 +5406,8 @@
       "next": "Nākamais",
       "image_gallery": "Attēlu galerija",
       "back_to_top": "Atpakaļ uz augšu",
-      "close": "Aizvērt"
+      "close": "Aizvērt",
+      "new_window": "Atveras jaunā logā"
     },
     "language": {
       "label": "Valoda"
@@ -5420,7 +5421,9 @@
       "company_details": "Uzņēmuma informācija",
       "registration_number": "Reģ. numurs {{ number }}",
       "license_number": "Licences numurs {{ number }}",
-      "copyright": "© {{ year }} {{ shop_name }}. Visas tiesības aizsargātas."
+      "copyright": "© {{ year }} {{ shop_name }}. Visas tiesības aizsargātas.",
+      "design": "Dizains:",
+      "development": "Izstrādāja:"
     }
   },
   "testimonials": {
