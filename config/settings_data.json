@@ -48,7 +48,7 @@
           "body_color": "#1e1e1e",
           "body_margin_top": 8,
           "cta_label": "Explore our adventures",
-          "cta_url": "shopify://collections",
+          "cta_url": "https://hikeyourmind.com/collections/adventures",
           "cta_alignment": "left",
           "cta_font_size": 14,
           "cta_font": "system_ui_n4",
