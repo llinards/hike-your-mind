@@ -22,7 +22,7 @@
       },
       "13856967578753540910": {
         "type": "shopify://apps/easy-peasy-popup/blocks/announcement/019db5e4-2cb2-72de-970c-32a48c68f75f",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "image": "shopify://shop_images/WhatsApp_Image_2026-11-21_at_13.47.39_9bf14384-d5e2-4c78-a23f-a1b577dec8fb.jpg",
           "image_height": 500,
